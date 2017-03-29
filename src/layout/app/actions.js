@@ -1,4 +1,4 @@
-import * as TYPES from '../constants'
+import * as TYPES from './constants'
 
 //导出加一的方法e
 export function mini_menu() {

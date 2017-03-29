@@ -1,4 +1,4 @@
-import * as TYPES from '../constants'
+import * as TYPES from './constants'
 import 'whatwg-fetch'
 const menu_url = 'http://localhost:3000/menu'
 

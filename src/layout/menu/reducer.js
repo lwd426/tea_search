@@ -1,5 +1,5 @@
 //处理数字增加的reducer
-import * as TYPES from '../constants'
+import * as TYPES from './constants'
 
 let reducer = (state={wintype: 'deviceinfo', add: false, menulist: []},action)=>{
     switch(action.type){
