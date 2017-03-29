@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import { Layout, Breadcrumb} from 'antd';
-import GLServerLog from '../serverlog';
-import GLDeviceInfo from '../deviceinfo';
-import GLDataChart from '../datachart';
-import GLTestInfo from '../testinfo';
+import GLServerLog from '../../components/serverlog';
+import GLDeviceInfo from '../../components/deviceinfo';
+import GLDataChart from '../../components/datachart';
+import GLTestInfo from '../../components/testinfo';
 import '../app/app.css';
 import './style.css';
 import 'antd.min.css';

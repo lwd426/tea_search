@@ -1,5 +1,3 @@
-export const MINI_MENU = 'MINI_MENU'
-export const MAX_MENU = 'MAX_MENU'
 export const GET_MENUDATA_SUCCESS = 'GET_MENUDATA_SUCCESS'
 export const SHOW_WIN_TYPE = 'SHOW_WIN_TYPE'
 export const ADD_TEST_GROUP = 'ADD_TEST_GROUP'

@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 import {
 	Provider
 } from 'react-redux'
-import App from './components/app'
+import App from './layout/app'
 import configureStore from './redux/configureStore'
 import DevTool from './redux/DevTool'  // 引入Redux调试工具DevTools
 
@@ -13,7 +13,7 @@ render(
 	<Provider store={store}>
 		<div>
 			<App/>
-			{/*<DevTool/>*/}
+			<DevTool/>
 		</div>
 
 	</Provider>,
