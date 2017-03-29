@@ -1,0 +1,19 @@
+.ant-col-sm-16{
+    float: none;
+    width: 240px;
+}
+
+.ant-col-sm-offset-8{
+    float: none;
+    width: 240px;
+}
+
+.ant-form-item-control>.ant-btn-primary{
+    width: 96px;
+    margin: 0px 5%;
+}
+
+.server-btn {
+    margin: 4px;
+}
+

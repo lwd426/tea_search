@@ -1,0 +1,9 @@
+.content-panel {
+    padding: 5px 4px;
+    background: '#fff';
+    minHeight: 360
+}
+
+.ant-layout-content{
+    background: #ffffff;
+}

@@ -1,0 +1,25 @@
+/*隐藏添加项*/
+.hidden-input-add-testgroup {
+    display: none !important;
+}
+
+.show-input-add-testgroup {
+    height: 40px;
+    padding: 0px 10px;
+    display: block !important;
+    background: #404040 !important;
+    border: 0px !important;
+    border-bottom: 1px solid #d9d9d9 !important;
+    border-radius: 0px !important;
+    width: 82% !important;
+    color: rgb(202, 198, 198) !important;
+    margin: 0 auto !important;
+}
+
+.delete-menu{
+    width:20px;
+}
+
+.edit-menu{
+    width:20px;
+}

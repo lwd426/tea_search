@@ -1,0 +1,32 @@
+.stragety-div>div{
+    width: 48%;
+    height: 100px;
+    float: left;
+    overflow-y: auto;
+}
+
+.stragety-div>div>div {
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    border-bottom: 1px solid rgba(158, 153, 153, 0.22);
+}
+.stragety-div>div>span {
+    display: block;
+    height:20px;
+    margin: 4px 10px;
+    text-align: center;
+
+}
+
+.ant-confirm-body .ant-confirm-content{
+    margin: 0px;
+}
+
+.ant-confirm .ant-modal-body{
+    padding: 30px 10px;
+}
+
+.ant-table ant-table-large ant-table-scroll-position-left ant-table-scroll-position-right{
+    margin-left:10px !important;
+}

@@ -1,0 +1,71 @@
+#app {
+    height: 100%;
+}
+
+#app > div {
+    height: 100%;
+}
+
+.ant-layout-header{
+    height: 36px !important;
+    line-height: 36px !important;
+}
+.ant-layout{
+    height: 100% !important;
+}
+
+.ant-layout-content{
+    margin: 0px !important;
+}
+
+.ant-layout-footer{
+    padding: 12px 50px !important;
+}
+
+.ant-breadcrumb{
+    margin: 12px !important;
+}
+
+#components-layout-demo-side .logo {
+    height: 32px;
+    background: #333;
+    border-radius: 6px;
+    margin: 16px;
+}
+
+#components-layout-demo-side .ant-layout-sider-collapsed .anticon {
+    font-size: 16px;
+    margin-left: 8px;
+}
+
+#components-layout-demo-side .ant-layout-sider-collapsed .nav-text {
+    display: none;
+}
+
+#components-layout-demo-side .ant-layout-sider-collapsed .ant-menu-submenu-vertical > .ant-menu-submenu-title:after {
+    display: none;
+}
+
+.ant-layout-sider-trigger{
+    width: 50% !important;
+    margin-left: 50%;
+    border-top: 1px solid #949090 !important;
+    border-left: 1px solid #949090 !important;
+}
+
+.add-test-group-btn {
+    padding: 0px;
+    margin-left: 0%;
+    position: absolute !important;
+    text-align: center;
+    width: 50%;
+    bottom: 0;
+    cursor: pointer;
+    height: 48px;
+    border: 0px !important;
+    border-top: 1px solid #949090 !important;
+    border-radius: 0px !important;
+    line-height: 48px;
+    background: rgba(64, 64, 64, 0.88) !important;
+    color: #fff !important;
+}
