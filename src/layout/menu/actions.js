@@ -1,5 +1,5 @@
 import * as TYPES from './constants'
-import 'whatwg-fetch'
+import fetch from '../../fetch'
 const menu_url = 'http://localhost:3000/menu'
 
 // export const refreshData = () => {
@@ -20,27 +20,10 @@ export function getMenulist() {
     // 注意这个函数也接收了 getState() 方法
     // 它让你选择接下来 dispatch 什么
     return (dispatch, getState) => {
-        return dispatch(getData('getMenuList'))
-    }
-}
-
-// 这里的方法返回一个函数进行异步操作
-export function getData(type) {
-    // 注意这个函数也接收了 getState() 方法
-    // 它让你选择接下来 dispatch 什么
-    return dispatch => {
-        return fetch(menu_url)
-            .then((res) => {
-            return res.json()
-        }).then((json) => {
-            if(type === 'getMenuList'){
-                dispatch(getMenuListSuccess(json.data.results))
-            }else if(type === 'saveMenu'){
-                dispatch(saveMenuSuccess(json.data.results))
-            }else if(type==='deleteMenu'){
-                dispatch(deleteMenuSuccess(json.data.results))
-            }
-        }).catch((e) => { console.log(e.message) })
+        return dispatch(fetch.getData(menu_url,function(err, result){
+            if(!err)  getMenuListSuccess([])
+            dispatch(getMenuListSuccess(result.data.results))
+        }))
     }
 }
 
@@ -64,23 +47,6 @@ export function cancelAddTestGroup(){
 }
 
 
-function postData(data) {
-    return dispatch => {
-        return fetch(menu_url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            }).then((res) => {
-                console.log(res.status);
-                return res.json()
-            }).then((json) => {
-                dispatch(getData('saveMenu'))
-            }).catch((e) => { console.log(e.message) })
-    }
-}
-
 /**
  * 新增测试组
  * @param name
@@ -90,7 +56,14 @@ export function saveMenu(name) {
     // 注意这个函数也接收了 getState() 方法
     // 它让你选择接下来 dispatch 什么
     return (dispatch, getState) => {
-        return dispatch(postData({name}))
+        // return dispatch(postData({name}))
+        return dispatch(fetch.postData(menu_url,{name}, function(err, result){
+            if(!err)  postData([])
+            dispatch(fetch.getData(menu_url,function(err, result){
+                if(!err)  getMenuListSuccess([])
+                dispatch(getMenuListSuccess(result.data.results))
+            }))
+        }))
     }
 }
 
@@ -108,22 +81,25 @@ export const deleteMenuSuccess = (menulist) => {
     }
 }
 
-function deleteData(data) {
-    return dispatch => {
-        return fetch(menu_url, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        }).then((res) => {
-            console.log(res.status);
-            return res.json()
-        }).then((json) => {
-            dispatch(getData('deleteMenu'))
-        }).catch((e) => { console.log(e.message) })
-    }
-}
+// function deleteData(data) {
+//     return dispatch => {
+//         return fetch(menu_url, {
+//             method: 'DELETE',
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify(data)
+//         }).then((res) => {
+//             console.log(res.status);
+//             return res.json()
+//         }).then((json) => {
+//             dispatch(fetch.getData(menu_url,function(err, result){
+//                 if(!err)  deleteMenuSuccess([])
+//                 dispatch(deleteMenuSuccess(result.data.results))
+//             }))
+//         }).catch((e) => { console.log(e.message) })
+//     }
+// }
 
 /**
  * 删除测试组
@@ -133,7 +109,15 @@ function deleteData(data) {
 export function deleteTestGroup(id) {
     return (dispatch, getState) => {
         return dispatch(deleteData({id: id}))
+        return dispatch(fetch.deleteData(menu_url,{id: id}, function(err, result){
+            if(!err)  deleteMenuSuccess([])
+            dispatch(fetch.getData(menu_url,function(err, result){
+                if(!err)  getMenuListSuccess([])
+                dispatch(getMenuListSuccess(result.data.results))
+            }))
+        }))
     }
+
 }
 
 

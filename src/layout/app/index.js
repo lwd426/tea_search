@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as actions from './actions'
 import * as menuactions from '../menu/actions'
+import contentactions from '../content/actions'
 
 import './app.css';
 import 'antd.min.css';
@@ -20,19 +21,20 @@ class App extends React.Component {
         super(props);
     }
     onCollapse = (collapsed) => {
-        let {reduxActions} = this.props;
+        // let {reduxActions} = this.props;
+
         if(collapsed) {
-            reduxActions.mini_menu()
+            this.props.appActions.mini_menu()
         }else{
-            reduxActions.max_menu()
+            this.props.appActions.max_menu()
         }
     }
     componentDidMount(){
 
     }
     addTestGroup=()=>{
-        let {menuActions} = this.props;
-        menuActions.addTestGroup();
+        // let {menuActions} = this.props;
+        this.props.menuActions.addTestGroup();
     }
     render() {
         return (
@@ -62,14 +64,17 @@ class App extends React.Component {
 //将state.counter绑定到props的counter
 function mapStateToProps(state) {
     return{
-            app: state.app
+            app: state.app,
+            menu: state.menu,
+            content: state.content
     }
 }
 //将action的所有方法绑定到props上
 function mapDispatchToProps(dispatch) {
     return  {
-        reduxActions:bindActionCreators(actions,dispatch),
-        menuActions:bindActionCreators(menuactions,dispatch)
+        appActions:bindActionCreators(actions,dispatch),
+        menuActions:bindActionCreators(menuactions,dispatch),
+        contentActions: contentactions(dispatch)
     }
 }
 

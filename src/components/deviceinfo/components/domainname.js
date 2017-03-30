@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import './style.css';
+import '../style.css';
 import 'antd.min.css';
 import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button } from 'antd';
 const FormItem = Form.Item;

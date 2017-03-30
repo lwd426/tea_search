@@ -4,6 +4,8 @@ import { Menu, Input, Popconfirm,Icon, Tooltip} from 'antd';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as actions from './actions'
+import * as menuactions from '../menu/actions'
+import contentactions from '../content/actions'
 import './style.css';
 import 'antd.min.css';
 
@@ -18,27 +20,27 @@ class GLMenu extends React.Component {
     }
     componentDidMount(){
         let {actions} = this.props;
-        actions.getMenulist();
+        this.props.menuActions.getMenulist();
 
     }
     changeWintype =(item, key, selected)=>{
-        let {actions} = this.props;
-        actions.changeShowWinType(item.key);
+        // let {actions} = this.props;
+        this.props.menuActions.changeShowWinType(item.key);
     }
     confirm = () => {
         var name = this.refs.add.value;
-        let {actions} = this.props;
-        actions.saveMenu(name)
+        // let {actions} = this.props;
+        this.props.menuActions.saveMenu(name)
         this.refs.add.value = '';
 
     }
     cancel = () => {
         let {actions} = this.props;
-        actions.cancelAddTestGroup();
+        this.props.menuActions.cancelAddTestGroup();
     }
     confirmDelete = (id) => {
         let {actions} = this.props;
-        actions.deleteTestGroup(id);
+        this.props.menuActions.deleteTestGroup(id);
     }
     render() {
         return (
@@ -75,14 +77,17 @@ class GLMenu extends React.Component {
 //将state.counter绑定到props的counter
 function mapStateToProps(state) {
     return{
-            menu: state.menu,
-            app: state.app
+        menu: state.menu,
+        app: state.app,
+        content: state.content
     }
 }
 //将action的所有方法绑定到props上
 function mapDispatchToProps(dispatch) {
     return  {
-        actions:bindActionCreators(actions,dispatch)
+        appActions:bindActionCreators(actions,dispatch),
+        menuActions:bindActionCreators(menuactions,dispatch),
+        contentActions: contentactions(dispatch)
     }
 }
 

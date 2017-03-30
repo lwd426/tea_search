@@ -1,3 +1,12 @@
+import * as TYPES from './constants';
+
 /**
- * Created by lwd426 on 17/3/23.
+ * 进入编辑策略页面
+ * @returns {{type}}
  */
+export function xxx(stragety) {
+    return {
+        type: TYPES.EDIT_STRAGETY_INFO,
+        stragety: stragety
+    }
+}

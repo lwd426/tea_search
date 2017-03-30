@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import { Tabs } from 'antd';
-import GLDomain from './domainname'
-import GLWebservers from './webservers'
-import GLServerGroup from './servergroup'
+import GLDomain from './components/domainname'
+import GLWebservers from './components/webservers'
+import GLServerGroup from './components/servergroup'
 const TabPane = Tabs.TabPane;
 
 

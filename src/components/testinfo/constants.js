@@ -1,3 +1,2 @@
-/**
- * Created by lwd426 on 17/3/29.
- */
+export const EDIT_STRAGETY_INFO = 'EDIT_STRAGETY_INFO'
+export const SHOW_WIN_TYPE = 'SHOW_WIN_TYPE'

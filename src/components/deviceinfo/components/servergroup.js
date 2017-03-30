@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import './style.css';
+import '../style.css';
 import 'antd.min.css';
 import GLTree from './tree'
 import { Table, Input, Icon, Button, Popconfirm } from 'antd';
