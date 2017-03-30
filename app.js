@@ -7,8 +7,8 @@ var app = require('koa')()
     , cors = require('koa-cors');
 const convert = require('koa-convert');
 const bodyparser = require('koa-bodyparser')();
-const index = require('./routes/index');
-const parse = require('./lib/parse/utils')
+const index = require('./backend/routes/index');
+// const parse = require('./backend/parse/utils')
 
 
 // var menu = require('./routes/menu');

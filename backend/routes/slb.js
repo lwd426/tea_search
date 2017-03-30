@@ -1,5 +1,5 @@
 var router = require('koa-router')();
-var lib = require('../lib')
+var lib = require('../services/slb')
 
 router.get('/', function *(next) {
     var result = yield lib.getSlbList()

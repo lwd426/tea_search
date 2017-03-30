@@ -7,6 +7,8 @@
 var app = require('../app');
 var debug = require('debug')('demo:server');
 var http = require('http');
+var config = require('../config')
+
 
 /**
  * Get port from environment and store in Express.
@@ -86,5 +88,11 @@ function onListening() {
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
+    console.log('Setup the server');
+    console.log('配置信息如下,请核对:')
+    console.log('数据服务信息:'+ config.DB.url)
+    console.log('服务端口:' + config.PORT)
+    console.log('Listening on ' +addr.port)
+    console.log('... ');
   debug('Listening on ' + bind);
 }

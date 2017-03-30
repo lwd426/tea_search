@@ -2,11 +2,15 @@ var request = require('request');
 var Promise = require("promise");
 var parseJson = require('json-superparser');
 var querystring = require('query-string');
-var DBC = require('../config').DB;
+var DBC = require('../../config').DB;
 
 
 module.exports = {
-	post:  function* () {
+    /**
+	 * 保存数据
+     * @returns {*}
+     */
+	save:  function* () {
 		var args = Array.prototype.slice.call(arguments);
 		return new Promise(function (resolve, reject) {
 			var result = {};
@@ -35,7 +39,7 @@ module.exports = {
 	 * @returns {*|exports|module.exports}
 	 * @ 注意: 一次查询最多只能查出100条
 	 */
-	get:  function* (params, opts) {
+	search:  function* (params, opts) {
 		var args = Array.prototype.slice.call(arguments);
 		return new Promise(function (resolve, reject) {
 			var result = {};
@@ -57,6 +61,11 @@ module.exports = {
 		});
 
 	},
+    /**
+	 * 删除数据
+     * @param params
+     * @returns {*}
+     */
     delete:  function* (params) {
         var args = Array.prototype.slice.call(arguments);
         return new Promise(function (resolve, reject) {
