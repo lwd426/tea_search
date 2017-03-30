@@ -1,3 +1,10 @@
+/**
+ * 用途： 数据服务脚本
+ * 应提供功能： 与数据服务沟通，完成增删改查
+ * 开发者：刘伟东
+ * Created by lwd426 on 17/3/30.
+ */
+
 var request = require('request');
 var Promise = require("promise");
 var parseJson = require('json-superparser');

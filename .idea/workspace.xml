@@ -2,66 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d4b33b02-0f7f-4318-8007-a3d9469ee0bd" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/index.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/parse/menu.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/parse/utils.js" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/lib/request.js" afterPath="$PROJECT_DIR$/backend/db/request.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/routes/index.js" afterPath="$PROJECT_DIR$/backend/routes/index.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/routes/slb.js" afterPath="$PROJECT_DIR$/backend/routes/slb.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/actions.js" afterPath="$PROJECT_DIR$/frontend/components/actions.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/datachart/actions.js" afterPath="$PROJECT_DIR$/frontend/components/datachart/actions.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/datachart/constants.js" afterPath="$PROJECT_DIR$/frontend/layout/content/constants.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/datachart/index.js" afterPath="$PROJECT_DIR$/frontend/components/datachart/index.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/datachart/reducer.js" afterPath="$PROJECT_DIR$/frontend/components/deviceinfo/reducer.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/datachart/style.css" afterPath="$PROJECT_DIR$/frontend/components/serverlog/style.css" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/deviceinfo/actions.js" afterPath="$PROJECT_DIR$/frontend/components/deviceinfo/actions.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/deviceinfo/components/domainname.js" afterPath="$PROJECT_DIR$/frontend/components/deviceinfo/components/domainname.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/deviceinfo/components/info.js" afterPath="$PROJECT_DIR$/frontend/components/deviceinfo/components/info.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/deviceinfo/components/tree.js" afterPath="$PROJECT_DIR$/frontend/components/deviceinfo/components/tree.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/deviceinfo/components/webservers.js" afterPath="$PROJECT_DIR$/frontend/components/deviceinfo/components/webservers.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/deviceinfo/constants.js" afterPath="$PROJECT_DIR$/frontend/components/serverlog/constants.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/deviceinfo/index.js" afterPath="$PROJECT_DIR$/frontend/components/deviceinfo/index.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/deviceinfo/reducer.js" afterPath="$PROJECT_DIR$/frontend/components/datachart/reducer.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/deviceinfo/style.css" afterPath="$PROJECT_DIR$/frontend/components/deviceinfo/style.css" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/reducer.js" afterPath="$PROJECT_DIR$/frontend/components/reducer.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/serverlog/actions.js" afterPath="$PROJECT_DIR$/frontend/components/serverlog/actions.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/serverlog/constants.js" afterPath="$PROJECT_DIR$/frontend/components/deviceinfo/constants.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/serverlog/index.js" afterPath="$PROJECT_DIR$/frontend/components/serverlog/index.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/serverlog/reducer.js" afterPath="$PROJECT_DIR$/frontend/components/serverlog/reducer.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/serverlog/style.css" afterPath="$PROJECT_DIR$/frontend/components/datachart/style.css" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/testinfo/actions.js" afterPath="$PROJECT_DIR$/frontend/components/testinfo/actions.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/testinfo/components/stragety.js" afterPath="$PROJECT_DIR$/frontend/components/testinfo/components/stragety.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/testinfo/components/testgroup.js" afterPath="$PROJECT_DIR$/frontend/components/testinfo/components/testgroup.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/testinfo/constants.js" afterPath="$PROJECT_DIR$/frontend/components/testinfo/constants.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/testinfo/index.js" afterPath="$PROJECT_DIR$/frontend/components/testinfo/index.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/testinfo/reducer.js" afterPath="$PROJECT_DIR$/frontend/components/testinfo/reducer.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/testinfo/style.css" afterPath="$PROJECT_DIR$/frontend/components/testinfo/style.css" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/css/common.scss" afterPath="$PROJECT_DIR$/frontend/css/common.scss" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/favicon.ico" afterPath="$PROJECT_DIR$/frontend/img/favicon.ico" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/fetch/index.js" afterPath="$PROJECT_DIR$/frontend/fetch/index.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/img/logo.png" afterPath="$PROJECT_DIR$/frontend/img/logo.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/index.html" afterPath="$PROJECT_DIR$/frontend/index.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/index.js" afterPath="$PROJECT_DIR$/frontend/index.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/layout/app/actions.js" afterPath="$PROJECT_DIR$/frontend/layout/app/actions.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/layout/app/app.css" afterPath="$PROJECT_DIR$/frontend/layout/app/app.css" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/layout/app/constants.js" afterPath="$PROJECT_DIR$/frontend/layout/app/constants.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/layout/app/index.js" afterPath="$PROJECT_DIR$/frontend/layout/app/index.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/layout/app/reducer.js" afterPath="$PROJECT_DIR$/frontend/layout/app/reducer.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/layout/content/constants.js" afterPath="$PROJECT_DIR$/frontend/components/datachart/constants.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/layout/content/index.js" afterPath="$PROJECT_DIR$/frontend/layout/content/index.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/layout/content/style.css" afterPath="$PROJECT_DIR$/frontend/layout/content/style.css" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/layout/menu/actions.js" afterPath="$PROJECT_DIR$/frontend/layout/menu/actions.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/layout/menu/constants.js" afterPath="$PROJECT_DIR$/frontend/layout/menu/constants.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/layout/menu/index.js" afterPath="$PROJECT_DIR$/frontend/layout/menu/index.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/layout/menu/reducer.js" afterPath="$PROJECT_DIR$/frontend/layout/menu/reducer.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/layout/menu/style.css" afterPath="$PROJECT_DIR$/frontend/layout/menu/style.css" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/redux/DevTool.js" afterPath="$PROJECT_DIR$/frontend/redux/DevTool.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/redux/configureStore.js" afterPath="$PROJECT_DIR$/frontend/redux/configureStore.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/redux/reducers.js" afterPath="$PROJECT_DIR$/frontend/redux/reducers.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/www" afterPath="$PROJECT_DIR$/bin/www" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/webpack.config.js" afterPath="$PROJECT_DIR$/build/webpack.config.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/db/request.js" afterPath="$PROJECT_DIR$/backend/db/request.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/services/slb/index.js" afterPath="$PROJECT_DIR$/backend/services/slb/index.js" />
     </list>
     <ignored path="gatedlaunch.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -81,7 +23,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="slb.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="slb.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/routes/slb.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="15">
@@ -91,11 +33,33 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/backend/genginx/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="1" column="34" lean-forward="false" selection-start-line="1" selection-start-column="34" selection-end-line="1" selection-end-column="34" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/services/charts/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="5" column="3" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/services/slb/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="7" lean-forward="true" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="7" />
+            <state relative-caret-position="30">
+              <caret line="2" column="54" lean-forward="false" selection-start-line="2" selection-start-column="54" selection-end-line="2" selection-end-column="54" />
               <folding />
             </state>
           </provider>
@@ -104,8 +68,8 @@
       <file leaf-file-name="request.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/db/request.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="64" column="7" lean-forward="false" selection-start-line="64" selection-start-column="7" selection-end-line="64" selection-end-column="7" />
+            <state relative-caret-position="45">
+              <caret line="3" column="10" lean-forward="false" selection-start-line="3" selection-start-column="10" selection-end-line="3" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -161,18 +125,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tree.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/components/deviceinfo/components/tree.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#51#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -219,8 +171,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/components/deviceinfo/servergroup.js" />
-        <option value="$PROJECT_DIR$/src/components/deviceinfo/style.css" />
         <option value="$PROJECT_DIR$/src/components/deviceinfo/webservers.js" />
         <option value="$PROJECT_DIR$/lib/parse/menu.js" />
         <option value="$PROJECT_DIR$/lib/parse/utils.js" />
@@ -266,10 +216,12 @@
         <option value="$PROJECT_DIR$/build/webpack.config.js" />
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/bin/www" />
-        <option value="$PROJECT_DIR$/backend/db/request.js" />
         <option value="$PROJECT_DIR$/backend/index.js" />
-        <option value="$PROJECT_DIR$/backend/services/slb/index.js" />
         <option value="$PROJECT_DIR$/backend/routes/slb.js" />
+        <option value="$PROJECT_DIR$/backend/genginx/index.js" />
+        <option value="$PROJECT_DIR$/backend/services/charts/index.js" />
+        <option value="$PROJECT_DIR$/backend/services/slb/index.js" />
+        <option value="$PROJECT_DIR$/backend/db/request.js" />
       </list>
     </option>
   </component>
@@ -327,6 +279,104 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gatedlaunch" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gatedlaunch" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="slb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gatedlaunch" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gatedlaunch" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="charts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gatedlaunch" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gatedlaunch" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gatedlaunch" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gatedlaunch" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="genginx" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gatedlaunch" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gatedlaunch" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="db" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -442,12 +492,12 @@
       <workItem from="1490172220273" duration="41417000" />
       <workItem from="1490680755784" duration="2007000" />
       <workItem from="1490689862204" duration="26200000" />
-      <workItem from="1490880813143" duration="3877000" />
+      <workItem from="1490880813143" duration="4345000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="112402000" />
+    <option name="totallyTimeSpent" value="112870000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -504,21 +554,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/frontend/components/deviceinfo/constants.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/layout/app/constants.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="23" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/webserver/actions.js" />
     <entry file="file://$PROJECT_DIR$/frontend/components/testinfo/constants.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -894,22 +929,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/db/request.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="64" column="7" lean-forward="false" selection-start-line="64" selection-start-column="7" selection-end-line="64" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/services/slb/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="7" lean-forward="true" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/backend/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -919,6 +938,40 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/backend/routes/slb.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="34" lean-forward="false" selection-start-line="1" selection-start-column="34" selection-end-line="1" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/services/slb/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="54" lean-forward="false" selection-start-line="2" selection-start-column="54" selection-end-line="2" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/db/request.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="10" lean-forward="false" selection-start-line="3" selection-start-column="10" selection-end-line="3" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/services/charts/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="3" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/genginx/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="1" column="34" lean-forward="false" selection-start-line="1" selection-start-column="34" selection-end-line="1" selection-end-column="34" />
