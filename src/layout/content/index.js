@@ -7,7 +7,7 @@ import GLTestInfo from '../../components/testinfo';
 // import GLStragetyInfo from '../../components/testinfo/components/stragety';
 import * as actions from '../app/actions'
 import * as menuactions from '../menu/actions'
-import contentactions from './actions'
+import contentactions from '../../components/actions'
 
 import '../app/app.css';
 import './style.css';

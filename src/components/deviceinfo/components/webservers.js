@@ -56,10 +56,10 @@ class GLGroup extends React.Component {
 
         this.state = {
             dataSource: [
-                { key: 1, ip: '10.200.38.184', qps: 32, stragetyname: '按钮颜色测试',  address:'北京联通机房',backup: 'ddd'},
-                { key: 2, ip: '10.200.38.185', qps: 42, stragetyname: '播放记录改版',  address:'北京联通机房',backup: 'My name is Jim Green, I am 42 years old, living in London No. 1 Lake Park.' },
-                { key: 3, ip: '10.200.38.186', qps: 32, stragetyname: '按钮颜色测试',  address:'北京联通机房',backup: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.' },
-                { key: 4, ip: '10.200.38.187', qps: 32, stragetyname: '播放记录改版', address:'北京联通机房',backup: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.' },
+                { key: 1, ip: '10.200.38.184', qps: 32, stragetyname: '按钮颜色测试',  address:'北京联通机房',backup: 'ddd'}
+                // { key: 2, ip: '10.200.38.185', qps: 42, stragetyname: '播放记录改版',  address:'北京联通机房',backup: 'My name is Jim Green, I am 42 years old, living in London No. 1 Lake Park.' },
+                // { key: 3, ip: '10.200.38.186', qps: 32, stragetyname: '按钮颜色测试',  address:'北京联通机房',backup: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.' },
+                // { key: 4, ip: '10.200.38.187', qps: 32, stragetyname: '播放记录改版', address:'北京联通机房',backup: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.' },
             ],
             count: 4,
         };

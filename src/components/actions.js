@@ -1,9 +1,9 @@
 import { bindActionCreators } from 'redux'
 
-import * as testinfoActions from '../../components/testinfo/actions'
-import * as deviceinfoActions from '../../components/deviceinfo/actions'
-import * as serverlogActions from '../../components/serverlog/actions'
-import * as datachartActions from '../../components/datachart/actions'
+import * as testinfoActions from './testinfo/actions'
+import * as deviceinfoActions from './deviceinfo/actions'
+import * as serverlogActions from './serverlog/actions'
+import * as datachartActions from './datachart/actions'
 
 module.exports = function (dispatch){
     return {

@@ -1,8 +1,8 @@
 var router = require('koa-router')();
-const menu = require('./menu');
+const slb = require('./slb');
 
 
-router.use('/menu', menu.routes(), menu.allowedMethods());
+router.use('/slb', slb.routes(), slb.allowedMethods());
 
 // router.get('/', function *(next) {
 //     console.log('////')

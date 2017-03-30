@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as actions from './actions'
 import * as menuactions from '../menu/actions'
-import contentactions from '../content/actions'
+import contentactions from '../../components/actions'
 import './style.css';
 import 'antd.min.css';
 
