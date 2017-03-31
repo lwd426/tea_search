@@ -12,3 +12,13 @@ export function edit_stragety(stragety) {
     }
 }
 
+/**
+ * 返回到项目组
+ * @returns {{type, stragety: *}}
+ */
+export function goback() {
+    return {
+        type: TYPES.GOBACK_TO_TESTINFOGROUP
+    }
+}
+

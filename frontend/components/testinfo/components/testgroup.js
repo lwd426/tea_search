@@ -52,10 +52,8 @@ class GLTestgroup extends React.Component {
 
         this.state = {
             dataSource: [
-                { key:1, id: 1, name: '按照按钮测试', status: 'running', flowaccounting: '未配置',  time:'2017-03-29 10:00:00',version: 'v1.0.0'},
-                { key: 2, id: 2, name: '点播评论', status: 'stop', flowaccounting: '35%',  time:'2017-03-29 10:00:00',version: 'v1.8.0'}
-            ],
-            count: 4,
+                { key:1, id: 1, name: '按照按钮测试', status: 'running', flowaccounting: '未配置',  time:'2017-03-29 10:00:00',version: 'v1.0.0'}
+            ]
         };
     }
     onDelete = (index) => {
@@ -64,7 +62,9 @@ class GLTestgroup extends React.Component {
         this.setState({ dataSource });
     }
     handleAdd = () => {
-        const { count, dataSource } = this.state;
+        const {dataSource } = this.state;
+        let count = dataSource.length;
+        console.log('dddddd')
         let newData =  {
             id: count,
             name: '',
@@ -74,8 +74,7 @@ class GLTestgroup extends React.Component {
             version: ''}
 
         this.setState({
-            dataSource: [...dataSource, newData],
-            count: count + 1,
+            dataSource: [...dataSource, newData]
         });
     }
 
@@ -85,10 +84,10 @@ class GLTestgroup extends React.Component {
 
         return (
             <div>
-                <div>
-                    <Button className="add-btn" onClick={this.handleAdd}>新增测试项</Button>
+                <div className="gl-testinfo-btndiv">
+                    <Button className="gl-right-btn" icon="plus" onClick={this.handleAdd}>新增测试项</Button>
                 </div>
-                <Table
+                <Table className="gl-testinfo-table"
                     columns={columns}
                     dataSource={dataSource}
                 />

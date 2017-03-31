@@ -6,6 +6,9 @@ let reducer = (state={showtype: 'testgroup', stragety: {}},action)=>{
         case TYPES.EDIT_STRAGETY_INFO:
             return Object.assign({}, state, {stragety: action.stragety, showtype: 'stragety'})
             break
+        case TYPES.GOBACK_TO_TESTINFOGROUP:
+            return Object.assign({}, state, {showtype: 'testgroup'})
+            break
         default:
             return state
     }

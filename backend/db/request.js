@@ -1,4 +1,5 @@
 /**
+ * 状态：废弃（由于采用了Parse的sdk方式）
  * 用途： 数据服务脚本
  * 应提供功能： 与数据服务沟通，完成增删改查
  * 开发者：刘伟东
@@ -74,6 +75,33 @@ module.exports = {
      * @returns {*}
      */
     delete:  function* (params) {
+        var args = Array.prototype.slice.call(arguments);
+        return new Promise(function (resolve, reject) {
+            var result = {};
+            var opt = {
+                method: 'DELETE',
+                uri: DBC.url + '/'+ args[0],
+                headers: DBC.get
+            }
+            console.log(DBC.url + '?' + querystring.stringify(args[1]) + '&where=' + JSON.stringify(args[0]))
+            request(opt, function (error, response, body) {
+                var body = parseJson(body);
+                if(!body || body.error) {
+                    console.log('Error now! Request Error, Please do with it...')
+                }
+                result = body;
+                resolve(result);
+            })
+
+        });
+
+    },
+    /**
+     * 删除数据
+     * @param params
+     * @returns {*}
+     */
+    update:  function* (params) {
         var args = Array.prototype.slice.call(arguments);
         return new Promise(function (resolve, reject) {
             var result = {};

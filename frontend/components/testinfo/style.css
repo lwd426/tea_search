@@ -30,3 +30,22 @@
 .ant-table ant-table-large ant-table-scroll-position-left ant-table-scroll-position-right{
     margin-left:10px !important;
 }
+
+.gl-testinfo-table{
+    width: 100%;
+    float: left;
+}
+.gl-left-btn {
+    border: none;
+}
+.content-panel{
+    padding: 0px !important;
+}
+
+.gl-testinfo-btndiv{
+    margin: 7px 2px;
+}
+.gl-right-btn {
+    margin: 0px 4px 4px 4px;
+    float: right;
+}

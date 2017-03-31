@@ -56,7 +56,7 @@ app.use(router.routes(), router.allowedMethods());
 
 
 app.on('error', function(err, ctx){
-    console.log('server error:'+err + ' ' +ctx);
+    console.log('server error:'+err + ' ' + JSON.stringify(ctx));
     logger.error('server error', err, ctx);
 });
 

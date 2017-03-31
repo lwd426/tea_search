@@ -121,6 +121,9 @@ class GLStragety extends React.Component {
             count: count + 1,
         });
     }
+    goBack = () => {
+        this.props.contentActions.testinfoActions.goback()
+    }
     render() {
         const { dataSource } = this.state;
         const columns = this.columns;
@@ -128,12 +131,14 @@ class GLStragety extends React.Component {
         console.log(JSON.stringify(stragety))
         return (
             <div>
-                <div>
-                    <Button className="editable-add-btn" onClick={this.handleAdd}>新增策略</Button>
-                    <Button className="editable-add-btn" onClick={showConfirm}>发布到服务器</Button>
-                    <Button className="editable-add-btn" onClick={showBackWindow}>回滚</Button>
+                <div className="gl-testinfo-btndiv">
+                    <Button className="gl-left-btn" icon="double-left" onClick={this.goBack}>返回</Button>
+                    <Button className="gl-right-btn" icon="loading-3-quarters" onClick={showBackWindow}>回滚</Button>
+                    <Button className="gl-right-btn" icon="upload" onClick={showConfirm}>发布到服务器</Button>
+                    <Button className="gl-right-btn" icon="plus" onClick={this.handleAdd}>新增策略</Button>
                 </div>
                 <Table
+                    className="gl-testinfo-table"
                     columns={columns}
                     expandedRowRender={record => <p>{record.description}</p>}
                     dataSource={dataSource}

@@ -49,6 +49,27 @@ module.exports = {
                 if (callback) callback(e.message);
             })
         }
+    },
+    updateData: (url, where, data, callback) => {
+        return dispatch => {
+
+            return fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    where: where,
+                    data: data
+                })
+            }).then((res) => {
+                return res.json()
+            }).then((json) => {
+                if (callback) callback(null, json);
+            }).catch((e) => {
+                if (callback) callback(e.message);
+            })
+        }
     }
 }
 

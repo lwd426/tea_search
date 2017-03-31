@@ -5,7 +5,7 @@
  * Created by lwd426 on 17/3/30.
  */
 
-var db = require('../../db/request')
+var db = require('../../db')
 const uuid = require('uuid/v1');
 module.exports = {
     /**
@@ -19,7 +19,7 @@ module.exports = {
             uuid: uuid(),
             type: 'menu'
         }
-        var result = yield db.save(data)
+        var result = yield db.save('slb', data)
         return result;
     },
     /**
@@ -27,7 +27,7 @@ module.exports = {
      * @returns {*}
      */
     getSlbList: function*() {
-        var slblist = yield db.search({type: 'menu'});
+        var slblist = yield db.get('slb');
         return slblist;
     },
     /**
@@ -36,7 +36,16 @@ module.exports = {
      * @returns {*}
      */
     deleteSlb: function*(id) {
-        var result = yield db.delete(id);
+        var result = yield db.delete('slb', {objectId: id});
+        return result;
+    },
+    /**
+     * 删除slb信息
+     * @param id
+     * @returns {*}
+     */
+    updateSlb: function*(where, data) {
+        var result = yield db.update('slb', where, data);
         return result;
     }
 }

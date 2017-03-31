@@ -13,7 +13,7 @@ export function getMenulist() {
     return (dispatch, getState) => {
         return dispatch(fetch.getData(slb_list_url,function(err, result){
             if(!err)  getMenuListSuccess([])
-            dispatch(getMenuListSuccess(result.data.results))
+            dispatch(getMenuListSuccess(result.data))
         }))
     }
 }
@@ -25,12 +25,11 @@ export function getMenulist() {
  */
 export function deleteTestGroup(id) {
     return (dispatch, getState) => {
-        return dispatch(deleteData({id: id}))
         return dispatch(fetch.deleteData(slb_list_url,{id: id}, function(err, result){
             if(!err)  deleteMenuSuccess([])
             dispatch(fetch.getData(slb_list_url,function(err, result){
                 if(!err)  getMenuListSuccess([])
-                dispatch(getMenuListSuccess(result.data.results))
+                dispatch(getMenuListSuccess(result.data))
             }))
         }))
     }
@@ -50,7 +49,7 @@ export function saveMenu(name) {
             if(!err)  postData([])
             dispatch(fetch.getData(slb_list_url,function(err, result){
                 if(!err)  getMenuListSuccess([])
-                dispatch(getMenuListSuccess(result.data.results))
+                dispatch(getMenuListSuccess(result.data))
             }))
         }))
     }
