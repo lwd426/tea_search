@@ -90,6 +90,8 @@ class GLGroup extends React.Component {
     render() {
         const { dataSource } = this.state;
         const columns = this.columns;
+        const slbid = this.props.menu.slbid || '';
+        console.log(slbid);
 
         return (
             <div>
