@@ -2,21 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d4b33b02-0f7f-4318-8007-a3d9469ee0bd" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/frontend/components/testgroup/actions.js" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/frontend/components/testinfo/actions.js" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/frontend/components/testinfo/components/stragety.js" afterPath="$PROJECT_DIR$/frontend/components/testgroup/components/stragety.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/frontend/components/testinfo/components/testgroup.js" afterPath="$PROJECT_DIR$/frontend/components/testgroup/components/testgroup.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/frontend/components/testinfo/constants.js" afterPath="$PROJECT_DIR$/frontend/components/testgroup/constants.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/frontend/components/testinfo/index.js" afterPath="$PROJECT_DIR$/frontend/components/testgroup/index.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/frontend/components/testinfo/reducer.js" afterPath="$PROJECT_DIR$/frontend/components/testgroup/reducer.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/frontend/components/testinfo/style.css" afterPath="$PROJECT_DIR$/frontend/components/testgroup/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/db/index.js" afterPath="$PROJECT_DIR$/backend/db/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/routes/index.js" afterPath="$PROJECT_DIR$/backend/routes/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/actions.js" afterPath="$PROJECT_DIR$/frontend/components/actions.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/reducer.js" afterPath="$PROJECT_DIR$/frontend/components/reducer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/layout/content/index.js" afterPath="$PROJECT_DIR$/frontend/layout/content/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/routes/testgroup.js" afterPath="$PROJECT_DIR$/backend/routes/testgroup.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/services/testgroup/index.js" afterPath="$PROJECT_DIR$/backend/services/testgroup/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/testgroup/actions.js" afterPath="$PROJECT_DIR$/frontend/components/testgroup/actions.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/testgroup/components/testgroup.js" afterPath="$PROJECT_DIR$/frontend/components/testgroup/components/testgroup.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/layout/menu/actions.js" afterPath="$PROJECT_DIR$/frontend/layout/menu/actions.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/layout/menu/constants.js" afterPath="$PROJECT_DIR$/frontend/layout/menu/constants.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/layout/menu/index.js" afterPath="$PROJECT_DIR$/frontend/layout/menu/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/layout/menu/reducer.js" afterPath="$PROJECT_DIR$/frontend/layout/menu/reducer.js" />
     </list>
     <ignored path="gatedlaunch.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -36,26 +30,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="slb.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/routes/slb.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="4" lean-forward="false" selection-start-line="0" selection-start-column="4" selection-end-line="0" selection-end-column="4" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="actions.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/components/actions.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="10" column="24" lean-forward="false" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="reducer.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frontend/components/testgroup/reducer.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -69,8 +43,8 @@
       <file leaf-file-name="actions.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frontend/components/testgroup/actions.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="55">
-              <caret line="62" column="48" lean-forward="false" selection-start-line="62" selection-start-column="48" selection-end-line="62" selection-end-column="48" />
+            <state relative-caret-position="300">
+              <caret line="29" column="34" lean-forward="true" selection-start-line="29" selection-start-column="34" selection-end-line="29" selection-end-column="34" />
               <folding>
                 <element signature="e#0#37#0" expanded="true" />
               </folding>
@@ -78,31 +52,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/components/testgroup/style.css">
+      <file leaf-file-name="actions.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/layout/menu/actions.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="682">
-              <caret line="48" column="20" lean-forward="true" selection-start-line="48" selection-start-column="20" selection-end-line="48" selection-end-column="20" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/fetch/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="97">
-              <caret line="34" column="26" lean-forward="false" selection-start-line="34" selection-start-column="22" selection-end-line="34" selection-end-column="26" />
+            <state relative-caret-position="273">
+              <caret line="59" column="8" lean-forward="false" selection-start-line="59" selection-start-column="8" selection-end-line="59" selection-end-column="8" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="constants.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/components/testgroup/constants.js">
+        <entry file="file://$PROJECT_DIR$/frontend/layout/menu/constants.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="55" lean-forward="false" selection-start-line="5" selection-start-column="55" selection-end-line="5" selection-end-column="55" />
+            <state relative-caret-position="120">
+              <caret line="8" column="37" lean-forward="false" selection-start-line="8" selection-start-column="37" selection-end-line="8" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -111,18 +75,18 @@
       <file leaf-file-name="testgroup.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/routes/testgroup.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="23" column="48" lean-forward="false" selection-start-line="23" selection-start-column="48" selection-end-line="23" selection-end-column="48" />
+            <state relative-caret-position="225">
+              <caret line="15" column="34" lean-forward="true" selection-start-line="15" selection-start-column="34" selection-end-line="15" selection-end-column="34" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="testgroup.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="testgroup.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frontend/components/testgroup/components/testgroup.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-608">
-              <caret line="47" column="39" lean-forward="false" selection-start-line="47" selection-start-column="39" selection-end-line="47" selection-end-column="39" />
+            <state relative-caret-position="352">
+              <caret line="99" column="20" lean-forward="true" selection-start-line="99" selection-start-column="20" selection-end-line="99" selection-end-column="20" />
               <folding>
                 <element signature="e#0#51#0" expanded="true" />
               </folding>
@@ -131,10 +95,40 @@
         </entry>
       </file>
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/layout/app/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="267">
+              <caret line="34" column="4" lean-forward="false" selection-start-line="34" selection-start-column="4" selection-end-line="34" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/layout/menu/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="25" column="17" lean-forward="false" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="reducer.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/frontend/layout/menu/reducer.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="6" column="43" lean-forward="false" selection-start-line="6" selection-start-column="43" selection-end-line="6" selection-end-column="43" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/services/testgroup/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="532">
-              <caret line="46" column="47" lean-forward="false" selection-start-line="46" selection-start-column="47" selection-end-line="46" selection-end-column="47" />
+            <state relative-caret-position="315">
+              <caret line="21" column="24" lean-forward="false" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -164,7 +158,6 @@
       <find>querystring</find>
       <find>parseJson</find>
       <find>getData</find>
-      <find>changeShowWinType</find>
       <find>add</find>
       <find>editable-add-btn</find>
       <find>TYPES</find>
@@ -177,7 +170,9 @@
       <find>GLTestInfo</find>
       <find>updateData</find>
       <find>handleAdd</find>
+      <find>changeShowWinType</find>
       <find>updateTest</find>
+      <find>changeWintype</find>
     </findStrings>
     <replaceStrings>
       <replace>actions</replace>
@@ -192,8 +187,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/fetch/index.js" />
-        <option value="$PROJECT_DIR$/lib/index.js" />
         <option value="$PROJECT_DIR$/routes/slb.js" />
         <option value="$PROJECT_DIR$/src/conf/content.yml" />
         <option value="$PROJECT_DIR$/src/layout/content/reducer.js" />
@@ -221,7 +214,6 @@
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/backend/db/parse/sdk.js" />
         <option value="$PROJECT_DIR$/config.js" />
-        <option value="$PROJECT_DIR$/frontend/layout/menu/index.js" />
         <option value="$PROJECT_DIR$/backend/db/request.js" />
         <option value="$PROJECT_DIR$/frontend/fetch/index.js" />
         <option value="$PROJECT_DIR$/backend/routes/slb.js" />
@@ -233,16 +225,19 @@
         <option value="$PROJECT_DIR$/frontend/components/actions.js" />
         <option value="$PROJECT_DIR$/frontend/components/reducer.js" />
         <option value="$PROJECT_DIR$/backend/routes/index.js" />
-        <option value="$PROJECT_DIR$/frontend/layout/menu/actions.js" />
         <option value="$PROJECT_DIR$/frontend/layout/content/index.js" />
         <option value="$PROJECT_DIR$/frontend/components/testgroup/index.js" />
         <option value="$PROJECT_DIR$/backend/db/index.js" />
         <option value="$PROJECT_DIR$/frontend/components/testgroup/constants.js" />
         <option value="$PROJECT_DIR$/frontend/components/testgroup/reducer.js" />
-        <option value="$PROJECT_DIR$/backend/services/testgroup/index.js" />
-        <option value="$PROJECT_DIR$/backend/routes/testgroup.js" />
+        <option value="$PROJECT_DIR$/frontend/layout/menu/constants.js" />
         <option value="$PROJECT_DIR$/frontend/components/testgroup/actions.js" />
         <option value="$PROJECT_DIR$/frontend/components/testgroup/components/testgroup.js" />
+        <option value="$PROJECT_DIR$/backend/routes/testgroup.js" />
+        <option value="$PROJECT_DIR$/backend/services/testgroup/index.js" />
+        <option value="$PROJECT_DIR$/frontend/layout/menu/index.js" />
+        <option value="$PROJECT_DIR$/frontend/layout/menu/actions.js" />
+        <option value="$PROJECT_DIR$/frontend/layout/menu/reducer.js" />
       </list>
     </option>
   </component>
@@ -736,12 +731,12 @@
       <workItem from="1490680755784" duration="2007000" />
       <workItem from="1490689862204" duration="26200000" />
       <workItem from="1490880813143" duration="4345000" />
-      <workItem from="1490932211944" duration="16217000" />
+      <workItem from="1490932211944" duration="17542000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="129087000" />
+    <option name="totallyTimeSpent" value="130412000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -798,14 +793,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/frontend/layout/menu/constants.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="24" lean-forward="false" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/frontend/layout/app/actions.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -975,14 +962,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/layout/menu/reducer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="17" lean-forward="true" selection-start-line="23" selection-start-column="17" selection-end-line="23" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/backend/db/request.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -1063,26 +1042,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/layout/menu/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="47" column="41" lean-forward="false" selection-start-line="47" selection-start-column="17" selection-end-line="47" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/frontend/components/testgroup/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="17" column="30" lean-forward="false" selection-start-line="17" selection-start-column="30" selection-end-line="17" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/layout/app/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
-          <caret line="34" column="4" lean-forward="false" selection-start-line="34" selection-start-column="4" selection-end-line="34" selection-end-column="4" />
           <folding />
         </state>
       </provider>
@@ -1107,14 +1070,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="412">
           <caret line="76" column="29" lean-forward="false" selection-start-line="76" selection-start-column="29" selection-end-line="76" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/layout/menu/actions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="502">
-          <caret line="89" column="1" lean-forward="true" selection-start-line="84" selection-start-column="0" selection-end-line="89" selection-end-column="1" />
           <folding />
         </state>
       </provider>
@@ -1159,32 +1114,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/services/testgroup/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="46" column="47" lean-forward="false" selection-start-line="46" selection-start-column="47" selection-end-line="46" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/routes/testgroup.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="48" lean-forward="false" selection-start-line="23" selection-start-column="48" selection-end-line="23" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/components/testgroup/actions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="55">
-          <caret line="62" column="48" lean-forward="false" selection-start-line="62" selection-start-column="48" selection-end-line="62" selection-end-column="48" />
-          <folding>
-            <element signature="e#0#37#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/frontend/components/testgroup/reducer.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
@@ -1193,13 +1122,79 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/layout/menu/constants.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="37" lean-forward="false" selection-start-line="8" selection-start-column="37" selection-end-line="8" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/layout/app/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="267">
+          <caret line="34" column="4" lean-forward="false" selection-start-line="34" selection-start-column="4" selection-end-line="34" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/components/testgroup/actions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="29" column="34" lean-forward="true" selection-start-line="29" selection-start-column="34" selection-end-line="29" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/frontend/components/testgroup/components/testgroup.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-608">
-          <caret line="47" column="39" lean-forward="false" selection-start-line="47" selection-start-column="39" selection-end-line="47" selection-end-column="39" />
+        <state relative-caret-position="352">
+          <caret line="99" column="20" lean-forward="true" selection-start-line="99" selection-start-column="20" selection-end-line="99" selection-end-column="20" />
           <folding>
             <element signature="e#0#51#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/routes/testgroup.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="34" lean-forward="true" selection-start-line="15" selection-start-column="34" selection-end-line="15" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/services/testgroup/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="24" lean-forward="false" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/layout/menu/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="25" column="17" lean-forward="false" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/layout/menu/actions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="59" column="8" lean-forward="false" selection-start-line="59" selection-start-column="8" selection-end-line="59" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/layout/menu/reducer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="43" lean-forward="false" selection-start-line="6" selection-start-column="43" selection-end-line="6" selection-end-column="43" />
+          <folding />
         </state>
       </provider>
     </entry>

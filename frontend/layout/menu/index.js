@@ -27,6 +27,10 @@ class GLMenu extends React.Component {
         // let {actions} = this.props;
         this.props.menuActions.changeShowWinType(item.key);
     }
+    changeSlb = (item, key, selected) => {
+        console.log('dddddddd')
+        this.props.menuActions.changeSlb(item.key);
+    }
     confirm = () => {
         var name = this.refs.add.value;
         // let {actions} = this.props;
@@ -48,6 +52,7 @@ class GLMenu extends React.Component {
                 {this.props.menu.menulist.map((e, index) =>
                     <SubMenu
                     key={e.objectId}
+                    onTitleClick={this.changeSlb}
                     title={<Tooltip placement="right" title={
                         <span>
                             <Icon className="edit-menu"type="edit" />
@@ -58,10 +63,10 @@ class GLMenu extends React.Component {
                         <span><Icon type="database" /><span className="nav-text">{e.name}</span></span>
                            </Tooltip>}
                     >
-                    <Menu.Item key={e.objectId + ",deviceinfo"}><Icon type="hdd" />设备信息</Menu.Item>
-                    <Menu.Item key={e.objectId + ",testinfo"}><Icon type="appstore-o" />测试项目</Menu.Item>
-                    <Menu.Item key={e.objectId + ",datachart"}><Icon type="filter" />数据报表</Menu.Item>
-                    <Menu.Item key={e.objectId + ",serverlog"}><Icon type="file-text" />服务器日志</Menu.Item>
+                    <Menu.Item key={"deviceinfo"}><Icon type="hdd" />设备信息</Menu.Item>
+                    <Menu.Item key={"testinfo"}><Icon type="appstore-o" />测试项目</Menu.Item>
+                    <Menu.Item key={"datachart"}><Icon type="filter" />数据报表</Menu.Item>
+                    <Menu.Item key={"serverlog"}><Icon type="file-text" />服务器日志</Menu.Item>
                     </SubMenu>
                 )}
 

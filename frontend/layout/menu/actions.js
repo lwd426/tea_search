@@ -55,6 +55,12 @@ export function saveMenu(name) {
     }
 }
 
+export function changeSlb(slbid){
+    return {
+        type: TYPES.CHANGE_SLB,
+        slbid: slbid
+    }
+}
 
 export function changeShowWinType(wintype) {
     return {

@@ -25,10 +25,8 @@ export function goback() {
 }
 
 export function addTestGroup(group){
-    // 注意这个函数也接收了 getState() 方法
-    // 它让你选择接下来 dispatch 什么
     return (dispatch, getState) => {
-        return dispatch(fetch.postData(testgroup_url,{name: group.name, code: group.code}, function(err, result){
+        return dispatch(fetch.postData(testgroup_url,{name: group.name, code: group.code, slbid: group.slbid}, function(err, result){
             if(!err)  postData([])
             dispatch(fetch.getData(testgroup_url,function(err, result){
                 if(!err)  getTestGroupListSuccess([])

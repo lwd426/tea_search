@@ -12,7 +12,8 @@ router.get('/', function *(next) {
 router.post('/', function *(next) {
     var name = this.request.body.name;
     var code = this.request.body.code;
-    var result = yield lib.saveTestgroup(name, code)
+    var slbid = this.request.body.slbid;
+    var result = yield lib.saveTestgroup(name, code, slbid)
     this.body = {
         status: 'success',
         data: result

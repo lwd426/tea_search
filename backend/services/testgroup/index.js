@@ -15,10 +15,11 @@ module.exports = {
      * @param name
      * @returns {*}
      */
-    saveTestgroup: function*(name, code) {
+    saveTestgroup: function*(name, code, slbid) {
         var data = {
             name: '请输入',
             code: code,
+            slbid: slbid,
             status: '新上',
             flowaccounting: '未配置',
             time: moment().format('YYYY-MM-DD HH:mm'),

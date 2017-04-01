@@ -77,10 +77,12 @@ class GLTestgroup extends React.Component {
         // this.setState({ dataSource });
     }
     handleAdd = () => {
-        // const {testgrouplist } = this.state;
+        const slbid = this.props.menu.slbid || '';
+
         let count = uuid();
         let newData =  {
             key: count ,
+            slbid: slbid,
             code:  count,
             name: '',
             status: '-',
@@ -104,6 +106,7 @@ class GLTestgroup extends React.Component {
         const  dataSource = this.props.content.testgroup.testgrouplist.map((cell, index)=>{
             return {
                 key: cell.code,
+                slbid:cell.slbid,
                 code: index + 1,
                 name: cell.name,
                 status: cell.status,

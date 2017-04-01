@@ -1,11 +1,10 @@
 //处理数字增加的reducer
 import * as TYPES from './constants'
 
-let reducer = (state={wintype: 'deviceinfo', add: false, menulist: []},action)=>{
+let reducer = (state={wintype: 'deviceinfo',slbid: '', add: false, menulist: []},action)=>{
     switch(action.type){
         case TYPES.SHOW_WIN_TYPE:
-            let info = action.wintype.split(',')[1];
-            return Object.assign({}, state, { wintype: info})
+            return Object.assign({}, state, { wintype: action.wintype})
             break
         case TYPES.ADD_TEST_GROUP:
             return Object.assign({}, state, { add: true})
@@ -21,6 +20,9 @@ let reducer = (state={wintype: 'deviceinfo', add: false, menulist: []},action)=>
             break
         case TYPES.DELETE_MENU_SUCCESS:
             return Object.assign({}, state, { menulist: action.menulist})
+            break
+        case TYPES.CHANGE_SLB:
+            return Object.assign({}, state, { slbid: action.slbid})
             break
         default:
             return state
