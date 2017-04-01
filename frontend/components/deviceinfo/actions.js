@@ -3,6 +3,39 @@ import fetch from '../../fetch'
 const slb_list_url = 'http://localhost:3000/slb'
 
 
+/*export function updateMenu(name) {
+    return (dispatch, getState) => {
+        return dispatch(fetch.postData(slb_list_url,{name}, function(err, result){
+            if(!err)  postData([]);
+            dispatch(fetch.getData(slb_list_url,function(err, result){
+                console.log(result.data.results);
+                if(!err)  getMenuListSuccess([])
+                dispatch(getMenuListSuccess(result.data.results))
+            }))
+        }))
+    }
+}*/
+
+export function updateSLB(objectId, slbDomain) {
+    return (dispatch, getState) => {
+        return dispatch(fetch.updateData(slb_list_url,{objectId: 'I4WN52Sb7j'}, {slbDomain: slbDomain}, function(err, result){
+            console.log(err)
+            if(!err){
+                return false;
+            }
+            console.log(result)
+            //dispatch(getMenuListSuccess(result.data.results))
+        }))
+    }
+}
+
+export const getMenuListSuccess = (menulist) => {
+    return {
+        type: TYPES.GET_MENUDATA_SUCCESS,
+        menulist
+    }
+}
+
 /**
  * 获取demo
  * @returns {function(*, *)}

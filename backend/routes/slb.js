@@ -27,9 +27,10 @@ router.del('/', function *(next) {
     };
 });
 router.put('/', function *(next) {
+    console.log('woqu')
     var where = this.request.body.where;
     var data = this.request.body.data;
-    var result = yield lib.updateSlb(data, where)
+    var result = yield lib.updateSlb(where, data)
     this.body = {
         status: 'success',
         data: result

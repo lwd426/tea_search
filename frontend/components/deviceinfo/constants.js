@@ -1,3 +1,1 @@
-/**
- * Created by lwd426 on 17/3/29.
- */
+export const GET_MENUDATA_SUCCESS = 'GET_MENUDATA_SUCCESS'
