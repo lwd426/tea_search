@@ -74,7 +74,7 @@ module.exports = {
         try{
             var Quwey = ParseUtils.initQuery(tableName);
             for(var key in whereOpts){
-                Quwey.set(key, whereOpts.key);
+                Quwey.equalTo(key, whereOpts[key]);
             }
             var results = yield ParseUtils.get(Quwey);
             var i = 0, len = results.length, updateResult = false;

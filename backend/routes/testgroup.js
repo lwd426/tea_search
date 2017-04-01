@@ -1,0 +1,41 @@
+var router = require('koa-router')();
+var lib = require('../services/testgroup')
+
+router.get('/', function *(next) {
+    var result = yield lib.getTestgroupList()
+    this.body = {
+        status: 'success',
+        data: result
+    };
+});
+
+router.post('/', function *(next) {
+    var name = this.request.body.name;
+    var code = this.request.body.code;
+    var result = yield lib.saveTestgroup(name, code)
+    this.body = {
+        status: 'success',
+        data: result
+    };
+});
+
+router.del('/', function *(next) {
+    var code = this.request.body.code;
+    var result = yield lib.deleteTest({code:code})
+    this.body = {
+        status: 'success',
+        data: result
+    };
+});
+router.put('/', function *(next) {
+    var where = this.request.body.where;
+    var data = this.request.body.data;
+    var result = yield lib.updateTest(data, where)
+    this.body = {
+        status: 'success',
+        data: result
+    };
+});
+
+module.exports = router;
+

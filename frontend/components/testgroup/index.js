@@ -15,11 +15,11 @@ class GLTestinfo extends React.Component {
         return true;
     }
     render() {
-        var {showtype}  = this.props;
+        console.log(this.props)
         return (
                 <div className="content-panel">
                     {(()=> {
-                        switch(this.props.content.testinfo.showtype){
+                        switch(this.props.content.testgroup.showtype){
                             case 'stragety': return <GLStragety {...this.props}/>; break;
                             case 'testgroup': return <GLTestgroup {...this.props}/>; break;
                             default: return <GLTestgroup {...this.props}/>;

@@ -3,8 +3,7 @@ import { Layout, Breadcrumb} from 'antd';
 import GLServerLog from '../../components/serverlog';
 import GLDeviceInfo from '../../components/deviceinfo';
 import GLDataChart from '../../components/datachart';
-import GLTestInfo from '../../components/testinfo';
-// import GLStragetyInfo from '../../components/testinfo/components/stragety';
+import GLTestInfo from '../../components/testgroup';
 import * as actions from '../app/actions'
 import * as menuactions from '../menu/actions'
 import contentactions from '../../components/actions'
@@ -26,7 +25,6 @@ class GLContent extends React.Component {
         return true;
     }
     render() {
-        // let {reduxState} = this.props;
         let wintype = this.props.menu.wintype;
         return (
             <Content style={{ margin: '0 16px' }}>

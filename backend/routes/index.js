@@ -1,8 +1,10 @@
 var router = require('koa-router')();
+const testgroup = require('./testgroup');
 const slb = require('./slb');
 
 
 router.use('/slb', slb.routes(), slb.allowedMethods());
+router.use('/testgroup', testgroup.routes(), testgroup.allowedMethods());
 
 // router.get('/', function *(next) {
 //     console.log('////')
