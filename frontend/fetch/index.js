@@ -52,7 +52,6 @@ module.exports = {
     },
     updateData: (url, where, data, callback) => {
         return dispatch => {
-
             return fetch(url, {
                 method: 'DELETE',
                 headers: {
@@ -63,6 +62,7 @@ module.exports = {
                     data:da
                 })
             }).then((res) => {
+                console.log(res.json())
                 return res.json()
             }).then((json) => {
                 if (callback) callback(null, json);

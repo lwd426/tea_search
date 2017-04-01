@@ -1,83 +1,55 @@
 import React, { Component, PropTypes } from 'react'
 import '../style.css';
 import 'antd.min.css';
-import { Form, Input, Tooltip, Icon, Button } from 'antd';
-const FormItem = Form.Item;
-
+import { Form, Input, Tooltip, Icon, Button, message } from 'antd';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import contentactions from '../../actions'
 
 class RegistrationForm extends React.Component {
-    state = {
-        confirmDirty: false,
-    };
-    handleSubmit = (e) => {
-        e.preventDefault();
-        this.props.form.validateFieldsAndScroll((err, values) => {
-            if (!err) {
-                console.log('Received values of form: ', values);
-            }
-        });
+    constructor(props) {
+        super(props);
+        this.state = {
+            confirmDirty: false,
+        }
+    }
+
+    success = () => {
+      message.success('Update success');
+    }
+
+    error = () => {
+      message.error('This is a message of error');
+    }
+    
+    updataSlb = () => {
+        var objectID = 'I4WN52Sb7j';
+        var slbDomain = 'houge.com';
+        //actions.updateMenu(name, domainid, objectID)
+        this.props.contentActions.deviceinfoActions.updateSLB(objectID, slbDomain);
+        /*var inputDOM = this.refs['input'].getDOMNode();
+        inputDOM.value = 'ddd'*/
+        this.success()
     }
     render() {
-        const { getFieldDecorator } = this.props.form;
-        const formItemLayout = {
-            labelCol: {
-                xs: { span: 24 },
-                sm: { span: 6 },
-            },
-            wrapperCol: {
-                xs: { span: 24 },
-                sm: { span: 14 },
-            },
-        };
         return (
-            <Form onSubmit={this.handleSubmit}>
-                <FormItem
-                    {...formItemLayout}
-                    label="SLB域名"
-                    hasFeedback
-                >
-                    {getFieldDecorator('email', {
-                        rules: [{
-                            type: 'email', message: '您输入的不是域名，请核实',
-                        }, {
-                            required: true, message: '请输入域名',
-                        }],
-                    })(
-                        <Input />
-                    )}
-                </FormItem>
-                <FormItem
-                    {...formItemLayout}
-                    label={(
-                        <span>域名ID&nbsp;
-                            <Tooltip title="不知道ID规则?">
-                            <Icon type="question-circle-o" />
-                          </Tooltip>
-                        </span>
-                        )}
-                        hasFeedback
-                    >
-                    {getFieldDecorator('nickname', {
-                        rules: [{ required: true, message: 'Please input your nickname!', whitespace: true }],
-                    })(
-                        <Input />
-                    )}
-                </FormItem>
-                <FormItem
-                    wrapperCol={{
-                        xs: { span: 24, offset: 0 },
-                        sm: { span: 16, offset: 8 },
-                    }}
-                >
-                    <Button type="primary" htmlType="submit" size="large">保存</Button>
-                    <Button type="primary" htmlType="submit" size="large">取消</Button>
-                </FormItem>
-            </Form>
+            <div className="slbBox">
+                <span className="labelspan">SLB域名 : </span> <Input /> <br/><br/>
+                <span className="labelspan">域名 ID : </span> <Input disabled={true} ref="input"/> <br/><br/>
+                <Button type="primary" size="large" onClick={this.updataSlb.bind(this)}>保存</Button>
+                <Button type="primary" size="large">取消</Button>
+            </div>
         );
     }
 }
-
-const WrappedRegistrationForm = Form.create()(RegistrationForm);
-
-
-export default WrappedRegistrationForm;
+function mapStateToProps(state) {
+    return{
+        
+    }
+}
+function mapDispatchToProps(dispatch) {
+    return  {
+        contentActions: contentactions(dispatch)
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(RegistrationForm);

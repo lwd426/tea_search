@@ -1,7 +1,7 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react';
 import '../style.css';
 import 'antd.min.css';
-import GLTree from './tree'
+import GLTree from './tree';
 import { Table, Input, Icon, Button, Popconfirm } from 'antd';
 
 
@@ -73,9 +73,11 @@ class GLGroup extends React.Component {
         const { count, dataSource } = this.state;
         const newData = {
             key: count,
-            name: `Edward King ${count}`,
-            age: 32,
+            ip: `0.200.38.18 ${count}`,
+            qps: 32,
+            stragetyname: '按钮颜色',
             address: `London, Park Lane no. ${count}`,
+            backup: 'spring'
         };
         this.setState({
             dataSource: [...dataSource, newData],
@@ -93,7 +95,6 @@ class GLGroup extends React.Component {
             <div>
                 <div>
                     <Button className="server-btn" onClick={this.handleAdd}>新增服务器</Button>
-                    <Button className="server-btn" onClick={this.handleAdd}>批量删除</Button>
                     <Button className="server-btn" onClick={this.handleAdd}>设定为参照服务器</Button>
                 </div>
                 <Table
