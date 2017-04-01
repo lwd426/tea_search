@@ -1,9 +1,9 @@
 var router = require('koa-router')();
-var lib = require('../services/testgroup')
+var lib = require('../services/stragety')
 
 router.get('/', function *(next) {
-    var slbid = this.query.slbid;
-    var result = yield lib.getTestgroupList(slbid)
+    var tgid = this.request.body.tgid;
+    var result = yield lib.getStragetyList(tgid)
     this.body = {
         status: 'success',
         data: result

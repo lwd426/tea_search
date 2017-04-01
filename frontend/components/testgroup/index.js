@@ -15,7 +15,6 @@ class GLTestinfo extends React.Component {
         return true;
     }
     render() {
-        console.log(this.props)
         return (
                 <div className="content-panel">
                     {(()=> {

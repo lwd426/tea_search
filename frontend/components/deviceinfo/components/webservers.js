@@ -82,7 +82,9 @@ class GLGroup extends React.Component {
             count: count + 1,
         });
     }
-
+    componentWillReceiveProps(nextProps) {
+        return true;
+    }
     render() {
         const { dataSource } = this.state;
         const columns = this.columns;

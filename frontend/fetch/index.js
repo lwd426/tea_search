@@ -54,13 +54,13 @@ module.exports = {
         return dispatch => {
 
             return fetch(url, {
-                method: 'PUT',
+                method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
                     where: where,
-                    data: data
+                    data:da
                 })
             }).then((res) => {
                 return res.json()

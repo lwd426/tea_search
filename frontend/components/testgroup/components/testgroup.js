@@ -42,10 +42,10 @@ class GLTestgroup extends React.Component {
             render: (text, test) => {
                 return (
                 <span>
-                  <a href="#">改名</a>
-                  <span className="ant-divider" />
+                  {/*<a href="#">改名</a>*/}
+                  {/*<span className="ant-divider" />*/}
                   <a href="#" onClick={() => {
-                      that.props.contentActions.testgroupActions.edit_stragety(test)
+                      that.props.contentActions.testgroupActions.edit_stragetylist(test)
                   }}>策略维护</a>
                   <span className="ant-divider" />
                   <Popconfirm title="确认删除策略?" onConfirm={() => {
@@ -67,8 +67,8 @@ class GLTestgroup extends React.Component {
         return (value) => {
 
             const dataSource = [...this.props.content.testgroup.testgrouplist];
-            var code = dataSource[index]['code'];
-            this.props.contentActions.testgroupActions.updateTest({code:code}, {name: value})
+            var cell = dataSource[index];
+            this.props.contentActions.testgroupActions.updateTest({code:cell.code, slbid: cell.slbid}, {name: value})
         };
     }
     onDelete = (index) => {
@@ -77,6 +77,7 @@ class GLTestgroup extends React.Component {
         // this.setState({ dataSource });
     }
     handleAdd = () => {
+        console.log(this.props.menu)
         const slbid = this.props.menu.slbid || '';
 
         let count = uuid();
@@ -100,7 +101,8 @@ class GLTestgroup extends React.Component {
         return true;
     }
     componentDidMount =()=> {
-        this.props.contentActions.testgroupActions.getTestGroupList()
+        const slbid = this.props.menu.slbid || '';
+        this.props.contentActions.testgroupActions.getTestGroupList(slbid)
     }
     render() {
         const  dataSource = this.props.content.testgroup.testgrouplist.map((cell, index)=>{
@@ -132,7 +134,7 @@ class GLTestgroup extends React.Component {
 }
 
 GLTestgroup.propTypes = {
-    edit_stragety: PropTypes.func.isRequired
+    edit_stragetylist: PropTypes.func.isRequired
 }
 
 export default GLTestgroup

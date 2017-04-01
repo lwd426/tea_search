@@ -1,7 +1,7 @@
 //处理数字增加的reducer
 import * as TYPES from './constants'
 
-let reducer = (state={wintype: 'deviceinfo',slbid: '', add: false, menulist: []},action)=>{
+let reducer = (state={wintype: 'mainpage',slbid: '', add: false, menulist: []},action)=>{
     switch(action.type){
         case TYPES.SHOW_WIN_TYPE:
             return Object.assign({}, state, { wintype: action.wintype})

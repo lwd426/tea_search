@@ -101,34 +101,51 @@ class GLStragety extends React.Component {
             count: 4,
         };
     }
+    componentWillReceiveProps =(nextProps)=> {
+        return true;
+    }
     onDelete = (index) => {
         const dataSource = [...this.state.dataSource];
         dataSource.splice(index, 1);
         this.setState({ dataSource });
     }
     handleAdd = () => {
-        const { count, dataSource } = this.state;
-        var newData = { key: count,
-            stragetyname: '策略xx',
-            status: '失效',
-            server: 'xxx.xxx.xxx.xxx',
-            flowaccounting: 'xx%',
-            tag: '-',
-            worktime: '',description: <GLInfo/> };
+        // const { count, dataSource } = this.state;
+        // var newData = { key: count,
+        //     stragetyname: '策略xx',
+        //     status: '失效',
+        //     server: 'xxx.xxx.xxx.xxx',
+        //     flowaccounting: 'xx%',
+        //     tag: '-',
+        //     worktime: '',description: <GLInfo/> };
+        //
+        // this.setState({
+        //     dataSource: [...dataSource, newData],
+        //     count: count + 1,
+        // });
+        this.props.contentActions.testgroupActions.add_stragety()
 
-        this.setState({
-            dataSource: [...dataSource, newData],
-            count: count + 1,
-        });
     }
     goBack = () => {
         this.props.contentActions.testinfoActions.goback()
     }
     render() {
-        const { dataSource } = this.state;
         const columns = this.columns;
-        let {stragety} = this.props.content.testinfo;
-        console.log(JSON.stringify(stragety))
+        const  dataSource = this.props.content.testgroup.stragetylist.map((cell, index)=>{
+            return {
+                key: cell.code,
+                slbid:cell.slbid,
+                testgroupcode: cell.tgid,
+                code: index + 1,
+                name: cell.name,
+                status: cell.status,
+                server: cell.serverarray,
+                flowaccounting: cell.flowaccounting,
+                tag: cell.tag,
+                worktime: cell.time,
+                description: <GLInfo/>
+            }
+        });
         return (
             <div>
                 <div className="gl-testinfo-btndiv">

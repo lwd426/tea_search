@@ -1,9 +1,9 @@
 //处理数字增加的reducer
 import * as TYPES from './constants'
 
-let reducer = (state={showtype: 'testgroup', stragety: {}, testgrouplist: []},action)=>{
+let reducer = (state={showtype: 'testgroup', stragety: {}, testgrouplist: [], stragetylist: []},action)=>{
     switch(action.type){
-        case TYPES.EDIT_STRAGETY_INFO:
+        case TYPES.STRAGETY_LIST:
             return Object.assign({}, state, {stragety: action.stragety, showtype: 'stragety'})
             break
         case TYPES.GOBACK_TO_TESTINFOGROUP:
@@ -14,6 +14,9 @@ let reducer = (state={showtype: 'testgroup', stragety: {}, testgrouplist: []},ac
             break
         case TYPES.DELETE_TEST_SUCCESS:
             return Object.assign({}, state, {testgrouplist: action.testgrouplist})
+            break
+        case TYPES.GET_STRAGETY_LIST:
+            return Object.assign({}, state, {stragetylist: action.list})
             break
         default:
             return state

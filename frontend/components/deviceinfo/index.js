@@ -9,15 +9,17 @@ class GLDeviceInfo extends React.Component {
     constructor(props) {
         super(props);
         const panes = [
-            { title: '域名信息维护', content: <GLDomain/>, key: '1', closable: false },
-            { title: 'Web服务器维护', content: <GLWebservers/>, key: '2', closable: false  },
+            { title: '域名信息维护', content: <GLDomain />, key: '1', closable: false },
+            { title: 'Web服务器维护', content: <GLWebservers {...this.props}/>, key: '2', closable: false  },
         ];
         this.state = {
             activeKey: panes[0].key,
             panes,
         };
     }
-
+    componentWillReceiveProps(nextProps) {
+        return true;
+    }
     onChange = (activeKey) => {
         this.setState({ activeKey });
     }
@@ -31,6 +33,7 @@ class GLDeviceInfo extends React.Component {
                 activeKey={this.state.activeKey}
                 type="editable-card"
                 onEdit={this.onEdit}
+                {...this.props}
             >
                 {this.state.panes.map(pane => <TabPane tab={pane.title} key={pane.key} closable={pane.closable}>{pane.content}</TabPane>)}
             </Tabs>

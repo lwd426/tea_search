@@ -4,6 +4,7 @@ import GLServerLog from '../../components/serverlog';
 import GLDeviceInfo from '../../components/deviceinfo';
 import GLDataChart from '../../components/datachart';
 import GLTestInfo from '../../components/testgroup';
+import GLMainPage from '../../components/mainpage';
 import * as actions from '../app/actions'
 import * as menuactions from '../menu/actions'
 import contentactions from '../../components/actions'
@@ -40,6 +41,7 @@ class GLContent extends React.Component {
                             case 'testinfo': return <GLTestInfo {...this.props}/>; break;
                             case 'datachart': return <GLDataChart {...this.props}/>; break;
                             case 'stragetyinfo': return <GLStragetyInfo {...this.props}/>; break;
+                            case 'mainpage': return <GLMainPage {...this.props}/>; break;
                         }
                     })()}
                 </div>

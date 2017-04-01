@@ -11,11 +11,11 @@ var moment = require('moment');
 
 module.exports = {
     /**
-     * 保存slb信息
+     * 保存策略信息
      * @param name
      * @returns {*}
      */
-    saveTestgroup: function*(name, code, slbid) {
+    saveStragety: function*(name, code, slbid) {
         var data = {
             name: '请输入',
             code: code,
@@ -32,28 +32,28 @@ module.exports = {
         return result;
     },
     /**
-     * 获取slb列表
+     * 获取策略列表
      * @returns {*}
      */
-    getTestgroupList: function*(slbid) {
-        var list = yield db.get('testgroup', {slbid: slbid});
+    getStragetyList: function*() {
+        var list = yield db.get('testgroup',{tgid: tgid});
         return list;
     },
     /**
-     * 删除slb信息
+     * 删除策略信息
      * @param id
      * @returns {*}
      */
-    deleteTest: function*(data) {
+    deleteStragety: function*(data) {
         var result = yield db.delete('testgroup', data);
         return result;
     },
     /**
-     * 删除slb信息
+     * 更新策略信息
      * @param id
      * @returns {*}
      */
-    updateTest: function*(data, where) {
+    updateStragety: function*(data, where) {
         var result = yield db.update('testgroup', where, data);
         return result;
     }
