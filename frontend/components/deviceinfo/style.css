@@ -1,0 +1,38 @@
+.ant-col-sm-16{
+    float: none;
+    width: 240px;
+}
+
+.ant-col-sm-offset-8{
+    float: none;
+    width: 240px;
+}
+
+.ant-form-item-control>.ant-btn-primary{
+    width: 96px;
+    margin-left: 10px;
+}
+
+.server-btn {
+    margin: 4px;
+}
+
+.slbBox{
+    width: 100%;
+    text-align: center;
+    margin-top: 70px;
+    font-size: 14px;
+}
+.slbBox>.ant-btn{
+    margin-left: 10px;
+}
+.slbBox>.labelspan{
+    width: 80px;
+    display: inline-block;
+    text-align: left;
+}
+
+.slbBox>.ant-input{
+    width: 240px;
+}
+

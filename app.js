@@ -7,8 +7,8 @@ var app = require('koa')()
     , cors = require('koa-cors');
 const convert = require('koa-convert');
 const bodyparser = require('koa-bodyparser')();
-const index = require('./routes/index');
-const parse = require('./lib/parse/utils')
+const index = require('./backend/routes/index');
+// const parse = require('./backend/parse/utils')
 
 
 // var menu = require('./routes/menu');
@@ -56,7 +56,7 @@ app.use(router.routes(), router.allowedMethods());
 
 
 app.on('error', function(err, ctx){
-    console.log('server error:'+err + ' ' +ctx);
+    console.log('server error:'+err + ' ' + JSON.stringify(ctx));
     logger.error('server error', err, ctx);
 });
 
