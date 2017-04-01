@@ -59,7 +59,7 @@ module.exports = {
                 },
                 body: JSON.stringify({
                     where: where,
-                    data:da
+                    data: data
                 })
             }).then((res) => {
                 console.log(res.json())
