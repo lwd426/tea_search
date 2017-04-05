@@ -4,6 +4,7 @@ import 'antd.min.css';
 import GLTestgroup from './components/testgroup';
 // import * as actions from './actions'
 import GLStragety from './components/stragety';
+import GLAddStragety from './components/stragety_cell';
 
 
 class GLTestinfo extends React.Component {
@@ -21,6 +22,7 @@ class GLTestinfo extends React.Component {
                         switch(this.props.content.testgroup.showtype){
                             case 'stragety': return <GLStragety {...this.props}/>; break;
                             case 'testgroup': return <GLTestgroup {...this.props}/>; break;
+                            case 'addstragety': return <GLAddStragety {...this.props}/>; break;
                             default: return <GLTestgroup {...this.props}/>;
                         }
                     })()}

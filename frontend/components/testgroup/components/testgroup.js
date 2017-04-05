@@ -56,12 +56,6 @@ class GLTestgroup extends React.Component {
                 </span>
             )}
         }];
-
-        // this.state = {
-        //     dataSource: [
-                // { key:1, id: 1, name: '按照按钮测试', status: 'running', flowaccounting: '未配置',  time:'2017-03-29 10:00:00',version: 'v1.0.0'}
-            // ]
-        // };
     }
     onCellChange = (index, key) => {
         return (value) => {
@@ -77,7 +71,6 @@ class GLTestgroup extends React.Component {
         // this.setState({ dataSource });
     }
     handleAdd = () => {
-        console.log(this.props.menu)
         const slbid = this.props.menu.slbid || '';
 
         let count = uuid();
@@ -109,6 +102,7 @@ class GLTestgroup extends React.Component {
             return {
                 key: cell.code,
                 slbid:cell.slbid,
+                tgid: cell.tgid,
                 code: index + 1,
                 name: cell.name,
                 status: cell.status,

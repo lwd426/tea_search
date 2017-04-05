@@ -1,13 +1,16 @@
 //处理数字增加的reducer
 import * as TYPES from './constants'
 
-let reducer = (state={showtype: 'testgroup', stragety: {}, testgrouplist: [], stragetylist: []},action)=>{
+let reducer = (state={showtype: 'testgroup', slbid:'', tgid: '', stragety: {}, testgrouplist: [], stragetylist: []},action)=>{
     switch(action.type){
         case TYPES.STRAGETY_LIST:
             return Object.assign({}, state, {stragety: action.stragety, showtype: 'stragety'})
             break
         case TYPES.GOBACK_TO_TESTINFOGROUP:
             return Object.assign({}, state, {showtype: 'testgroup'})
+            break
+        case TYPES.GOBACK_TO_STRAGETYLIST:
+            return Object.assign({}, state, {showtype: 'stragety'})
             break
         case TYPES.GET_TESTGROUP_SUCCESS:
             return Object.assign({}, state, {testgrouplist: action.testgrouplist})
@@ -16,7 +19,10 @@ let reducer = (state={showtype: 'testgroup', stragety: {}, testgrouplist: [], st
             return Object.assign({}, state, {testgrouplist: action.testgrouplist})
             break
         case TYPES.GET_STRAGETY_LIST:
-            return Object.assign({}, state, {stragetylist: action.list})
+            return Object.assign({}, state, {stragetylist: action.list,showtype: 'stragety', slbid: action.slbid, tgid: action.tgid})
+            break
+        case TYPES.ADD_STRAGETY:
+            return Object.assign({}, state, {showtype: 'addstragety'})
             break
         default:
             return state

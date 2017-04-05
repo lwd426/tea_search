@@ -35,7 +35,7 @@ module.exports = {
      * 获取策略列表
      * @returns {*}
      */
-    getStragetyList: function*() {
+    getStragetyList: function*(tgid) {
         var list = yield db.get('testgroup',{tgid: tgid});
         return list;
     },

@@ -11,24 +11,27 @@ const stragety_url = 'http://localhost:3000/stragety'
 export function edit_stragetylist(stragety) {
     return (dispatch, getState) => {
         var testgroupid = stragety.key;
-        return dispatch(fetch.getData(stragety_url,{tgid: testgroupid},function(err, result){
-            if(!err)  getStragetyListSuccess([])
-            dispatch(getStragetyListSuccess(result.data))
+        var slbid = stragety.slbid;
+        return dispatch(fetch.getData(stragety_url + '?tgid='+testgroupid,function(err, result){
+            if(!err)  getStragetyListSuccess([], testgroupid, slbid)
+            dispatch(getStragetyListSuccess(result.data, testgroupid, slbid))
         }))
     }
 }
 
-export function getStragetyListSuccess(list){
+export function getStragetyListSuccess(list, stragetyid, testgroupid, slbid){
     return {
         type: TYPES.GET_STRAGETY_LIST,
-        list: list
+        list: list,
+        tgid: testgroupid,
+        slbid,
+        stragetyid
     }
 }
 
-export function add_stragety(){
+export function add_stragety(stragetyid, tgid, slbid){
     return {
-        type: TYPES.ADD_STRAGETY,
-
+        type: TYPES.ADD_STRAGETY
     }
 }
 
@@ -41,6 +44,14 @@ export function goback() {
         type: TYPES.GOBACK_TO_TESTINFOGROUP
     }
 }
+
+export function goback2stragelist() {
+    return {
+        type: TYPES.GOBACK_TO_STRAGETYLIST
+    }
+}
+
+
 
 export function addTestGroup(group){
     return (dispatch, getState) => {
