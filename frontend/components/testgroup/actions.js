@@ -35,6 +35,27 @@ export function add_stragety(stragetyid, tgid, slbid){
     }
 }
 
+export function addUrls(urls){
+    return {
+        type: TYPES.ADD_URLS,
+        urls
+    }
+}
+
+export function changeAddUrlType(addurltype) {
+    return {
+        type: TYPES.ADD_URL_TYPE,
+        addurltype
+    }
+}
+
+export function changeAddUidType(adduidtype) {
+    return {
+        type: TYPES.ADD_UID_TYPE,
+        adduidtype
+    }
+}
+
 /**
  * 返回到项目组
  * @returns {{type, stragety: *}}
@@ -83,11 +104,11 @@ export const deleteTestSuccess = (list) => {
  * @param name
  * @returns {function(*, *)}
  */
-export function deleteTest(code) {
+export function deleteTest(slbid, code) {
     return (dispatch, getState) => {
         return dispatch(fetch.deleteData(testgroup_url,{code: code}, function(err, result){
             if(!err)  deleteTestSuccess([])
-            dispatch(fetch.getData(testgroup_url,function(err, result){
+            dispatch(fetch.getData(testgroup_url + '?slbid='+slbid,function(err, result){
                 if(!err)  deleteTestSuccess([])
                 dispatch(deleteTestSuccess(result.data))
             }))

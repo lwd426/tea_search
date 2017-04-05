@@ -50,6 +50,9 @@ class RegistrationForm extends React.Component {
             }
         });
     }
+    componentWillReceiveProps =(nextProps)=> {
+        return true;
+    }
     handleConfirmBlur = (e) => {
         const value = e.target.value;
         this.setState({ confirmDirty: this.state.confirmDirty || !!value });
@@ -68,6 +71,31 @@ class RegistrationForm extends React.Component {
             form.validateFields(['confirm'], { force: true });
         }
         callback();
+    }
+    changeAddUrlType = (e) => {
+        var type = e.target.value;
+        this.props.contentActions.testgroupActions.changeAddUrlType(type)
+    }
+    changeAddUidType = (e) => {
+        var type = e.target.value;
+        this.props.contentActions.testgroupActions.changeAddUidType(type)
+    }
+    addUrl = () => {
+        var type = this.props.content.testgroup.addurltype;
+        var refname = '',values=[];
+        if(type === "single"){
+            refname = 'urlinputsingle'
+        }else{
+            refname = 'urlinputmultiple'
+        }
+        var value = this.refs[refname].refs.input.value;
+        if(value.indexOf(';') !== -1){
+            values.push(value)
+        }else{
+           values = valyue.split(',');
+        }
+        this.props.contentActions.testgroupActions.addUrls(values);
+        // var value = ;
     }
     render() {
         const { getFieldDecorator } = this.props.form;
@@ -93,29 +121,38 @@ class RegistrationForm extends React.Component {
                 },
             },
         };
-        const prefixSelector = getFieldDecorator('prefix', {
-            initialValue: '86',
-        })(
-            <Select className="icp-selector">
-                <Option value="86">+86</Option>
-            </Select>
-        );
+        let urls = this.props.content.testgroup.addurls;
+        var urlselectedDiv = '<div>';
+        if(urls.length === 0) {
+            urlselectedDiv = '';
+        }else{
+            urls.map((url, index) => {
+                urlselectedDiv += '<span>'+ url + '</span>';
+            })
+            urlselectedDiv += '</div>'
+        }
+
         return (
             <Form onSubmit={this.handleSubmit}>
                 <FormItem
                     {...formItemLayout}
-                    label="基本信息"
+                    label="分流策略名称"
                     hasFeedback
                 >
                     {getFieldDecorator('email', {
                         rules: [{
-                            type: 'email', message: 'The input is not valid E-mail!',
-                        }, {
-                            required: true, message: 'Please input your E-mail!',
+                            required: true, message: '请输入分流策略名称!',
                         }],
                     })(
-                        <Input />
+                        <Input placeholder="请输入分流策略名称"/>
                     )}
+                </FormItem>
+                <FormItem
+                    {...formItemLayout}
+                    label="描述"
+                    hasFeedback
+                >
+                        <Input type="textarea"  rows={2} />
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
@@ -132,41 +169,42 @@ class RegistrationForm extends React.Component {
                     label="分流服务器"
                     hasFeedback
                 >
-                    {getFieldDecorator('confirm', {
-                        rules: [{
-                            required: true, message: 'Please confirm your password!',
-                        }, {
-                            validator: this.checkPassword,
-                        }],
-                    })(
-                        <Input type="password" onBlur={this.handleConfirmBlur} />
-                    )}
-                </FormItem>
-                <FormItem
-                    {...formItemLayout}
-                    label="分流服务器"
-                    hasFeedback
-                >
                     <GLServerTree {...this.props} />
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
                     label="URL"
                 >
-                    <RadioGroup defaultValue="a" size="small">
-                        <RadioButton value="a" checked>逐个添加</RadioButton>
-                        <RadioButton value="b">批量添加</RadioButton>
+                    {urlselectedDiv}
+                    <RadioGroup defaultValue="multiple" size="default" onChange={this.changeAddUrlType}>
+                        <RadioButton value="single" disabled>逐个添加</RadioButton>
+                        <RadioButton value="multiple">批量添加</RadioButton>
                     </RadioGroup>
+                    {this.props.content.testgroup.addurltype === 'single' ?
+                        <div>
+                            <Input size="large" ref="urlinputsingle" className="gl-input-with-btn"/>
+                            <Button size="large" className="gl-input-btn" onClick={this.addUrl}>添加</Button>
+                        </div> :  <div>
+                            <Input type="textarea" ref="urlinputmultiple" className="gl-input-with-btn" rows={2} />
+                            <Button size="large" className="gl-input-btn" onClick={this.addUrl}>添加</Button>
+                        </div>}
+
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
                     label="UID"
                 >
-                    <RadioGroup defaultValue="a" size="small">
-                        <RadioButton value="a" checked>逐个添加</RadioButton>
-                        <RadioButton value="b">批量添加</RadioButton>
+                    <RadioGroup defaultValue="multiple" size="default" onChange={this.changeAddUidType}>
+                        <RadioButton value="single" disabled>逐个添加</RadioButton>
+                        <RadioButton value="multiple">批量添加</RadioButton>
                     </RadioGroup>
-                    <Input type="textarea" rows={4} />
+                    {this.props.content.testgroup.adduidtype === 'single' ? <div>
+                            <Input size="large" className="gl-input-with-btn"/>
+                            <Button size="large" className="gl-input-btn">添加</Button>
+                        </div> :  <div>
+                            <Input type="textarea" className="gl-input-with-btn" rows={2} />
+                            <Button size="large" className="gl-input-btn">添加</Button>
+                        </div>}
                 </FormItem>
                 <FormItem
                     {...formItemLayout}

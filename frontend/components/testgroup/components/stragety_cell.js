@@ -14,7 +14,7 @@ class GLAddStragety extends React.Component {
         return true;
     }
     goBack = () => {
-        this.props.contentActions.testgroupActions.goback()
+        this.props.contentActions.testgroupActions.goback2stragelist()
     }
     render() {
         console.log(this.props)

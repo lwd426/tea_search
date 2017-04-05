@@ -114,7 +114,7 @@ class GLStragety extends React.Component {
         this.props.contentActions.testgroupActions.add_stragety()
     }
     goBack = () => {
-        this.props.contentActions.testgroupActions.goback2stragelist()
+        this.props.contentActions.testgroupActions.goback()
     }
     render() {
         const columns = this.columns;

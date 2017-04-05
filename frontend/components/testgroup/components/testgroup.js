@@ -49,7 +49,7 @@ class GLTestgroup extends React.Component {
                   }}>策略维护</a>
                   <span className="ant-divider" />
                   <Popconfirm title="确认删除策略?" onConfirm={() => {
-                      that.props.contentActions.testgroupActions.deleteTest(test.key)
+                      that.props.contentActions.testgroupActions.deleteTest(that.props.menu.slbid,test.key)
                   }}>
                     <a href="#">删除</a>
                   </Popconfirm>
@@ -88,7 +88,8 @@ class GLTestgroup extends React.Component {
     }
     componentWillReceiveProps =(nextProps)=> {
         if(this.props.menu.slbid === nextProps.menu.slbid) return false;
-        this.props.contentActions.testgroupActions.getTestGroupList(nextProps.menu.slbid)
+        if(nextProps.menu.wintype === 'testinfo') this.props.contentActions.testgroupActions.getTestGroupList(nextProps.menu.slbid);
+
         return true;
     }
     componentDidMount =()=> {
