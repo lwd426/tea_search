@@ -62,10 +62,11 @@ export function changeSlb(slbid){
     }
 }
 
-export function changeShowWinType(wintype) {
+export function changeShowWinType(slbid, wintype) {
     return {
         type: TYPES.SHOW_WIN_TYPE,
-        wintype: wintype
+        wintype,
+        slbid
     }
 }
 

@@ -11,24 +11,48 @@ const stragety_url = 'http://localhost:3000/stragety'
 export function edit_stragetylist(stragety) {
     return (dispatch, getState) => {
         var testgroupid = stragety.key;
-        return dispatch(fetch.getData(stragety_url,{tgid: testgroupid},function(err, result){
-            if(!err)  getStragetyListSuccess([])
-            dispatch(getStragetyListSuccess(result.data))
+        var slbid = stragety.slbid;
+        return dispatch(fetch.getData(stragety_url + '?tgid='+testgroupid,function(err, result){
+            if(!err)  getStragetyListSuccess([], testgroupid, slbid)
+            dispatch(getStragetyListSuccess(result.data, testgroupid, slbid))
         }))
     }
 }
 
-export function getStragetyListSuccess(list){
+export function getStragetyListSuccess(list, stragetyid, testgroupid, slbid){
     return {
         type: TYPES.GET_STRAGETY_LIST,
-        list: list
+        list: list,
+        tgid: testgroupid,
+        slbid,
+        stragetyid
     }
 }
 
-export function add_stragety(){
+export function add_stragety(stragetyid, tgid, slbid){
     return {
-        type: TYPES.ADD_STRAGETY,
+        type: TYPES.ADD_STRAGETY
+    }
+}
 
+export function addUrls(urls){
+    return {
+        type: TYPES.ADD_URLS,
+        urls
+    }
+}
+
+export function changeAddUrlType(addurltype) {
+    return {
+        type: TYPES.ADD_URL_TYPE,
+        addurltype
+    }
+}
+
+export function changeAddUidType(adduidtype) {
+    return {
+        type: TYPES.ADD_UID_TYPE,
+        adduidtype
     }
 }
 
@@ -41,6 +65,14 @@ export function goback() {
         type: TYPES.GOBACK_TO_TESTINFOGROUP
     }
 }
+
+export function goback2stragelist() {
+    return {
+        type: TYPES.GOBACK_TO_STRAGETYLIST
+    }
+}
+
+
 
 export function addTestGroup(group){
     return (dispatch, getState) => {
@@ -72,11 +104,11 @@ export const deleteTestSuccess = (list) => {
  * @param name
  * @returns {function(*, *)}
  */
-export function deleteTest(code) {
+export function deleteTest(slbid, code) {
     return (dispatch, getState) => {
         return dispatch(fetch.deleteData(testgroup_url,{code: code}, function(err, result){
             if(!err)  deleteTestSuccess([])
-            dispatch(fetch.getData(testgroup_url,function(err, result){
+            dispatch(fetch.getData(testgroup_url + '?slbid='+slbid,function(err, result){
                 if(!err)  deleteTestSuccess([])
                 dispatch(deleteTestSuccess(result.data))
             }))

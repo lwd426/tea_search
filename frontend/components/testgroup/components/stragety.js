@@ -96,7 +96,7 @@ class GLStragety extends React.Component {
 
         this.state = {
             dataSource: [
-                { key: 1, stragetyname: '策略一', status: '生效', server: '192.168.1.1', flowaccounting: '50%', tag: '2930c',worktime: '2017-03-27 18:00 至 2017-03-31 18：00',description: <GLInfo/> },
+                // { key: 1, stragetyname: '策略一', status: '生效', server: '192.168.1.1', flowaccounting: '50%', tag: '2930c',worktime: '2017-03-27 18:00 至 2017-03-31 18：00',description: <GLInfo/> },
             ],
             count: 4,
         };
@@ -110,24 +110,11 @@ class GLStragety extends React.Component {
         this.setState({ dataSource });
     }
     handleAdd = () => {
-        // const { count, dataSource } = this.state;
-        // var newData = { key: count,
-        //     stragetyname: '策略xx',
-        //     status: '失效',
-        //     server: 'xxx.xxx.xxx.xxx',
-        //     flowaccounting: 'xx%',
-        //     tag: '-',
-        //     worktime: '',description: <GLInfo/> };
-        //
-        // this.setState({
-        //     dataSource: [...dataSource, newData],
-        //     count: count + 1,
-        // });
+        // const {slbid, tgid} = this.props.content.testgroup;
         this.props.contentActions.testgroupActions.add_stragety()
-
     }
     goBack = () => {
-        this.props.contentActions.testinfoActions.goback()
+        this.props.contentActions.testgroupActions.goback()
     }
     render() {
         const columns = this.columns;
@@ -136,6 +123,7 @@ class GLStragety extends React.Component {
                 key: cell.code,
                 slbid:cell.slbid,
                 testgroupcode: cell.tgid,
+                stragetycode: cell.code,
                 code: index + 1,
                 name: cell.name,
                 status: cell.status,

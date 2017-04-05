@@ -19,6 +19,16 @@
 
 }
 
+.add-stragety>div>.title{
+    text-align: center;
+    height: 30px;
+    font-size: 14px;
+    border-bottom: 1px solid #d2cccc;
+    margin: 0 auto;
+    width: 22%;
+    margin-bottom: 40px;
+}
+
 .ant-confirm-body .ant-confirm-content{
     margin: 0px;
 }
@@ -48,4 +58,25 @@
 .gl-right-btn {
     margin: 0px 4px 4px 4px;
     float: right;
+}
+
+.ant-calendar-picker{
+    width: 100% !important;
+    min-width: 200px !important;
+}
+.form .ant-select{
+    width: 100% !important;
+    min-width: 200px !important;
+}
+form textarea.ant-input{
+    width: 100% ;
+    min-width: 200px !important;
+}
+
+.gl-input-with-btn{
+    width: 80% !important;
+}
+.gl-input-btn{
+    width: 18% !important;
+    margin-left: 2%;
 }

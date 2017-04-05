@@ -53,7 +53,7 @@ module.exports = {
     updateData: (url, where, data, callback) => {
         return dispatch => {
             return fetch(url, {
-                method: 'DELETE',
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },

@@ -49,19 +49,13 @@ class GLTestgroup extends React.Component {
                   }}>策略维护</a>
                   <span className="ant-divider" />
                   <Popconfirm title="确认删除策略?" onConfirm={() => {
-                      that.props.contentActions.testgroupActions.deleteTest(test.key)
+                      that.props.contentActions.testgroupActions.deleteTest(that.props.menu.slbid,test.key)
                   }}>
                     <a href="#">删除</a>
                   </Popconfirm>
                 </span>
             )}
         }];
-
-        // this.state = {
-        //     dataSource: [
-                // { key:1, id: 1, name: '按照按钮测试', status: 'running', flowaccounting: '未配置',  time:'2017-03-29 10:00:00',version: 'v1.0.0'}
-            // ]
-        // };
     }
     onCellChange = (index, key) => {
         return (value) => {
@@ -77,7 +71,6 @@ class GLTestgroup extends React.Component {
         // this.setState({ dataSource });
     }
     handleAdd = () => {
-        console.log(this.props.menu)
         const slbid = this.props.menu.slbid || '';
 
         let count = uuid();
@@ -92,12 +85,11 @@ class GLTestgroup extends React.Component {
             version: ''}
 
         this.props.contentActions.testgroupActions.addTestGroup(newData)
-
-        // this.setState({
-        //     dataSource: [...dataSource, newData]
-        // });
     }
     componentWillReceiveProps =(nextProps)=> {
+        if(this.props.menu.slbid === nextProps.menu.slbid) return false;
+        if(nextProps.menu.wintype === 'testinfo') this.props.contentActions.testgroupActions.getTestGroupList(nextProps.menu.slbid);
+
         return true;
     }
     componentDidMount =()=> {
@@ -109,6 +101,7 @@ class GLTestgroup extends React.Component {
             return {
                 key: cell.code,
                 slbid:cell.slbid,
+                tgid: cell.tgid,
                 code: index + 1,
                 name: cell.name,
                 status: cell.status,

@@ -2,7 +2,8 @@ var router = require('koa-router')();
 var lib = require('../services/stragety')
 
 router.get('/', function *(next) {
-    var tgid = this.request.body.tgid;
+    var tgid = this.query.tgid;
+    console.log(tgid)
     var result = yield lib.getStragetyList(tgid)
     this.body = {
         status: 'success',
