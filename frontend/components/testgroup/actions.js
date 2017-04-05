@@ -42,6 +42,26 @@ export function addUrls(urls){
     }
 }
 
+export function deleteUrl(index) {
+    return {
+        type: TYPES.DELETE_URL,
+        index
+    }
+}
+export function addUids(uids){
+    return {
+        type: TYPES.ADD_UIDS,
+        uids
+    }
+}
+
+export function deleteUid(index) {
+    return {
+        type: TYPES.DELETE_UID,
+        index
+    }
+}
+
 export function changeAddUrlType(addurltype) {
     return {
         type: TYPES.ADD_URL_TYPE,
