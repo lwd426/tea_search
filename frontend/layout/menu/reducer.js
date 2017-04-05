@@ -4,7 +4,7 @@ import * as TYPES from './constants'
 let reducer = (state={wintype: 'mainpage',slbid: '', add: false, menulist: []},action)=>{
     switch(action.type){
         case TYPES.SHOW_WIN_TYPE:
-            return Object.assign({}, state, { wintype: action.wintype})
+            return Object.assign({}, state, { wintype: action.wintype, slbid: action.slbid})
             break
         case TYPES.ADD_TEST_GROUP:
             return Object.assign({}, state, { add: true})

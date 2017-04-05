@@ -85,12 +85,10 @@ class GLTestgroup extends React.Component {
             version: ''}
 
         this.props.contentActions.testgroupActions.addTestGroup(newData)
-
-        // this.setState({
-        //     dataSource: [...dataSource, newData]
-        // });
     }
     componentWillReceiveProps =(nextProps)=> {
+        if(this.props.menu.slbid === nextProps.menu.slbid) return false;
+        this.props.contentActions.testgroupActions.getTestGroupList(nextProps.menu.slbid)
         return true;
     }
     componentDidMount =()=> {
