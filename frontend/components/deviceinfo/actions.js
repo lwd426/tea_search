@@ -1,20 +1,7 @@
 import * as TYPES from './constants'
 import fetch from '../../fetch'
-const slb_list_url = 'http://localhost:3000/slb'
-
-
-/*export function updateMenu(name) {
-    return (dispatch, getState) => {
-        return dispatch(fetch.postData(slb_list_url,{name}, function(err, result){
-            if(!err)  postData([]);
-            dispatch(fetch.getData(slb_list_url,function(err, result){
-                console.log(result.data.results);
-                if(!err)  getMenuListSuccess([])
-                dispatch(getMenuListSuccess(result.data.results))
-            }))
-        }))
-    }
-}*/
+const slb_list_url = 'http://localhost:3000/slb';
+const web_list_url = 'http://localhost:3000/webserver';
 
 export function updateSLB(objectId, slbDomain) {
     return (dispatch, getState) => {
@@ -36,57 +23,83 @@ export const getMenuListSuccess = (menulist) => {
     }
 }
 
-/**
- * 获取demo
- * @returns {function(*, *)}
-
-export function getMenulist() {
-    // 注意这个函数也接收了 getState() 方法
-    // 它让你选择接下来 dispatch 什么
-    return (dispatch, getState) => {
-        return dispatch(fetch.getData(slb_list_url,function(err, result){
-            if(!err)  getMenuListSuccess([])
-            dispatch(getMenuListSuccess(result.data.results))
-        }))
+function updateWebServerList(list) {
+    return {
+        type: TYPES.WEBSERVERLIST,
+        webServerList: list
     }
 }
- */
 
-/**
- * 删除demo
- * @param name
- * @returns {function(*, *)}
-
-export function deleteTestGroup(id) {
+export function addWebServer(group){
     return (dispatch, getState) => {
-        return dispatch(deleteData({id: id}))
-        return dispatch(fetch.deleteData(slb_list_url,{id: id}, function(err, result){
-            if(!err)  deleteMenuSuccess([])
-            dispatch(fetch.getData(slb_list_url,function(err, result){
-                if(!err)  getMenuListSuccess([])
-                dispatch(getMenuListSuccess(result.data.results))
-            }))
-        }))
-    }
-
-}
-*/
-/**
- * 新增demo
- * @param name
- * @returns {function(*, *)}
-
-export function saveMenu(name) {
-    // 注意这个函数也接收了 getState() 方法
-    // 它让你选择接下来 dispatch 什么
-    return (dispatch, getState) => {
-        return dispatch(fetch.postData(slb_list_url,{name}, function(err, result){
+        return dispatch(fetch.postData(web_list_url,{
+                key: group.key, 
+                slbid: group.slbid, 
+                ip: group.ip, 
+                stragetyname: group.stragetyname,
+                address: group.address,
+                backup: group.backup
+            }, function(err, result){
             if(!err)  postData([])
-            dispatch(fetch.getData(slb_list_url,function(err, result){
-                if(!err)  getMenuListSuccess([])
-                dispatch(getMenuListSuccess(result.data.results))
+            dispatch(fetch.getData(web_list_url + '?slbid='+group.slbid,function(err, result){
+                if(!err) updateWebServerList([]);
+                dispatch(updateWebServerList(result.data));
             }))
         }))
     }
 }
+
+/**
+ * 删除 web服务器
+ * @param name
+ * @returns {function(*, *)}
  */
+ function deleteWebServerList(list){
+    return {
+        type: TYPES.DELETE_WEBSERVERLIST,
+        webServerList: list
+    }
+}
+export function deleteWebServer(key) {
+    return (dispatch, getState) => {
+        console.log(key)
+        return dispatch(fetch.deleteData(web_list_url,{key: key}, function(err, result){
+            if(!err)  deleteWebServerList([])
+            dispatch(fetch.getData(web_list_url,function(err, result){
+                if(!err)  deleteWebServerList([])
+                dispatch(deleteWebServerList(result.data))
+            }))
+        }))
+    }
+
+}
+
+/**
+ * 更新 web服务器
+ * @returns {function(*, *)}
+ */
+export function updateWebServer(where, data) {
+    return (dispatch, getState) => {
+        return dispatch(fetch.updateData(web_list_url,where,data,function(err, result){
+            if(!err)  updateWebServerList([])
+            dispatch(fetch.getData(web_list_url + '?slbid='+ where.slbid,function(err, result){
+                if(!err)  updateWebServerList([])
+                dispatch(updateWebServerList(result.data))
+            }))
+        }))
+    }
+}
+
+/**
+ * 获取web服务器列表
+ * @returns {function(*, *)}
+ */
+export function getWebServerList(slbid) {
+    return (dispatch, getState) => {
+        return dispatch(fetch.getData(web_list_url + '?slbid='+slbid,function(err, result){
+            if(!err)  updateWebServerList([])
+            //console.log(result)
+            dispatch(updateWebServerList(result.data))
+        }))
+    }
+}
