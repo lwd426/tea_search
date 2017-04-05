@@ -34,12 +34,21 @@ class GLGroup extends React.Component {
             render: (text, record, index) => (
                 <EditableCell
                     value={text}
-                    onChange={this.onCellChange(index)}
+                    onChange={this.onCellChange(index, 'ip')}
                 />
             ),
         },{
+            title: '参照服务器',
+            dataIndex: 'refer',
+        },{
             title: '策略名称',
             dataIndex: 'stragetyname',
+            render: (text, record, index) => (
+                <EditableCell
+                    value={text}
+                    onChange={this.onCellChange(index, 'stragetyname')}
+                />
+            ),
         },{
             title: '机房',
             dataIndex: 'address',
@@ -51,38 +60,28 @@ class GLGroup extends React.Component {
             dataIndex: 'operation',
             render: (text, record) => (
                 <span>
-                  <a href="#">确认</a>
-                  <span className="ant-divider" />
-                  <Popconfirm title="确认删除策略?" onConfirm={() => {
-                      console.log(record);
-                      that.props.contentActions.deviceinfoActions.deleteWebServer(record.key);
-                  }}>
-                    <a href="#">删除</a>
-                  </Popconfirm>
+                    <Popconfirm title="确认设为参照服务器?" onConfirm={() => {
+                        console.log(record);
+                        that.props.contentActions.deviceinfoActions.updateWebServer({key: record.key}, {refer : 'true'});
+                    }}>
+                        <a href="#">设为参照服务器</a>
+                    </Popconfirm>
+                    <span className="ant-divider" />
+                    <Popconfirm title="确认删除策略?" onConfirm={() => {
+                        that.props.contentActions.deviceinfoActions.deleteWebServer(record.key);
+                    }}>
+                        <a href="#">删除</a>
+                    </Popconfirm>
                 </span>
             )
-        }];
+        },];
+    }
 
-        this.state = {
-            dataSource: [
-                { key: 1, ip: '10.200.38.184', qps: 32, stragetyname: '按钮颜色测试',  address:'北京联通机房',backup: 'ddd'}
-                // { key: 2, ip: '10.200.38.185', qps: 42, stragetyname: '播放记录改版',  address:'北京联通机房',backup: 'My name is Jim Green, I am 42 years old, living in London No. 1 Lake Park.' },
-                // { key: 3, ip: '10.200.38.186', qps: 32, stragetyname: '按钮颜色测试',  address:'北京联通机房',backup: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.' },
-                // { key: 4, ip: '10.200.38.187', qps: 32, stragetyname: '播放记录改版', address:'北京联通机房',backup: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.' },
-            ],
-            count: 4,
-        };
-    }
-    onDelete = (index) => {
-        const dataSource = [...this.state.dataSource];
-        dataSource.splice(index, 1);
-        this.setState({ dataSource });
-    }
-    onCellChange = (index) => {
+    onCellChange = (index, keyname) => {
         return (value) => {
             const dataSource = [...this.props.content.deviceinfo.webServerList];
             var cell = dataSource[index];
-            this.props.contentActions.deviceinfoActions.updateWebServer({key:cell.key, slbid: cell.slbid}, {ip: value})
+            this.props.contentActions.deviceinfoActions.updateWebServer({key:cell.key, slbid: cell.slbid}, {[keyname] : value})
         };
     }
     handleAdd = () => {
@@ -92,10 +91,11 @@ class GLGroup extends React.Component {
         const newData = {
             key: key,
             slbid: slbid,
-            ip: `10.200.38.18444`,
-            stragetyname: '策略名称',
+            ip: `请输入ip`,
+            stragetyname: '请输入策略名称',
             address: '机房',
-            backup: '备注'
+            backup: '备注',
+            refer: 'false'
         };
         /*this.setState({
             dataSource: [...dataSource, newData],
@@ -105,16 +105,18 @@ class GLGroup extends React.Component {
         this.props.contentActions.deviceinfoActions.addWebServer(newData);
     }
     componentWillReceiveProps(nextProps) {
+        console.log('componentWillReceiveProps')
         return true;
     }
-    componentDidMount =()=> {
+    componentDidMount() {
         const slbid = this.props.menu.slbid || '';
         this.props.contentActions.deviceinfoActions.getWebServerList(slbid);
     }
     render() {
+                console.log('rerender');
+
         const columns = this.columns;
         //console.log(this.props)
-        console.log('rerender');
         const dataSource = this.props.content.deviceinfo.webServerList.map((cell, index)=>{
             return {
                 key: cell.key,
@@ -122,15 +124,15 @@ class GLGroup extends React.Component {
                 ip: cell.ip,
                 stragetyname: cell.stragetyname,
                 address: cell.address,
-                backup: cell.backup
+                backup: cell.backup,
+                refer: cell.refer
             }
         });
-        console.log(dataSource)//第一次进来没数据，在切换就有数据了，什么原因？
         return (
             <div>
                 <div>
                     <Button className="server-btn" onClick={this.handleAdd}>新增服务器</Button>
-                    <Button className="server-btn" onClick={this.handleAdd}>设定为参照服务器</Button>
+                    <Button className="server-btn" onClick={this.setRefer}>设定为参照服务器</Button>
                 </div>
                 <Table
                     columns={columns}

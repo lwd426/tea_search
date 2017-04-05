@@ -38,10 +38,12 @@ export function addWebServer(group){
                 ip: group.ip, 
                 stragetyname: group.stragetyname,
                 address: group.address,
-                backup: group.backup
+                backup: group.backup,
+                refer: group.refer
             }, function(err, result){
             if(!err)  postData([])
-            dispatch(fetch.getData(web_list_url + '?slbid='+group.slbid,function(err, result){
+                console.log('ddddd')
+            dispatch(fetch.getData(web_list_url + '?slbid=' + group.slbid,function(err, result){
                 if(!err) updateWebServerList([]);
                 dispatch(updateWebServerList(result.data));
             }))

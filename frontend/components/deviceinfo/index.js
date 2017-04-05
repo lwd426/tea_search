@@ -18,15 +18,21 @@ class GLDeviceInfo extends React.Component {
         };
     }
     componentWillReceiveProps(nextProps) {
+        console.log('mamamamamam')
         return true;
     }
     onChange = (activeKey) => {
         this.setState({ activeKey });
+        /*if(activeKey == 2){
+            const slbid = this.props.menu.slbid || '';
+            this.props.contentActions.deviceinfoActions.getWebServerList(slbid);
+        }*/
     }
     onEdit = (targetKey, action) => {
         this[action](targetKey);
     }
     render() {
+        console.log('nnnnnn'+this.props.content.deviceinfo.webServerList.length)
         return (
             <Tabs
                 onChange={this.onChange}
@@ -35,7 +41,7 @@ class GLDeviceInfo extends React.Component {
                 onEdit={this.onEdit}
                 {...this.props}
             >
-                {this.state.panes.map(pane => <TabPane tab={pane.title} key={pane.key} closable={pane.closable}>{pane.content}</TabPane>)}
+                {this.state.panes.map(pane => <TabPane tab={pane.title} {...this.props} key={pane.key} closable={pane.closable}>{pane.content}</TabPane>)}
             </Tabs>
         );
     }
