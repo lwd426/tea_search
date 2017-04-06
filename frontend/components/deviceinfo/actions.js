@@ -62,12 +62,11 @@ export function addWebServer(group){
         webServerList: list
     }
 }
-export function deleteWebServer(key) {
+export function deleteWebServer(server) {
     return (dispatch, getState) => {
-        console.log(key)
-        return dispatch(fetch.deleteData(web_list_url,{key: key}, function(err, result){
+        return dispatch(fetch.deleteData(web_list_url,{key: server.key}, function(err, result){
             if(!err)  deleteWebServerList([])
-            dispatch(fetch.getData(web_list_url,function(err, result){
+            dispatch(fetch.getData(web_list_url+ '?slbid=' + server.slbid,function(err, result){
                 if(!err)  deleteWebServerList([])
                 dispatch(deleteWebServerList(result.data))
             }))

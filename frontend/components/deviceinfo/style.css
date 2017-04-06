@@ -17,6 +17,10 @@
     margin: 4px;
 }
 
+.ant-tabs-nav{
+    margin-left: 2px;
+}
+
 .slbBox{
     width: 100%;
     text-align: center;

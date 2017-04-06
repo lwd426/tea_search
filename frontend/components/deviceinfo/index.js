@@ -8,15 +8,11 @@ const TabPane = Tabs.TabPane;
 class GLDeviceInfo extends React.Component {
     constructor(props) {
         super(props);
-        var _this = this
-        const panes = [
-            { title: '域名信息维护', content: <GLDomain {..._this.props}/>, key: '1', closable: false },
-            { title: 'Web服务器维护', content: <GLWebservers {..._this.props}/>, key: '2', closable: false  },
-        ];
-        this.state = {
-            activeKey: panes[0].key,
-            panes,
-        };
+        var _this = this;
+        // this.state = {
+        //     activeKey: panes[0].key,
+        //     panes,
+        // };
     }
     componentWillReceiveProps(nextProps) {
                 console.log('device componentWillReceiveProps')
@@ -39,11 +35,11 @@ class GLDeviceInfo extends React.Component {
         return (
             <Tabs
                 onChange={this.onChange}
-                type="editable-card"
                 onEdit={this.onEdit}
                 {...this.props}
             >
-                {this.state.panes.map((pane) => <TabPane tab={pane.title}  key={pane.key} closable={pane.closable} {..._this.props}>{pane.content}</TabPane>)}
+                <TabPane tab="域名信息维护"  key="1" closable="false" {..._this.props}><GLDomain {..._this.props}/></TabPane>
+                <TabPane tab="Web服务器维护"  key="2" closable="false" {..._this.props}> <GLWebservers {..._this.props}/></TabPane>
             </Tabs>
         );
     }

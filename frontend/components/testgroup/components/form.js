@@ -158,16 +158,16 @@ class RegistrationForm extends React.Component {
                 >
                         <Input type="textarea"  rows={2} />
                 </FormItem>
-                <FormItem
-                    {...formItemLayout}
-                    label="生效时间"
-                    hasFeedback
-                >
-                    <RangePicker
-                        showTime={{ hideDisabledOptions: true }}
-                        format="YYYY-MM-DD HH:mm:ss"
-                    />
-                </FormItem>
+                {/*<FormItem*/}
+                    {/*{...formItemLayout}*/}
+                    {/*label="生效时间"*/}
+                    {/*hasFeedback*/}
+                {/*>*/}
+                    {/*<RangePicker*/}
+                        {/*showTime={{ hideDisabledOptions: true }}*/}
+                        {/*format="YYYY-MM-DD HH:mm:ss"*/}
+                    {/*/>*/}
+                {/*</FormItem>*/}
                 <FormItem
                     {...formItemLayout}
                     label="分流服务器"
@@ -223,7 +223,7 @@ class RegistrationForm extends React.Component {
                     label="地域"
                 >
                     <Select mode="multiple" onChange={(value)=>{
-                    }} placeholder="Please select">
+                    }} placeholder="请选择策略生效区域（可不选）">
                         {this.props.content.testgroup.cities.map((city, index)=> {
                             return <Option key={city.admincode} value={city.name4en}>{city.name}</Option>
                         })}

@@ -138,8 +138,9 @@ class GLStragety extends React.Component {
             <div>
                 <div className="gl-testinfo-btndiv">
                     <Button className="gl-left-btn" icon="double-left" onClick={this.goBack}>返回</Button>
-                    <Button className="gl-right-btn" icon="loading-3-quarters" onClick={showBackWindow}>回滚</Button>
-                    <Button className="gl-right-btn" icon="upload" onClick={showConfirm}>发布到服务器</Button>
+                    <Button className="gl-left-btn" icon="upload" onClick={showConfirm}>发布到服务器</Button>
+                    <Button className="gl-right-btn" icon="loading-3-quarters" onClick={showBackWindow}>生成原始版本</Button>
+                    <Button className="gl-right-btn" icon="loading-3-quarters" onClick={showBackWindow}>生成数据标签</Button>
                     <Button className="gl-right-btn" icon="plus" onClick={this.handleAdd}>新增策略</Button>
                 </div>
                 <Table
