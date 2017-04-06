@@ -43,18 +43,24 @@ class GLWebserver extends React.Component {
         },{
             title: '策略名称',
             dataIndex: 'stragetyname',
-            render: (text, record, index) => (
-                <EditableCell
-                    value={text}
-                    onChange={this.onCellChange(index, 'stragetyname')}
-                />
-            ),
         },{
             title: '机房',
             dataIndex: 'address',
+            render: (text, record, index) => (
+                <EditableCell
+                    value={text}
+                    onChange={this.onCellChange(index, 'address')}
+                />
+            ),
         },{
             title: '备注',
             dataIndex: 'backup',
+            render: (text, record, index) => (
+                <EditableCell
+                    value={text}
+                    onChange={this.onCellChange(index, 'backup')}
+                />
+            ),
         },{
             title: '操作',
             dataIndex: 'operation',
@@ -92,7 +98,7 @@ class GLWebserver extends React.Component {
             key: key,
             slbid: slbid,
             ip: `请输入ip`,
-            stragetyname: '请输入策略名称',
+            stragetyname: '-',
             address: '机房',
             backup: '备注',
             refer: '否'

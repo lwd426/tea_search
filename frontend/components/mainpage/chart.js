@@ -67,7 +67,7 @@ export default class myChart extends React.Component {
                 <div id="container" className="chart-box"></div>
                 {/*<div onClick = {this.randerChart('line')}> {'line'} </div>
                 <div onClick = {this.randerChart('pie')}> {'pie'} </div>
-                <div onClick = {this.randerChart('column')}> 'column'} </div>*/}
+                <div onClick = {this.randerChart('column')}> {'column'} </div>*/}
             </div>          
         )
     }
