@@ -16,7 +16,6 @@ const webServerReducer = (state = initState,action) => {
             })
         }
         case 'CURRENT_SLB_NAME' : {
-            console.log(action.name)
             return Object.assign({},state,{
                 current_slb_name: action.name
             })

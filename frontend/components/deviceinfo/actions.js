@@ -9,10 +9,8 @@ const web_list_url = 'http://localhost:3000/webserver';
  * @returns {function(*, *)}
  */
 export function getSLB(objectId) {
-    console.log('mmm')
     return (dispatch, getState) => {
         return dispatch(fetch.getData(slb_list_url + '?objectId=' + objectId,function(err, result){
-            console.log(err);
             if(!err) getSlbName('');
             var arr = result.data;
             var name = arr[0].slbDomain;

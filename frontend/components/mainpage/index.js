@@ -14,7 +14,7 @@ class GLMainpage extends React.Component {
         return (
             <div>
                 我是首页
-                <Chart/>
+                {/*<Chart/>*/}
                 <EChart/>
             </div>
         );
