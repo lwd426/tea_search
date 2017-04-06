@@ -3,12 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d4b33b02-0f7f-4318-8007-a3d9469ee0bd" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/deviceinfo/actions.js" afterPath="$PROJECT_DIR$/frontend/components/deviceinfo/actions.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/deviceinfo/components/webservers.js" afterPath="$PROJECT_DIR$/frontend/components/deviceinfo/components/webservers.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/deviceinfo/index.js" afterPath="$PROJECT_DIR$/frontend/components/deviceinfo/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/deviceinfo/style.css" afterPath="$PROJECT_DIR$/frontend/components/deviceinfo/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/testgroup/components/form.js" afterPath="$PROJECT_DIR$/frontend/components/testgroup/components/form.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/testgroup/style.css" afterPath="$PROJECT_DIR$/frontend/components/testgroup/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/testgroup/components/stragety.js" afterPath="$PROJECT_DIR$/frontend/components/testgroup/components/stragety.js" />
     </list>
     <ignored path="gatedlaunch.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -53,11 +48,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frontend/components/testgroup/style.css">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="198">
               <caret line="102" column="27" lean-forward="false" selection-start-line="102" selection-start-column="27" selection-end-line="102" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="stragety.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/frontend/components/testgroup/components/stragety.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="256">
+              <caret line="139" column="104" lean-forward="true" selection-start-line="139" selection-start-column="104" selection-end-line="139" selection-end-column="104" />
               <folding />
             </state>
           </provider>
@@ -125,16 +130,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.d.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/node_modules/antd/lib/tabs/index.d.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="140">
-              <caret line="34" column="21" lean-forward="false" selection-start-line="34" selection-start-column="21" selection-end-line="34" selection-end-column="21" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -147,7 +142,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>lib</find>
       <find>parse</find>
       <find>deleteData</find>
       <find>edit_stragety</find>
@@ -177,6 +171,7 @@
       <find>ant-tabs-nav</find>
       <find>deleteWebServer</find>
       <find>.gl-input-btn</find>
+      <find>.gl-url-add-seleted</find>
     </findStrings>
     <replaceStrings>
       <replace>actions</replace>
@@ -221,7 +216,6 @@
         <option value="$PROJECT_DIR$/backend/routes/cha.js" />
         <option value="$PROJECT_DIR$/backend/cha/request.js" />
         <option value="$PROJECT_DIR$/frontend/fetch/index.js" />
-        <option value="$PROJECT_DIR$/frontend/components/testgroup/components/stragety.js" />
         <option value="$PROJECT_DIR$/frontend/components/testgroup/components/servertree.js" />
         <option value="$PROJECT_DIR$/frontend/components/testgroup/components/testgroup.js" />
         <option value="$PROJECT_DIR$/backend/routes/index.js" />
@@ -242,6 +236,7 @@
         <option value="$PROJECT_DIR$/frontend/components/deviceinfo/components/webservers.js" />
         <option value="$PROJECT_DIR$/frontend/components/testgroup/components/form.js" />
         <option value="$PROJECT_DIR$/frontend/components/testgroup/style.css" />
+        <option value="$PROJECT_DIR$/frontend/components/testgroup/components/stragety.js" />
       </list>
     </option>
   </component>
@@ -643,12 +638,12 @@
       <workItem from="1490689862204" duration="26200000" />
       <workItem from="1490880813143" duration="4345000" />
       <workItem from="1490932211944" duration="22836000" />
-      <workItem from="1491354857840" duration="27181000" />
+      <workItem from="1491354857840" duration="27613000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="162887000" />
+    <option name="totallyTimeSpent" value="163319000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -661,7 +656,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="323" y="23" width="1117" height="812" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Debug Logs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -670,7 +665,7 @@
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26733577" sideWeight="0.21603563" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Execute Anonymous" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37638888" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37638888" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26733577" sideWeight="0.78396434" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3253012" sideWeight="0.49499285" order="1" side_tool="false" content_ui="tabs" />
@@ -920,14 +915,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/components/testgroup/components/stragety.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="721">
-          <caret line="155" column="0" lean-forward="true" selection-start-line="155" selection-start-column="0" selection-end-line="155" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/frontend/components/testgroup/components/servertree.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="332">
@@ -1133,6 +1120,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
           <caret line="102" column="27" lean-forward="false" selection-start-line="102" selection-start-column="27" selection-end-line="102" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/components/testgroup/components/stragety.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="139" column="104" lean-forward="true" selection-start-line="139" selection-start-column="104" selection-end-line="139" selection-end-column="104" />
           <folding />
         </state>
       </provider>
