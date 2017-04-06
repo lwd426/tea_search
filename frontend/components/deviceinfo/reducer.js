@@ -7,12 +7,12 @@ const webServerReducer = (state = initState,action) => {
     switch (action.type){
         case 'WEBSERVERLIST' : {
             return Object.assign({},state,{
-                webServerList: action.webServerList,
+                webServerList: action.webServerList
             })
         }
         case 'DELETE_WEBSERVERLIST' : {
             return Object.assign({},state,{
-                webServerList: action.webServerList,
+                webServerList: action.webServerList
             })
         }
         default:

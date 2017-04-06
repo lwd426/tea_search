@@ -62,7 +62,7 @@ class GLGroup extends React.Component {
                 <span>
                     <Popconfirm title="确认设为参照服务器?" onConfirm={() => {
                         console.log(record);
-                        that.props.contentActions.deviceinfoActions.updateWebServer({key: record.key}, {refer : 'true'});
+                        that.props.contentActions.deviceinfoActions.updateWebServer({key: record.key}, {refer : '是'});
                     }}>
                         <a href="#">设为参照服务器</a>
                     </Popconfirm>
@@ -95,7 +95,7 @@ class GLGroup extends React.Component {
             stragetyname: '请输入策略名称',
             address: '机房',
             backup: '备注',
-            refer: 'false'
+            refer: '否'
         };
         /*this.setState({
             dataSource: [...dataSource, newData],
@@ -105,19 +105,17 @@ class GLGroup extends React.Component {
         this.props.contentActions.deviceinfoActions.addWebServer(newData);
     }
     componentWillReceiveProps(nextProps) {
-        console.log('componentWillReceiveProps')
+        console.log('webserver componentWillReceiveProps')
         return true;
     }
     componentDidMount() {
-        const slbid = this.props.menu.slbid || '';
-        this.props.contentActions.deviceinfoActions.getWebServerList(slbid);
+        // const slbid = this.props.menu.slbid || '';
+        // this.props.contentActions.deviceinfoActions.getWebServerList(slbid);
     }
     render() {
-                console.log('rerender');
-
+        console.log('webserver render')
         const columns = this.columns;
-        //console.log(this.props)
-        const dataSource = this.props.content.deviceinfo.webServerList.map((cell, index)=>{
+        var dataSource = this.props.content.deviceinfo.webServerList.map((cell, index)=>{
             return {
                 key: cell.key,
                 slbid:cell.slbid,
@@ -138,6 +136,7 @@ class GLGroup extends React.Component {
                     columns={columns}
                     rowSelection={rowSelection}
                     dataSource={dataSource}
+                    {...this.props}
                 />
             </div>
         );
