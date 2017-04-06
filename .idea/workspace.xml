@@ -3,17 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="d4b33b02-0f7f-4318-8007-a3d9469ee0bd" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/db/index.js" afterPath="$PROJECT_DIR$/backend/db/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/routes/index.js" afterPath="$PROJECT_DIR$/backend/routes/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/routes/stragety.js" afterPath="$PROJECT_DIR$/backend/routes/stragety.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/testgroup/actions.js" afterPath="$PROJECT_DIR$/frontend/components/testgroup/actions.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/testgroup/components/form.js" afterPath="$PROJECT_DIR$/frontend/components/testgroup/components/form.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/testgroup/components/servertree.js" afterPath="$PROJECT_DIR$/frontend/components/testgroup/components/servertree.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/testgroup/components/stragety.js" afterPath="$PROJECT_DIR$/frontend/components/testgroup/components/stragety.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/testgroup/components/testgroup.js" afterPath="$PROJECT_DIR$/frontend/components/testgroup/components/testgroup.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/testgroup/constants.js" afterPath="$PROJECT_DIR$/frontend/components/testgroup/constants.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/testgroup/reducer.js" afterPath="$PROJECT_DIR$/frontend/components/testgroup/reducer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/testgroup/style.css" afterPath="$PROJECT_DIR$/frontend/components/testgroup/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/deviceinfo/components/editcell.js" afterPath="$PROJECT_DIR$/frontend/components/deviceinfo/components/editcell.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/mainpage/index.js" afterPath="$PROJECT_DIR$/frontend/components/mainpage/index.js" />
     </list>
     <ignored path="gatedlaunch.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -45,31 +36,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frontend/components/testgroup/style.css">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="265">
               <caret line="114" column="20" lean-forward="false" selection-start-line="114" selection-start-column="20" selection-end-line="114" selection-end-column="20" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="actions.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/components/testgroup/actions.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="334">
-              <caret line="75" column="14" lean-forward="false" selection-start-line="75" selection-start-column="8" selection-end-line="75" selection-end-column="14" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="constants.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/components/testgroup/constants.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="53" lean-forward="false" selection-start-line="14" selection-start-column="53" selection-end-line="14" selection-end-column="53" />
               <folding />
             </state>
           </provider>
@@ -88,8 +59,8 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/routes/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="10" lean-forward="false" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="10" />
+            <state relative-caret-position="90">
+              <caret line="6" column="10" lean-forward="false" selection-start-line="6" selection-start-column="10" selection-end-line="6" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -105,6 +76,18 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/components/mainpage/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="16" column="18" lean-forward="true" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
+              <folding>
+                <element signature="e#0#52#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="stragety.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/routes/stragety.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -115,21 +98,33 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/services/stragety/index.js">
+      <file leaf-file-name="webservers.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/components/deviceinfo/components/webservers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="56" column="63" lean-forward="true" selection-start-line="56" selection-start-column="63" selection-end-line="56" selection-end-column="63" />
+            <state relative-caret-position="75">
+              <caret line="5" column="36" lean-forward="false" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="36" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="city.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/services/stragety/city.js">
+      <file leaf-file-name="editcell.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/frontend/components/deviceinfo/components/editcell.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="30" lean-forward="false" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
+            <state relative-caret-position="391">
+              <caret line="57" column="28" lean-forward="false" selection-start-line="57" selection-start-column="28" selection-end-line="57" selection-end-column="28" />
+              <folding>
+                <element signature="e#0#51#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/services/stragety/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="286">
+              <caret line="56" column="63" lean-forward="false" selection-start-line="56" selection-start-column="63" selection-end-line="56" selection-end-column="63" />
               <folding />
             </state>
           </provider>
@@ -147,8 +142,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>parseJson</find>
-      <find>add</find>
       <find>editable-add-btn</find>
       <find>TYPES</find>
       <find>data4back</find>
@@ -177,6 +170,8 @@
       <find>adduidtype</find>
       <find>addU</find>
       <find>pla</find>
+      <find>.gl-url-add-div</find>
+      <find>EditableCell</find>
     </findStrings>
     <replaceStrings>
       <replace>actions</replace>
@@ -191,7 +186,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/frontend/components/testinfo/components/stragety.js" />
         <option value="$PROJECT_DIR$/frontend/components/testinfo/reducer.js" />
         <option value="$PROJECT_DIR$/frontend/components/testinfo/style.css" />
         <option value="$PROJECT_DIR$/backend/db/parse/utils.js" />
@@ -216,8 +210,6 @@
         <option value="$PROJECT_DIR$/frontend/components/actions.js" />
         <option value="$PROJECT_DIR$/frontend/layout/content/index.js" />
         <option value="$PROJECT_DIR$/frontend/components/reducer.js" />
-        <option value="$PROJECT_DIR$/frontend/components/mainpage/index.js" />
-        <option value="$PROJECT_DIR$/frontend/components/deviceinfo/components/webservers.js" />
         <option value="$PROJECT_DIR$/frontend/index.js" />
         <option value="$PROJECT_DIR$/frontend/layout/menu/actions.js" />
         <option value="$PROJECT_DIR$/frontend/layout/menu/index.js" />
@@ -242,6 +234,9 @@
         <option value="$PROJECT_DIR$/frontend/components/testgroup/reducer.js" />
         <option value="$PROJECT_DIR$/frontend/components/testgroup/components/form.js" />
         <option value="$PROJECT_DIR$/frontend/components/testgroup/style.css" />
+        <option value="$PROJECT_DIR$/frontend/components/mainpage/index.js" />
+        <option value="$PROJECT_DIR$/frontend/components/deviceinfo/components/webservers.js" />
+        <option value="$PROJECT_DIR$/frontend/components/deviceinfo/components/editcell.js" />
       </list>
     </option>
   </component>
@@ -381,6 +376,76 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="testgroup" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="components" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gatedlaunch" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gated_launch_engine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="frontend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="components" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mainpage" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gatedlaunch" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gated_launch_engine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="frontend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="components" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gatedlaunch" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gated_launch_engine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="frontend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="components" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceinfo" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -573,12 +638,12 @@
       <workItem from="1490689862204" duration="26200000" />
       <workItem from="1490880813143" duration="4345000" />
       <workItem from="1490932211944" duration="22836000" />
-      <workItem from="1491354857840" duration="24186000" />
+      <workItem from="1491354857840" duration="24859000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="159892000" />
+    <option name="totallyTimeSpent" value="160565000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -635,7 +700,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/backend/index.js" />
     <entry file="file://$PROJECT_DIR$/backend/genginx/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -758,26 +822,6 @@
         <state relative-caret-position="75">
           <caret line="5" column="15" lean-forward="false" selection-start-line="5" selection-start-column="15" selection-end-line="5" selection-end-column="15" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/components/mainpage/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="14" column="20" lean-forward="false" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#51#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/components/deviceinfo/components/webservers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1110">
-          <caret line="78" column="24" lean-forward="false" selection-start-line="78" selection-start-column="24" selection-end-line="78" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#52#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -969,7 +1013,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
           <caret line="15" column="30" lean-forward="false" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
-          <folding />
+          <folding>
+            <marker date="1491442711000" expanded="true" signature="172:323" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -985,14 +1031,18 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="334">
           <caret line="75" column="14" lean-forward="false" selection-start-line="75" selection-start-column="8" selection-end-line="75" selection-end-column="14" />
-          <folding />
+          <folding>
+            <marker date="1491442817000" expanded="true" signature="1250:1315" ph="{...}" />
+            <marker date="1491442817000" expanded="true" signature="1263:1313" ph="{&quot;type&quot;: TYPES.ADD_UIDS...}" />
+            <marker date="1491442817000" expanded="true" signature="1657:1740" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/backend/routes/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="10" lean-forward="false" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="10" />
+        <state relative-caret-position="90">
+          <caret line="6" column="10" lean-forward="false" selection-start-line="6" selection-start-column="10" selection-end-line="6" selection-end-column="10" />
           <folding />
         </state>
       </provider>
@@ -1016,7 +1066,7 @@
     <entry file="file://$PROJECT_DIR$/backend/services/stragety/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="286">
-          <caret line="56" column="63" lean-forward="true" selection-start-line="56" selection-start-column="63" selection-end-line="56" selection-end-column="63" />
+          <caret line="56" column="63" lean-forward="false" selection-start-line="56" selection-start-column="63" selection-end-line="56" selection-end-column="63" />
           <folding />
         </state>
       </provider>
@@ -1044,6 +1094,34 @@
         <state relative-caret-position="265">
           <caret line="114" column="20" lean-forward="false" selection-start-line="114" selection-start-column="20" selection-end-line="114" selection-end-column="20" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/components/mainpage/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="18" lean-forward="true" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#52#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/components/deviceinfo/components/webservers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="36" lean-forward="false" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/components/deviceinfo/components/editcell.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="57" column="28" lean-forward="false" selection-start-line="57" selection-start-column="28" selection-end-line="57" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#51#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
