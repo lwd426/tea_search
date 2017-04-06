@@ -45,15 +45,12 @@ class RegistrationForm extends React.Component {
         this.props.contentActions.deviceinfoActions.getSLB(objectID);
     }
     render() {
-
         let name = this.props.content.deviceinfo.current_slb_name || '';
-        console.log(name);
-        
         var value=this.state.value;
-
         if(value == '' && name != '' ){
             value = name;
         }
+        
         return (
             <div className="slbBox">
                 <span className="labelspan">SLB域名 : </span>
