@@ -145,6 +145,7 @@ class GLStragety extends React.Component {
                 <Table
                     className="gl-testinfo-table"
                     columns={columns}
+                    size="middle"
                     expandedRowRender={record => <p>{record.description}</p>}
                     dataSource={dataSource}
                 />

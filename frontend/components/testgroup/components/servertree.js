@@ -31,21 +31,21 @@ const treeData = [{
 }];
 
 class GLServerTree extends React.Component {
-    state = {
-        value: ['1','2'],
-    }
     onChange = (values, labels) => {
-        console.log('onChange ', value, arguments);
-        this.setState({ value });
+        console.log('onChange ', values, arguments);
+        // this.setState({ value });
 
     }
     render() {
         const tProps = {
+            // value: this.props.content.serverlist,
             treeData,
-            value: this.state.value,
             onChange: this.onChange,
             multiple: true,
-            defaultValue:  ['1','2'],
+            allowClear: true,
+            defaultValue:  [],
+            placeholder: '请选择服务器',
+            size: 'large',
             treeCheckable: true,
             showCheckedStrategy: SHOW_PARENT,
             searchPlaceholder: 'Please select'

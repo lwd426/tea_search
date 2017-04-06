@@ -28,8 +28,10 @@ module.exports = {
         var result;
         try{
             var Quwey = ParseUtils.initQuery(tableName);
-            for(var key in whereOpts){
-                Quwey.equalTo(key, whereOpts[key]);
+            if(whereOpts) {
+                for(var key in whereOpts){
+                    Quwey.equalTo(key, whereOpts[key]);
+                }
             }
             result = yield ParseUtils.get(Quwey)
         }catch(e){
@@ -47,8 +49,10 @@ module.exports = {
         var result;
         try{
             var Quwey = ParseUtils.initQuery(tableName);
-            for(var key in whereOpts){
-                Quwey.equalTo(key, whereOpts[key]);
+            if(whereOpts) {
+                for(var key in whereOpts){
+                    Quwey.equalTo(key, whereOpts[key]);
+                }
             }
             var results =  yield ParseUtils.get(Quwey);
             var i = 0, len = results.length, deleteResult = false;
@@ -73,8 +77,10 @@ module.exports = {
         var result;
         try{
             var Quwey = ParseUtils.initQuery(tableName);
-            for(var key in whereOpts){
-                Quwey.equalTo(key, whereOpts[key]);
+            if(whereOpts) {
+                for(var key in whereOpts){
+                    Quwey.equalTo(key, whereOpts[key]);
+                }
             }
             var results = yield ParseUtils.get(Quwey);
             var i = 0, len = results.length, updateResult = false;

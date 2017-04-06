@@ -92,7 +92,7 @@ class GLTestgroup extends React.Component {
 
         return true;
     }
-    componentDidMount =()=> {
+    componentWillMount =()=> {
         const slbid = this.props.menu.slbid || '';
         this.props.contentActions.testgroupActions.getTestGroupList(slbid)
     }
@@ -119,6 +119,7 @@ class GLTestgroup extends React.Component {
                 </div>
                 <Table bordered className="gl-testinfo-table"
                     columns={columns}
+                   size="middle"
                     dataSource={dataSource}
                 />
             </div>
