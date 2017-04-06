@@ -42,14 +42,4 @@ class RegistrationForm extends React.Component {
         );
     }
 }
-function mapStateToProps(state) {
-    return{
-        
-    }
-}
-function mapDispatchToProps(dispatch) {
-    return  {
-        contentActions: contentactions(dispatch)
-    }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(RegistrationForm);
+export default RegistrationForm;
