@@ -1,7 +1,7 @@
 //处理数字增加的reducer
 import * as TYPES from './constants'
 
-let reducer = (state={showtype: 'testgroup', slbid:'', tgid: '',addurls:[], adduids: [],addurltype: 'multiple',adduidtype: 'multiple',stragety: {}, testgrouplist: [], stragetylist: []},action)=>{
+let reducer = (state={showtype: 'testgroup', slbid:'', tgid: '',addurls:[], cities:[], adduids: [],serverlist:[], addurltype: 'multiple',adduidtype: 'multiple',stragety: {}, testgrouplist: [], stragetylist: []},action)=>{
     switch(action.type){
         case TYPES.STRAGETY_LIST:
             return Object.assign({}, state, {stragety: action.stragety, showtype: 'stragety'})
@@ -43,6 +43,16 @@ let reducer = (state={showtype: 'testgroup', slbid:'', tgid: '',addurls:[], addu
         case TYPES.DELETE_UID:
             state.adduids.splice(action.index, 1);
             return Object.assign({}, state, {adduids: state.adduids})
+            break
+        case TYPES.GET_CITIES_SUCCESS:
+            // var cities = action.cities.map((city, index)=>{
+            //     return {
+            //         value: city.name4en,
+            //         label: city.name,
+            //         code: city.admincode
+            //     }
+            // })
+            return Object.assign({}, state, {cities: action.cities})
             break
         default:
             return state

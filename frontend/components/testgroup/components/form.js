@@ -13,25 +13,9 @@ const { RangePicker } = DatePicker;
 const options = [{
     value: 'zhejiang',
     label: 'Zhejiang',
-    children: [{
-        value: 'hangzhou',
-        label: 'Hangzhou',
-        children: [{
-            value: 'xihu',
-            label: 'West Lake',
-        }],
-    }],
 }, {
     value: 'jiangsu',
     label: 'Jiangsu',
-    children: [{
-        value: 'nanjing',
-        label: 'Nanjing',
-        children: [{
-            value: 'zhonghuamen',
-            label: 'Zhong Hua Men',
-        }],
-    }],
 }];
 
 class RegistrationForm extends React.Component {
@@ -49,6 +33,9 @@ class RegistrationForm extends React.Component {
                 console.log('Received values of form: ', values);
             }
         });
+    }
+    componentWillMount =()=> {
+        this.props.contentActions.testgroupActions.getCities();
     }
     componentWillReceiveProps =(nextProps)=> {
         return true;
@@ -197,7 +184,7 @@ class RegistrationForm extends React.Component {
                             if(url !== '')  return (<div key={index}><span className="gl-choice-remove"><Icon type="close" onClick={_this.removeSeletedUrl.bind(_this,index)}/></span><span className="gl-url-add-seleted">{url}</span></div>);
                         })
                     }</div>
-                    <RadioGroup defaultValue="multiple" size="default" onChange={this.changeAddUrlType}>
+                    <RadioGroup className="gl-add-type" defaultValue="multiple" size="default" onChange={this.changeAddUrlType}>
                         <RadioButton value="single" disabled>逐个添加</RadioButton>
                         <RadioButton value="multiple">批量添加</RadioButton>
                     </RadioGroup>
@@ -206,7 +193,7 @@ class RegistrationForm extends React.Component {
                             <Input size="large" ref="urlinputsingle" className="gl-input-with-btn"/>
                             <Button size="large" className="gl-input-btn" onClick={this.addUrl}>添加</Button>
                         </div> :  <div>
-                            <Input type="textarea" ref="urlinputmultiple" className="gl-input-with-btn" placeholder="以;分隔" rows={2} />
+                            <Input type="textarea" ref="urlinputmultiple" className="gl-input-with-btn" placeholder="请输入策略生效的url。添加多个，以;分隔" rows={2} />
                             <Button size="large" className="gl-input-btn" onClick={this.addUrl}>添加</Button>
                         </div>}
 
@@ -219,7 +206,7 @@ class RegistrationForm extends React.Component {
                         if(uid !== '')  return (<div key={index}><span className="gl-choice-remove"><Icon type="close" onClick={_this.removeSeletedUid.bind(_this,index)}/></span><span className="gl-url-add-seleted">{uid}</span></div>);
                     })
                 }</div>
-                    <RadioGroup defaultValue="multiple" size="default" onChange={this.changeAddUidType}>
+                    <RadioGroup className="gl-add-type" defaultValue="multiple" size="default" onChange={this.changeAddUidType}>
                         <RadioButton value="single" disabled>逐个添加</RadioButton>
                         <RadioButton value="multiple">批量添加</RadioButton>
                     </RadioGroup>
@@ -227,7 +214,7 @@ class RegistrationForm extends React.Component {
                             <Input size="large" ref="uidinputsingle" className="gl-input-with-btn"/>
                             <Button size="large" className="gl-input-btn" onClick={this.addUid}>添加</Button>
                         </div> :  <div>
-                            <Input type="textarea" ref="uidinputmultiple" className="gl-input-with-btn" placeholder="以;分隔" rows={2} />
+                            <Input type="textarea" ref="uidinputmultiple" className="gl-input-with-btn" placeholder="请输入策略生效的uid。添加多个，以;分隔" rows={2} />
                             <Button size="large" className="gl-input-btn" onClick={this.addUid}>添加</Button>
                         </div>}
                 </FormItem>
@@ -235,9 +222,12 @@ class RegistrationForm extends React.Component {
                     {...formItemLayout}
                     label="地域"
                 >
-                    <Cascader options={options} onChange={(value)=>{
-
-                    }} placeholder="Please select" />
+                    <Select mode="multiple" onChange={(value)=>{
+                    }} placeholder="Please select">
+                        {this.props.content.testgroup.cities.map((city, index)=> {
+                            return <Option key={city.admincode} value={city.name4en}>{city.name}</Option>
+                        })}
+                    </Select>
 
                 </FormItem>
 

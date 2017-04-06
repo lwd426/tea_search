@@ -3,6 +3,7 @@ import fetch from '../../fetch'
 
 const testgroup_url = 'http://localhost:3000/testgroup'
 const stragety_url = 'http://localhost:3000/stragety'
+const city_url = 'http://localhost:3000/city'
 
 /**
  * 进入编辑策略页面
@@ -52,6 +53,27 @@ export function addUids(uids){
     return {
         type: TYPES.ADD_UIDS,
         uids
+    }
+}
+
+/**
+ * 获取区域信息
+ * @returns {function(*, *)}
+ */
+export function getCities() {
+    return (dispatch, getState) => {
+        return dispatch(fetch.getData(city_url,function(err, result){
+            if(!err)  getCitiesSuccess([])
+            dispatch(getCitiesSuccess(result.data))
+        }))
+    }
+}
+
+
+export function getCitiesSuccess(list) {
+    return {
+        type: TYPES.GET_CITIES_SUCCESS,
+        cities: list
     }
 }
 
@@ -112,6 +134,11 @@ export function getTestGroupListSuccess(list) {
         testgrouplist: list
     }
 }
+
+
+
+
+
 export const deleteTestSuccess = (list) => {
     return {
         type: TYPES.DELETE_TEST_SUCCESS,

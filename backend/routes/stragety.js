@@ -3,7 +3,6 @@ var lib = require('../services/stragety')
 
 router.get('/', function *(next) {
     var tgid = this.query.tgid;
-    console.log(tgid)
     var result = yield lib.getStragetyList(tgid)
     this.body = {
         status: 'success',
