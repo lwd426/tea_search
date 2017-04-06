@@ -23,7 +23,7 @@ const rowSelection = {
 };
 
 
-class GLGroup extends React.Component {
+class GLWebserver extends React.Component {
     constructor(props) {
         super(props);
         let that = this;
@@ -68,7 +68,7 @@ class GLGroup extends React.Component {
                     </Popconfirm>
                     <span className="ant-divider" />
                     <Popconfirm title="确认删除策略?" onConfirm={() => {
-                        that.props.contentActions.deviceinfoActions.deleteWebServer(record.key);
+                        that.props.contentActions.deviceinfoActions.deleteWebServer(record);
                     }}>
                         <a href="#">删除</a>
                     </Popconfirm>
@@ -128,15 +128,16 @@ class GLGroup extends React.Component {
         });
         return (
             <div>
-                <div>
-                    <Button className="server-btn" onClick={this.handleAdd}>新增服务器</Button>
-                    <Button className="server-btn" onClick={this.setRefer}>设定为参照服务器</Button>
+                <div className="gl-testinfo-btndiv">
+                    <Button className="gl-right-btn" icon="eye-o" onClick={this.setRefer}>设定为参照服务器</Button>
+                    <Button className="gl-right-btn" icon="plus" onClick={this.handleAdd}>新增服务器</Button>
                 </div>
                 <Table
                     columns={columns}
                     rowSelection={rowSelection}
                     dataSource={dataSource}
-                    {...this.props}
+                    bordered className="gl-testinfo-table"
+                    size="middle"
                 />
             </div>
         );
@@ -144,4 +145,4 @@ class GLGroup extends React.Component {
 }
 
 
-export default GLGroup;
+export default GLWebserver;
