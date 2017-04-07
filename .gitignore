@@ -4,6 +4,6 @@ cache
 backend/cha
 npm-debug.log
 *.iml
-/public/*
+public
 run/
 logs/
