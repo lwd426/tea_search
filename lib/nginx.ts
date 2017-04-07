@@ -1,4 +1,3 @@
-
 interface CONTENT {
     location: string,
     group?: string,
@@ -175,7 +174,7 @@ class UpstreamGroup {
         return this.groupName + "_" + this.metaData.serverArray[this.index];
     }
 
-    getUpstream(opt=this.metaData.serverArray): string {
+    getUpstream(opt = this.metaData.serverArray): string {
         let n = this.getUpstreamName();
         let s = '';
         opt.forEach(ip => {
