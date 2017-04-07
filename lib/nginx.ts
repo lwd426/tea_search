@@ -266,7 +266,7 @@ function array2one(arr) {
     for (let v of arr) {
         if (Array.isArray(v.url) && v.url.length) {
             v.url.forEach(item => {
-                arr2.push(Object.assign({}, v, {url: item}));
+                arr2.push((<any>Object).assign({}, v, {url: item}));
             });
         } else if (typeof v.url === "string") {
             arr2.push(v);
