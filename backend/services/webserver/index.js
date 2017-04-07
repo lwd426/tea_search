@@ -41,7 +41,15 @@ module.exports = {
             }else{
                 listofstragety = yield db.get('stragety', {slbid: slbid}, undefined, {key: 'stra_id', opt: 'in', data: stragetiesinfo.split(';')});
             }
-            server.set('stragetiesinfo', listofstragety)
+            var info = listofstragety.map((stragety)=>{
+                return {
+                    stra_name: stragety.get("stra_name"),
+                    stra_id: stragety.get("stra_id"),
+                    stra_servers: stragety.get("stra_servers"),
+                    stra_status: stragety.get("stra_status")
+                }
+            })
+            server.set('stragetiesinfo', info)
         }
         return list;
     },
@@ -56,11 +64,14 @@ module.exports = {
     },
     /**
      * 删除WebServer信息
-     * @param id
+     * @param data
+     * @param where
+     * @param otherwhere
+     * @param type 是更新内容还是添加内容
      * @returns {*}
      */
-    updateWebServer: function*(data, where, otherwhere) {
-        var result = yield db.update('webServer', where, data, otherwhere);
+    updateWebServer: function*(data, where, otherwhere, type) {
+        var result = yield db.update('webServer', where, data, otherwhere, type);
         return result;
     }
 }

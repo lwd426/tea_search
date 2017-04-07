@@ -50,7 +50,6 @@ module.exports = {
      * @returns {*}
      */
     updateSlb: function*(where, data) {
-        console.log('nimei')
         var result = yield db.update('slb', where, data);
         return result;
     }

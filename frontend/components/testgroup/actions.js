@@ -1,10 +1,10 @@
 import * as TYPES from './constants';
 import fetch from '../../fetch'
 
-const testgroup_url = 'http://localhost:3000/testgroup'
-const stragety_url = 'http://localhost:3000/stragety'
-const city_url = 'http://localhost:3000/city'
-const server_url = 'http://localhost:3000/webserver'
+const testgroup_url = '/testgroup'
+const stragety_url = '/stragety'
+const city_url = '/city'
+const server_url = '/webserver'
 
 /**
  * 进入编辑策略页面
@@ -258,23 +258,23 @@ export function validate(slbid,tgid,name,desc,cities,servers,urls,uids) {
     console.log('d')
     return (dispatch, getState) => {
         dispatch(fetch.getData(stragety_url+ '?slbid='+slbid,function(err, result){
-            if(result.data.length === 0){//如果当前slb下没有策略，则直接保存
+            // if(result.data.length === 0){//如果当前slb下没有策略，则直接保存
                 return dispatch(fetch.postData(stragety_url,{slbid,tgid,name,desc,cities,servers,urls,uids}, function(err, result){
                     if(err || result.status === 'failure')  dispatch(saveStragetyResult(false))
                     // dispatch(saveStragetyResult(true))
                     dispatch(edit_stragetylist(tgid,slbid))
                 }))
-            }else{
-                if(urls.length !==0) {//填写了url
+            // }else{
+            //     if(urls.length !==0) {//填写了url
                     // 查询本slb下所有的url信息（包括对应的机器key）(也就是查询当前slb下所有的策略信息列表)
                     //
-                }else if(uids.length !==0 || cities.length !==0) {//没填写url,填写uid或区域信息
+                // }else if(uids.length !==0 || cities.length !==0) {//没填写url,填写uid或区域信息
                     //
-                }else{//没填写url,也没填写uid
+                // }else{//没填写url,也没填写uid
                     // 不让保存
-                    return false;
-                }
-            }
+                    // return false;
+                // }
+            // }
 
             // if(!err)  getTestGroupListSuccess([])
             // dispatch(getTestGroupListSuccess(result.data))
