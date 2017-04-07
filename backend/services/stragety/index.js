@@ -37,7 +37,7 @@ module.exports = {
         if(result){
             var otherwhere = {key: 'ip', opt: 'in', data: servers}
             var data = {urls: urls.join(';'), uids: uids.join(';'), stragetiesinfo: uuid}
-            var result2 =  yield server_service.updateWebServer(data, undefined, otherwhere)
+            var result2 =  yield server_service.updateWebServer(data, undefined, otherwhere, 'add')
         }
         return result && result2;
     },

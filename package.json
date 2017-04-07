@@ -5,6 +5,7 @@
   "scripts": {
     "lint": "eslint src",
     "test": "make test",
+    "build": "webpack --config build/webpack.config.js",
     "start": "npm run dev:local",
     "dev:local": "cross-env NODE_ENV=development node build/webpack.dev.js --hot",
     "dev:test": "cross-env NODE_ENV=development node build/webpack.dev.js --hot --deploy",
