@@ -1,6 +1,11 @@
+.idea
 node_modules
 cache
 backend/cha
 npm-debug.log
+<<<<<<< HEAD
 .gitignore
 frontend/components/deviceinfo
+=======
+*.iml
+>>>>>>> develop
