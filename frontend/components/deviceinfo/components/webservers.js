@@ -113,14 +113,14 @@ class GLWebserver extends React.Component {
         const columns = this.columns;
         var dataSource = this.props.content.deviceinfo.webServerList.map((cell, index)=>{
             var stragetyinfo = '-';
-            cell.stragetiesinfo.map((stragety, index)=>{
-                stragetyinfo += stragety.name + ' ';
-            })
+            // cell.stragetiesinfo.map((stragety, index)=>{
+                // stragetyinfo += stragety.name + ' ';
+            // })
             return {
                 key: cell.key,
                 slbid:cell.slbid,
                 ip: cell.ip,
-                stragetyname: stragetyinfo,
+                stragetyname: '',
                 address: cell.address,
                 backup: cell.backup,
                 refer: cell.refer
