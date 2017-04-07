@@ -5,7 +5,7 @@ export default class myChart extends React.Component {
     randerChart = (type) => {
         var chart = new Highcharts.Chart({
             chart: {
-                renderTo: 'container',
+                renderTo: 'container2',
                 type: type ? type : 'column'
             },
             title: {
@@ -64,7 +64,7 @@ export default class myChart extends React.Component {
     render() {
         return (
             <div>
-                <div id="container" className="chart-box"></div>
+                <div id="container2" className="chart-box"></div>
                 {/*<div onClick = {this.randerChart('line')}> {'line'} </div>
                 <div onClick = {this.randerChart('pie')}> {'pie'} </div>
                 <div onClick = {this.randerChart('column')}> {'column'} </div>*/}
