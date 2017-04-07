@@ -3150,7 +3150,7 @@ webpackJsonp([0,2],{
 	                    key: cell.key,
 	                    slbid: cell.slbid,
 	                    ip: cell.ip,
-	                    stragetyname: '',
+	                    stragetyname: stragetyinfo,
 	                    address: cell.address,
 	                    backup: cell.backup,
 	                    refer: cell.refer
