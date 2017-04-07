@@ -2,24 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d4b33b02-0f7f-4318-8007-a3d9469ee0bd" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/db/index.js" afterPath="$PROJECT_DIR$/backend/db/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/db/parse/sdk.js" afterPath="$PROJECT_DIR$/backend/db/parse/sdk.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/routes/cha.js" afterPath="$PROJECT_DIR$/backend/routes/cha.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/routes/stragety.js" afterPath="$PROJECT_DIR$/backend/routes/stragety.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/services/stragety/index.js" afterPath="$PROJECT_DIR$/backend/services/stragety/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/services/webserver/index.js" afterPath="$PROJECT_DIR$/backend/services/webserver/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/deviceinfo/components/info.js" afterPath="$PROJECT_DIR$/frontend/components/deviceinfo/components/info.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/deviceinfo/components/webservers.js" afterPath="$PROJECT_DIR$/frontend/components/deviceinfo/components/webservers.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/deviceinfo/index.js" afterPath="$PROJECT_DIR$/frontend/components/deviceinfo/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/testgroup/actions.js" afterPath="$PROJECT_DIR$/frontend/components/testgroup/actions.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/testgroup/components/form.js" afterPath="$PROJECT_DIR$/frontend/components/testgroup/components/form.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/testgroup/components/servertree.js" afterPath="$PROJECT_DIR$/frontend/components/testgroup/components/servertree.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/testgroup/components/stragety.js" afterPath="$PROJECT_DIR$/frontend/components/testgroup/components/stragety.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/testgroup/components/testgroup.js" afterPath="$PROJECT_DIR$/frontend/components/testgroup/components/testgroup.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/testgroup/constants.js" afterPath="$PROJECT_DIR$/frontend/components/testgroup/constants.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/testgroup/reducer.js" afterPath="$PROJECT_DIR$/frontend/components/testgroup/reducer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/frontend/components/testgroup/style.css" afterPath="$PROJECT_DIR$/frontend/components/testgroup/style.css" />
     </list>
     <ignored path="gatedlaunch.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -89,7 +72,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/services/webserver/index.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="179">
@@ -109,21 +92,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/services/testgroup/index.js">
+      <file leaf-file-name="stragety.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/routes/stragety.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="38" column="56" lean-forward="false" selection-start-line="38" selection-start-column="56" selection-end-line="38" selection-end-column="56" />
+            <state relative-caret-position="360">
+              <caret line="24" column="34" lean-forward="true" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="stragety.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backend/routes/stragety.js">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/backend/services/stragety/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="48" lean-forward="false" selection-start-line="7" selection-start-column="44" selection-end-line="7" selection-end-column="48" />
+            <state relative-caret-position="389">
+              <caret line="38" column="88" lean-forward="false" selection-start-line="38" selection-start-column="88" selection-end-line="38" selection-end-column="88" />
               <folding />
             </state>
           </provider>
@@ -244,12 +227,12 @@
         <option value="$PROJECT_DIR$/frontend/components/testgroup/constants.js" />
         <option value="$PROJECT_DIR$/frontend/components/testgroup/reducer.js" />
         <option value="$PROJECT_DIR$/frontend/components/testgroup/components/servertree.js" />
-        <option value="$PROJECT_DIR$/backend/services/stragety/index.js" />
         <option value="$PROJECT_DIR$/backend/routes/stragety.js" />
         <option value="$PROJECT_DIR$/frontend/components/testgroup/components/testgroup.js" />
         <option value="$PROJECT_DIR$/frontend/components/deviceinfo/components/info.js" />
         <option value="$PROJECT_DIR$/frontend/components/testgroup/components/stragety.js" />
         <option value="$PROJECT_DIR$/frontend/components/testgroup/actions.js" />
+        <option value="$PROJECT_DIR$/backend/services/stragety/index.js" />
       </list>
     </option>
   </component>
@@ -666,12 +649,12 @@
       <workItem from="1490689862204" duration="26200000" />
       <workItem from="1490880813143" duration="4345000" />
       <workItem from="1490932211944" duration="22836000" />
-      <workItem from="1491354857840" duration="58438000" />
+      <workItem from="1491354857840" duration="58647000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="194144000" />
+    <option name="totallyTimeSpent" value="194353000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -690,12 +673,12 @@
       <window_info id="Debug Logs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1627907" sideWeight="0.5114995" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3597056" sideWeight="0.26960784" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19043238" sideWeight="0.26960784" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Execute Anonymous" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1627907" sideWeight="0.48850045" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3597056" sideWeight="0.73039216" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19043238" sideWeight="0.73039216" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3253012" sideWeight="0.49499285" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -1047,14 +1030,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/services/stragety/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="434">
-          <caret line="39" column="58" lean-forward="true" selection-start-line="39" selection-start-column="58" selection-end-line="39" selection-end-column="58" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/backend/db/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="179">
@@ -1075,14 +1050,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="209">
           <caret line="38" column="56" lean-forward="false" selection-start-line="38" selection-start-column="56" selection-end-line="38" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/routes/stragety.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="48" lean-forward="false" selection-start-line="7" selection-start-column="44" selection-end-line="7" selection-end-column="48" />
           <folding />
         </state>
       </provider>
@@ -1150,6 +1117,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="179">
           <caret line="31" column="4" lean-forward="false" selection-start-line="31" selection-start-column="4" selection-end-line="31" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/routes/stragety.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" column="34" lean-forward="true" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/services/stragety/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="389">
+          <caret line="38" column="88" lean-forward="false" selection-start-line="38" selection-start-column="88" selection-end-line="38" selection-end-column="88" />
           <folding />
         </state>
       </provider>

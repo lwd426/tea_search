@@ -36,7 +36,7 @@ module.exports = {
         //更新server信息，把uids、urls和策略id更新到server记录里
         if(result){
             var otherwhere = {key: 'ip', opt: 'in', data: servers}
-            var data = {urls: urls.join(';'), uids: uids.join(';')}
+            var data = {urls: urls.join(';'), uids: uids.join(';'), stragetiesinfo: uuid}
             var result2 =  yield server_service.updateWebServer(data, undefined, otherwhere)
         }
         return result && result2;
