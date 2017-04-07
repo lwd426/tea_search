@@ -13,7 +13,6 @@ render(
 	<Provider store={store}>
 		<div>
 			<App/>
-			<DevTool/>
 		</div>
 
 	</Provider>,
