@@ -4,17 +4,12 @@ interface CONTENT {
     group?: string,
     upstreams: string
 }
-interface CODE {
-    code: number,
-    data: string
-}
 interface Meta {
     url: string,
     uidArray?: string[],
     regionArray?: string [],
     serverArray?: string[],
     default?: boolean
-
 }
 const defaultUpstream = "defaultUpstream";
 const geoipUrl = `/etc/maxmind-city.mmdb`;
