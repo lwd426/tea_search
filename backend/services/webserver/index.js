@@ -9,7 +9,6 @@ var db = require('../../db')
 var moment = require('moment');
 
 module.exports = {
-
     saveWebServer: function*(key, slbid, ip, stragetyname, address, backup, refer) {
         var data = {
             key: key, 
@@ -32,6 +31,18 @@ module.exports = {
      */
     getWebServerList: function*(slbid) {
         var list = yield db.get('webServer', {slbid: slbid});
+        var len = list.length, i=0;
+        for(;i<len;i++){
+            var server = list[i];
+            var listofstragety = '';
+            var stragetiesinfo = server.get('stragetiesinfo') ;
+            if(!stragetiesinfo || stragetiesinfo.split(';').length === 0) {
+                listofstragety = [];
+            }else{
+                listofstragety = yield db.get('stragety', {slbid: slbid}, undefined, {key: 'stra_id', opt: 'in', data: stragetiesinfo.split(';')});
+            }
+            server.set('stragetiesinfo', listofstragety)
+        }
         return list;
     },
     /**
@@ -48,8 +59,8 @@ module.exports = {
      * @param id
      * @returns {*}
      */
-    updateWebServer: function*(data, where) {
-        var result = yield db.update('webServer', where, data);
+    updateWebServer: function*(data, where, otherwhere) {
+        var result = yield db.update('webServer', where, data, otherwhere);
         return result;
     }
 }

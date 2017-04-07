@@ -36,13 +36,13 @@ class GLWebserver extends React.Component {
                     value={text}
                     onChange={this.onCellChange(index, 'ip')}
                 />
-            ),
+            )
         },{
             title: '参照服务器',
             dataIndex: 'refer',
         },{
-            title: '策略名称',
-            dataIndex: 'stragetyname',
+            title: '策略信息',
+            dataIndex: 'stragetyname'
         },{
             title: '机房',
             dataIndex: 'address',
@@ -93,40 +93,34 @@ class GLWebserver extends React.Component {
     handleAdd = () => {
         const slbid = this.props.menu.slbid || '';
         let key = uuid();
-        //console.log('ddd ' + slbid);
         const newData = {
             key: key,
             slbid: slbid,
             ip: `请输入ip`,
-            stragetyname: '-',
+            stragetiesinfo: '-',
             address: '机房',
             backup: '备注',
             refer: '否'
         };
-        /*this.setState({
-            dataSource: [...dataSource, newData],
-            count: count + 1,
-        });*/
-
         this.props.contentActions.deviceinfoActions.addWebServer(newData);
     }
     componentWillReceiveProps(nextProps) {
-        console.log('webserver componentWillReceiveProps')
         return true;
     }
     componentDidMount() {
-        // const slbid = this.props.menu.slbid || '';
-        // this.props.contentActions.deviceinfoActions.getWebServerList(slbid);
     }
     render() {
-        console.log('webserver render')
         const columns = this.columns;
         var dataSource = this.props.content.deviceinfo.webServerList.map((cell, index)=>{
+            var stragetyinfo = '-';
+            cell.stragetiesinfo.map((stragety, index)=>{
+                stragetyinfo += stragety.name + ' ';
+            })
             return {
                 key: cell.key,
                 slbid:cell.slbid,
                 ip: cell.ip,
-                stragetyname: cell.stragetyname,
+                stragetyname: stragetyinfo,
                 address: cell.address,
                 backup: cell.backup,
                 refer: cell.refer

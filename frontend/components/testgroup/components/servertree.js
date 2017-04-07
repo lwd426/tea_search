@@ -4,47 +4,33 @@ import '../style.css';
 import 'antd.min.css';
 const SHOW_PARENT = TreeSelect.SHOW_PARENT;
 
-const treeData = [{
-    label: '192.168.1.1',
-    value: '1',
-    key: '1wewer',
-}, {
-    label: '192.168.1.2',
-    value: '2',
-    key: '2ddd',
-}, {
-    label: '192.168.1.3',
-    value: '3',
-    key: 'dfdfd',
-}, {
-    label: '192.168.1.4',
-    value: '4',
-    key: '4ddfdfddf',
-}, {
-    label: '192.168.1.5',
-    value: '5',
-    key: '5dfdfdf',
-}, {
-    label: '192.168.1.6',
-    value: '6',
-    key: '6',
-}];
-
+var treeData = [];
 class GLServerTree extends React.Component {
     onChange = (values, labels) => {
-        console.log('onChange ', values, arguments);
-        // this.setState({ value });
+        this.props.contentActions.testgroupActions.addServers(values, labels);
+    }
+    componentWillReceiveProps =(nextProps)=> {
+        return true;
+    }
+    componentDidMount =()=>{
 
     }
     render() {
+        treeData = this.props.content.testgroup.servers.map((server, index) => {
+            return {
+                label: server.status ?  server.ip + <span>server.statusinfo</span>: server.ip ,
+                value: server.key,
+                key: server.key
+            }
+        })
         const tProps = {
-            // value: this.props.content.serverlist,
             treeData,
+            value: this.props.content.testgroup.serverselectedkeys,
             onChange: this.onChange,
             multiple: true,
             allowClear: true,
             defaultValue:  [],
-            placeholder: '请选择服务器',
+            placeholder: '请选择策略的分流服务器',
             size: 'large',
             treeCheckable: true,
             showCheckedStrategy: SHOW_PARENT,

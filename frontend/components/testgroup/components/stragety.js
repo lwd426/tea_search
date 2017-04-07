@@ -5,43 +5,6 @@ import GLInfo from '../../deviceinfo/components/info'
 import { Table, Input, Icon, Button,Modal, Popconfirm } from 'antd';
 const confirm = Modal.confirm;
 
-const columns4back = [
-    { title: '版本号', width: 80, dataIndex: 'name', key: 'name' },
-    { title: '说明', width: 100, dataIndex: 'age', key: 'age' },
-    { title: '发布时间', dataIndex: 'address', key: '1' },
-    {
-        title: '回滚',
-        key: 'operation',
-        fixed: 'right',
-        width: 100,
-        render: () => <Popconfirm title="确认回滚到此版本?" onConfirm={() => this.onDelete(index)}>
-            <a href="#">回滚</a>
-        </Popconfirm>,
-    },
-];
-
-const data4back = [{
-    key: '1',
-    name: 'John',
-    age: '版本说明哈哈哈哈啊哈和',
-    address: '2017/03/17 20:00:00',
-}, {
-    key: '2',
-    name: 'Jim',
-    age: 40,
-    address: '2017/03/17 20:00:00',
-},{
-    key: '3',
-    name: 'Jim Green',
-    age: '版本说明哈哈哈哈啊哈和',
-    address: '2017/03/17 20:00:00',
-},{
-    key: '4',
-    name: 'Jimen',
-    age: 40,
-    address: '2017/03/17 20:00:00',
-}];
-
 function showConfirm() {
     confirm({
         title: '请选择回滚到的版本信息?',
@@ -49,19 +12,14 @@ function showConfirm() {
     });
 }
 
-function showBackWindow() {
-    confirm({
-        title: '确认发布以下所有策略到服务器?',
-        content: <Table columns={columns4back} dataSource={data4back} />
-    });
-}
+
 
 class GLStragety extends React.Component {
     constructor(props) {
         super(props);
         this.columns = [{
             title: '策略名称',
-            dataIndex: 'stragetyname',
+            dataIndex: 'name',
             width: '20%',
         }, {
             title: '状态',
@@ -120,18 +78,18 @@ class GLStragety extends React.Component {
         const columns = this.columns;
         const  dataSource = this.props.content.testgroup.stragetylist.map((cell, index)=>{
             return {
-                key: cell.code,
+                key: cell.stra_id,
                 slbid:cell.slbid,
                 testgroupcode: cell.tgid,
-                stragetycode: cell.code,
-                code: index + 1,
-                name: cell.name,
-                status: cell.status,
-                server: cell.serverarray,
+                stragetycode: cell.stra_id,
+                code: cell.stra_id,
+                name: cell.stra_name,
+                status: cell.stra_status,
+                server: cell.stra_servers,
                 flowaccounting: cell.flowaccounting,
                 tag: cell.tag,
                 worktime: cell.time,
-                description: <GLInfo/>
+                description: <GLInfo urls={cell.stra_urls.split(';')} uids={cell.stra_uids.split(';')}/>
             }
         });
         return (
@@ -139,8 +97,8 @@ class GLStragety extends React.Component {
                 <div className="gl-testinfo-btndiv">
                     <Button className="gl-left-btn" icon="double-left" onClick={this.goBack}>返回</Button>
                     <Button className="gl-left-btn" icon="upload" onClick={showConfirm}>发布到服务器</Button>
-                    <Button className="gl-right-btn" icon="loading-3-quarters" onClick={showBackWindow}>生成原始版本</Button>
-                    <Button className="gl-right-btn" icon="loading-3-quarters" onClick={showBackWindow}>生成数据标签</Button>
+                    <Button className="gl-right-btn" icon="compass" onClick={showConfirm}>生成原始版本</Button>
+                    <Button className="gl-right-btn" icon="tag" onClick={showConfirm}>生成数据标签</Button>
                     <Button className="gl-right-btn" icon="plus" onClick={this.handleAdd}>新增策略</Button>
                 </div>
                 <Table
