@@ -3,4 +3,5 @@ node_modules
 cache
 backend/cha
 npm-debug.log
+.gitignore
 *.iml
