@@ -14,20 +14,17 @@ class GLTree extends React.Component {
             <div className="stragety-div">
                 <div>
                     <div>URL</div>
-                    <span>192.168.1.1</span>
-                    <span>192.168.1.1</span>
-                    <span>192.168.1.1</span>
-                    <span>192.168.1.1</span>
-                    <span>192.168.1.1</span>
-                    <span>192.168.1.1</span>
+                    { this.props.urls.map((cell)=>{
+                        return (<span>{cell}</span>)
+                      })
+                    }
                 </div>
                 <div>
                     <div>UID</div>
-                    <span>111111111</span>
-                    <span>111111111</span>
-                    <span>111111111</span>
-                    <span>111111111</span>
-                    <span>111111111</span>
+                    { this.props.uids.map((cell)=>{
+                        return (<span>{cell}</span>)
+                    })
+                    }
                 </div>
 
             </div>

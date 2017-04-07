@@ -43,8 +43,10 @@ module.exports = {
             // query.lessThanOrEqualTo("wins", 50);
             // query.greaterThan("wins", 50);
             // query.greaterThanOrEqualTo("wins", 50);
+            // query.containedIn("playerName",["Jonathan Walsh", "Dario Wunsch", "Shawn Simon"]);
             query.find({
                 success: function (results) {
+                    console.log(results)
                     resolve(results)
                 },
                 error: function (error) {

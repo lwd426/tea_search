@@ -22,15 +22,21 @@ module.exports = {
      * 获取数据
      * @param tableName  表名称
      * @param whereOpts 条件
+     * @param otherOpts 除了等于条件的其他条件 格式：{key: 'stra_id', opt: 'in', data:xxx}
      * @returns {*}
      */
-    get: function* (tableName, whereOpts){
+    get: function* (tableName, equalToOpts, otherOpts){
         var result;
         try{
             var Quwey = ParseUtils.initQuery(tableName);
-            if(whereOpts) {
-                for(var key in whereOpts){
-                    Quwey.equalTo(key, whereOpts[key]);
+            if(equalToOpts) {
+                for(var key in equalToOpts){
+                    equalToOpts[key] ? Quwey.equalTo(key, equalToOpts[key]) : '';
+                }
+            }
+            if(otherOpts){
+                switch(otherOpts.opt){
+                    case "in": Quwey.containedIn(otherOpts.key, otherOpts.data);
                 }
             }
             result = yield ParseUtils.get(Quwey)
@@ -71,15 +77,21 @@ module.exports = {
      * @param tableName 表名称
      * @param whereOpts 条件（对象形式）
      * @param updateData 更新数据（对象形式）
+     * @param otherOpts where里的其他条件，比如in, 大于小于等（对象形式）
      * @returns {*}
      */
-    update: function* (tableName, whereOpts, updateData){
+    update: function* (tableName, whereOpts, updateData, otherOpts){
         var result;
         try{
             var Quwey = ParseUtils.initQuery(tableName);
             if(whereOpts) {
                 for(var key in whereOpts){
                     Quwey.equalTo(key, whereOpts[key]);
+                }
+            }
+            if(otherOpts){
+                switch(otherOpts.opt){
+                    case "in": Quwey.containedIn(otherOpts.key, otherOpts.data);
                 }
             }
             var results = yield ParseUtils.get(Quwey);

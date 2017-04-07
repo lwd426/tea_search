@@ -15,12 +15,10 @@ class GLDeviceInfo extends React.Component {
         // };
     }
     componentWillReceiveProps(nextProps) {
-                console.log('device componentWillReceiveProps')
 
         return true;
     }
     onChange = (activeKey) => {
-        console.log('changetab')
         if(activeKey == 2){
             const slbid = this.props.menu.slbid || '';
             this.props.contentActions.deviceinfoActions.getWebServerList(slbid);
@@ -30,7 +28,6 @@ class GLDeviceInfo extends React.Component {
         this[action](targetKey);
     }
     render() {
-        console.log('device render')
         var _this = this;
         return (
             <Tabs

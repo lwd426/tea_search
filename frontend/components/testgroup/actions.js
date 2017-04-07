@@ -4,29 +4,27 @@ import fetch from '../../fetch'
 const testgroup_url = 'http://localhost:3000/testgroup'
 const stragety_url = 'http://localhost:3000/stragety'
 const city_url = 'http://localhost:3000/city'
+const server_url = 'http://localhost:3000/webserver'
 
 /**
  * 进入编辑策略页面
  * @returns {{type}}
  */
-export function edit_stragetylist(stragety) {
+export function edit_stragetylist(tgid, slbid) {
     return (dispatch, getState) => {
-        var testgroupid = stragety.key;
-        var slbid = stragety.slbid;
-        return dispatch(fetch.getData(stragety_url + '?tgid='+testgroupid,function(err, result){
-            if(!err)  getStragetyListSuccess([], testgroupid, slbid)
-            dispatch(getStragetyListSuccess(result.data, testgroupid, slbid))
+        return dispatch(fetch.getData(stragety_url + '?tgid='+tgid,function(err, result){
+            if(!err)  getStragetyListSuccess([], tgid, slbid)
+            dispatch(getStragetyListSuccess(result.data, tgid, slbid))
         }))
     }
 }
 
-export function getStragetyListSuccess(list, stragetyid, testgroupid, slbid){
+export function getStragetyListSuccess(list, tgid, slbid){
     return {
         type: TYPES.GET_STRAGETY_LIST,
         list: list,
-        tgid: testgroupid,
-        slbid,
-        stragetyid
+        tgid,
+        slbid
     }
 }
 
@@ -77,6 +75,42 @@ export function getCitiesSuccess(list) {
     }
 }
 
+/**
+ * 获取服务器信息
+ * @returns {function(*, *)}
+ */
+export function getServers(slbid) {
+    return (dispatch, getState) => {
+        return dispatch(fetch.getData(server_url+ '?slbid='+slbid,function(err, result){
+            if(!err)  getServersSuccess([])
+            dispatch(getServersSuccess(result.data))
+        }))
+    }
+}
+
+export function addServers(serverkeys, servers) {
+    return {
+        type: TYPES.ADD_SERVERS,
+        servers,
+        serverkeys,
+    }
+}
+
+export function getServersSuccess(list) {
+    return {
+        type: TYPES.GET_SERVERS_SUCCESS,
+        servers: list
+    }
+}
+
+export function addCities(values) {
+    return {
+        type: TYPES.ADD_CITIES,
+        citiesselected: values
+    }
+}
+
+
 export function deleteUid(index) {
     return {
         type: TYPES.DELETE_UID,
@@ -114,7 +148,15 @@ export function goback2stragelist() {
     }
 }
 
-
+// export function () {
+//     export function goback2stragelist(slbid, tgid) {
+//         return dispatch(fetch.getData(stragety_url + '?tgid='+slbid,function(err, result){
+//             if(!err)  getStragetyListSuccess([], undefined, tgid, slbid)
+//             dispatch(goback2stragelist())
+//         }))
+//
+//     }
+// }
 
 export function addTestGroup(group){
     return (dispatch, getState) => {
@@ -191,5 +233,53 @@ export function updateTest(where, data) {
             }))
         }))
     }
+}
+export function validateFailure(params) {
+    return {
+        type: VALIDATE_FAILURE,
+        params
+    }
+}
+// export function validateSuccesss() {
+//     return {
+//         type: VALIDATE_SUCCESS
+//     }
+// }
+
+export function saveStragetyResult(result) {
+    return {
+        type: TYPES.SAVE_STRAGETY_RESULT,
+        result
+    }
+}
+
+export function validate(slbid,tgid,name,desc,cities,servers,urls,uids) {
+    if(name === '') dispatch(validateFailure('name'));
+    console.log('d')
+    return (dispatch, getState) => {
+        dispatch(fetch.getData(stragety_url+ '?slbid='+slbid,function(err, result){
+            if(result.data.length === 0){//如果当前slb下没有策略，则直接保存
+                return dispatch(fetch.postData(stragety_url,{slbid,tgid,name,desc,cities,servers,urls,uids}, function(err, result){
+                    if(err || result.status === 'failure')  dispatch(saveStragetyResult(false))
+                    // dispatch(saveStragetyResult(true))
+                    dispatch(edit_stragetylist(tgid,slbid))
+                }))
+            }else{
+                if(urls.length !==0) {//填写了url
+                    // 查询本slb下所有的url信息（包括对应的机器key）(也就是查询当前slb下所有的策略信息列表)
+                    //
+                }else if(uids.length !==0 || cities.length !==0) {//没填写url,填写uid或区域信息
+                    //
+                }else{//没填写url,也没填写uid
+                    // 不让保存
+                    return false;
+                }
+            }
+
+            // if(!err)  getTestGroupListSuccess([])
+            // dispatch(getTestGroupListSuccess(result.data))
+        }))
+    }
+
 }
 

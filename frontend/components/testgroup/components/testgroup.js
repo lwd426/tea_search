@@ -4,8 +4,45 @@ import 'antd.min.css';
 import EditableCell from './editcell'
 const uuid = require('uuid/v1');
 
-import { Table, Button, Popconfirm } from 'antd';
+import { Table, Button, Modal, Popconfirm } from 'antd';
+const confirm = Modal.confirm;
 
+const columns4back = [
+    { title: '版本号', width: 80, dataIndex: 'name', key: 'name' },
+    { title: '说明', width: 100, dataIndex: 'age', key: 'age' },
+    { title: '发布时间', dataIndex: 'address', key: '1' },
+    {
+        title: '回滚',
+        key: 'operation',
+        fixed: 'right',
+        width: 100,
+        render: () => <Popconfirm title="确认回滚到此版本?" onConfirm={() => this.onDelete(index)}>
+            <a href="#">回滚</a>
+        </Popconfirm>,
+    },
+];
+
+const data4back = [{
+    key: '1',
+    name: 'John',
+    age: '版本说明哈哈哈哈啊哈和',
+    address: '2017/03/17 20:00:00',
+}, {
+    key: '2',
+    name: 'Jim',
+    age: 40,
+    address: '2017/03/17 20:00:00',
+},{
+    key: '3',
+    name: 'Jim Green',
+    age: '版本说明哈哈哈哈啊哈和',
+    address: '2017/03/17 20:00:00',
+},{
+    key: '4',
+    name: 'Jimen',
+    age: 40,
+    address: '2017/03/17 20:00:00',
+}];
 
 class GLTestgroup extends React.Component {
     constructor(props) {
@@ -42,10 +79,10 @@ class GLTestgroup extends React.Component {
             render: (text, test) => {
                 return (
                 <span>
-                  {/*<a href="#">改名</a>*/}
-                  {/*<span className="ant-divider" />*/}
+                  <a href="#" onClick={that.showBackWindow}>版本日志</a>
+                  <span className="ant-divider" />
                   <a href="#" onClick={() => {
-                      that.props.contentActions.testgroupActions.edit_stragetylist(test)
+                      that.props.contentActions.testgroupActions.edit_stragetylist(test.code, that.props.menu.slbid)
                   }}>策略维护</a>
                   <span className="ant-divider" />
                   <Popconfirm title="确认删除策略?" onConfirm={() => {
@@ -64,6 +101,12 @@ class GLTestgroup extends React.Component {
             var cell = dataSource[index];
             this.props.contentActions.testgroupActions.updateTest({code:cell.code, slbid: cell.slbid}, {name: value})
         };
+    }
+    showBackWindow = () => {
+        confirm({
+            title: '确认发布以下所有策略到服务器?',
+            content: <Table columns={columns4back} dataSource={data4back}/>
+        });
     }
     onDelete = (index) => {
         const dataSource = [...this.props.content.testgroup.testgrouplist];
@@ -99,10 +142,10 @@ class GLTestgroup extends React.Component {
     render() {
         const  dataSource = this.props.content.testgroup.testgrouplist.map((cell, index)=>{
             return {
-                key: cell.code,
+                key: cell.objectId,
                 slbid:cell.slbid,
-                tgid: cell.tgid,
-                code: index + 1,
+                tgid: cell.objectId,
+                code: cell.objectId,
                 name: cell.name,
                 status: cell.status,
                 flowaccounting: cell.flowaccounting,
