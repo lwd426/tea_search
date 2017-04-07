@@ -5,6 +5,6 @@ backend/cha
 npm-debug.log
 .gitignore
 *.iml
-public
+/public/*
 run/
 logs/
