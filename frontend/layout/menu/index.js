@@ -65,8 +65,8 @@ class GLMenu extends React.Component {
                     >
                     <Menu.Item key={e.objectId+",deviceinfo"}><Icon type="hdd" />设备信息</Menu.Item>
                     <Menu.Item key={e.objectId+",testinfo"}><Icon type="appstore-o" />测试项目</Menu.Item>
-                    <Menu.Item key={e.objectId+",datachart"}><Icon type="filter" />数据报表</Menu.Item>
-                    <Menu.Item key={e.objectId+",serverlog"}><Icon type="file-text" />服务器日志</Menu.Item>
+                    {/*<Menu.Item key={e.objectId+",datachart"}><Icon type="filter" />数据报表</Menu.Item>
+                    <Menu.Item key={e.objectId+",serverlog"}><Icon type="file-text" />服务器日志</Menu.Item>*/}
                     </SubMenu>
                 )}
 

@@ -1,6 +1,7 @@
+.idea
 node_modules
 cache
-.idea
 backend/cha
 npm-debug.log
 .gitignore
+*.iml

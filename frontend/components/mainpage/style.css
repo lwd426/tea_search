@@ -40,3 +40,28 @@
 .editable-add-btn {
     margin-bottom: 8px;
 }
+
+.mainpage{
+    padding:12px;
+}
+.mainpage .ant-cascader-picker{
+    width:250px;
+    margin-bottom: 20px;
+}
+.dropdownBox,.spanBox{
+    width:33%;text-align: center;display: inline-block;
+}
+.rangepickerBox{
+    display: inline-block;
+    float: right;
+}
+.rangepickerBox .ant-calendar-picker{
+    width: 200px!important;
+}
+.dropdownBox,.spanBox,.rangepickerBox{
+    font-size: 15px;
+    margin-bottom: 40px;
+}
+.tableBox{
+    padding: 50px 100px;
+}

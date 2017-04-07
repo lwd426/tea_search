@@ -39,4 +39,9 @@
 .slbBox>.ant-input{
     width: 240px;
 }
+.slbBox>.editable-cell{
+    width: 240px;
+    display: inline-block;
+    text-align: left;
+}
 

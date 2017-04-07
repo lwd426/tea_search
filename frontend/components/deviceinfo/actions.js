@@ -3,14 +3,34 @@ import fetch from '../../fetch'
 const slb_list_url = '/slb';
 const web_list_url = '/webserver';
 
+
+/**
+ * 获取SLB名称
+ * @returns {function(*, *)}
+ */
+export function getSLB(objectId) {
+    return (dispatch, getState) => {
+        return dispatch(fetch.getData(slb_list_url + '?objectId=' + objectId,function(err, result){
+            if(!err) getSlbName('');
+            var arr = result.data;
+            var name = arr[0].slbDomain;
+            dispatch(getSlbName(name));
+        }))
+    }
+}
+
+export function getSlbName(name){
+    return {
+        type: TYPES.CURRENT_SLB_NAME,
+        name
+    }
+}
 export function updateSLB(objectId, slbDomain) {
     return (dispatch, getState) => {
-        return dispatch(fetch.updateData(slb_list_url,{objectId: 'I4WN52Sb7j'}, {slbDomain: slbDomain}, function(err, result){
-            console.log(err)
+        return dispatch(fetch.updateData(slb_list_url,{objectId: objectId}, {slbDomain: slbDomain}, function(err, result){
             if(!err){
                 return false;
             }
-            console.log(result)
             //dispatch(getMenuListSuccess(result.data.results))
         }))
     }

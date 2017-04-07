@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react';
 import 'antd.min.css';
 import {  Table, Input, Icon, Button, Popconfirm  } from 'antd';
 class EditableCell extends React.Component {

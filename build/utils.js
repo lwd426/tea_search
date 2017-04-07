@@ -30,6 +30,9 @@ exports.getIP = function() {
       if (details.family == 'IPv4' && key == 'en0') {
         IPv4 = details.address;
         return true;
+      }else if(details.family == 'IPv4' && key == 'eth1'){
+        IPv4 = details.address;
+        return true;
       }
     });
   }
