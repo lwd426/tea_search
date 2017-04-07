@@ -62,7 +62,6 @@ module.exports = {
                     data: data
                 })
             }).then((res) => {
-                console.log(res.json())
                 return res.json()
             }).then((json) => {
                 if (callback) callback(null, json);

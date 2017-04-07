@@ -26,9 +26,14 @@ module.exports = {
      * 获取slb列表
      * @returns {*}
      */
-    getSlbList: function*() {
-        var slblist = yield db.get('slb');
-        return slblist;
+    getSlbList: function*(id) {
+        if(id){
+            var slblist = yield db.get('slb', {objectId: id});
+            return slblist;
+        }else{
+            var slblist = yield db.get('slb');
+            return slblist;
+        } 
     },
     /**
      * 删除slb信息

@@ -3,6 +3,8 @@ var lib = require('../services/slb')
 
 router.get('/', function *(next) {
     var result = yield lib.getSlbList()
+    var objectId = this.query.objectId;
+    var result = yield lib.getSlbList(objectId)
     this.body = {
         status: 'success',
         data: result
