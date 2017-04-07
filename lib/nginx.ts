@@ -127,7 +127,7 @@ class UpstreamGroup {
             $geoip2_data_city_name default=Beijing city names en;
            }`;
         if (this.type == 'url_region') {
-            cookie = '$geoip2_data_city_name'//todo
+            cookie = '$geoip2_data_city_name';
         } else if (this.type == 'url_uid') {
             cookie = '$COOKIE_uid';
             geo1p2 = '';
