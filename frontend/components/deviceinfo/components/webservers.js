@@ -120,7 +120,7 @@ class GLWebserver extends React.Component {
                 key: cell.key,
                 slbid:cell.slbid,
                 ip: cell.ip,
-                stragetyname: '',
+                stragetyname: stragetyinfo,
                 address: cell.address,
                 backup: cell.backup,
                 refer: cell.refer
