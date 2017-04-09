@@ -10,6 +10,7 @@ module.exports = {
         },
         timeout: 5
 	}
+	, HOST: 'http://localhost:3000'
 	,PORT: 3000
 
 }

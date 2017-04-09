@@ -13,6 +13,13 @@ class GLTree extends React.Component {
         return (
             <div className="stragety-div">
                 <div>
+                    <div>服务器</div>
+                    { this.props.servers.map((cell)=>{
+                        return (<span>{cell}</span>)
+                    })
+                    }
+                </div>
+                <div>
                     <div>URL</div>
                     { this.props.urls.map((cell)=>{
                         return (<span>{cell}</span>)

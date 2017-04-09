@@ -34,10 +34,14 @@ module.exports = {
                     equalToOpts[key] ? Quwey.equalTo(key, equalToOpts[key]) : '';
                 }
             }
-            if(otherOpts){
-                switch(otherOpts.opt){
-                    case "in": Quwey.containedIn(otherOpts.key, otherOpts.data);
-                }
+            if(otherOpts && Array.isArray(otherOpts)){
+                otherOpts.map((opt)=>{
+                    switch(opt.opt){
+                        case "in": Quwey.containedIn(opt.key, opt.data);break;
+                        case "limit": Quwey.limit(opt.data);break;
+                        case "noEqual": Quwey.notEqualTo(opt.key, opt.data);break;
+                    }
+                })
             }
             result = yield ParseUtils.get(Quwey)
         }catch(e){
@@ -77,10 +81,10 @@ module.exports = {
      * @param tableName 表名称
      * @param whereOpts 条件（对象形式）
      * @param updateData 更新数据（对象形式）
-     * @param otherOpts where里的其他条件，比如in, 大于小于等（对象形式）
+     * @param otherOpts where里的其他条件，比如in, 大于小于等（数组形式）
      * @returns {*}
      */
-    update: function* (tableName, whereOpts, updateData, otherOpts){
+    update: function* (tableName, whereOpts, updateData, otherOpts, type){
         var result;
         try{
             var Quwey = ParseUtils.initQuery(tableName);
@@ -89,16 +93,27 @@ module.exports = {
                     Quwey.equalTo(key, whereOpts[key]);
                 }
             }
-            if(otherOpts){
-                switch(otherOpts.opt){
-                    case "in": Quwey.containedIn(otherOpts.key, otherOpts.data);
-                }
+            if(otherOpts && Array.isArray(otherOpts)){
+                otherOpts.map((opt)=>{
+                    switch(opt.opt){
+                        case "in": Quwey.containedIn(opt.key, opt.data);break;
+                        case "limit": Quwey.limit(opt.data);break;
+                        case "noEqual": Quwey.notEqualTo(opt.key, opt.data);break;
+                    }
+                })
             }
             var results = yield ParseUtils.get(Quwey);
             var i = 0, len = results.length, updateResult = false;
             for(;i<len;i++){
                 for(var key in updateData){
-                    results[i].set(key, updateData[key]);
+                    switch(updateData.opt){
+                        case "in": Quwey.containedIn(otherOpts.key, otherOpts.data);
+                    }
+                    if(type === 'add' && results[i].get(key)){
+                        results[i].set(key,results[i].get(key)+';' + updateData[key]);
+                    }else{
+                        results[i].set(key, updateData[key]);
+                    }
                 }
                 updateResult = yield ParseUtils.save(results[i]);
                 updateResult = updateResult.status;

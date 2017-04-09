@@ -24,7 +24,7 @@ class GLAddStragety extends React.Component {
                     <Button className="gl-left-btn" icon="double-left" onClick={this.goBack}>返回</Button>
                 </div>
                 <div>
-                    <div className="title">新增分流策略</div>
+                    <div className="title">{this.props.content.testgroup.editting_stragety ? "修改分流策略" : "新增分流策略"}</div>
                 </div>
                 <GLForm {...this.props}/>
 

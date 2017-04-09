@@ -1,6 +1,7 @@
 import * as TYPES from './constants'
 import fetch from '../../fetch'
-const slb_list_url = 'http://localhost:3000/slb'
+const HOST = require('../../../config').HOST;
+const slb_list_url = HOST + '/slb'
 
 
 /**
