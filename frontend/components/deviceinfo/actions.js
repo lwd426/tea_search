@@ -1,7 +1,9 @@
 import * as TYPES from './constants'
 import fetch from '../../fetch'
-const slb_list_url = '/slb';
-const web_list_url = '/webserver';
+const HOST = require('../../../config').HOST;
+
+const slb_list_url = HOST + '/slb';
+const web_list_url = HOST + '/webserver';
 
 
 /**

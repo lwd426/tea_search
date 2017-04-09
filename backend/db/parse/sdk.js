@@ -46,7 +46,6 @@ module.exports = {
             // query.containedIn("playerName",["Jonathan Walsh", "Dario Wunsch", "Shawn Simon"]);
             query.find({
                 success: function (results) {
-                    console.log(results)
                     resolve(results)
                 },
                 error: function (error) {

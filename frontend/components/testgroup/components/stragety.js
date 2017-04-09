@@ -27,6 +27,12 @@ class GLStragety extends React.Component {
         }, {
             title: 'web服务器',
             dataIndex: 'server',
+        }, , {
+            title: '生效url',
+            dataIndex: 'urls',
+        }, , {
+            title: '生效uid',
+            dataIndex: 'uids',
         }, {
             title: '流量占比',
             dataIndex: 'flowaccounting',
@@ -41,9 +47,13 @@ class GLStragety extends React.Component {
             dataIndex: 'operation',
             render: (text, record) => (
                 <span>
-                  <a href="#">启动</a>
+                  <a href="#" onClick={()=>{
+                      this.props.contentActions.testgroupActions.handleStragety(record.code, record.status === "running" ? "stopped" : "running")
+                  }}> {record.status === 'running' ? '停止' : '启动'}</a>
                   <span className="ant-divider" />
-                  <a href="#">编辑</a>
+                  <a href="#" onClick={()=>{
+                      this.props.contentActions.testgroupActions.editStragety(record)
+                  }}>修改</a>
                   <span className="ant-divider" />
                   <Popconfirm title="确认删除策略?" onConfirm={() => this.onDelete(index)}>
                     <a href="#">删除</a>
@@ -52,12 +62,6 @@ class GLStragety extends React.Component {
             )
         }];
 
-        this.state = {
-            dataSource: [
-                // { key: 1, stragetyname: '策略一', status: '生效', server: '192.168.1.1', flowaccounting: '50%', tag: '2930c',worktime: '2017-03-27 18:00 至 2017-03-31 18：00',description: <GLInfo/> },
-            ],
-            count: 4,
-        };
     }
     componentWillReceiveProps =(nextProps)=> {
         return true;
@@ -70,6 +74,10 @@ class GLStragety extends React.Component {
     handleAdd = () => {
         // const {slbid, tgid} = this.props.content.testgroup;
         this.props.contentActions.testgroupActions.add_stragety()
+    }
+    generateTags =()=>{
+        const {slbid, tgid} = this.props.content.testgroup;
+        this.props.contentActions.testgroupActions.generateTags(slbid, tgid);
     }
     goBack = () => {
         this.props.contentActions.testgroupActions.goback()
@@ -84,12 +92,17 @@ class GLStragety extends React.Component {
                 stragetycode: cell.stra_id,
                 code: cell.stra_id,
                 name: cell.stra_name,
+                desc: cell.stra_desc,
                 status: cell.stra_status,
-                server: cell.stra_servers,
+                server: '...',
+                serverskey: cell.stra_serverskey,
+                urls: '...',
+                uids: '...',
+                cities: cell.stra_cities,
                 flowaccounting: cell.flowaccounting,
                 tag: cell.tag,
                 worktime: cell.time,
-                description: <GLInfo urls={cell.stra_urls.split(';')} uids={cell.stra_uids.split(';')}/>
+                description: <GLInfo urls={cell.stra_urls.split(';')} servers={cell.stra_servers.split(';')} uids={cell.stra_uids.split(';')}/>
             }
         });
         return (
@@ -98,7 +111,7 @@ class GLStragety extends React.Component {
                     <Button className="gl-left-btn" icon="double-left" onClick={this.goBack}>返回</Button>
                     <Button className="gl-left-btn" icon="upload" onClick={showConfirm}>发布到服务器</Button>
                     <Button className="gl-right-btn" icon="compass" onClick={showConfirm}>生成原始版本</Button>
-                    <Button className="gl-right-btn" icon="tag" onClick={showConfirm}>生成数据标签</Button>
+                    <Button className="gl-right-btn" icon="tag" onClick={this.generateTags}>生成数据标签</Button>
                     <Button className="gl-right-btn" icon="plus" onClick={this.handleAdd}>新增策略</Button>
                 </div>
                 <Table

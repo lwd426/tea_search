@@ -7,6 +7,7 @@ const SHOW_PARENT = TreeSelect.SHOW_PARENT;
 var treeData = [];
 class GLServerTree extends React.Component {
     onChange = (values, labels) => {
+        console.log(values)
         this.props.contentActions.testgroupActions.addServers(values, labels);
     }
     componentWillReceiveProps =(nextProps)=> {

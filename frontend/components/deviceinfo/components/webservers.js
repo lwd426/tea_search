@@ -66,13 +66,13 @@ class GLWebserver extends React.Component {
             dataIndex: 'operation',
             render: (text, record) => (
                 <span>
-                    <Popconfirm title="确认设为参照服务器?" onConfirm={() => {
-                        console.log(record);
-                        that.props.contentActions.deviceinfoActions.updateWebServer({key: record.key}, {refer : '是'});
-                    }}>
-                        <a href="#">设为参照服务器</a>
-                    </Popconfirm>
-                    <span className="ant-divider" />
+                    {/*<Popconfirm title="确认设为参照服务器?" onConfirm={() => {*/}
+                        {/*console.log(record);*/}
+                        {/*that.props.contentActions.deviceinfoActions.updateWebServer({key: record.key}, {refer : '是'});*/}
+                    {/*}}>*/}
+                        {/*<a href="#">设为参照服务器</a>*/}
+                    {/*</Popconfirm>*/}
+                    {/*<span className="ant-divider" />*/}
                     <Popconfirm title="确认删除策略?" onConfirm={() => {
                         that.props.contentActions.deviceinfoActions.deleteWebServer(record);
                     }}>

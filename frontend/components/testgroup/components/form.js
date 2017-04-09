@@ -10,14 +10,6 @@ const RadioGroup = Radio.Group;
 
 const { RangePicker } = DatePicker;
 
-const options = [{
-    value: 'zhejiang',
-    label: 'Zhejiang',
-}, {
-    value: 'jiangsu',
-    label: 'Jiangsu',
-}];
-
 class RegistrationForm extends React.Component {
     constructor(props) {
         super(props);
@@ -32,15 +24,17 @@ class RegistrationForm extends React.Component {
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
-                var name = values.stra_name;
-                var desc = values.stra_desc || '';
+                var name = this.refs.name.refs.input.value || '';
+                var desc = this.refs.desc.refs.input.value || '';
                 var cities = values.stra_cities || [];
                 var servers = _this.props.content.testgroup.serverselected;
+                var serverskey = _this.props.content.testgroup.serverselectedkeys;
                 var urls = _this.props.content.testgroup.addurls;
                 var uids = _this.props.content.testgroup.adduids;
                 const slbid = _this.props.menu.slbid || '';
                 const tgid = _this.props.content.testgroup.tgid || '';
-                this.props.contentActions.testgroupActions.validate(slbid,tgid,name,desc,cities,servers,urls,uids)
+                // var type = _this.props.content.testgroup.editting_stragety ? 'modify' : 'add'
+                this.props.contentActions.testgroupActions.validate(slbid,tgid,name,desc,cities,servers,serverskey,urls,uids)
             }
         });
     }
@@ -48,6 +42,8 @@ class RegistrationForm extends React.Component {
         this.props.contentActions.testgroupActions.getCities();
         const slbid = this.props.menu.slbid || '';
         this.props.contentActions.testgroupActions.getServers(slbid);
+    }
+    componentDidMount =() => {
     }
     componentWillReceiveProps =(nextProps)=> {
         return true;
@@ -151,31 +147,45 @@ class RegistrationForm extends React.Component {
             },
         };
         var _this =this;
+        var stra_name = '';
+        var stra_desc = '';
+        var stra_name = '';
+        var cities = [];
+        var stragety = this.props.content.testgroup.editting_stragety;
+        if(stragety){
+            stra_name = stragety.name;
+            stra_desc = stragety.desc;
+            cities = stragety.cities.split(';')
+            this.props.content.testgroup.serverselectedkeys = stragety.serverskey.split(';');
+            this.props.content.testgroup.addurls = stragety.urls.split(';');
+            this.props.content.testgroup.adduids = stragety.uids.split(';');
+        }
         return (
             <Form onSubmit={this.handleSubmit}>
                 <FormItem
                     {...formItemLayout}
                     label="分流策略名称"
                     hasFeedback
+                    required
                 >
-                    {getFieldDecorator('stra_name', {
-                        rules: [{
-                            required: true, message: '请输入分流策略名称!',
-                        }],
-                    })(
-                        <Input placeholder="请输入分流策略名称"/>
-                    )}
+                    {/*{getFieldDecorator('stra_name', {*/}
+                        {/*rules: [{*/}
+                            {/*required: true, message: '请输入分流策略名称!',*/}
+                        {/*}],*/}
+                    {/*})(*/}
+                        <Input ref="name" placeholder="请输入分流策略名称" defaultValue={stra_name}/>
+                    {/*)}*/}
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
                     label="描述"
                     hasFeedback
                 >
-                    {getFieldDecorator('stra_desc', {
-                        rules: [],
-                    })(
-                        <Input type="textarea"  rows={2} />
-                    )}
+                    {/*{getFieldDecorator('stra_desc', {*/}
+                        {/*rules: [],*/}
+                    {/*})(*/}
+                        <Input type="textarea" ref="desc" defaultValue={stra_desc} rows={2} />
+                    {/*)}*/}
                 </FormItem>
                 {/*<FormItem*/}
                     {/*{...formItemLayout}*/}
@@ -193,7 +203,7 @@ class RegistrationForm extends React.Component {
                     hasFeedback
                     required
                 >
-                    <GLServerTree {...this.props} />
+                    <GLServerTree {...this.props}/>
                 </FormItem>
                 <FormItem className="gl-line-form">
                 <div className="gl-line-div"><span className="gl-line"></span><span className="gl-line-content">以下三项至少填写一项</span><span className="gl-line"></span></div>
@@ -246,22 +256,22 @@ class RegistrationForm extends React.Component {
                     {...formItemLayout}
                     label="地域"
                 >
-                    {getFieldDecorator('stra_cities', {
-                        rules: [],
-                    })(
-                        <Select mode="multiple" onChange={this.selectRegion} placeholder="请选择策略生效区域（可不选）">
+                    {/*{getFieldDecorator('stra_cities', {*/}
+                        {/*rules: [],*/}
+                    {/*})(*/}
+                        <Select mode="multiple" ref="cities" defaultValue={cities} onChange={this.selectRegion} placeholder="请选择策略生效区域（可不选）">
                             {this.props.content.testgroup.cities.map((city, index)=> {
                                 return <Option key={city.admincode} value={city.name4en}>{city.name}</Option>
                             })}
                         </Select>
-                    )}
+                    {/*)}*/}
 
 
                 </FormItem>
 
                 <FormItem {...tailFormItemLayout}>
                     <Button type="primary" htmlType="submit" size="large">保存</Button>
-                    <Button type="primary" htmlType="submit" size="large">保存并新增</Button>
+                    <Button type="primary" size="large" onClick={this.props.contentActions.testgroupActions.goback2stragelist}>返回</Button>
                 </FormItem>
             </Form>
         );

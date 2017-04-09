@@ -1,10 +1,12 @@
 import * as TYPES from './constants';
 import fetch from '../../fetch'
+const HOST = require('../../../config').HOST;
 
-const testgroup_url = '/testgroup'
-const stragety_url = '/stragety'
-const city_url = '/city'
-const server_url = '/webserver'
+const testgroup_url = HOST + '/testgroup'
+const stragety_url = HOST + '/stragety'
+const city_url = HOST + '/city'
+const server_url = HOST + '/webserver'
+const tag_url = HOST + '/stragety/tag'
 
 /**
  * 进入编辑策略页面
@@ -28,7 +30,7 @@ export function getStragetyListSuccess(list, tgid, slbid){
     }
 }
 
-export function add_stragety(stragetyid, tgid, slbid){
+export function add_stragety(){
     return {
         type: TYPES.ADD_STRAGETY
     }
@@ -253,13 +255,25 @@ export function saveStragetyResult(result) {
     }
 }
 
-export function validate(slbid,tgid,name,desc,cities,servers,urls,uids) {
+/**
+ * 验证策略详情
+ * @param slbid slb编码
+ * @param tgid 测试组编码
+ * @param name 策略名称
+ * @param desc 策略描述
+ * @param cities 策略生效区域
+ * @param servers 策略生效服务器
+ * @param serverskey 策略生效服务器编码
+ * @param urls 策略生效url
+ * @param uids 策略生效uid
+ * @returns {function(*=, *)}
+ */
+export function validate(slbid,tgid,name,desc,cities,servers,serverskey,urls,uids) {
     if(name === '') dispatch(validateFailure('name'));
-    console.log('d')
     return (dispatch, getState) => {
         dispatch(fetch.getData(stragety_url+ '?slbid='+slbid,function(err, result){
             // if(result.data.length === 0){//如果当前slb下没有策略，则直接保存
-                return dispatch(fetch.postData(stragety_url,{slbid,tgid,name,desc,cities,servers,urls,uids}, function(err, result){
+                return dispatch(fetch.postData(stragety_url,{slbid,tgid,name,desc,cities,servers,serverskey,urls,uids}, function(err, result){
                     if(err || result.status === 'failure')  dispatch(saveStragetyResult(false))
                     // dispatch(saveStragetyResult(true))
                     dispatch(edit_stragetylist(tgid,slbid))
@@ -283,3 +297,50 @@ export function validate(slbid,tgid,name,desc,cities,servers,urls,uids) {
 
 }
 
+
+export function handleStragety(stra_id, status) {
+    return (dispatch, getState) => {
+        return dispatch(fetch.updateData(stragety_url,{stra_id: stra_id}, {stra_status: status}, function(err, result){
+            if(!err)  changeStragetyStatus()
+            // dispatch(fetch.getData(testgroup_url+ '?slbid='+group.slbid,function(err, result){
+            //     if(!err)  getTestGroupListSuccess([])
+                dispatch(changeStragetyStatus(stra_id, status))
+            // }))
+        }))
+    }
+}
+
+export function changeStragetyStatus(stra_id, status) {
+    return {
+        type: TYPES.CHANGE_STRAGETY_STATUS,
+        status,
+        stra_id
+    }
+}
+
+
+export function editStragety(stragety) {
+    return {
+        type: TYPES.EDIT_STRAGETY,
+        stragety
+    }
+}
+
+/**
+ * 为策略生成标签
+ */
+export function generateTags(slbid, tgid) {
+    return (dispatch, getState) => {
+        return dispatch(fetch.getData(tag_url + '?slbid='+slbid + '&tgid='+tgid,function(err, result){
+            if(err)  freshStragetylist([])
+            dispatch(freshStragetylist(result.data))
+        }))
+    }
+}
+
+export function freshStragetylist(stragetylist) {
+    return {
+        type: TYPES.FRESH_STRAGETYLIST,
+        stragetylist
+    }
+}
