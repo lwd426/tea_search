@@ -6,20 +6,22 @@ import { Table, Input, Icon, Button, Popconfirm } from 'antd';
 import EditableCell from './editcell';
 const uuid = require('uuid/v1');
 
-
 const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-    },
+    // onChange: (selectedRowKeys, selectedRows) => {
+    //     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+    // },
     onSelect: (record, selected, selectedRows) => {
-        console.log(record, selected, selectedRows);
+        var referServers = selectedRows.map((server)=>{
+            return server.key;
+        })
+        this.props.contentActions.deviceinfoActions.setReferServers(referServers);
     },
     onSelectAll: (selected, selectedRows, changeRows) => {
         console.log(selected, selectedRows, changeRows);
-    },
-    getCheckboxProps: record => ({
-        disabled: record.name === 'Disabled User',    // Column configuration not to be checked
-    }),
+    }
+    // getCheckboxProps: record => ({
+    //     disabled: record.name === 'Disabled User',    // Column configuration not to be checked
+    // }),
 };
 
 
@@ -66,13 +68,13 @@ class GLWebserver extends React.Component {
             dataIndex: 'operation',
             render: (text, record) => (
                 <span>
-                    <Popconfirm title="确认设为参照服务器?" onConfirm={() => {
-                        console.log(record);
-                        that.props.contentActions.deviceinfoActions.updateWebServer({key: record.key}, {refer : '是'});
-                    }}>
-                        <a href="#">设为参照服务器</a>
-                    </Popconfirm>
-                    <span className="ant-divider" />
+                    {/*<Popconfirm title="确认设为参照服务器?" onConfirm={() => {*/}
+                        {/*console.log(record);*/}
+                        {/*that.props.contentActions.deviceinfoActions.updateWebServer({key: record.key}, {refer : '是'});*/}
+                    {/*}}>*/}
+                        {/*<a href="#">设为参照服务器</a>*/}
+                    {/*</Popconfirm>*/}
+                    {/*<span className="ant-divider" />*/}
                     <Popconfirm title="确认删除策略?" onConfirm={() => {
                         that.props.contentActions.deviceinfoActions.deleteWebServer(record);
                     }}>
@@ -100,7 +102,7 @@ class GLWebserver extends React.Component {
             stragetiesinfo: '-',
             address: '机房',
             backup: '备注',
-            refer: '否'
+            refer: ''
         };
         this.props.contentActions.deviceinfoActions.addWebServer(newData);
     }

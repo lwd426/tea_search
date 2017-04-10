@@ -1,7 +1,9 @@
 import * as TYPES from './constants'
 import fetch from '../../fetch'
-const slb_list_url = '/slb';
-const web_list_url = '/webserver';
+const HOST = require('../../../config').HOST;
+
+const slb_list_url = HOST + '/slb';
+const web_list_url = HOST + '/webserver';
 
 
 /**
@@ -121,6 +123,19 @@ export function getWebServerList(slbid) {
             if(!err)  updateWebServerList([])
             //console.log(result)
             dispatch(updateWebServerList(result.data))
+        }))
+    }
+}
+
+/**
+ * 设置基准服务器
+ * @param servers
+ */
+export function setReferServers(servers) {
+    return (dispatch, getState) => {
+        return dispatch(fetch.postData(web_list_url,{opt:'in',key:'key',data:servers},{'refer':true},function(err, result){
+            if(err)  freshStragetylist([])
+            dispatch(freshStragetylist(result.data))
         }))
     }
 }

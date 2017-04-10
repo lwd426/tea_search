@@ -50,7 +50,7 @@ class GLTestgroup extends React.Component {
         let that = this;
         this.columns = [{
             title: '序号',
-            dataIndex: 'code',
+            dataIndex: 'key',
             width: '20%',
         }, {
             title: '项目名称',
@@ -86,7 +86,7 @@ class GLTestgroup extends React.Component {
                   }}>策略维护</a>
                   <span className="ant-divider" />
                   <Popconfirm title="确认删除策略?" onConfirm={() => {
-                      that.props.contentActions.testgroupActions.deleteTest(that.props.menu.slbid,test.key)
+                      that.props.contentActions.testgroupActions.deleteTest(that.props.menu.slbid,test.code)
                   }}>
                     <a href="#">删除</a>
                   </Popconfirm>
@@ -142,7 +142,7 @@ class GLTestgroup extends React.Component {
     render() {
         const  dataSource = this.props.content.testgroup.testgrouplist.map((cell, index)=>{
             return {
-                key: cell.objectId,
+                key: index +1,
                 slbid:cell.slbid,
                 tgid: cell.objectId,
                 code: cell.objectId,

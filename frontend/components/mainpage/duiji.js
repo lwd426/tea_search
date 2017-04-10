@@ -1,15 +1,11 @@
 import React from 'react';
-
 import echarts from 'echarts';
-//var echarts = require('echarts');
-
-
+import {Table,Button,Icon} from 'antd';
 
 export default class EChart extends React.Component {
-
     randerChart = () => {
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('line'));
+        var myChart = echarts.init(document.getElementById('duiji'));
         // 绘制图表
         myChart.setOption({
             title: { text: '' },
@@ -23,7 +19,7 @@ export default class EChart extends React.Component {
                 }
             },
             legend: {
-                data:['总量','版本一访问用户','版本二访问用户','版本一访问用户比例','版本二访问用户比例']
+                data:['曝光','点击','点击率']
             },
             xAxis: [
                 {
@@ -35,26 +31,27 @@ export default class EChart extends React.Component {
                 }
             ],
             yAxis: [
+                
                 {
                     type: 'value',
                     name: '访问用户',
                     min: 0,
-                    max: 6000,
-                    interval: 1000,
+                    max: 1500,
+                    interval: 300,
                     axisLabel: {
                         formatter: '{value}'
                     }
                 },
                 {
                     type: 'value',
-                    name: '访问用户比例',
+                    name: '点击率',
                     min: 0,
-                    max: 60,
-                    interval: 10,
+                    max: 100,
+                    interval: 20,
                     axisLabel: {
                         formatter: '{value} %'
                     }
-                }
+                },
             ],
             toolbox: {
                 show: true, //是否显示工具箱
@@ -68,31 +65,24 @@ export default class EChart extends React.Component {
             },
             series: [
                 {
-                    name:'总量',
-                    type:'bar',
-                    data:[2000, 3000, 2700, 3000, 4000, 5000, 4000, 3500, 3000, 2000, 3000, 4000]
+                    name:'曝光',
+                    type: "bar",
+                    barWidth : 20,
+                    stack: "总量",
+                    data:[200, 130, 330, 450, 400, 250, 240, 500, 100, 600, 500, 250]
                 },
                 {
-                    name:'版本一访问用户',
-                    type:'bar',
-                    data:[500, 590, 290, 300, 1000, 1200, 2000, 1000, 1500, 1200, 1500, 1000]
+                    name:'点击',
+                    type: "bar",
+                    barWidth : 20,
+                    stack: "总量",
+                    data:[240, 150, 380, 400, 500, 260, 280, 550, 150, 500, 530, 250]
                 },
                 {
-                    name:'版本二访问用户',
-                    type:'bar',
-                    data:[600, 690, 390, 500, 1200, 1500, 2200, 800, 1300, 1000, 1100, 1300]
-                },
-                {
-                    name:'版本一访问用户比例',
+                    name:'点击率',
                     type:'line',
                     yAxisIndex: 1,
-                    data:[20, 13, 33, 45, 40, 25, 24, 50, 10, 60, 50, 25]
-                },
-                {
-                    name:'版本二访问用户比例',
-                    type:'line',
-                    yAxisIndex: 1,
-                    data:[24, 15, 38, 40, 50, 26, 28, 55, 15, 50, 53, 25]
+                    data:[34, 25, 48, 50, 60, 36, 38, 65, 35, 60, 63, 35]
                 }
             ]
         });
@@ -101,12 +91,56 @@ export default class EChart extends React.Component {
     componentDidMount() {
         this.randerChart();
     }
-
+    componentWillReceiveProps(nextProps) {
+        this.randerChart();
+        return true;
+    }
     render() {
+        const columns = [{
+            title: '日期',
+            dataIndex: 'date',
+            key: 'date',
+            width: '20%',
+        }, {
+          title: '曝光',
+          dataIndex: 'appear',
+          key: 'appear',
+        }, {
+          title: '点击',
+          dataIndex: 'click',
+          key: 'click',
+        }, {
+          title: '转化率',
+          dataIndex: 'persent',
+          key: 'persent',
+        }];
+
+
+        const data = [{
+          key: '1',
+          date: '3-2',
+          appear: 43,
+          click: 22,
+          persent: '20%',
+        }, {
+          key: '2',
+          date: '3-3',
+          appear: 46,
+          click: 28,
+          persent: '20%',
+        }, {
+          key: '3',
+          date: '3-4',
+          appear: 83,
+          click: 62,
+          persent: '20%',
+        }];
+
         return (
             <div>
-                <div id="line" style={{width:'100%',height:400}} className="chart-box"></div>
-            </div>          
+                <div id="duiji" style={{width:'100%',height:400}} ></div>
+                <Table bordered={true} columns={columns} dataSource={data} />  
+            </div>      
         )
     }
 }

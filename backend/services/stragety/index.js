@@ -16,7 +16,7 @@ module.exports = {
      * @param name
      * @returns {*}
      */
-    saveStragety: function*(uuid, slbid,tgid,name,desc,cities,servers,urls,uids) {
+    saveStragety: function*(uuid, slbid,tgid,name,desc,cities,servers,serverskey,urls,uids) {
         //保存策略
         var data = {
             stra_id : uuid,
@@ -24,6 +24,7 @@ module.exports = {
             stra_desc: desc,
             stra_cities: cities.join(';'),
             stra_servers: servers.join(';'),
+            stra_serverskey: serverskey.join(';'),
             stra_urls: urls.join(';'),
             stra_uids: uids.join(';'),
             stra_status: 'new',
@@ -37,7 +38,7 @@ module.exports = {
         if(result){
             var otherwhere = {key: 'ip', opt: 'in', data: servers}
             var data = {urls: urls.join(';'), uids: uids.join(';'), stragetiesinfo: uuid}
-            var result2 =  yield server_service.updateWebServer(data, undefined, otherwhere, 'add')
+            var result2 =  yield server_service.updateWebServer(data, undefined, [otherwhere], 'add')
         }
         return result && result2;
     },
@@ -46,8 +47,8 @@ module.exports = {
      * @returns {*}
      */
     getStragetyList: function*(opts) {
-        var list = yield db.get('stragety',opts);
-        return list;
+        return yield db.get('stragety',opts);
+        // return list;
     },
     /**
      * 删除策略信息
@@ -55,8 +56,8 @@ module.exports = {
      * @returns {*}
      */
     deleteStragety: function*(data) {
-        var result = yield db.delete('stragety', data);
-        return result;
+       return yield db.delete('stragety', data);
+        // return result;
     },
     /**
      * 更新策略信息
@@ -64,7 +65,27 @@ module.exports = {
      * @returns {*}
      */
     updateStragety: function*(data, where) {
-        var result = yield db.update('stragety', where, data);
-        return result;
+        return yield db.update('stragety', where, data);
+        // return result;
+    },
+    /**
+     * 取出num个tag
+     * @param num
+     */
+    getTags: function*(num){
+        var tags =  yield db.get('tag', undefined, [{opt: 'noEqual', key:'tag_status', data: 'used'},{'limit': num}]);
+        return tags.map((tag)=>{
+            return {
+                tag_id: tag.get('objectId'),
+                tag_value: tag.get('value')
+            }
+        })
+    },
+    /**
+     * 更新已使用的tag状态为used
+     * @param tags_used
+     */
+    updateTags: function* (tags_used) {
+        return yield db.update('tag', undefined, [{opt: 'in', key: 'objectId', data: tags_used}], {'tag_status': 'used'});
     }
 }

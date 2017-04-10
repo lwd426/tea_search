@@ -1,11 +1,11 @@
 //处理数字增加的reducer
 import * as TYPES from './constants'
 const initialState = {
-    showtype: 'testgroup',
+    showtype: 'testgroup', //content展示类型
     slbid: '',//当前所处的slbid
     citiesselected: [],//已选择区域
     serverselected: [],//已选择服务器
-    serverselectedkeys: [],
+    serverselectedkeys: [], //已选择的服务器编码
     addurls: [],//已添加url
     adduids: [],//已添加uid
     tgid: '',//测试组id
@@ -17,8 +17,9 @@ const initialState = {
     stragety: {},//当前所处策略
     testgrouplist: [],//当前所处测试组列表
     stragetylist: []//当前所处策略列表
-    ,validatestatus: 'failure'
-    ,savestragetystatus: false
+    ,validatestatus: 'failure' //保存策略时验证的状态
+    ,savestragetystatus: false //保存策略状态(启动或停止使用)
+    ,editting_stragety: undefined //正在编辑的策略
 }
 
 let reducer = (state = initialState, action)=> {
@@ -47,7 +48,7 @@ let reducer = (state = initialState, action)=> {
             })
             break
         case TYPES.ADD_STRAGETY:
-            return Object.assign({}, state, {showtype: 'addstragety'})
+            return Object.assign({}, state, {showtype: 'addstragety', editting_stragety: undefined})
             break
         case TYPES.ADD_URL_TYPE:
             return Object.assign({}, state, {addurltype: action.addurltype})
@@ -104,6 +105,22 @@ let reducer = (state = initialState, action)=> {
             break
         case TYPES.ADD_SERVERS:
             return Object.assign({}, state, {serverselected: action.servers ,serverselectedkeys: action.serverkeys})
+            break
+        case TYPES.CHANGE_STRAGETY_STATUS:
+            state.stragetylist.map((stra)=>{
+                if(stra.stra_id === action.stra_id) stra.stra_status = action.status;
+            })
+            return Object.assign({}, state, {stragetylist: state.stragetylist})
+            break
+        case TYPES.EDIT_STRAGETY:
+            var editting_stragety = undefined;
+            state.stragetylist.map((stra)=>{
+                if(stra.stra_id === action.stragety.stragetycode) editting_stragety = action.stragety
+            })
+            return  Object.assign({}, state, {editting_stragety: editting_stragety, showtype: 'addstragety'});
+            break
+        case TYPES.FRESH_STRAGETYLIST:
+            return Object.assign({}, state, {stragetylist: action.stragetylist})
             break
         default:
             return state
