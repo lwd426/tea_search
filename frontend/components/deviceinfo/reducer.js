@@ -1,4 +1,4 @@
-
+import * as TYPES from './constants'
 const initState = {
     showtype: 'webServerList',
     webServerList: [],
@@ -18,6 +18,20 @@ const webServerReducer = (state = initState,action) => {
         case 'CURRENT_SLB_NAME' : {
             return Object.assign({},state,{
                 current_slb_name: action.name
+            })
+        }
+        case TYPES.SET_REFER_SERVER_SUCCESS : {
+            var servers = action.servers;
+            var serverlist = webServerList.map((server)=>{
+                if(servers.indexOf(server.key)){
+                    server.refer = true
+                }else{
+                    server.refer = false
+                }
+                return server;
+            })
+            return Object.assign({},state,{
+                webServerList: serverlist
             })
         }
         default:

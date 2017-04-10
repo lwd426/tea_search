@@ -6,24 +6,6 @@ import { Table, Input, Icon, Button, Popconfirm } from 'antd';
 import EditableCell from './editcell';
 const uuid = require('uuid/v1');
 
-const rowSelection = {
-    // onChange: (selectedRowKeys, selectedRows) => {
-    //     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-    // },
-    onSelect: (record, selected, selectedRows) => {
-        var referServers = selectedRows.map((server)=>{
-            return server.key;
-        })
-        this.props.contentActions.deviceinfoActions.setReferServers(referServers);
-    },
-    onSelectAll: (selected, selectedRows, changeRows) => {
-        console.log(selected, selectedRows, changeRows);
-    }
-    // getCheckboxProps: record => ({
-    //     disabled: record.name === 'Disabled User',    // Column configuration not to be checked
-    // }),
-};
-
 
 class GLWebserver extends React.Component {
     constructor(props) {
@@ -98,11 +80,11 @@ class GLWebserver extends React.Component {
         const newData = {
             key: key,
             slbid: slbid,
-            ip: `请输入ip`,
+            ip: '',
             stragetiesinfo: '-',
-            address: '机房',
-            backup: '备注',
-            refer: ''
+            address: '',
+            backup: '',
+            refer: '否'
         };
         this.props.contentActions.deviceinfoActions.addWebServer(newData);
     }
@@ -125,7 +107,7 @@ class GLWebserver extends React.Component {
                 stragetyname: stragetyinfo,
                 address: cell.address,
                 backup: cell.backup,
-                refer: cell.refer
+                refer: cell.refer ? '是' : '否'
             }
         });
         return (
@@ -136,7 +118,14 @@ class GLWebserver extends React.Component {
                 </div>
                 <Table
                     columns={columns}
-                    rowSelection={rowSelection}
+                    rowSelection={{
+                        onSelect: (record, selected, selectedRows) => {
+                            var referServers = selectedRows.map((server)=>{
+                                return server.key;
+                            })
+                            this.props.contentActions.deviceinfoActions.setReferServers(referServers);
+                        }
+                    }}
                     dataSource={dataSource}
                     bordered className="gl-testinfo-table"
                     size="middle"

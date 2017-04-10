@@ -18,8 +18,9 @@ class GLServerTree extends React.Component {
     }
     render() {
         treeData = this.props.content.testgroup.servers.map((server, index) => {
+            console.log(server)
             return {
-                label: server.status ?  server.ip + <span>server.statusinfo</span>: server.ip ,
+                label: server.status ?  server.ip + ' (' +server.statusinfo +')' : server.ip ,
                 value: server.key,
                 key: server.key
             }
