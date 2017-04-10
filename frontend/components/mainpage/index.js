@@ -4,6 +4,7 @@ import 'antd.min.css';
 import { Table, Input, Icon, Button, Popconfirm } from 'antd';
 import Chart from './chart.js';
 import EChart from './echart.js';
+import Duiji from './duiji.js';
 
 import MyTable from './table.js';
 
@@ -31,7 +32,6 @@ const options = [{
         label: '点播页评论2',
     }],
 }];
-//const defaultValue = {['m','button1']}
 
 function onChange(value) {
     console.log(value);
@@ -41,22 +41,6 @@ function onChange(value) {
 import { Tabs } from 'antd';
 const TabPane = Tabs.TabPane;
 
-
-//Dropdown
-function handleButtonClick(e) {
-    message.info('Click on left button.');
-    console.log('click left button', e);
-}
-function handleMenuClick(e) {
-    message.info('Click on menu item.');
-    console.log('click', e);
-}
-const menu = (
-    <Menu onClick={handleMenuClick}>
-        <Menu.Item key="1">BtnClick</Menu.Item>
-        <Menu.Item key="2">PicClice</Menu.Item>
-    </Menu>
-);
 
 //DatePicker
 import { DatePicker } from 'antd';
@@ -72,15 +56,19 @@ class GLMainpage extends React.Component {
     constructor(props) {
         super(props);
     }
+    componentWillReceiveProps(nextProps) {
+        console.log('mainpage componentWillReceiveProps');
+        return true;
+    }
     render() {
         const options_two = [{
             value: 'BtnClick',
             label: 'BtnClick',
         }, {
-            value: 'PicClice',
-            label: 'PicClice',
+            value: 'PicClick',
+            label: 'PicClick',
         }];
-
+        
         return (
             <div className="mainpage">
                 <br />
@@ -102,30 +90,17 @@ class GLMainpage extends React.Component {
                             </Dropdown>
                         </div>*/}
                         
-
                         <div className="rangepickerBox">
                             <RangePicker
                               defaultValue={[moment('2015/01/01', dateFormat), moment('2015/01/01', dateFormat)]}
                               format={dateFormat}
                             />
                         </div>
-
                         <EChart {...this.props}/>
-
                         <MyTable />
-
                     </TabPane>
-                    <TabPane tab="转化率" key="2">
-                        <div className="CascaderBox">
-                            <span>优化指标 ：</span>
-                            {/*<Dropdown overlay={menu}>
-                                <Button>
-                                    切换版本 <Icon type="down" />
-                                </Button>
-                            </Dropdown>*/}
 
-                            <Cascader options={options_two} defaultValue={['BtnClick']} onChange={onChange} />
-                        </div>
+                    <TabPane tab="转化率(多版本)" key="2">
 
                         <div className="rangepickerBox">
                             <RangePicker
@@ -133,10 +108,25 @@ class GLMainpage extends React.Component {
                                 format={dateFormat}
                             />
                         </div>
+                        <div className="CascaderBox">
+                            <span>优化指标 ：</span>
+                            <Cascader options={options_two} defaultValue={['BtnClick']} onChange={this.onChange} />
+                        </div>
+                        <div className="clear"></div>
 
-                        <Chart {...this.props}/>
+                        <div id = "content_one" style={{display:this.props.content.mainpage.content_one_display}}>
+                            <Chart {...this.props}/>
+                        </div>
+
+                        <div id = "content_two" style={{display: this.props.content.mainpage.content_two_display}}>
+                            <Button type="primary" className="back" onClick={() => {
+                                this.props.contentActions.mainpageActions.changeContentDisplay('block','none');
+                            }}><Icon type="left" />返回</Button>
+                            <Duiji {...this.props}/>
+                        </div>
 
                     </TabPane>
+
                   </Tabs>
                 </div>
                 

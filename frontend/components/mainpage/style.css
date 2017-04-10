@@ -71,9 +71,13 @@
 }
 .CascaderBox{
     display: inline-block;
-    text-align: left;
+    float: right;
+    margin-right: 20px;
     font-size: 14px;
 }
 .CascaderBox .ant-cascader-picker{
     width:100px;
 }
+.clear{clear: both;}
+#content_two{position: relative;}
+#content_two .back{position: absolute;top:-70px;}
