@@ -86,7 +86,7 @@ class GLTestgroup extends React.Component {
                   }}>策略维护</a>
                   <span className="ant-divider" />
                   <Popconfirm title="确认删除策略?" onConfirm={() => {
-                      that.props.contentActions.testgroupActions.deleteTest(that.props.menu.slbid,test.key)
+                      that.props.contentActions.testgroupActions.deleteTest(that.props.menu.slbid,test.code)
                   }}>
                     <a href="#">删除</a>
                   </Popconfirm>

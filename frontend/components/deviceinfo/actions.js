@@ -126,3 +126,16 @@ export function getWebServerList(slbid) {
         }))
     }
 }
+
+/**
+ * 设置基准服务器
+ * @param servers
+ */
+export function setReferServers(servers) {
+    return (dispatch, getState) => {
+        return dispatch(fetch.postData(web_list_url,{opt:'in',key:'key',data:servers},{'refer':true},function(err, result){
+            if(err)  freshStragetylist([])
+            dispatch(freshStragetylist(result.data))
+        }))
+    }
+}

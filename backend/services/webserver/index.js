@@ -39,7 +39,7 @@ module.exports = {
             if(!stragetiesinfo || stragetiesinfo.split(';').length === 0) {
                 listofstragety = [];
             }else{
-                listofstragety = yield db.get('stragety', {slbid: slbid}, undefined, [{key: 'stra_id', opt: 'in', data: stragetiesinfo.split(';')}]);
+                listofstragety = yield db.get('stragety', {slbid: slbid}, undefined, {key: 'stra_id', opt: 'in', data: stragetiesinfo.split(';')});
             }
             var info = listofstragety.map((stragety)=>{
                 return {
@@ -71,7 +71,7 @@ module.exports = {
      * @returns {*}
      */
     updateWebServer: function*(data, where, otherwhere, type) {
-        var result = yield db.update('webServer', where, data, [otherwhere], type);
+        var result = yield db.update('webServer', where, data, otherwhere, type);
         return result;
     }
 }
