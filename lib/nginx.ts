@@ -1,12 +1,7 @@
-
 interface CONTENT {
     location: string,
     group?: string,
     upstreams: string
-}
-interface CODE {
-    code: number,
-    data: string
 }
 interface Meta {
     url: string,
@@ -14,10 +9,9 @@ interface Meta {
     regionArray?: string [],
     serverArray?: string[],
     default?: boolean
-
 }
 const defaultUpstream = "defaultUpstream";
-const geoipUrl = `/etc/maxmind-city.mmdb`;
+const geoipCity = `/etc/maxmind-city.mmdb`;
 class Upstream {
     metaData: Meta;
     upStreamName: string;
@@ -129,11 +123,11 @@ class UpstreamGroup {
         let cookie = "";
         let geo1p2 = `
            #使用geoip2 通过ip获取城市信息
-           geoip2 ${geoipUrl} {
+           geoip2 ${geoipCity} {
             $geoip2_data_city_name default=Beijing city names en;
            }`;
         if (this.type == 'url_region') {
-            cookie = '$geoip2_data_city_name'//todo
+            cookie = '$geoip2_data_city_name';
         } else if (this.type == 'url_uid') {
             cookie = '$COOKIE_uid';
             geo1p2 = '';
@@ -180,7 +174,7 @@ class UpstreamGroup {
         return this.groupName + "_" + this.metaData.serverArray[this.index];
     }
 
-    getUpstream(opt=this.metaData.serverArray): string {
+    getUpstream(opt = this.metaData.serverArray): string {
         let n = this.getUpstreamName();
         let s = '';
         opt.forEach(ip => {
@@ -266,7 +260,7 @@ function array2one(arr) {
     for (let v of arr) {
         if (Array.isArray(v.url) && v.url.length) {
             v.url.forEach(item => {
-                arr2.push(Object.assign({}, v, {url: item}));
+                arr2.push((<any>Object).assign({}, v, {url: item}));
             });
         } else if (typeof v.url === "string") {
             arr2.push(v);
@@ -283,11 +277,8 @@ function array2one(arr) {
 }
 
 function nginx(arr: any[]) {
-
     let verf = new Verify(arr);
     const re = verf.check();
-    console.log("re");
-    console.log(re);
     if (re.code != 0) {
         return;
     }
@@ -306,25 +297,5 @@ function nginx(arr: any[]) {
     return re;
 }
 
-nginx([
-        {
-            url: '/',
-            regionArray: ['bj', 'shanghai'],
-            serverArray: ["1.1.1.1", "2.2.2.8"],
-            uidArray: [],
-            default: false
-        },
-        {
-            url: ['/b.html', '/c.html'],
-            uidArray: ['bj', 'shanghai'],
-            serverArray: ["1.1.1.2", "2.2.2.2"],
-            default: false
-        },
-        {
-            url: ['/'], serverArray: ['3.3.3.3', '4.4.4.4', '5.5.5.5', '6.6.6.6'],
-            default: 1
-        }
-    ]
-);
 
 export = nginx;
