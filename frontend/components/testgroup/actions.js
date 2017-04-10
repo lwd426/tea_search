@@ -198,9 +198,9 @@ export const deleteTestSuccess = (list) => {
 export function deleteTest(slbid, code) {
     return (dispatch, getState) => {
         return dispatch(fetch.deleteData(testgroup_url,{code: code}, function(err, result){
-            if(!err)  deleteTestSuccess([])
+            if(err)  deleteTestSuccess([])
             dispatch(fetch.getData(testgroup_url + '?slbid='+slbid,function(err, result){
-                if(!err)  deleteTestSuccess([])
+                if(err)  deleteTestSuccess([])
                 dispatch(deleteTestSuccess(result.data))
             }))
         }))
@@ -338,9 +338,15 @@ export function generateTags(slbid, tgid) {
     }
 }
 
+/**
+ * 刷新策略列表
+ * @param stragetylist
+ * @returns {{type, stragetylist: *}}
+ */
 export function freshStragetylist(stragetylist) {
     return {
         type: TYPES.FRESH_STRAGETYLIST,
         stragetylist
     }
 }
+

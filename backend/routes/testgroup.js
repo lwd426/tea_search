@@ -23,7 +23,7 @@ router.post('/', function *(next) {
 
 router.del('/', function *(next) {
     var code = this.request.body.code;
-    var result = yield lib.deleteTest({code:code})
+    var result = yield lib.deleteTest({objectId:code})
     this.body = {
         status: 'success',
         data: result

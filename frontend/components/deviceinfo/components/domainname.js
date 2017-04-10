@@ -50,7 +50,7 @@ class RegistrationForm extends React.Component {
         if(value == '' && name != '' ){
             value = name;
         }
-        
+
         return (
             <div className="slbBox">
                 <span className="labelspan">SLB域名 : </span>

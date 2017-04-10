@@ -12,7 +12,23 @@ function showConfirm() {
     });
 }
 
-
+const rowSelection = {
+    // onChange: (selectedRowKeys, selectedRows) => {
+    //     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+    // },
+    // onSelect: (record, selected, selectedRows) => {
+    //     var referServers = selectedRows.map((server)=>{
+    //         return server.key;
+    //     })
+    //     this.props.contentActions.testgroupActions.setReferServers(referServers);
+    // },
+    // onSelectAll: (selected, selectedRows, changeRows) => {
+    //     console.log(selected, selectedRows, changeRows);
+    // }
+    // getCheckboxProps: record => ({
+    //     disabled: record.name === 'Disabled User',    // Column configuration not to be checked
+    // }),
+};
 
 class GLStragety extends React.Component {
     constructor(props) {
@@ -79,6 +95,9 @@ class GLStragety extends React.Component {
         const {slbid, tgid} = this.props.content.testgroup;
         this.props.contentActions.testgroupActions.generateTags(slbid, tgid);
     }
+    generateReferServer=()=>{
+        this.props.contentActions.testgroupActions.generateReferServer();
+    }
     goBack = () => {
         this.props.contentActions.testgroupActions.goback()
     }
@@ -110,7 +129,7 @@ class GLStragety extends React.Component {
                 <div className="gl-testinfo-btndiv">
                     <Button className="gl-left-btn" icon="double-left" onClick={this.goBack}>返回</Button>
                     <Button className="gl-left-btn" icon="upload" onClick={showConfirm}>发布到服务器</Button>
-                    <Button className="gl-right-btn" icon="compass" onClick={showConfirm}>生成原始版本</Button>
+                    <Button className="gl-right-btn" icon="compass" onClick={this.generateReferServer}>生成原始版本</Button>
                     <Button className="gl-right-btn" icon="tag" onClick={this.generateTags}>生成数据标签</Button>
                     <Button className="gl-right-btn" icon="plus" onClick={this.handleAdd}>新增策略</Button>
                 </div>
@@ -120,6 +139,7 @@ class GLStragety extends React.Component {
                     size="middle"
                     expandedRowRender={record => <p>{record.description}</p>}
                     dataSource={dataSource}
+                    rowSelection={rowSelection}
                 />
             </div>
         );

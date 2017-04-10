@@ -73,10 +73,10 @@ module.exports = {
      * @param num
      */
     getTags: function*(num){
-        var tags =  yield db.get('tag', undefined, [{opt: 'noEqual', key:'tag_status', data: 'used'},{opt:'limit', data: num}]);
+        var tags =  yield db.get('tag', undefined, [{opt: 'noEqual', key:'tag_status', data: 'used'},{'limit': num}]);
         return tags.map((tag)=>{
             return {
-                tag_id: tag.id,
+                tag_id: tag.get('objectId'),
                 tag_value: tag.get('value')
             }
         })
@@ -86,6 +86,6 @@ module.exports = {
      * @param tags_used
      */
     updateTags: function* (tags_used) {
-        return yield db.update('tag', undefined, {'tag_status': 'used'}, [{opt: 'in', key:'objectId', data: tags_used}]);
+        return yield db.update('tag', undefined, [{opt: 'in', key: 'objectId', data: tags_used}], {'tag_status': 'used'});
     }
 }
