@@ -9,7 +9,7 @@ export default class EChart extends React.Component {
 
     randerChart = () => {
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('container'));
+        var myChart = echarts.init(document.getElementById('line'));
         // 绘制图表
         myChart.setOption({
             title: { text: '' },
@@ -105,7 +105,7 @@ export default class EChart extends React.Component {
     render() {
         return (
             <div>
-                <div id="container" style={{width:'100%',height:400}} className="chart-box"></div>
+                <div id="line" style={{width:'100%',height:400}} className="chart-box"></div>
             </div>          
         )
     }

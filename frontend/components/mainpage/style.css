@@ -65,3 +65,15 @@
 .tableBox{
     padding: 50px 100px;
 }
+.dropdownBox{
+    text-align: left;
+    font-size: 14px;
+}
+.CascaderBox{
+    display: inline-block;
+    text-align: left;
+    font-size: 14px;
+}
+.CascaderBox .ant-cascader-picker{
+    width:100px;
+}

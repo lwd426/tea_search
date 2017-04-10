@@ -11,30 +11,30 @@ import { Menu, Dropdown, message } from 'antd';
 //Cascader
 import { Cascader } from 'antd';
 const options = [{
-  value: 'm',
-  label: 'M站灰度测试',
-  children: [{
-    value: 'button1',
-    label: '按钮颜色测试1',
-  },{
-    value: 'button2',
-    label: '按钮颜色测试2',
-  }],
+    value: 'm',
+    label: 'M站灰度测试',
+    children: [{
+        value: 'button1',
+        label: '按钮颜色测试1',
+    },{
+        value: 'button2',
+        label: '按钮颜色测试2',
+    }],
 }, {
-  value: 'pc',
-  label: 'PC灰度测试',
-  children: [{
-    value: 'dianbo1',
-    label: '点播页评论1',
-  },{
-    value: 'dianbo2',
-    label: '点播页评论2',
-  }],
+    value: 'pc',
+    label: 'PC灰度测试',
+    children: [{
+        value: 'dianbo1',
+        label: '点播页评论1',
+    },{
+        value: 'dianbo2',
+        label: '点播页评论2',
+    }],
 }];
 //const defaultValue = {['m','button1']}
 
 function onChange(value) {
-  console.log(value);
+    console.log(value);
 }
 
 //Tabs
@@ -44,19 +44,18 @@ const TabPane = Tabs.TabPane;
 
 //Dropdown
 function handleButtonClick(e) {
-  message.info('Click on left button.');
-  console.log('click left button', e);
+    message.info('Click on left button.');
+    console.log('click left button', e);
 }
 function handleMenuClick(e) {
-  message.info('Click on menu item.');
-  console.log('click', e);
+    message.info('Click on menu item.');
+    console.log('click', e);
 }
 const menu = (
-  <Menu onClick={handleMenuClick}>
-    <Menu.Item key="1">版本一</Menu.Item>
-    <Menu.Item key="2">版本二</Menu.Item>
-    <Menu.Item key="3">版本三</Menu.Item>
-  </Menu>
+    <Menu onClick={handleMenuClick}>
+        <Menu.Item key="1">BtnClick</Menu.Item>
+        <Menu.Item key="2">PicClice</Menu.Item>
+    </Menu>
 );
 
 //DatePicker
@@ -72,13 +71,20 @@ const monthFormat = 'YYYY/MM';
 class GLMainpage extends React.Component {
     constructor(props) {
         super(props);
-
     }
     render() {
+        const options_two = [{
+            value: 'BtnClick',
+            label: 'BtnClick',
+        }, {
+            value: 'PicClice',
+            label: 'PicClice',
+        }];
+
         return (
             <div className="mainpage">
                 <br />
-                <Cascader defaultValue={['zhejiang', 'hangzhou', 'xihu']} options={options} defaultValue={['m','button1']} onChange={onChange} />
+                <Cascader options={options} defaultValue={['m','button1']} onChange={onChange} />
 
                 <div className="card-container">
                   <Tabs type="card">
@@ -104,13 +110,32 @@ class GLMainpage extends React.Component {
                             />
                         </div>
 
-                        <EChart/>
+                        <EChart {...this.props}/>
 
                         <MyTable />
 
                     </TabPane>
                     <TabPane tab="转化率" key="2">
-                        <Chart/>
+                        <div className="CascaderBox">
+                            <span>优化指标 ：</span>
+                            {/*<Dropdown overlay={menu}>
+                                <Button>
+                                    切换版本 <Icon type="down" />
+                                </Button>
+                            </Dropdown>*/}
+
+                            <Cascader options={options_two} defaultValue={['BtnClick']} onChange={onChange} />
+                        </div>
+
+                        <div className="rangepickerBox">
+                            <RangePicker
+                                defaultValue={[moment('2015/01/01', dateFormat), moment('2015/01/01', dateFormat)]}
+                                format={dateFormat}
+                            />
+                        </div>
+
+                        <Chart {...this.props}/>
+
                     </TabPane>
                   </Tabs>
                 </div>
