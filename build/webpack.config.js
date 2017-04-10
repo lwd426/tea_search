@@ -11,7 +11,7 @@ var pickFiles = utils.pickFiles;
 // 项目根路径
 var ROOT_PATH = fullPath('../');
 // 项目源码路径
-var SRC_PATH = ROOT_PATH + '/src';
+var SRC_PATH = ROOT_PATH + '/frontend';
 // 产出路径
 var DIST_PATH = ROOT_PATH + '/public';
 console.log(ROOT_PATH)

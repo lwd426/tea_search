@@ -1,4 +1,9 @@
+.idea
 node_modules
 cache
+backend/cha
 npm-debug.log
-.idea/
+*.iml
+public
+run/
+logs/
