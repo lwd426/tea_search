@@ -162,7 +162,7 @@ class GLTestgroup extends React.Component {
                 </div>
                 <Table bordered className="gl-testinfo-table"
                     columns={columns}
-                   size="middle"
+                    size="middle"
                     dataSource={dataSource}
                 />
             </div>
@@ -170,8 +170,8 @@ class GLTestgroup extends React.Component {
     }
 }
 
-GLTestgroup.propTypes = {
-    edit_stragetylist: PropTypes.func.isRequired
-}
+// GLTestgroup.propTypes = {
+//     edit_stragetylist: PropTypes.func.isRequired
+// }
 
 export default GLTestgroup

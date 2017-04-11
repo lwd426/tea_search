@@ -276,13 +276,12 @@ export function validate(slbid,tgid,name,desc,cities,servers,serverskey,urls,uid
         if(name === '') {
             dispatch(validateFailure('name', '请填写分流策略名称'));
         }else{
-            console.log('dd')
+            var type = 'normal'
             dispatch(fetch.getData(stragety_url+ '?slbid='+slbid,function(err, result){
                 var stragetylist = result.data;
                 if(stragetylist.length === 0){//如果当前slb下没有策略，则直接保存
-                    return dispatch(fetch.postData(stragety_url,{slbid,tgid,name,desc,cities,servers,serverskey,urls,uids}, function(err, result){
+                    return dispatch(fetch.postData(stragety_url,{slbid,tgid,name,desc,cities,servers,serverskey,urls,uids,type}, function(err, result){
                         if(err || result.status === 'failure')  dispatch(saveStragetyResult(false))
-                        // dispatch(saveStragetyResult(true))
                         dispatch(edit_stragetylist(tgid,slbid))
                     }))
                 }else{
@@ -326,7 +325,8 @@ export function validate(slbid,tgid,name,desc,cities,servers,serverskey,urls,uid
                         }else{//如果url不重复，看是否包含
                             urls_of_slb.map((url_of_slb)=>{
                                 urls.map((url)=>{
-                                    if(url.match(url_of_slb)){//包含
+
+                                    if(url_of_slb.indexOf(url) || url.indexOf(url_of_slb) || url.match(url_of_slb)){
                                         url_matched = true;
                                         url_matched_info.push({
                                             url: url,
@@ -338,7 +338,7 @@ export function validate(slbid,tgid,name,desc,cities,servers,serverskey,urls,uid
                         }
 
                         if((!url_exsit && !url_matched) || (url_exsit && !server_exsit)) {//如果不重复也不包含，则直接保存 || 重复，server不重复，直接保存
-                            return dispatch(fetch.postData(stragety_url,{slbid,tgid,name,desc,cities,servers,serverskey,urls,uids}, function(err, result){
+                            return dispatch(fetch.postData(stragety_url,{slbid,tgid,name,desc,cities,servers,serverskey,urls,uids,type}, function(err, result){
                                 if(err || result.status === 'failure')  dispatch(saveStragetyResult(false))
                                 dispatch(edit_stragetylist(tgid,slbid))
                             }))
@@ -364,7 +364,7 @@ export function validate(slbid,tgid,name,desc,cities,servers,serverskey,urls,uid
                             dispatch(validateFailure('server','分流服务器已经被占用（规则：url为空时，必须选择未被占用的分流服务器）'
                             ));
                         }else{
-                            return dispatch(fetch.postData(stragety_url,{slbid,tgid,name,desc,cities,servers,serverskey,urls,uids}, function(err, result){
+                            return dispatch(fetch.postData(stragety_url,{slbid,tgid,name,desc,cities,servers,serverskey,urls,uids,type}, function(err, result){
                                 if(err || result.status === 'failure')  dispatch(saveStragetyResult(false))
                                 dispatch(edit_stragetylist(tgid,slbid))
                             }))
@@ -383,15 +383,20 @@ export function validate(slbid,tgid,name,desc,cities,servers,serverskey,urls,uid
 }
 
 
-export function handleStragety(stra_id, status) {
+export function handleStragety(slbid, stra_id, status) {
     return (dispatch, getState) => {
-        return dispatch(fetch.updateData(stragety_url,{stra_id: stra_id}, {stra_status: status}, function(err, result){
-            if(err)  dispatch(changeStragetyStatus())
-            // dispatch(fetch.getData(testgroup_url+ '?slbid='+group.slbid,function(err, result){
-            //     if(!err)  getTestGroupListSuccess([])
+        //先更新重新发布
+        return dispatch(fetch.getData(slb_publish_url + '?slbid='+slbid,function(err, result){
+            //发布失败，告知用户
+            if(err)  return dispatch(publishresult(false))
+            //如果发布成功，则更新策略状态
+            return dispatch(fetch.updateData(stragety_url,{stra_id: stra_id}, {stra_status: status}, function(err, result){
+                if(err)  dispatch(changeStragetyStatus())
+
                 dispatch(changeStragetyStatus(stra_id, status))
-            // }))
+            }))
         }))
+
     }
 }
 
@@ -464,5 +469,48 @@ export function publish(slbid) {
 export function publishresult() {
     return {
         type: TYPES.PUBLISH
+    }
+}
+
+
+export function generateReferVersion(version) {
+    return (dispatch, getState) => {
+        var slbid = version.slbid;
+        var tgid = version.tgid;
+        var name = version.name;
+        var desc = version.desc;
+        var cities = version.cities;
+        var servers = version.servers;
+        var serverskey = version.serverskey;
+        var urls = version.urls;
+        var uids = version.uids;
+        var type = 'refer';
+        return dispatch(fetch.postData(stragety_url, {
+            slbid,
+            tgid,
+            name,
+            desc,
+            cities,
+            servers,
+            serverskey,
+            urls,
+            uids,
+            type
+        }, function (err, result) {
+            if (err || result.status === 'failure') dispatch(saveStragetyResult(false))
+            dispatch(edit_stragetylist(tgid, slbid))
+        }))
+    }
+}
+
+export function updateStragety(stra_id, tgid , cdata) {
+    return (dispatch, getState) => {
+        return dispatch(fetch.updateData(stragety_url,{stra_id},data,function(err, result){
+            if(err)  dispatch(getTestGroupListSuccess([]))
+            return dispatch(fetch.getData(stragety_url + '?tgid='+tgid,function(err, result){
+                if(err)  dispatch(getStragetyListSuccess([], tgid, slbid))
+                dispatch(getStragetyListSuccess(result.data, tgid, slbid))
+            }))
+        }))
     }
 }

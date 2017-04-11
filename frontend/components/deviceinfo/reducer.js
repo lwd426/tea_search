@@ -21,17 +21,16 @@ const webServerReducer = (state = initState,action) => {
             })
         }
         case TYPES.SET_REFER_SERVER_SUCCESS : {
-            var servers = action.servers;
-            var serverlist = webServerList.map((server)=>{
-                if(servers.indexOf(server.key)){
-                    server.refer = true
-                }else{
-                    server.refer = false
+            var servers = action.servers,
+                status = action.status;
+            console.log('dd')
+            state.webServerList.map((server)=>{
+                if(servers.indexOf(server.key) !== -1){
+                    server.refer = status
                 }
-                return server;
             })
             return Object.assign({},state,{
-                webServerList: serverlist
+                webServerList: state.webServerList
             })
         }
         default:

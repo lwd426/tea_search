@@ -16,7 +16,7 @@ module.exports = {
      * @param name
      * @returns {*}
      */
-    saveStragety: function*(uuid, slbid,tgid,name,desc,cities,servers,serverskey,urls,uids) {
+    saveStragety: function*(uuid, slbid,tgid,name,desc,cities,servers,serverskey,urls,uid,type) {
         //保存策略
         var data = {
             stra_id : uuid,
@@ -30,6 +30,7 @@ module.exports = {
             stra_status: 'new',
             tgid: tgid,
             slbid: slbid,
+            type: type,
             flowaccounting: '未配置',
             time: moment().format('YYYY-MM-DD HH:mm:ss')
         }

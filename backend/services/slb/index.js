@@ -8,6 +8,7 @@
 var db = require('../../db')
 const uuid = require('uuid/v1');
 var libStragety = require('../stragety')
+var libNginx = require('../../../lib/nginx')
 
 module.exports = {
     /**
@@ -39,7 +40,7 @@ module.exports = {
              uidArray:['3323444',...],
              regionArray: ['Beijing','Tianjin'...],
              serverArray:['192.168.1.2',..],
-             isSpecial: true
+             default: true
          }
          ]
          */
@@ -67,6 +68,8 @@ module.exports = {
         })
         console.log(data)
         //调用禚永然的配置文件生成接口
+        var dd = libNginx(data);
+        console.log(dd)
 
         //发送
     },

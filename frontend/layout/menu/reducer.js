@@ -21,9 +21,9 @@ let reducer = (state={wintype: 'mainpage',slbid: '', add: false, menulist: []},a
         case TYPES.DELETE_MENU_SUCCESS:
             return Object.assign({}, state, { menulist: action.menulist})
             break
-        case TYPES.CHANGE_SLB:
-            return Object.assign({}, state, { slbid: action.slbid})
-            break
+        // case TYPES.CHANGE_SLB:
+        //     return Object.assign({}, state, { slbid: action.slbid})
+        //     break
         default:
             return state
     }

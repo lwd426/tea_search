@@ -20,6 +20,7 @@ const initialState = {
     ,validatestatus: 'failure' //保存策略时验证的状态
     ,savestragetystatus: false //保存策略状态(启动或停止使用)
     ,editting_stragety: undefined //正在编辑的策略
+    ,refer_stragety: undefined //正在编辑的策略
     , validateStra: {
         name: {
             status: false,
@@ -62,8 +63,13 @@ let reducer = (state = initialState, action)=> {
             return Object.assign({}, state, {testgrouplist: action.testgrouplist})
             break
         case TYPES.GET_STRAGETY_LIST:
+            var refer_s = undefined;
+            action.list.map((stragety)=>{
+                if(stragety.type === 'refer') refer_s = stragety;
+            })
             return Object.assign({}, state, {
                 stragetylist: action.list,
+                refer_stragety: refer_s,
                 showtype: 'stragety',
                 slbid: action.slbid,
                 tgid: action.tgid,
@@ -111,6 +117,7 @@ let reducer = (state = initialState, action)=> {
                     ip: server.ip,
                     key: server.key,
                     status: status,
+                    refer: server.refer,
                     statusinfo: statusinfo || ''
                 }
 
@@ -137,16 +144,19 @@ let reducer = (state = initialState, action)=> {
             break
         case TYPES.EDIT_STRAGETY:
             var stra = action.stragety;
-            var urls= action.stragety.urlsvalues.split(';');
-            var uids = action.stragety.uidsvalues.split(';');
+            var urls= stra.urlsvalues.split(';');
+            var uids = stra.uidsvalues.split(';');
             if(urls[0] === '') urls = [];
             if(uids[0] === '') uids = [];
+            console.log('ddd')
             return Object.assign({}, state, {
+                showtype: 'addstragety',
                 editting_stragety: stra,
                 addurls: urls,
                 adduids: uids,
-                serverselectedkeys: stra.serverskey.split(';'),
-                showtype: 'addstragety'});
+                serverselectedkeys: stra.serverskey.split(';')
+                });
+
             break
         case TYPES.FRESH_STRAGETYLIST:
             return Object.assign({}, state, {stragetylist: action.stragetylist})

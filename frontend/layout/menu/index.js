@@ -28,9 +28,9 @@ class GLMenu extends React.Component {
         var infos = item.key.split(',')
         this.props.menuActions.changeShowWinType(infos[0], infos[1]);
     }
-    changeSlb = (item, key, selected) => {
-        this.props.menuActions.changeSlb(item.key);
-    }
+    // changeSlb = (item, key, selected) => {
+    //     this.props.menuActions.changeSlb(item.key);
+    // }
     confirm = () => {
         var name = this.refs.add.value;
         // let {actions} = this.props;
@@ -46,13 +46,17 @@ class GLMenu extends React.Component {
         let {actions} = this.props;
         this.props.menuActions.deleteTestGroup(id);
     }
+    changeMenu =(item)=>{
+        if(item.key.indexOf(',') === -1) return false;
+        var code = item.key.split(',')
+        this.props.menuActions.changeShowWinType(code[0], code[1]);
+    }
     render() {
         return (
-            <Menu theme="dark" mode={this.props.app.mode}  onSelect={this.changeWintype}>
+            <Menu theme="dark" mode={this.props.app.mode} onClick={this.changeMenu}  >
                 {this.props.menu.menulist.map((e, index) =>
                     <SubMenu
                     key={e.objectId}
-                    onTitleClick={this.changeSlb}
                     title={<Tooltip placement="right" title={
                         <span>
                             <Icon className="edit-menu"type="edit" />
