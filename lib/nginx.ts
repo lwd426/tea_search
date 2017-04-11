@@ -257,7 +257,7 @@ class Verify {
         for (let v of this.arr) {//todo
             if (Array.isArray(v.urlArray) && !v.urlArray.length) {
                 v.urlArray.push("/");
-                throw {code: 2, data: "有个没填url"}
+                //throw {code: 2, data: "有个没填url"}
             }
         }
     }

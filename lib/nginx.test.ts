@@ -20,5 +20,3 @@ nginx([
         }
     ]
 );
-
-console.log();
