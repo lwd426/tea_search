@@ -20,3 +20,25 @@ export function changeContentDisplay(one_display,two_display,key){
         content_two_key: key,
     }
 }
+
+export function changeProjectValue(array){
+    return{
+        type:TYPES.PROJECT_VALUE,
+        stragety: array
+    }
+}
+
+export function changeDatePicker(dateStrings){
+    return{
+        type:TYPES.DATE_PICKER,
+        date_picker: dateStrings
+    }
+}
+
+export function switchContentShow(main_display,card_display){
+    return{
+        type:TYPES.MAIN_CONTAINER_DISPLAY,
+        main_container_display: main_display,
+        card_container_display: card_display,
+    }
+}

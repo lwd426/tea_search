@@ -1,12 +1,40 @@
 import React from 'react';
 import echarts from 'echarts';
 import {Table,Button,Icon} from 'antd';
+import moment from 'moment';
 
 export default class EChart extends React.Component {
-    randerChart = () => {
+    randerChart = (date_picker) => {
         // 基于准备好的dom，初始化echarts实例
+
+        var data1 = [200, 130, 330, 450, 400, 250, 240, 500, 100, 600, 500, 250]
+        var data2 = [240, 150, 380, 400, 500, 260, 280, 550, 150, 500, 530, 250]
+        var data3 = [34, 25, 48, 50, 60, 36, 38, 65, 35, 60, 63, 35]
+
         var myChart = echarts.init(document.getElementById('duiji'));
         // 绘制图表
+        let xData = function() {
+            var start = new Date(date_picker[0]).getTime();
+            var end = new Date(date_picker[1]).getTime();
+            //var str = end.from(start, true); 
+            var length = (end - start)/(24*60*60*1000) + 1;
+
+            data1 = data1.slice(0, length);
+            data2 = data2.slice(0, length);
+            data3 = data3.slice(0, length);
+
+            var data_arr = [];
+            var date = moment(new Date(date_picker[0]));
+            for (var i = 0; i < length; i++) {
+                var month = date.month() + 1;
+                var day = date.date();
+                data_arr.push(month + "-" + day);
+
+                date = date.add(1, 'days');
+            }
+            return data_arr;
+        }(date_picker);
+
         myChart.setOption({
             title: { text: '' },
             tooltip: {
@@ -24,14 +52,13 @@ export default class EChart extends React.Component {
             xAxis: [
                 {
                     type: 'category',
-                    data: ['03-01','03-02','03-03','03-04','03-05','03-06','03-07','03-08','03-09','03-10','03-11','03-12'],
+                    data: xData,//['03-01','03-02','03-03','03-04','03-05','03-06','03-07','03-08','03-09','03-10','03-11','03-12'],
                     axisPointer: {
                         type: 'shadow'
                     }
                 }
             ],
             yAxis: [
-                
                 {
                     type: 'value',
                     name: '访问用户',
@@ -69,30 +96,32 @@ export default class EChart extends React.Component {
                     type: "bar",
                     barWidth : 20,
                     stack: "总量",
-                    data:[200, 130, 330, 450, 400, 250, 240, 500, 100, 600, 500, 250]
+                    data:data1//[200, 130, 330, 450, 400, 250, 240, 500, 100, 600, 500, 250]
                 },
                 {
                     name:'点击',
                     type: "bar",
                     barWidth : 20,
                     stack: "总量",
-                    data:[240, 150, 380, 400, 500, 260, 280, 550, 150, 500, 530, 250]
+                    data:data2//[240, 150, 380, 400, 500, 260, 280, 550, 150, 500, 530, 250]
                 },
                 {
                     name:'点击率',
                     type:'line',
                     yAxisIndex: 1,
-                    data:[34, 25, 48, 50, 60, 36, 38, 65, 35, 60, 63, 35]
+                    data:data3//[34, 25, 48, 50, 60, 36, 38, 65, 35, 60, 63, 35]
                 }
             ]
         });
     }
 
     componentDidMount() {
-        this.randerChart();
+        /*let date_picker = this.props.content.mainpage.date_picker
+        this.randerChart(date_picker);*/
     }
     componentWillReceiveProps(nextProps) {
-        this.randerChart();
+        let date_picker = nextProps.content.mainpage.date_picker
+        this.randerChart(date_picker);
         return true;
     }
     render() {
@@ -139,7 +168,7 @@ export default class EChart extends React.Component {
         return (
             <div>
                 <div id="duiji" style={{width:'100%',height:400}} ></div>
-                <Table bordered={true} columns={columns} dataSource={data} />  
+                <Table bordered={true} columns={columns} dataSource={data} title={() => '按日期'}/>  
             </div>      
         )
     }
