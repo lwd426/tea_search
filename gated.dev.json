@@ -18,6 +18,7 @@
         "--harmony-async-await"
       ],
       "env": {
+        "API_HOST": "http://10.100.54.188:3000"
       }
     }
   ]
