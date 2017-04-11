@@ -61,7 +61,7 @@ alias = Object.assign(alias, {
   'antd.min.css': NODE_MODULES_PATH + '/antd/dist/antd.min.css'
 });
 
-
+console.log(JSON.stringify(!!process.env.API_HOST ? process.env.API_HOST : 'http://localhost:3000'));
 var config = {
   context: SRC_PATH,
   entry: {
@@ -86,7 +86,8 @@ var config = {
   plugins: [
     new webpack.DefinePlugin({
       // http://stackoverflow.com/questions/30030031/passing-environment-dependent-variables-in-webpack
-      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || 'development')
+      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || 'development'),
+      "process.env.API_HOST": JSON.stringify(!!process.env.API_HOST ? process.env.API_HOST : 'http://localhost:3000')
     }),
     new webpack.optimize.CommonsChunkPlugin({
       names: ['lib', 'manifest']
