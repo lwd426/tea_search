@@ -57,14 +57,13 @@ export function addWebServer(group){
         return dispatch(fetch.postData(web_list_url,{
                 key: group.key, 
                 slbid: group.slbid, 
-                ip: group.ip, 
-                stragetyname: group.stragetyname,
-                address: group.address,
-                backup: group.backup,
-                refer: group.refer
+                ip: '',
+                stragetyname: '',
+                address: '',
+                backup: '',
+                refer: false
             }, function(err, result){
             if(!err)  postData([])
-                console.log('ddddd')
             dispatch(fetch.getData(web_list_url + '?slbid=' + group.slbid,function(err, result){
                 if(!err) updateWebServerList([]);
                 dispatch(updateWebServerList(result.data));
@@ -133,9 +132,16 @@ export function getWebServerList(slbid) {
  */
 export function setReferServers(servers) {
     return (dispatch, getState) => {
-        return dispatch(fetch.postData(web_list_url,{opt:'in',key:'key',data:servers},{'refer':true},function(err, result){
-            if(err)  freshStragetylist([])
-            dispatch(freshStragetylist(result.data))
+        return dispatch(fetch.updateData(web_list_url+ '/refer',{data:servers},{'refer':true},function(err, result){
+            if(err || !result.data)  setReferServersSuccess([])
+            dispatch(setReferServersSuccess(servers))
         }))
+    }
+}
+
+export function setReferServersSuccess(servers) {
+    return {
+        type: TYPES.SET_REFER_SERVER_SUCCESS,
+        servers
     }
 }

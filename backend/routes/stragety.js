@@ -39,8 +39,8 @@ router.post('/', function *(next) {
 });
 
 router.del('/', function *(next) {
-    var code = this.request.body.code;
-    var result = yield lib.deleteStragety({code:code})
+    var stra_id = this.request.body.code;
+    var result = yield lib.deleteStragety({stra_id:stra_id})
     this.body = {
         status: 'success',
         data: result

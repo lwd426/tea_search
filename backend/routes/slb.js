@@ -29,7 +29,6 @@ router.del('/', function *(next) {
     };
 });
 router.put('/', function *(next) {
-    console.log('woqu')
     var where = this.request.body.where;
     var data = this.request.body.data;
     var result = yield lib.updateSlb(where, data)
@@ -38,5 +37,16 @@ router.put('/', function *(next) {
         data: result
     };
 });
+
+router.get('/publish', function *(next) {
+    var slbid = this.query.slbid;
+    //调用发布接口
+    var result = yield lib.publish(slbid)
+    this.body = {
+        status: 'success',
+        data: result
+    };
+});
+
 
 module.exports = router;

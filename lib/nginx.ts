@@ -201,7 +201,7 @@ class Verify {
 
     check() {
         try {
-            this.serverSingle();
+            // this.serverSingle();
             this.url();
             this.hasDefault();
             return {
@@ -215,13 +215,19 @@ class Verify {
 
     hasDefault() {
         let flag = false;
+        let arr: boolean[] = [];
         for (let v of this.arr) {
-            flag = !!v.default || flag;
+            arr.push(!!v.default);
         }
-        if (!flag) {
+        if (arr.indexOf(true) == -1) {
             throw {
                 code: 3,
-                data: `没有默认的`
+                data: `没有default`
+            };
+        } else if (arr.indexOf(true) != arr.lastIndexOf(true)) {
+            throw {
+                code: 4,
+                data: `好几个default`
             };
         }
     }
@@ -248,9 +254,10 @@ class Verify {
     }
 
     url() {
-        for (let v of this.arr) {
-            if (!v.url) {
-                throw {code: 2, data: "有个没填url"}
+        for (let v of this.arr) {//todo
+            if (Array.isArray(v.urlArray) && !v.urlArray.length) {
+                v.urlArray.push("/");
+                //throw {code: 2, data: "有个没填url"}
             }
         }
     }
@@ -258,8 +265,8 @@ class Verify {
 function array2one(arr) {
     let arr2 = [];
     for (let v of arr) {
-        if (Array.isArray(v.url) && v.url.length) {
-            v.url.forEach(item => {
+        if (Array.isArray(v.urlArray) && v.urlArray.length) {
+            v.urlArray.forEach(item => {
                 arr2.push((<any>Object).assign({}, v, {url: item}));
             });
         } else if (typeof v.url === "string") {
@@ -278,9 +285,9 @@ function array2one(arr) {
 
 function nginx(arr: any[]) {
     let verf = new Verify(arr);
-    const re = verf.check();
+    let re = verf.check();
     if (re.code != 0) {
-        return;
+        return re;
     }
     arr = array2one(arr);
     const res = arr.map(item => {

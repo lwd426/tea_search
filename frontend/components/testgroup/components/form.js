@@ -23,7 +23,6 @@ class RegistrationForm extends React.Component {
         var _this = this;
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values);
                 var name = this.refs.name.refs.input.value || '';
                 var desc = this.refs.desc.refs.input.value || '';
                 var cities = values.stra_cities || [];
@@ -123,7 +122,6 @@ class RegistrationForm extends React.Component {
         this.props.contentActions.testgroupActions.addCities(values);
     }
     render() {
-        const { getFieldDecorator } = this.props.form;
         const formItemLayout = {
             labelCol: {
                 xs: { span: 24 },
@@ -156,6 +154,7 @@ class RegistrationForm extends React.Component {
             stra_name = stragety.name;
             stra_desc = stragety.desc;
             cities = stragety.cities.split(';')
+            if(cities[0] === '') cities =[];
             this.props.content.testgroup.serverselectedkeys = stragety.serverskey.split(';');
             this.props.content.testgroup.addurls = stragety.urls.split(';');
             this.props.content.testgroup.adduids = stragety.uids.split(';');
@@ -166,6 +165,8 @@ class RegistrationForm extends React.Component {
                     {...formItemLayout}
                     label="分流策略名称"
                     hasFeedback
+                    validateStatus={this.props.content.testgroup.validateStra.name.status}
+                    help={this.props.content.testgroup.validateStra.name.info}
                     required
                 >
                     {/*{getFieldDecorator('stra_name', {*/}
@@ -179,7 +180,6 @@ class RegistrationForm extends React.Component {
                 <FormItem
                     {...formItemLayout}
                     label="描述"
-                    hasFeedback
                 >
                     {/*{getFieldDecorator('stra_desc', {*/}
                         {/*rules: [],*/}
@@ -201,6 +201,8 @@ class RegistrationForm extends React.Component {
                     {...formItemLayout}
                     label={"分流服务器"}
                     hasFeedback
+                    validateStatus={this.props.content.testgroup.validateStra.server.status}
+                    help={this.props.content.testgroup.validateStra.server.info}
                     required
                 >
                     <GLServerTree {...this.props}/>
@@ -211,6 +213,9 @@ class RegistrationForm extends React.Component {
                 <FormItem
                     {...formItemLayout}
                     label="URL"
+                    hasFeedback
+                    validateStatus={this.props.content.testgroup.validateStra.url.status}
+                    help={this.props.content.testgroup.validateStra.url.info}
                 >
 
                     <div className="gl-url-add-div">{
@@ -235,6 +240,9 @@ class RegistrationForm extends React.Component {
                 <FormItem
                     {...formItemLayout}
                     label="UID"
+                    hasFeedback
+                    validateStatus={this.props.content.testgroup.validateStra.uid.status}
+                    help={this.props.content.testgroup.validateStra.uid.info}
                 ><div className="gl-url-add-div">{
                     this.props.content.testgroup.adduids.map((uid, index) => {
                         if(uid !== '')  return (<div key={index}><span className="gl-choice-remove"><Icon type="close" onClick={_this.removeSeletedUid.bind(_this,index)}/></span><span className="gl-url-add-seleted">{uid}</span></div>);
@@ -255,6 +263,9 @@ class RegistrationForm extends React.Component {
                 <FormItem
                     {...formItemLayout}
                     label="地域"
+                    hasFeedback
+                    validateStatus={this.props.content.testgroup.validateStra.region.status}
+                    help={this.props.content.testgroup.validateStra.region.status}
                 >
                     {/*{getFieldDecorator('stra_cities', {*/}
                         {/*rules: [],*/}

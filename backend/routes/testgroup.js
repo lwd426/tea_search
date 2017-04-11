@@ -1,5 +1,6 @@
 var router = require('koa-router')();
 var lib = require('../services/testgroup')
+var libStragety = require('../services/stragety')
 
 router.get('/', function *(next) {
     var slbid = this.query.slbid;
@@ -23,7 +24,10 @@ router.post('/', function *(next) {
 
 router.del('/', function *(next) {
     var code = this.request.body.code;
+
     var result = yield lib.deleteTest({objectId:code})
+    //删除测试组下的所有策略
+    result = yield libStragety.deleteStragety({tgid: code})
     this.body = {
         status: 'success',
         data: result

@@ -20,6 +20,28 @@ const initialState = {
     ,validatestatus: 'failure' //保存策略时验证的状态
     ,savestragetystatus: false //保存策略状态(启动或停止使用)
     ,editting_stragety: undefined //正在编辑的策略
+    , validateStra: {
+        name: {
+            status: false,
+            info: '请输入分流策略名称'
+        },
+        server: {
+            status: false,
+            info: '请选择分流服务器'
+        },
+        url: {
+            status: false,
+            info: ''
+        },
+        uid: {
+            status: false,
+            info: ''
+        },
+        region: {
+            status: false,
+            info: ''
+        }
+    }
 }
 
 let reducer = (state = initialState, action)=> {
@@ -31,7 +53,7 @@ let reducer = (state = initialState, action)=> {
             return Object.assign({}, state, {showtype: 'testgroup'})
             break
         case TYPES.GOBACK_TO_STRAGETYLIST:
-            return Object.assign({}, state, {showtype: 'stragety'})
+            return Object.assign({}, state, {showtype: 'stragety', editting_stragety: undefined})
             break
         case TYPES.GET_TESTGROUP_SUCCESS:
             return Object.assign({}, state, {testgrouplist: action.testgrouplist})
@@ -44,11 +66,12 @@ let reducer = (state = initialState, action)=> {
                 stragetylist: action.list,
                 showtype: 'stragety',
                 slbid: action.slbid,
-                tgid: action.tgid
+                tgid: action.tgid,
+                editting_stragety: undefined
             })
             break
         case TYPES.ADD_STRAGETY:
-            return Object.assign({}, state, {showtype: 'addstragety', editting_stragety: undefined})
+            return Object.assign({}, state, {showtype: 'addstragety', editting_stragety: undefined, serverselectedkeys:[],addurls: [], adduids: []})
             break
         case TYPES.ADD_URL_TYPE:
             return Object.assign({}, state, {addurltype: action.addurltype})
@@ -79,9 +102,9 @@ let reducer = (state = initialState, action)=> {
                 var status = false;//status为该机器的状态，是否有策略正在运行
                 var statusinfo = '';
                 stragetiesinfo.map((stragety) => {
-                    if (stragety.status === 'running') {
+                    if (stragety.stra_status === 'running') {
                         status = true;
-                        statusinfo += stragety.name + ';';
+                        statusinfo += stragety.stra_name + ' ';
                     }
                 })
                 return {
@@ -113,14 +136,43 @@ let reducer = (state = initialState, action)=> {
             return Object.assign({}, state, {stragetylist: state.stragetylist})
             break
         case TYPES.EDIT_STRAGETY:
-            var editting_stragety = undefined;
-            state.stragetylist.map((stra)=>{
-                if(stra.stra_id === action.stragety.stragetycode) editting_stragety = action.stragety
-            })
-            return  Object.assign({}, state, {editting_stragety: editting_stragety, showtype: 'addstragety'});
+            var stra = action.stragety;
+            var urls= action.stragety.urlsvalues.split(';');
+            var uids = action.stragety.uidsvalues.split(';');
+            if(urls[0] === '') urls = [];
+            if(uids[0] === '') uids = [];
+            return Object.assign({}, state, {
+                editting_stragety: stra,
+                addurls: urls,
+                adduids: uids,
+                serverselectedkeys: stra.serverskey.split(';'),
+                showtype: 'addstragety'});
             break
         case TYPES.FRESH_STRAGETYLIST:
             return Object.assign({}, state, {stragetylist: action.stragetylist})
+            break
+        case TYPES.VALIDATE_FAILURE:
+            var key = action.key,
+                info = action.info,
+                validateStra = state.validateStra;
+            if(key === 'url,uid'){
+                validateStra.url.status = 'error';validateStra.url.info = info;
+                validateStra.uid.status = 'error';validateStra.uid.info = info;
+                validateStra.name.status = 'success';validateStra.name.info = '';
+            }else{
+                switch(key){
+                    case "name": validateStra.name.status = 'error';validateStra.name.info = info;break;
+                    case "server": validateStra.server.status = 'error';validateStra.server.info = info;validateStra.name.status = 'success';validateStra.name.info = '';break;
+                    case "url": validateStra.url.status = 'error';validateStra.url.info = info;validateStra.name.status = 'success';validateStra.name.info = '';break;
+                    case "uid": validateStra.uid.status = 'error';validateStra.uid.info = info;validateStra.name.status = 'success';validateStra.name.info = '';break;
+                    case "region": validateStra.region.status = 'error';validateStra.region.info = info;validateStra.name.status = 'success';validateStra.name.info = '';break;
+                }
+            }
+
+            return Object.assign({}, state, {validateStra: validateStra})
+            break
+        case TYPES.PUBLISH:
+            // return Object.assign({}, state, {validStatus: 'failure'})
             break
         default:
             return state
