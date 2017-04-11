@@ -280,7 +280,7 @@ function nginx(arr: any[]) {
     let verf = new Verify(arr);
     const re = verf.check();
     if (re.code != 0) {
-        return;
+        return re;
     }
     arr = array2one(arr);
     const res = arr.map(item => {
