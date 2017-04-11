@@ -278,7 +278,7 @@ function array2one(arr) {
 
 function nginx(arr: any[]) {
     let verf = new Verify(arr);
-    const re = verf.check();
+    let re = verf.check();
     if (re.code != 0) {
         return re;
     }
