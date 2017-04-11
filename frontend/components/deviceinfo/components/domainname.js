@@ -34,10 +34,14 @@ class RegistrationForm extends React.Component {
         //actions.updateMenu(name, domainid, objectID)
         this.props.contentActions.deviceinfoActions.updateSLB(objectID, slbDomain);
         this.success();
-        this.refs.domainID.refs.input.value = '111';
+        this.refs.domainID.refs.input.value = '111';//到时拿到接口后，填入接口返回的id
     }
     componentWillReceiveProps(nextProps) {
-        console.log('domain componentWillReceiveProps')
+        console.log('domain componentWillReceiveProps');
+        let name = nextProps.content.deviceinfo.current_slb_name || '';
+        this.setState({
+          value: name
+        });
         return true;
     }
     componentDidMount = () => {
@@ -45,11 +49,7 @@ class RegistrationForm extends React.Component {
         this.props.contentActions.deviceinfoActions.getSLB(objectID);
     }
     render() {
-        let name = this.props.content.deviceinfo.current_slb_name || '';
-        var value=this.state.value;
-        if(value == '' && name != '' ){
-            value = name;
-        }
+        let value = this.state.value;
 
         return (
             <div className="slbBox">

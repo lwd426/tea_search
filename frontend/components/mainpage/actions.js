@@ -10,3 +10,13 @@ export function xxx(stragety) {
         stragety: stragety
     }
 }
+
+export function changeContentDisplay(one_display,two_display,key){
+    key = (key ? key : '')
+    return {
+        type:TYPES.CONTENT_DISPLAY,
+        content_one_display: one_display, 
+        content_two_display: two_display,
+        content_two_key: key,
+    }
+}

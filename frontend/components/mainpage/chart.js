@@ -1,74 +1,151 @@
-import React from 'react'
-import Highcharts from 'highcharts'
+import React from 'react';
+import echarts from 'echarts';
+import {Table,Button,Icon} from 'antd';
 
-export default class myChart extends React.Component {
-    randerChart = (type) => {
-        var chart = new Highcharts.Chart({
-            chart: {
-                renderTo: 'container2',
-                type: type ? type : 'column'
-            },
-            title: {
-                text: null
-            },
-            credits: {
-                enabled: false
-            },
-            xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: 'mumber'
-                }
-            },
+export default class EChart extends React.Component {
+    randerChart = () => {
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('container'));
+        // 绘制图表
+        myChart.setOption({
+            title: { text: '' },
             tooltip: {
-                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
-                footerFormat: '</table>',
-                shared: true,
-                useHTML: true
-            },
-            plotOptions: {
-                column: {
-                    pointPadding: 0.2,
-                    borderWidth: 0
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    crossStyle: {
+                        color: '#999'
+                    }
                 }
             },
-            series: [{
-                name: 'Tokyo',
-                data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-
-            }, {
-                name: 'New York',
-                data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
-
-            }, {
-                name: 'London',
-                data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
-
-            }, {
-                name: 'Berlin',
-                data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1]
-
-            }]
-        })
+            legend: {
+                data:['版本一','版本二','原始版本']
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: ['03-01','03-02','03-03','03-04','03-05','03-06','03-07','03-08','03-09','03-10','03-11','03-12'],
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '转化率',
+                    min: 10,
+                    max: 70,
+                    interval: 10,
+                    axisLabel: {
+                        formatter: '{value} %'
+                    }
+                }
+            ],
+            toolbox: {
+                show: true, //是否显示工具箱
+                feature: {
+                    mark: { show: true },
+                    dataView: { show: true, readOnly: false },
+                    magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
+                    restore: { show: true },
+                    saveAsImage: { show: true }
+                }
+            },
+            series: [
+                {
+                    name:'版本一',
+                    type:'line',
+                    data:[20, 13, 33, 45, 40, 25, 24, 50, 10, 60, 50, 25]
+                },
+                {
+                    name:'版本二',
+                    type:'line',
+                    data:[24, 15, 38, 40, 50, 26, 28, 55, 15, 50, 53, 25]
+                },
+                {
+                    name:'原始版本',
+                    type:'line',
+                    data:[34, 25, 48, 50, 60, 36, 38, 65, 35, 60, 63, 35]
+                }
+            ]
+        });
     }
 
     componentDidMount() {
-        this.randerChart('column')
+        this.randerChart();
     }
-
     render() {
+        const columns = [{
+          title: '版本',
+          dataIndex: 'date',
+          key: 'date',
+          width: '20%',
+          render: (text, record, index) => (
+            <a href="#" onClick={() => {
+                this.props.contentActions.mainpageActions.changeContentDisplay('none','block',record.key);
+            }}>
+                {text}
+            </a>
+          )
+        }, {
+          title: 'UV 访客数',
+          dataIndex: 'useramount',
+          key: 'useramount',
+          width: '20%',
+        }, {
+          title: 'PV 浏览数',
+          dataIndex: 'visitor',
+          key: 'visitor',
+          width: '20%',
+        }, {
+          title: '曝光',
+          dataIndex: 'appear',
+          key: 'appear',
+        }, {
+          title: '点击',
+          dataIndex: 'click',
+          key: 'click',
+        }, {
+          title: '转化率',
+          dataIndex: 'persent',
+          key: 'persent',
+        }];
+
+
+        const data = [{
+          key: '1',
+          date: '原始版本',
+          useramount: 3000,
+          visitor: 500,
+          appear: 43,
+          click: 22,
+          persent: '20%',
+        }, {
+          key: '2',
+          date: '测试版本一',
+          useramount: 3000,
+          visitor: 500,
+          appear: 46,
+          click: 28,
+          persent: '20%',
+        }, {
+          key: '3',
+          date: '测试版本二',
+          useramount: 3000,
+          visitor: 500,
+          appear: 83,
+          click: 62,
+          persent: '20%',
+        }];
+
         return (
             <div>
-                <div id="container2" className="chart-box"></div>
-                {/*<div onClick = {this.randerChart('line')}> {'line'} </div>
-                <div onClick = {this.randerChart('pie')}> {'pie'} </div>
-                <div onClick = {this.randerChart('column')}> {'column'} </div>*/}
-            </div>          
+                <br />
+
+                <div id="container" style={{width:'100%',height:400}} className="chart-box"></div>
+                <Table bordered={true} columns={columns} dataSource={data} />  
+            </div>      
         )
     }
 }

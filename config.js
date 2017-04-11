@@ -10,7 +10,7 @@ module.exports = {
         },
         timeout: 5
 	}
-	, HOST: 'http://localhost:3000'
+    , HOST: `${process.env.API_HOST}`
 	,PORT: 3000
 
 }

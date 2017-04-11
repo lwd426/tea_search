@@ -1,0 +1,25 @@
+{
+  "apps": [
+    {
+      "name": "gated",
+      "script": "./bin/www",
+      "instances": 1,
+      "exec_mode": "cluster",
+      "merge_logs": true,
+      "log_date_format": "YYYY-MM-DD HH:mm Z",
+      "out_file": "./logs/gated.out.log",
+      "error_file": "./logs/gated.err.log",
+      "pid": "./run/gated.pid",
+      "watch": [
+        "*",
+        "backend/"
+      ],
+      "node_args": [
+        "--harmony-async-await"
+      ],
+      "env": {
+        "API_HOST": "http://10.100.54.188:3000"
+      }
+    }
+  ]
+}
