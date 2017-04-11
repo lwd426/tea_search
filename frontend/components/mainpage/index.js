@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import './style.css';
 import 'antd.min.css';
-import { Table, Input, Icon, Button, Popconfirm } from 'antd';
+import { Table, Input, Icon, Button, Popconfirm, Collapse } from 'antd';
 import Chart from './chart.js';
 import EChart from './echart.js';
 import Duiji from './duiji.js';
@@ -22,19 +22,12 @@ import { DatePicker } from 'antd';
 import moment from 'moment';
 const { MonthPicker, RangePicker } = DatePicker;
 const dateFormat = 'YYYY/MM/DD';
-const monthFormat = 'YYYY/MM';
-
-
+const Panel = Collapse.Panel;
 
 
 class GLMainpage extends React.Component {
     constructor(props) {
         super(props);
-    }
-    componentWillReceiveProps(nextProps) {
-        console.log('mainpage componentWillReceiveProps');
-        //console.log(nextProps.content.mainpage.stragety);
-        return true;
     }
     rangeOnChange(dates, dateStrings) {
         console.log('From: ', dates[0], ', to: ', dates[1]);
@@ -46,11 +39,22 @@ class GLMainpage extends React.Component {
         this.props.contentActions.mainpageActions.changeProjectValue(arr);
     }
     disabledDate(current) {
-      // can not select days before today and today
-      return current && current.valueOf() > Date.now();
+        return current && current.valueOf() > Date.now();
+    }
+    collapseCallback(key) {
+        console.log(key);
+    }
+    componentDidMount(){
+        //this.props.contentActions.mainpageActions.getStragety()
+    }
+    componentWillReceiveProps(nextProps) {
+        console.log('mainpage componentWillReceiveProps');
+        //console.log(nextProps.content.mainpage.stragety);
+        return true;
     }
     
     render() {
+        //const options = this.props.content.mainpage.stragety
         const options = [{
             value: 'm',
             label: 'M站灰度测试',
@@ -85,8 +89,109 @@ class GLMainpage extends React.Component {
             <div className="mainpage">
                 <br />
                 <Cascader options={options} defaultValue={['m','button1']} onChange={this.onChange.bind(this)} />
+                <Button style={{float:'right'}}>
+                  <Icon type="plus-circle-o" />新建测试组 
+                </Button>
 
-                <div className="card-container">
+                <div className="main-container" style={{display: this.props.content.mainpage.main_container_display}}>
+
+                    <Collapse defaultActiveKey={['1','2','3','4']} onChange={this.collapseCallback}>
+                        <Panel header="M站灰度测试/按钮颜色测试1  (4条分流策略  3条运行中)" key="1">
+                            <Button type="primary" className="collbutton" onClick={() =>{this.props.contentActions.mainpageActions.switchContentShow('none','block')}}>
+                                Click
+                            </Button>
+                            <div style={{padding:20}}>
+                                <div className="left" style={{float:'left',width:'33%'}}>
+                                    <span>创建于：2017年3月21日</span><br/>
+                                    <span>已运行： 21天</span><br/>
+                                    <span>最近变动： 1天前</span><br/>
+                                </div>
+                                <div className="right" style={{float:'left',width:'33%'}}>
+                                    <span>BtnClick：3.6% (+4.2%)</span><br/>
+                                    <span>PicClick：2.6% (-2.1%)</span><br/>
+                                    <span>PicClick：2.6% (-2.1%)</span><br/>
+                                </div>
+                                <div className="right" style={{float:'left',width:'34%'}}>
+                                    <span>流量占比： 20%   运行中</span><br/>
+                                    <span>流量占比： 20%   运行中</span><br/>
+                                    <span>流量占比： 20%   运行中</span><br/>
+                                </div>
+                                <div className="clear"></div>
+                            </div>
+                        </Panel>
+                        <Panel header="M站灰度测试/按钮颜色测试2  (4条分流策略  3条运行中)" key="2">
+                            <Button type="primary" className="collbutton" onClick={() =>{this.props.contentActions.mainpageActions.switchContentShow('none','block')}}>
+                                Click
+                            </Button>
+                            <div style={{padding:20}}>
+                                <div className="left" style={{float:'left',width:'33%'}}>
+                                    <span>创建于：2017年3月21日</span><br/>
+                                    <span>已运行： 21天</span><br/>
+                                    <span>最近变动： 1天前</span><br/>
+                                </div>
+                                <div className="right" style={{float:'left',width:'33%'}}>
+                                    <span>BtnClick：3.6% (+4.2%)</span><br/>
+                                    <span>PicClick：2.6% (-2.1%)</span><br/>
+                                    <span>PicClick：2.6% (-2.1%)</span><br/>
+                                </div>
+                                <div className="right" style={{float:'left',width:'34%'}}>
+                                    <span>流量占比： 20%   运行中</span><br/>
+                                    <span>流量占比： 20%   运行中</span><br/>
+                                    <span>流量占比： 20%   运行中</span><br/>
+                                </div>
+                                <div className="clear"></div>
+                            </div>
+                        </Panel>
+                        <Panel header="PC灰度测试/点播页评论1  (4条分流策略  3条运行中)" key="3">
+                            <Button type="primary" className="collbutton" onClick={() =>{this.props.contentActions.mainpageActions.switchContentShow('none','block')}}>
+                                Click
+                            </Button>
+                            <div style={{padding:20}}>
+                                <div className="left" style={{float:'left',width:'33%'}}>
+                                    <span>创建于：2017年3月21日</span><br/>
+                                    <span>已运行： 21天</span><br/>
+                                    <span>最近变动： 1天前</span><br/>
+                                </div>
+                                <div className="right" style={{float:'left',width:'33%'}}>
+                                    <span>BtnClick：3.6% (+4.2%)</span><br/>
+                                    <span>PicClick：2.6% (-2.1%)</span><br/>
+                                    <span>PicClick：2.6% (-2.1%)</span><br/>
+                                </div>
+                                <div className="right" style={{float:'left',width:'34%'}}>
+                                    <span>流量占比： 20%   运行中</span><br/>
+                                    <span>流量占比： 20%   运行中</span><br/>
+                                    <span>流量占比： 20%   运行中</span><br/>
+                                </div>
+                                <div className="clear"></div>
+                            </div>
+                        </Panel>
+                        <Panel header="PC灰度测试/点播页评论2  (4条分流策略  3条运行中)" key="4">
+                            <Button type="primary" className="collbutton" onClick={() =>{this.props.contentActions.mainpageActions.switchContentShow('none','block')}}>
+                                Click
+                            </Button>
+                            <div style={{padding:20}}>
+                                <div className="left" style={{float:'left',width:'33%'}}>
+                                    <span>创建于：2017年3月21日</span><br/>
+                                    <span>已运行： 21天</span><br/>
+                                    <span>最近变动： 1天前</span><br/>
+                                </div>
+                                <div className="right" style={{float:'left',width:'33%'}}>
+                                    <span>BtnClick：3.6% (+4.2%)</span><br/>
+                                    <span>PicClick：2.6% (-2.1%)</span><br/>
+                                    <span>PicClick：2.6% (-2.1%)</span><br/>
+                                </div>
+                                <div className="right" style={{float:'left',width:'34%'}}>
+                                    <span>流量占比： 20%   运行中</span><br/>
+                                    <span>流量占比： 20%   运行中</span><br/>
+                                    <span>流量占比： 20%   运行中</span><br/>
+                                </div>
+                                <div className="clear"></div>
+                            </div>
+                        </Panel>
+                    </Collapse>
+                </div>
+
+                <div className="card-container" style={{display: this.props.content.mainpage.card_container_display}}>
                   <Tabs type="card">
                     <TabPane tab="流量" key="1">
                         <div className="spanBox">
