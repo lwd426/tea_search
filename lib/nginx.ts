@@ -248,8 +248,9 @@ class Verify {
     }
 
     url() {
-        for (let v of this.arr) {
-            if (!v.url) {
+        for (let v of this.arr) {//todo
+            if (Array.isArray(v.urlArray) && v.urlArray.length) {
+                v.urlArray.push("/");
                 throw {code: 2, data: "有个没填url"}
             }
         }
@@ -258,8 +259,8 @@ class Verify {
 function array2one(arr) {
     let arr2 = [];
     for (let v of arr) {
-        if (Array.isArray(v.url) && v.url.length) {
-            v.url.forEach(item => {
+        if (Array.isArray(v.urlArray) && v.urlArray.length) {
+            v.urlArray.forEach(item => {
                 arr2.push((<any>Object).assign({}, v, {url: item}));
             });
         } else if (typeof v.url === "string") {
