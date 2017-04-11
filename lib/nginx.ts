@@ -201,7 +201,7 @@ class Verify {
 
     check() {
         try {
-            this.serverSingle();
+            // this.serverSingle();
             this.url();
             this.hasDefault();
             return {
@@ -215,13 +215,19 @@ class Verify {
 
     hasDefault() {
         let flag = false;
+        let arr: boolean[] = [];
         for (let v of this.arr) {
-            flag = !!v.default || flag;
+            arr.push(!!v.default);
         }
-        if (!flag) {
+        if (arr.indexOf(true) == -1) {
             throw {
                 code: 3,
-                data: `没有默认的`
+                data: `没有default`
+            };
+        } else if (arr.indexOf(true) != arr.lastIndexOf(true)) {
+            throw {
+                code: 4,
+                data: `好几个default`
             };
         }
     }
@@ -249,7 +255,7 @@ class Verify {
 
     url() {
         for (let v of this.arr) {//todo
-            if (Array.isArray(v.urlArray) && v.urlArray.length) {
+            if (Array.isArray(v.urlArray) && !v.urlArray.length) {
                 v.urlArray.push("/");
                 throw {code: 2, data: "有个没填url"}
             }
