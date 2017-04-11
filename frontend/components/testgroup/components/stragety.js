@@ -7,28 +7,10 @@ const confirm = Modal.confirm;
 
 function showConfirm() {
     confirm({
-        title: '请选择回滚到的版本信息?',
+        title: '请输入版本说明',
         content: <Input placeholder="版本说明（10字以内）" />
     });
 }
-
-const rowSelection = {
-    // onChange: (selectedRowKeys, selectedRows) => {
-    //     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-    // },
-    // onSelect: (record, selected, selectedRows) => {
-    //     var referServers = selectedRows.map((server)=>{
-    //         return server.key;
-    //     })
-    //     this.props.contentActions.testgroupActions.setReferServers(referServers);
-    // },
-    // onSelectAll: (selected, selectedRows, changeRows) => {
-    //     console.log(selected, selectedRows, changeRows);
-    // }
-    // getCheckboxProps: record => ({
-    //     disabled: record.name === 'Disabled User',    // Column configuration not to be checked
-    // }),
-};
 
 class GLStragety extends React.Component {
     constructor(props) {
@@ -43,10 +25,10 @@ class GLStragety extends React.Component {
         }, {
             title: 'web服务器',
             dataIndex: 'server',
-        }, , {
+        }, {
             title: '生效url',
             dataIndex: 'urls',
-        }, , {
+        }, {
             title: '生效uid',
             dataIndex: 'uids',
         }, {
@@ -71,7 +53,9 @@ class GLStragety extends React.Component {
                       this.props.contentActions.testgroupActions.editStragety(record)
                   }}>修改</a>
                   <span className="ant-divider" />
-                  <Popconfirm title="确认删除策略?" onConfirm={() => this.onDelete(index)}>
+                  <Popconfirm title="确认删除策略?" onConfirm={() => {
+                      this.props.contentActions.testgroupActions.deleteStragety(record.code,record.slbid, record.testgroupcode)
+                  }}>
                     <a href="#">删除</a>
                   </Popconfirm>
                 </span>
@@ -101,6 +85,11 @@ class GLStragety extends React.Component {
     goBack = () => {
         this.props.contentActions.testgroupActions.goback()
     }
+    publish = () => {
+        // showConfirm()
+        const {slbid} = this.props.content.testgroup;
+        this.props.contentActions.testgroupActions.publish(slbid)
+    }
     render() {
         const columns = this.columns;
         const  dataSource = this.props.content.testgroup.stragetylist.map((cell, index)=>{
@@ -116,7 +105,9 @@ class GLStragety extends React.Component {
                 server: '...',
                 serverskey: cell.stra_serverskey,
                 urls: '...',
+                urlsvalues: cell.stra_urls,
                 uids: '...',
+                uidsvalues: cell.stra_uids,
                 cities: cell.stra_cities,
                 flowaccounting: cell.flowaccounting,
                 tag: cell.tag,
@@ -125,10 +116,11 @@ class GLStragety extends React.Component {
             }
         });
         return (
+
             <div>
                 <div className="gl-testinfo-btndiv">
                     <Button className="gl-left-btn" icon="double-left" onClick={this.goBack}>返回</Button>
-                    <Button className="gl-left-btn" icon="upload" onClick={showConfirm}>发布到服务器</Button>
+                    <Button className="gl-left-btn" icon="upload" onClick={this.publish}>发布到服务器</Button>
                     <Button className="gl-right-btn" icon="compass" onClick={this.generateReferServer}>生成原始版本</Button>
                     <Button className="gl-right-btn" icon="tag" onClick={this.generateTags}>生成数据标签</Button>
                     <Button className="gl-right-btn" icon="plus" onClick={this.handleAdd}>新增策略</Button>
@@ -139,7 +131,6 @@ class GLStragety extends React.Component {
                     size="middle"
                     expandedRowRender={record => <p>{record.description}</p>}
                     dataSource={dataSource}
-                    rowSelection={rowSelection}
                 />
             </div>
         );
