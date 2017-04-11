@@ -81,3 +81,12 @@
 .clear{clear: both;}
 #content_two{position: relative;}
 #content_two .back{position: absolute;top:-70px;}
+#content_one .ant-table-wrapper,#content_two .ant-table-wrapper{padding: 0 80px;}
+.ant-table.ant-table-bordered .ant-table-title{
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+    background: #4ea1dc;
+    color: #fff;
+    padding: 7px 0;
+}

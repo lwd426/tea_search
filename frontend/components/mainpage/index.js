@@ -11,31 +11,6 @@ import MyTable from './table.js';
 import { Menu, Dropdown, message } from 'antd';
 //Cascader
 import { Cascader } from 'antd';
-const options = [{
-    value: 'm',
-    label: 'M站灰度测试',
-    children: [{
-        value: 'button1',
-        label: '按钮颜色测试1',
-    },{
-        value: 'button2',
-        label: '按钮颜色测试2',
-    }],
-}, {
-    value: 'pc',
-    label: 'PC灰度测试',
-    children: [{
-        value: 'dianbo1',
-        label: '点播页评论1',
-    },{
-        value: 'dianbo2',
-        label: '点播页评论2',
-    }],
-}];
-
-function onChange(value) {
-    console.log(value);
-}
 
 //Tabs
 import { Tabs } from 'antd';
@@ -58,9 +33,46 @@ class GLMainpage extends React.Component {
     }
     componentWillReceiveProps(nextProps) {
         console.log('mainpage componentWillReceiveProps');
+        //console.log(nextProps.content.mainpage.stragety);
         return true;
     }
+    rangeOnChange(dates, dateStrings) {
+        console.log('From: ', dates[0], ', to: ', dates[1]);
+        console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
+        this.props.contentActions.mainpageActions.changeDatePicker(dateStrings);
+    }
+    onChange(arr) {
+        console.log(arr);
+        this.props.contentActions.mainpageActions.changeProjectValue(arr);
+    }
+    disabledDate(current) {
+      // can not select days before today and today
+      return current && current.valueOf() > Date.now();
+    }
+    
     render() {
+        const options = [{
+            value: 'm',
+            label: 'M站灰度测试',
+            children: [{
+                value: 'button1',
+                label: '按钮颜色测试1',
+            },{
+                value: 'button2',
+                label: '按钮颜色测试2',
+            }],
+        }, {
+            value: 'pc',
+            label: 'PC灰度测试',
+            children: [{
+                value: 'dianbo1',
+                label: '点播页评论1',
+            },{
+                value: 'dianbo2',
+                label: '点播页评论2',
+            }],
+        }];
+
         const options_two = [{
             value: 'BtnClick',
             label: 'BtnClick',
@@ -68,11 +80,11 @@ class GLMainpage extends React.Component {
             value: 'PicClick',
             label: 'PicClick',
         }];
-        
+
         return (
             <div className="mainpage">
                 <br />
-                <Cascader options={options} defaultValue={['m','button1']} onChange={onChange} />
+                <Cascader options={options} defaultValue={['m','button1']} onChange={this.onChange.bind(this)} />
 
                 <div className="card-container">
                   <Tabs type="card">
@@ -92,8 +104,10 @@ class GLMainpage extends React.Component {
                         
                         <div className="rangepickerBox">
                             <RangePicker
-                              defaultValue={[moment('2015/01/01', dateFormat), moment('2015/01/01', dateFormat)]}
+                              defaultValue={[moment().subtract(7, 'days'), moment()]}
                               format={dateFormat}
+                              onChange={this.rangeOnChange.bind(this)}
+                              disabledDate={this.disabledDate.bind(this)}
                             />
                         </div>
                         <EChart {...this.props}/>
@@ -104,8 +118,10 @@ class GLMainpage extends React.Component {
 
                         <div className="rangepickerBox">
                             <RangePicker
-                                defaultValue={[moment('2015/01/01', dateFormat), moment('2015/01/01', dateFormat)]}
+                                defaultValue={[moment().subtract(7, 'days'), moment()]}
                                 format={dateFormat}
+                                onChange={this.rangeOnChange.bind(this)}
+                                disabledDate={this.disabledDate.bind(this)}
                             />
                         </div>
                         <div className="CascaderBox">
