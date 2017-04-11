@@ -3,6 +3,8 @@ import * as TYPES from './constants';
 import moment from 'moment';
 
 let initState = {
+    main_container_display: 'block',
+    card_container_display: 'none',
     content_one_display: 'block',
     content_two_display: 'none',
     content_two_key: 1,
@@ -28,6 +30,12 @@ let reducer = (state = initState,action)=>{
         case TYPES.DATE_PICKER:{
             return Object.assign({}, state, {
                 date_picker: action.date_picker
+            })
+        }
+        case TYPES.MAIN_CONTAINER_DISPLAY:{
+            return Object.assign({}, state, {
+                main_container_display: action.main_container_display,
+                card_container_display: action.card_container_display,
             })
         }
         default:

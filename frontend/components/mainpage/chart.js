@@ -180,7 +180,10 @@ export default class EChart extends React.Component {
                 <br />
 
                 <div id="container" style={{width:'100%',height:400}} className="chart-box"></div>
-                <Table bordered={true} columns={columns} dataSource={data} title={() => '日均'}/>  
+                <div className="tableBox">
+                    <Button className="export">导出</Button>
+                    <Table bordered={true} columns={columns} dataSource={data} title={() => '日均'}/> 
+                </div>
             </div>      
         )
     }

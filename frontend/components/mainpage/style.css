@@ -81,6 +81,8 @@
 .clear{clear: both;}
 #content_two{position: relative;}
 #content_two .back{position: absolute;top:-70px;}
+.tableBox{position: relative;}
+.tableBox .export{position: absolute;top:55px;right: 60px;}
 #content_one .ant-table-wrapper,#content_two .ant-table-wrapper{padding: 0 80px;}
 .ant-table.ant-table-bordered .ant-table-title{
     font-size: 13px;
@@ -90,3 +92,6 @@
     color: #fff;
     padding: 7px 0;
 }
+.ant-collapse > .ant-collapse-item > .ant-collapse-header{height:45px;line-height:45px;font-size:15px}
+.ant-collapse > .ant-collapse-item{position: relative;}
+.ant-collapse > .ant-collapse-item .collbutton{position:absolute;top:8px;right:20px}
