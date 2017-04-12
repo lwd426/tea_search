@@ -48,22 +48,25 @@ class GLWebserver extends React.Component {
         },{
             title: '操作',
             dataIndex: 'operation',
-            render: (text, record) => (
-                <span>
-                    {/*<Popconfirm title="确认设为参照服务器?" onConfirm={() => {*/}
-                        {/*console.log(record);*/}
-                        {/*that.props.contentActions.deviceinfoActions.updateWebServer({key: record.key}, {refer : '是'});*/}
-                    {/*}}>*/}
-                        {/*<a href="#">设为参照服务器</a>*/}
-                    {/*</Popconfirm>*/}
-                    {/*<span className="ant-divider" />*/}
-                    <Popconfirm title="确认删除策略?" onConfirm={() => {
+            render: (text, record) => {
+                console.log(record.refer)
+               return ( <span>
+                   {record.refer === '是' ? (
+                   <Popconfirm title="取消该参照服务器前，请确认该服务器上没有正在生效的策略?" onConfirm={() => {
+                       that.props.contentActions.deviceinfoActions.setReferServers([record.key], false);
+                    }}><Icon type="eye" />
+                   </Popconfirm>) :(<Popconfirm title="设置该服务器为参照服务器?" onConfirm={() => {
+                           that.props.contentActions.deviceinfoActions.setReferServers([record.key], true);
+                       }}><Icon type="eye-o" />
+                       </Popconfirm>)}
+                   <span className="ant-divider" />
+                    <Popconfirm title="确认删除该服务器?" onConfirm={() => {
                         that.props.contentActions.deviceinfoActions.deleteWebServer(record);
                     }}>
-                        <a href="#">删除</a>
+                        <Icon type="delete" />
                     </Popconfirm>
-                </span>
-            )
+                </span>)
+            }
         },];
     }
 
@@ -120,10 +123,10 @@ class GLWebserver extends React.Component {
                     columns={columns}
                     rowSelection={{
                         onSelect: (record, selected, selectedRows) => {
-                            var referServers = selectedRows.map((server)=>{
-                                return server.key;
-                            })
-                            this.props.contentActions.deviceinfoActions.setReferServers(referServers);
+                            {/*var referServers = selectedRows.map((server)=>{*/}
+                                {/*return server.key;*/}
+                            {/*})*/}
+                            {/*this.props.contentActions.deviceinfoActions.setReferServers(referServers);*/}
                         }
                     }}
                     dataSource={dataSource}

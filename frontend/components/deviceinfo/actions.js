@@ -129,18 +129,19 @@ export function getWebServerList(slbid) {
  * 设置基准服务器
  * @param servers
  */
-export function setReferServers(servers) {
+export function setReferServers(servers, status) {
     return (dispatch, getState) => {
-        return dispatch(fetch.updateData(web_list_url+ '/refer',{data:servers},{'refer':true},function(err, result){
+        return dispatch(fetch.updateData(web_list_url+ '/refer',{data:servers},{'refer':status},function(err, result){
             if(err || !result.data)  setReferServersSuccess([])
-            dispatch(setReferServersSuccess(servers))
+            dispatch(setReferServersSuccess(servers, status))
         }))
     }
 }
 
-export function setReferServersSuccess(servers) {
+export function setReferServersSuccess(servers, status) {
     return {
         type: TYPES.SET_REFER_SERVER_SUCCESS,
-        servers
+        servers,
+        status
     }
 }

@@ -4,6 +4,7 @@ import 'antd.min.css';
 import GLInfo from '../../deviceinfo/components/info'
 import { Table, Input, Icon, Button,Modal, Popconfirm } from 'antd';
 const confirm = Modal.confirm;
+const uuid = require('uuid/v1');
 
 function showConfirm() {
     confirm({
@@ -46,7 +47,7 @@ class GLStragety extends React.Component {
             render: (text, record) => (
                 <span>
                   <a href="#" onClick={()=>{
-                      this.props.contentActions.testgroupActions.handleStragety(record.code, record.status === "running" ? "stopped" : "running")
+                      this.props.contentActions.testgroupActions.handleStragety(record.slbid, record.code, record.status === "running" ? "stopped" : "running")
                   }}> {record.status === 'running' ? '停止' : '启动'}</a>
                   <span className="ant-divider" />
                   <a href="#" onClick={()=>{
@@ -66,6 +67,10 @@ class GLStragety extends React.Component {
     componentWillReceiveProps =(nextProps)=> {
         return true;
     }
+    componentWillMount=()=>{
+        const slbid = this.props.menu.slbid || '';
+        this.props.contentActions.testgroupActions.getServers(slbid);
+    }
     onDelete = (index) => {
         const dataSource = [...this.state.dataSource];
         dataSource.splice(index, 1);
@@ -79,8 +84,37 @@ class GLStragety extends React.Component {
         const {slbid, tgid} = this.props.content.testgroup;
         this.props.contentActions.testgroupActions.generateTags(slbid, tgid);
     }
-    generateReferServer=()=>{
-        this.props.contentActions.testgroupActions.generateReferServer();
+    generateReferVersion=()=>{
+        const {slbid, tgid, servers, refer_stragety} = this.props.content.testgroup;
+        var serversinfo = [],serverkeys=[];
+        servers.map((server)=>{
+            if(server.refer) {
+                serversinfo.push(server.ip);
+                serverkeys.push(server.key);
+            }
+        })
+        if(refer_stragety) { //如果基准版本存在，则更新它
+            var stra_id = refer_stragety.stra_id,
+                tag = refer_stragety.tag,
+                stra_servers = serversinfo.join(';'),
+                stra_serverskey = serverkeys.join(';');
+            this.props.contentActions.testgroupActions.updateStragety(stra_id, tgid, slbid, {tag,stra_servers,stra_serverskey } )
+
+        }else{
+            const referVersions = {
+                desc: '基准版本',
+                servers: serversinfo,
+                slbid: slbid,
+                tgid: tgid,
+                uids: [],
+                urls: [],
+                cities: [],
+                name: '基准版本',
+                serverskey: serverkeys,
+            };
+            this.props.contentActions.testgroupActions.generateReferVersion(referVersions);
+        }
+
     }
     goBack = () => {
         this.props.contentActions.testgroupActions.goback()
@@ -121,7 +155,7 @@ class GLStragety extends React.Component {
                 <div className="gl-testinfo-btndiv">
                     <Button className="gl-left-btn" icon="double-left" onClick={this.goBack}>返回</Button>
                     <Button className="gl-left-btn" icon="upload" onClick={this.publish}>发布到服务器</Button>
-                    <Button className="gl-right-btn" icon="compass" onClick={this.generateReferServer}>生成原始版本</Button>
+                    <Button className="gl-right-btn" icon="compass" onClick={this.generateReferVersion}>生成原始版本</Button>
                     <Button className="gl-right-btn" icon="tag" onClick={this.generateTags}>生成数据标签</Button>
                     <Button className="gl-right-btn" icon="plus" onClick={this.handleAdd}>新增策略</Button>
                 </div>

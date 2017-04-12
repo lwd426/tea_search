@@ -73,5 +73,13 @@ module.exports = {
     updateWebServer: function*(data, where, otherwhere, type) {
         var result = yield db.update('webServer', where, data, otherwhere, type);
         return result;
+    },
+    /**
+     * 单纯的查询服务器基本信息
+     * @param where
+     * @param otherwhere
+     */
+    getServersInfo: function* (where,otherwhere) {
+        return yield db.get('webServer', where, otherwhere);
     }
 }

@@ -16,7 +16,7 @@ module.exports = {
     },
     save: function *(obj, data){
         return new Promise(function(resolve, reject){
-            obj.save(data, {
+            obj.save(data || null, {
                 success: function(obj) {
                     // The object was saved successfully.
                     resolve({status: true, data: obj})

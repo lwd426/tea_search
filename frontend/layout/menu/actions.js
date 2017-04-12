@@ -56,12 +56,12 @@ export function saveMenu(name) {
     }
 }
 
-export function changeSlb(slbid){
-    return {
-        type: TYPES.CHANGE_SLB,
-        slbid: slbid
-    }
-}
+// export function changeSlb(slbid){
+//     return {
+//         type: TYPES.CHANGE_SLB,
+//         slbid: slbid
+//     }
+// }
 
 export function changeShowWinType(slbid, wintype) {
     return {
@@ -102,6 +102,10 @@ export const getMenuListSuccess = (menulist) => {
         type: TYPES.GET_MENUDATA_SUCCESS,
         menulist
     }
+}
+
+export function changeMenu(slbid, wintye) {
+
 }
 
 

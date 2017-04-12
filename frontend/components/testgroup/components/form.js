@@ -39,8 +39,7 @@ class RegistrationForm extends React.Component {
     }
     componentWillMount =()=> {
         this.props.contentActions.testgroupActions.getCities();
-        const slbid = this.props.menu.slbid || '';
-        this.props.contentActions.testgroupActions.getServers(slbid);
+
     }
     componentDidMount =() => {
     }
@@ -156,8 +155,8 @@ class RegistrationForm extends React.Component {
             cities = stragety.cities.split(';')
             if(cities[0] === '') cities =[];
             this.props.content.testgroup.serverselectedkeys = stragety.serverskey.split(';');
-            this.props.content.testgroup.addurls = stragety.urls.split(';');
-            this.props.content.testgroup.adduids = stragety.uids.split(';');
+            this.props.content.testgroup.addurls = stragety.urlsvalues.split(';');
+            this.props.content.testgroup.adduids = stragety.uidsvalues.split(';');
         }
         return (
             <Form onSubmit={this.handleSubmit}>
