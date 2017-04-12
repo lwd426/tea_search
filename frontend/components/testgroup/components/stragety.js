@@ -97,8 +97,8 @@ class GLStragety extends React.Component {
             var stra_id = refer_stragety.stra_id,
                 tag = refer_stragety.tag,
                 stra_servers = serversinfo.join(';'),
-                stra_serverskeys = serverkeys.join(';');
-            this.props.contentActions.testgroupActions.updateStragety(stra_id, tgid, {tag,stra_servers,stra_serverskeys } )
+                stra_serverskey = serverkeys.join(';');
+            this.props.contentActions.testgroupActions.updateStragety(stra_id, tgid, slbid, {tag,stra_servers,stra_serverskey } )
 
         }else{
             const referVersions = {

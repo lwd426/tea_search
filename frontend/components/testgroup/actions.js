@@ -503,13 +503,17 @@ export function generateReferVersion(version) {
     }
 }
 
-export function updateStragety(stra_id, tgid , cdata) {
+export function updateStragety(stra_id, tgid , slbid,  data) {
     return (dispatch, getState) => {
+        //更新策略信息
         return dispatch(fetch.updateData(stragety_url,{stra_id},data,function(err, result){
-            if(err)  dispatch(getTestGroupListSuccess([]))
-            return dispatch(fetch.getData(stragety_url + '?tgid='+tgid,function(err, result){
-                if(err)  dispatch(getStragetyListSuccess([], tgid, slbid))
-                dispatch(getStragetyListSuccess(result.data, tgid, slbid))
+            //更新机器信息 - 添加策略名到新机器上
+            return dispatch(fetch.updateData(server_url, {other:{opt: 'in', key: 'key', data:data.stra_serverskey.split(';')}, type:'add'},{'stragetiesinfo':stra_id},function(err, result){
+                if(err)  dispatch(getTestGroupListSuccess([]))
+                return dispatch(fetch.getData(stragety_url + '?tgid='+tgid,function(err, result){
+                    if(err)  dispatch(getStragetyListSuccess([], tgid, slbid))
+                    dispatch(getStragetyListSuccess(result.data, tgid, slbid))
+                }))
             }))
         }))
     }

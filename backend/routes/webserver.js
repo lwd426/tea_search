@@ -37,7 +37,12 @@ router.del('/', function *(next) {
 router.put('/', function *(next) {
     var where = this.request.body.where;
     var data = this.request.body.data;
-    var result = yield lib.updateWebServer(data, where)
+    var result = {}
+    if(where.other){
+        result = yield lib.updateWebServer(data, undefined, [where.other], where.type)
+    }else{
+        result = yield lib.updateWebServer(data, where)
+    }
     this.body = {
         status: 'success',
         data: result

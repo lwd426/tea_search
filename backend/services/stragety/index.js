@@ -48,8 +48,22 @@ module.exports = {
      * @returns {*}
      */
     getStragetyList: function*(opts) {
-        return yield db.get('stragety',opts);
-        // return list;
+        var stragetylist =  yield db.get('stragety',opts);
+        //为了与web服务器的增删改查一致，所以策略的基准以服务器的key为准
+        var i=0; len=stragetylist.length;
+        for(;i<len;i++){
+            var stragety = stragetylist[i]
+            var serverskey = stragety.get("stra_serverskey").split(";");
+            var servers = yield server_service.getServersInfo(undefined, [{opt: 'in', key:'key', data: serverskey}])
+            var serversinfo = [];
+            servers.map((server)=>{
+                if(server.get('ip') && server.get('ip')!== '')  serversinfo.push(server.get('ip'));
+            })
+            stragety.set("stra_servers",serversinfo.join(';'));
+        }
+
+
+        return stragetylist;
     },
     /**
      * 删除策略信息
