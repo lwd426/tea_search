@@ -111,13 +111,13 @@ config.module.loaders.push({
   test: /\.js$/,
   exclude: /node_modules/,
   // 这里使用 loaders ，因为后面还需要添加 loader
-  loaders: ['babel?presets[]=react,presets[]=es2015,plugins[]=transform-decorators-legacy,plugins[]=transform-es2015-arrow-functions,plugins[]=transform-class-properties']
+  loaders: ['babel?presets[]=react,presets[]=es2015,presets[]=stage-0,plugins[]=transform-runtime,plugins[]=transform-decorators-legacy,plugins[]=transform-es2015-arrow-functions,plugins[]=transform-class-properties']
 });
 
 // 使用 babel 编译 jsx、es6
 config.module.loaders.push({
     test: /\.jsx?$/,
-    loaders: ['babel?presets[]=react,presets[]=es2015,plugins[]=transform-decorators-legacy,plugins[]=transform-class-properties'],
+    loaders: ['babel?presets[]=react,presets[]=es2015,presets[]=stage-0,plugins[]=transform-runtime,plugins[]=transform-decorators-legacy,plugins[]=transform-class-properties'],
     exclude: /node_modules/
 });
 

@@ -98,7 +98,7 @@ class GLMainpage extends React.Component {
                     <Collapse defaultActiveKey={['1','2','3','4']} onChange={this.collapseCallback}>
                         <Panel header="M站灰度测试/按钮颜色测试1  (4条分流策略  3条运行中)" key="1">
                             <Button type="primary" className="collbutton" onClick={() =>{this.props.contentActions.mainpageActions.switchContentShow('none','block')}}>
-                                Click
+                                查看详情
                             </Button>
                             <div style={{padding:20}}>
                                 <div className="left" style={{float:'left',width:'33%'}}>
@@ -121,7 +121,7 @@ class GLMainpage extends React.Component {
                         </Panel>
                         <Panel header="M站灰度测试/按钮颜色测试2  (4条分流策略  3条运行中)" key="2">
                             <Button type="primary" className="collbutton" onClick={() =>{this.props.contentActions.mainpageActions.switchContentShow('none','block')}}>
-                                Click
+                                查看详情
                             </Button>
                             <div style={{padding:20}}>
                                 <div className="left" style={{float:'left',width:'33%'}}>
@@ -144,7 +144,7 @@ class GLMainpage extends React.Component {
                         </Panel>
                         <Panel header="PC灰度测试/点播页评论1  (4条分流策略  3条运行中)" key="3">
                             <Button type="primary" className="collbutton" onClick={() =>{this.props.contentActions.mainpageActions.switchContentShow('none','block')}}>
-                                Click
+                                查看详情
                             </Button>
                             <div style={{padding:20}}>
                                 <div className="left" style={{float:'left',width:'33%'}}>
@@ -167,7 +167,7 @@ class GLMainpage extends React.Component {
                         </Panel>
                         <Panel header="PC灰度测试/点播页评论2  (4条分流策略  3条运行中)" key="4">
                             <Button type="primary" className="collbutton" onClick={() =>{this.props.contentActions.mainpageActions.switchContentShow('none','block')}}>
-                                Click
+                                查看详情
                             </Button>
                             <div style={{padding:20}}>
                                 <div className="left" style={{float:'left',width:'33%'}}>
@@ -216,7 +216,7 @@ class GLMainpage extends React.Component {
                             />
                         </div>
                         <EChart {...this.props}/>
-                        <MyTable />
+                        <MyTable {...this.props}/>
                     </TabPane>
 
                     <TabPane tab="转化率(多版本)" key="2">

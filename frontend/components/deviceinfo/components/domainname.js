@@ -19,7 +19,6 @@ class RegistrationForm extends React.Component {
     success = () => {
       message.success('Update success');
     }
-
     error = () => {
       message.error('This is a message of error');
     }
@@ -28,12 +27,33 @@ class RegistrationForm extends React.Component {
           value:event.target.value//注意事件对象
         });
     }
-    updataSlb = () => {
+    updataSlb = async() => {
         const objectID = this.props.menu.slbid;
         var slbDomain = this.refs.input.refs.input.value;
         //actions.updateMenu(name, domainid, objectID)
         this.props.contentActions.deviceinfoActions.updateSLB(objectID, slbDomain);
         this.success();
+        //await this.props.contentActions.deviceinfoActions.checkoutSLB(slbDomain);
+        /*fetch('http://10.118.31.22:8081' + '/v2/virtualhost/getbyname/' + slbDomain,{
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+                "SlbAccount": "le-test"
+            }
+        }).then((res) => {
+            return res.json()
+        })
+
+
+        try {
+          let response = await fetch('http://10.118.31.22:8081' + '/v2/virtualhost/getbyname/' + slbDomain);
+          let data = response.json();
+          console.log(data);
+        } catch(e) {
+          console.log("error", e);
+        }*/
+        // 注：这段代码如果想运行，外面需要包一个 async function
+
         this.refs.domainID.refs.input.value = '111';//到时拿到接口后，填入接口返回的id
     }
     componentWillReceiveProps(nextProps) {
