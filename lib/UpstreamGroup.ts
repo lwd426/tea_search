@@ -67,7 +67,6 @@ export class UpstreamGroup {
         return `
         map ${cookie} $${groupName} {
             ${regName}
-           
        } `;
     }
 

@@ -6,7 +6,8 @@ const CODE = {
     "CONTAIN": 1,
     "NO_DEFAULT": 2,
     "MUCH_DEFAULT": 3,
-    "JIAOJI": 4
+    "JIAOJI": 4,
+    "URL_UID": 5,
 };
 class Methods {
     static contain(first, sec): boolean {//url是否包含,包含返回true
@@ -138,7 +139,32 @@ class Verify {
         for (let i = 0; i < this.arr.length; i++) {
             for (let j = i + 1; j < this.arr.length; j++) {
                 if (Methods.contain(this.arr[i].url, this.arr[j].url)) {
+                    //如果url一样，在判断uid和地域是不是有重复
+
                     if (this.arr[i].default || this.arr[j].default) {
+                        continue;
+                    }
+                    if (this.arr[i].url == this.arr[j].url) {
+                        let flag = false;
+                        if (Array.isArray(this.arr[i].uidArray) && Array.isArray(this.arr[j].uidArray)) {
+                            const ccc = Methods.intersection(this.arr[i].uidArray, this.arr[j].uidArray);
+                            if (ccc) {
+                                throw {
+                                    code: CODE.URL_UID,
+                                    data: `${this.arr[i].url}相同但是uid:${ccc}多次`
+                                }
+                            }
+                        }
+                        if (Array.isArray(this.arr[i].regionArray) && Array.isArray(this.arr[j].regionArray)) {
+                            const ccc = Methods.intersection(this.arr[i].regionArray, this.arr[j].regionArray);
+                            if (ccc) {
+                                throw {
+                                    code: CODE.URL_UID,
+                                    data: `${this.arr[i].url}相同但是region:${ccc}多次`
+                                }
+                            }
+                        }
+                        console.log(this.arr[i].url, "相同");
                         continue;
                     }
                     throw {
@@ -191,4 +217,4 @@ class Verify {
     }
 }
 
-export {Methods,Verify};
+export {Methods, Verify};

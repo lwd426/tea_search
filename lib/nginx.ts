@@ -1,11 +1,12 @@
-import {CONTENT,Meta,level} from './if';
+import {CONTENT, Meta, level, MataS} from './if';
 import {Methods, Verify} from './check';
 import {UpstreamGroup}from './UpstreamGroup';
 import {three}from './three';
+import {four}from './four';
 const defaultUpstream = "defaultUpstream";
 const geoip_city = `/etc/maxmind-city.mmdb`;
 const geoip_subdivisions = `/etc/maxmind-subdivisions.mmdb`;
-let allServers=[];
+let allServers = [];
 
 let needDefault = false;
 class Upstream {//default
@@ -24,7 +25,7 @@ class Upstream {//default
     }
 
     doit(): CONTENT {
-        let location = needDefault?this.getLocation():'';
+        let location = needDefault ? this.getLocation() : '';
         let upstreams = this.getUpstream();
         return {
             location: location,
@@ -66,13 +67,12 @@ class Upstream {//default
 //如果uid或者region有效，则生成一个upstream group, 对于哪种不需要生成group的，还是使用另外一个函数吧
 
 
-
 function array2one(arr) {
     let arr2 = [];
     for (let v of arr) {
         if (Array.isArray(v.urlArray) && v.urlArray.length) {
             v.urlArray.forEach(item => {
-                arr2.push((<any>Object).assign({}, v, {url: item||'/'}));
+                arr2.push((<any>Object).assign({}, v, {url: item || '/'}));
             });
         }
     }
@@ -108,13 +108,17 @@ function nginx(arr: any[]) {
         }
     });
     let geo = geoIp(arr);
-    const res = arr.map(item => {
-        delete item.urlArray;
-        if (item.uidArray && item.regionArray) {
+    let wjgz = wanjianguizong(arr);
+    /*const res = arr.map(item => {
+     delete item.urlArray;
+     if (item.uidArray && item.regionArray) {
 
-            return new three(item,allServers).doit();
-        }
-        return item.uidArray || item.regionArray ? new UpstreamGroup(item,allServers).doit() : new Upstream(item).doit();
+     return new three(item, allServers).doit();
+     }
+     return item.uidArray || item.regionArray ? new UpstreamGroup(item, allServers).doit() : new Upstream(item).doit();
+     }); */
+    const res = wjgz.map(item => {
+        return item.servers ? new four(item, allServers).doit() : new Upstream(item).doit();
     });
 
     let content = `${geo}`;
@@ -155,18 +159,51 @@ function geoIp(arr) {
 
 }
 
-function allServerHandler(arr){
-    for(let v of arr){
-        if(v.default){
-            allServers=[].concat(v.serverArray);
+function allServerHandler(arr) {
+    for (let v of arr) {
+        if (v.default) {
+            allServers = [].concat(v.serverArray);
         }
     }
-    for(let v of arr){
-        for(let k of v.serverArray){
-            if(allServers.indexOf(k)==-1){
+    for (let v of arr) {
+        for (let k of v.serverArray) {
+            if (allServers.indexOf(k) == -1) {
                 allServers.push(k);
             }
         }
     }
 }
 export = nginx;
+
+function wanjianguizong(arr) {
+    let array = [];
+    for (let v of arr) {
+        if (v.default) {
+            array.push(v);
+            continue;
+        }
+        let o = {url: v.url, servers: []};
+
+        //还得处理相同的url归一的问题
+        array.forEach(item => {
+            if (item.url == v.url) {
+                o.servers = item.servers;
+            }
+        });
+        if (v.uidArray) {
+            o.servers.push({
+                uids: v.uidArray,
+                servers: v.serverArray
+            });
+        }
+        //不能是else if 因为有的会uid和地域都有
+        if (v.regionArray) {
+            o.servers.push({
+                regions: v.regionArray,
+                servers: v.serverArray
+            });
+        }
+        array.push(o);
+    }
+    return array;
+}

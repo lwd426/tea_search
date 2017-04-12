@@ -14,18 +14,26 @@ nginx([
             default: false
         },
 
-        {
-            urlArray: ['~ /abcD'],
-            uidArray: ['zhuoyongran123', 'zyr123'],
-            serverArray: ['0.0.0.0'],
-            default: false
-        },
+        /*{
+         urlArray: ['~ /abcD'],
+         uidArray: ['zhuoyongran123', 'zyr123'],
+         serverArray: ['0.0.0.0'],
+         default: false
+         },*/
         {
             // urlArray: ['/zyr/','/zyr1'],
             urlArray: ['/abcd'],
             uidArray: ['zhuoyongran'],
             regionArray: ['linyi'],
             serverArray: ['0.0.0.0'],
+            default: false
+        },
+        {
+            // urlArray: ['/zyr/','/zyr1'],
+            urlArray: ['/abcd'],
+            uidArray: ['zhuoyongran1'],
+            regionArray: ['linyi7'],
+            serverArray: ['0.0.0.7'],
             default: false
         },
         {
