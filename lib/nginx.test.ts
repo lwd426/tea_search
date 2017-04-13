@@ -14,28 +14,21 @@ nginx([
             default: false
         },
 
-        /*{
-         urlArray: ['~ /abcD'],
-         uidArray: ['zhuoyongran123', 'zyr123'],
-         serverArray: ['0.0.0.0'],
-         default: false
-         },*/
         {
+            urlArray: ['~ /vplay.*.html'],
+            uidArray: ['zhuoyongran123', 'zyr123'],
+            serverArray: ['0.0.0.0'],
+            default: false
+        }
+        , {
             // urlArray: ['/zyr/','/zyr1'],
-            urlArray: ['/abcd'],
+            urlArray: ['= /vplay1234.html'],
             uidArray: ['zhuoyongran'],
             regionArray: ['linyi'],
             serverArray: ['0.0.0.0'],
             default: false
         },
-        {
-            // urlArray: ['/zyr/','/zyr1'],
-            urlArray: ['/abcd'],
-            uidArray: ['zhuoyongran1'],
-            regionArray: ['linyi7'],
-            serverArray: ['0.0.0.7'],
-            default: false
-        },
+
         {
             urlArray: ['/'],
             serverArray: ['3.3.3.3', '4.4.4.4', '5.5.5.5', '6.6.6.6'],//传给我所有的没使用灰度服务器

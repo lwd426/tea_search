@@ -44,13 +44,15 @@ export class four {
         for(let v of this.meta.servers){
             if(v.uids){
                 let n=this.getOneUpstreamName(v);
-                r+=`if($COOKIE_uid ~* "${v.uids.join("|")}"){
+                r+=`
+                if($COOKIE_uid ~* "${v.uids.join("|")}"){
                     proxy_pass http://$${n};
                 }`;
             }
             if(v.regions){
                 let n=this.getOneUpstreamName(v);
-                r+=`if($geoip2_data_${level}_name ~* "${v.regions.join("|")}"){
+                r+=`
+                if($geoip2_data_${level}_name ~* "${v.regions.join("|")}"){
                     proxy_pass http://$${n};
                 }`;
             }
