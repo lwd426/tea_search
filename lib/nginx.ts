@@ -203,10 +203,8 @@ function wanjianguizong(arr) {
                 servers: v.serverArray
             });
         }
-        o.servers.sort((a,b)=>{
-            if(a.uids){
-                return -1;
-            }
+        o.servers.sort((a, b) => {
+            return a.uids ? -1 : 1;
         });
         array.push(o);
     }
