@@ -107,6 +107,7 @@ export default class EChart extends React.Component {
         this.randerChart(date_picker);
     }
     componentWillReceiveProps(nextProps) {
+        console.log('chart componentWillReceiveProps');
         let date_picker = nextProps.content.mainpage.date_picker
         this.randerChart(date_picker);
         return true;

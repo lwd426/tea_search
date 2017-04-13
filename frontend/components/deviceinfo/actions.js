@@ -4,8 +4,6 @@ const HOST = require('../../../config').HOST;
 
 const slb_list_url = HOST + '/slb';
 const web_list_url = HOST + '/webserver';
-
-
 /**
  * 获取SLB名称
  * @returns {function(*, *)}
@@ -27,6 +25,7 @@ export function getSlbName(name){
         name
     }
 }
+
 export function updateSLB(objectId, slbDomain) {
     return (dispatch, getState) => {
         return dispatch(fetch.updateData(slb_list_url,{objectId: objectId}, {slbDomain: slbDomain}, function(err, result){
