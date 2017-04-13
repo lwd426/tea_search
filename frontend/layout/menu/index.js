@@ -56,7 +56,6 @@ class GLMenu extends React.Component {
         this.props.menuActions.editSlb(slbid, slbname);
     }
     changeMenu =(item)=>{
-        console.log(item)
         if(!item.key) return false;
         if(item.key.indexOf(',') === -1) return false;
         var code = item.key.split(',')

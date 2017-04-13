@@ -95,12 +95,12 @@ export function changeShowWinType(slbid, wintype) {
             if(err) return dispatch(changeSlbSuccess(''));
             var arr = result.data;
             var domain = arr[0].slbDomain;
-            return dispatch(changeSlbSuccess(domain, '2020'));
+            return dispatch(changeSlbSuccess(wintype, slbid, domain, '2020'));
         }))
     }
 }
 
-export function changeSlbSuccess(domain) {
+export function changeSlbSuccess(wintype, slbid, domain, domainId) {
     return {
         type: TYPES.CHANGE_SLB_SUCCESS,
         wintype,

@@ -2,7 +2,9 @@
     float: none;
     width: 240px;
 }
-
+.editable-cell-icon{
+    line-height: 4px;
+}
 .ant-col-sm-offset-8{
     float: none;
     width: 240px;
