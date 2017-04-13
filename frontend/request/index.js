@@ -1,10 +1,11 @@
-// import 'whatwg-fetch';
+import 'whatwg-fetch';
 const HOST = require('../../config').HOST;
 
 const virtualhost_url = HOST + '/virtualhost/getbyname/';
+const data_all_url = 'http://10.100.54.188:8001/db/functions/get_statistic_action';
 
 module.exports = {
-    getVirtualHostByname:async (name) => {
+    getVirtualHostByname : async (name) => {
         /*fetch(virtualhost_url + name)
         .then((res) => {
             res.json()
@@ -16,6 +17,26 @@ module.exports = {
         try {
             let response = await fetch(virtualhost_url + name,{
                 method: 'GET',
+            });
+            let data = await response.json();
+            return data;
+        } catch(e) {
+            console.log("error", e);
+        }
+    },
+    getDateAll : async (projectname, start, end) => {
+        try {
+            let response = await fetch(data_all_url,{
+                method: 'POST',
+                headers: {
+                    "X-Parse-Application-Id": "agent",
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "Accept": "application/json"
+                },
+                body: {
+                    "start": start,
+                    "end": end,
+                }
             });
             let data = await response.json();
             return data;
