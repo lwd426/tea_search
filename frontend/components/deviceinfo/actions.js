@@ -92,7 +92,7 @@ export function deleteWebServer(server) {
                     dispatch(deleteWebServerList(result.data))
                 }))
             }else{
-                return dispatch(showNotification('不能删除！', result.data.info, 'error'))
+                return dispatch(showNotification('不能删除！', result.data.info, 'warning'))
             }
 
         }))

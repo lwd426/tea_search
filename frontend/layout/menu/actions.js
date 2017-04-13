@@ -27,10 +27,10 @@ export function getMenulist() {
 export function deleteTestGroup(id) {
     return (dispatch, getState) => {
         return dispatch(fetch.deleteData(slb_list_url,{id: id}, function(err, result){
-            if(!err)  deleteMenuSuccess([])
+            if(err)  deleteMenuSuccess([])
             dispatch(fetch.getData(slb_list_url,function(err, result){
-                if(!err)  getMenuListSuccess([])
-                dispatch(getMenuListSuccess(result.data))
+                if(err)  deleteMenuSuccess([])
+                dispatch(deleteMenuSuccess(result.data))
             }))
         }))
     }
@@ -43,8 +43,6 @@ export function deleteTestGroup(id) {
  * @returns {function(*, *)}
  */
 export function saveMenu(name) {
-    // 注意这个函数也接收了 getState() 方法
-    // 它让你选择接下来 dispatch 什么
     return (dispatch, getState) => {
         return dispatch(fetch.postData(slb_list_url,{name}, function(err, result){
             if(!err)  postData([])
@@ -56,6 +54,33 @@ export function saveMenu(name) {
     }
 }
 
+export function editSlb(slbid, slbname) {
+    return (dispatch, getState) => {
+        return dispatch(fetch.updateData(slb_list_url,{objectId: slbid}, {name: slbname}, function(err, result){
+            if(!err)  editMenuListSuccess([])
+            dispatch(fetch.getData(slb_list_url,function(err, result){
+                if(!err)  editMenuListSuccess([])
+                dispatch(editMenuListSuccess(result.data))
+            }))
+        }))
+    }
+}
+
+export const editMenuListSuccess = (menulist) => {
+    return {
+        type: TYPES.EDIT_MENUDATA_SUCCESS,
+        menulist
+    }
+}
+
+export function editSlbClick(slbid, slbname) {
+    return {
+        type: TYPES.EDIT_SLB_CLICK,
+        slbid,
+        slbname
+    }
+}
+
 // export function changeSlb(slbid){
 //     return {
 //         type: TYPES.CHANGE_SLB,
@@ -64,10 +89,24 @@ export function saveMenu(name) {
 // }
 
 export function changeShowWinType(slbid, wintype) {
+    //读取slb信息
+    return (dispatch, getState) => {
+        return dispatch(fetch.getData(slb_list_url + '?objectId=' + slbid,function(err, result){
+            if(err) return dispatch(changeSlbSuccess(''));
+            var arr = result.data;
+            var domain = arr[0].slbDomain;
+            return dispatch(changeSlbSuccess(domain, '2020'));
+        }))
+    }
+}
+
+export function changeSlbSuccess(domain) {
     return {
-        type: TYPES.SHOW_WIN_TYPE,
+        type: TYPES.CHANGE_SLB_SUCCESS,
         wintype,
-        slbid
+        slbid,
+        domain,
+        domainId
     }
 }
 
