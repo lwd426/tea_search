@@ -95,3 +95,5 @@
 .ant-collapse > .ant-collapse-item > .ant-collapse-header{height:45px;line-height:45px;font-size:15px}
 .ant-collapse > .ant-collapse-item{position: relative;}
 .ant-collapse > .ant-collapse-item .collbutton{position:absolute;top:8px;right:20px}
+.increase{color:red}
+.decrease{color:green}

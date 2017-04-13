@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import './style.css';
 import 'antd.min.css';
 import { Table, Input, Icon, Button, Popconfirm, Collapse } from 'antd';
@@ -107,14 +107,13 @@ class GLMainpage extends React.Component {
                                     <span>最近变动： 1天前</span><br/>
                                 </div>
                                 <div className="right" style={{float:'left',width:'33%'}}>
-                                    <span>BtnClick：3.6% (+4.2%)</span><br/>
-                                    <span>PicClick：2.6% (-2.1%)</span><br/>
-                                    <span>PicClick：2.6% (-2.1%)</span><br/>
+                                    <span>BtnClick：3.6%</span> <span className="increase">(+4.2%)</span><br/>
+                                    <span>PicClick：2.6%</span> <span className="decrease">(-2.1%)</span><br/>
+                                    <span>PicClick：2.6%</span> <span className="decrease">(-2.1%)</span><br/>
                                 </div>
                                 <div className="right" style={{float:'left',width:'34%'}}>
                                     <span>流量占比： 20%   运行中</span><br/>
-                                    <span>流量占比： 20%   运行中</span><br/>
-                                    <span>流量占比： 20%   运行中</span><br/>
+                                    
                                 </div>
                                 <div className="clear"></div>
                             </div>
@@ -130,14 +129,13 @@ class GLMainpage extends React.Component {
                                     <span>最近变动： 1天前</span><br/>
                                 </div>
                                 <div className="right" style={{float:'left',width:'33%'}}>
-                                    <span>BtnClick：3.6% (+4.2%)</span><br/>
-                                    <span>PicClick：2.6% (-2.1%)</span><br/>
-                                    <span>PicClick：2.6% (-2.1%)</span><br/>
+                                    <span>BtnClick：3.6%</span> <span className="increase">(+4.2%)</span><br/>
+                                    <span>PicClick：2.6%</span> <span className="decrease">(-2.1%)</span><br/>
+                                    <span>PicClick：2.6%</span> <span className="decrease">(-2.1%)</span><br/>
                                 </div>
                                 <div className="right" style={{float:'left',width:'34%'}}>
                                     <span>流量占比： 20%   运行中</span><br/>
-                                    <span>流量占比： 20%   运行中</span><br/>
-                                    <span>流量占比： 20%   运行中</span><br/>
+                                    
                                 </div>
                                 <div className="clear"></div>
                             </div>
@@ -153,14 +151,13 @@ class GLMainpage extends React.Component {
                                     <span>最近变动： 1天前</span><br/>
                                 </div>
                                 <div className="right" style={{float:'left',width:'33%'}}>
-                                    <span>BtnClick：3.6% (+4.2%)</span><br/>
-                                    <span>PicClick：2.6% (-2.1%)</span><br/>
-                                    <span>PicClick：2.6% (-2.1%)</span><br/>
+                                    <span>BtnClick：3.6%</span> <span className="increase">(+4.2%)</span><br/>
+                                    <span>PicClick：2.6%</span> <span className="decrease">(-2.1%)</span><br/>
+                                    <span>PicClick：2.6%</span> <span className="decrease">(-2.1%)</span><br/>
                                 </div>
                                 <div className="right" style={{float:'left',width:'34%'}}>
                                     <span>流量占比： 20%   运行中</span><br/>
-                                    <span>流量占比： 20%   运行中</span><br/>
-                                    <span>流量占比： 20%   运行中</span><br/>
+                                    
                                 </div>
                                 <div className="clear"></div>
                             </div>
@@ -176,14 +173,13 @@ class GLMainpage extends React.Component {
                                     <span>最近变动： 1天前</span><br/>
                                 </div>
                                 <div className="right" style={{float:'left',width:'33%'}}>
-                                    <span>BtnClick：3.6% (+4.2%)</span><br/>
-                                    <span>PicClick：2.6% (-2.1%)</span><br/>
-                                    <span>PicClick：2.6% (-2.1%)</span><br/>
+                                    <span>BtnClick：3.6%</span> <span className="increase">(+4.2%)</span><br/>
+                                    <span>PicClick：2.6%</span> <span className="decrease">(-2.1%)</span><br/>
+                                    <span>PicClick：2.6%</span> <span className="decrease">(-2.1%)</span><br/>
                                 </div>
                                 <div className="right" style={{float:'left',width:'34%'}}>
                                     <span>流量占比： 20%   运行中</span><br/>
-                                    <span>流量占比： 20%   运行中</span><br/>
-                                    <span>流量占比： 20%   运行中</span><br/>
+                                    
                                 </div>
                                 <div className="clear"></div>
                             </div>
