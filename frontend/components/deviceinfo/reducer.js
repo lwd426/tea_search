@@ -33,9 +33,12 @@ const webServerReducer = (state = initState,action) => {
                 status = action.status;
             state.webServerList.map((server)=>{
                 if(servers.indexOf(server.key) !== -1){
-                    server.refer = status
+                    server.refer = status;
+                    if(!status) server.stragetiesinfo =  []
+
                 }
             })
+            utilscomps.showNotification('warning', '必要操作提示', '请去对应的测试组内重新点击"生成基准版本按钮"使操作生效！');
             return Object.assign({},state,{
                 webServerList: state.webServerList
             })
