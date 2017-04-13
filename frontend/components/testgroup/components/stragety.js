@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react'
 import '../style.css';
 import 'antd.min.css';
 import GLInfo from '../../deviceinfo/components/info'
+import utilscomps from '../../utilscomps'
+
 import { Table, Input, Icon, Button,Modal, Popconfirm } from 'antd';
 const confirm = Modal.confirm;
 const uuid = require('uuid/v1');
@@ -47,6 +49,10 @@ class GLStragety extends React.Component {
             render: (text, record) => (
                 <span>
                   <a href="#" onClick={()=>{
+                      if(record.status === 'running') {
+                          utilscomps.showNotification('warning', '不能修改','此策略正在运行中，请先停止此策略');
+                          return false;
+                      }
                       this.props.contentActions.testgroupActions.handleStragety(record.slbid, record.code, record.status === "running" ? "stopped" : "running")
                   }}> {record.status === 'running' ? '停止' : '启动'}</a>
                   <span className="ant-divider" />
@@ -55,6 +61,10 @@ class GLStragety extends React.Component {
                   }}>修改</a>
                   <span className="ant-divider" />
                   <Popconfirm title="确认删除策略?" onConfirm={() => {
+                      if(record.status === 'running') {
+                          utilscomps.showNotification('warning', '不能删除','此策略正在运行中，删除前请先停止此策略');
+                          return false;
+                      }
                       this.props.contentActions.testgroupActions.deleteStragety(record.code,record.slbid, record.testgroupcode)
                   }}>
                     <a href="#">删除</a>
