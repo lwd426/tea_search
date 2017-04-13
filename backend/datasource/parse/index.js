@@ -1,4 +1,4 @@
-var ParseUtils = require('./parse/sdk');
+var ParseUtils = require('./sdk');
 
 module.exports = {
     /**

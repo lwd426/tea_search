@@ -2,11 +2,16 @@ import React, { Component, PropTypes } from 'react';
 import '../style.css';
 import 'antd.min.css';
 import GLTree from './tree';
-import { Table, Input, Icon, Button, Popconfirm } from 'antd';
+import { Table, Input, Icon, Button, Popconfirm, notification } from 'antd';
 import EditableCell from './editcell';
 const uuid = require('uuid/v1');
 
-
+const openNotificationWithIcon = (type, title, content) => {
+    notification[type]({
+        message: title,
+        description: content
+    });
+};
 class GLWebserver extends React.Component {
     constructor(props) {
         super(props);
@@ -92,6 +97,8 @@ class GLWebserver extends React.Component {
         this.props.contentActions.deviceinfoActions.addWebServer(newData);
     }
     componentWillReceiveProps(nextProps) {
+        // var {notification} = nextProps.content.deviceinfo;
+        // if(notification.show) openNotificationWithIcon(notification.type, notification.title,notification.content)
         return true;
     }
     componentDidMount() {

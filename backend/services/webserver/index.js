@@ -5,7 +5,7 @@
  * Created by lwd426 on 17/3/30.
  */
 
-var db = require('../../db')
+var db = require('../../datasource/parse')
 var moment = require('moment');
 
 module.exports = {
@@ -59,7 +59,31 @@ module.exports = {
      * @returns {*}
      */
     deleteWebServer: function*(data) {
-        var result = yield db.delete('webServer', data);
+        //先查询要删除的server，如果server下有策略，则不能删除，返回信息：提示用策略正在运行，请先删除
+        var result = {
+            status: 'failure',
+            info: ''
+        }
+        var server = yield db.get('webServer', data);
+        if(server[0].get('stragetiesinfo')){
+            var stragetiesid = server[0].get('stragetiesinfo').split(';');
+            var strageties = yield db.get('stragety', undefined, {key: 'in', key: 'stra_id', data: stragetiesid});
+            var i = 0,len = strageties.length;
+            var stra_info = [];
+            for(;i<len;i++){
+                var stragety = strageties[i];
+                if(stragety !== ''){
+                    stra_info.push(stragety.get('stra_name'));
+                }
+            }
+            result.info = "不能删除该服务器（该服务器部署了以下几个策略：" + stra_info.join(' ')
+        }else{
+            var re = yield db.delete('webServer', data);
+            result.status = 'success';
+            result.info = '删除成功'
+        }
+
+
         return result;
     },
     /**

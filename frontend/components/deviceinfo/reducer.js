@@ -1,7 +1,8 @@
 import * as TYPES from './constants'
+import utilscomps from '../utilscomps'
 const initState = {
     showtype: 'webServerList',
-    webServerList: [],
+    webServerList: []
 };
 const webServerReducer = (state = initState,action) => {
     switch (action.type){
@@ -9,21 +10,27 @@ const webServerReducer = (state = initState,action) => {
             return Object.assign({},state,{
                 webServerList: action.webServerList
             })
+            break
         }
         case 'DELETE_WEBSERVERLIST' : {
             return Object.assign({},state,{
                 webServerList: action.webServerList
             })
+            break
         }
         case 'CURRENT_SLB_NAME' : {
             return Object.assign({},state,{
                 current_slb_name: action.name
             })
         }
+            break
+        case TYPES.SHOW_NOTIFICATION :
+            utilscomps.showNotification(action.showtype, action.title,action.content);
+            return  state;
+            break
         case TYPES.SET_REFER_SERVER_SUCCESS : {
             var servers = action.servers,
                 status = action.status;
-            console.log('dd')
             state.webServerList.map((server)=>{
                 if(servers.indexOf(server.key) !== -1){
                     server.refer = status
@@ -32,6 +39,7 @@ const webServerReducer = (state = initState,action) => {
             return Object.assign({},state,{
                 webServerList: state.webServerList
             })
+            break
         }
         default:
             return state;
