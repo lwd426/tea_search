@@ -1,22 +1,38 @@
 import nginx = require("./nginx");
 nginx([
         {
-            urlArray: '/',
-            regionArray: ['bj', 'shanghai'],
+            urlArray: ['/bdf/'],
+            regionArray: ['henan', 'sichuan'],
+            serverArray: ["1.1.1.1", "2.2.2.8"],
+            uidArray: [],
+            default: false
+        }, {
+            urlArray: ['/a.t'],
+            regionArray: ['henan', 'sichuan', 'shandong'],
             serverArray: ["1.1.1.1", "2.2.2.8"],
             uidArray: [],
             default: false
         },
+
         {
-            urlArray: ['/b.html', '/c.html'],
-            uidArray: ['zhao', 'qian'],
-            serverArray: ["1.1.1.2", "2.2.2.2"],
+            urlArray: ['~ /vplay.*.html'],
+            uidArray: ['zhuoyongran123', 'zyr123'],
+            serverArray: ['0.0.0.0'],
+            default: false
+        }
+        , {
+            // urlArray: ['/zyr/','/zyr1'],
+            urlArray: ['= /vplay1234.html'],
+            uidArray: ['zhuoyongran'],
+            regionArray: ['linyi'],
+            serverArray: ['0.0.0.0'],
             default: false
         },
+
         {
             urlArray: ['/'],
-            serverArray: ['3.3.3.3', '4.4.4.4', '5.5.5.5', '6.6.6.6'],
-            default: 1
+            serverArray: ['3.3.3.3', '4.4.4.4', '5.5.5.5', '6.6.6.6'],//传给我所有的没使用灰度服务器
+            default: true
         }
     ]
 );

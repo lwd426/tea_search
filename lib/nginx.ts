@@ -1,18 +1,15 @@
-interface CONTENT {
-    location: string,
-    group?: string,
-    upstreams: string
-}
-interface Meta {
-    url: string,
-    uidArray?: string[],
-    regionArray?: string [],
-    serverArray?: string[],
-    default?: boolean
-}
+import {CONTENT, Meta, level, MataS} from './if';
+import {Methods, Verify} from './check';
+import {UpstreamGroup}from './UpstreamGroup';
+import {three}from './three';
+import {four}from './four';
 const defaultUpstream = "defaultUpstream";
-const geoipCity = `/etc/maxmind-city.mmdb`;
-class Upstream {
+const geoip_city = `/etc/maxmind-city.mmdb`;
+const geoip_subdivisions = `/etc/maxmind-subdivisions.mmdb`;
+let allServers = [];
+
+let needDefault = false;
+class Upstream {//default
     metaData: Meta;
     upStreamName: string;
     type: string = 'url';
@@ -28,7 +25,7 @@ class Upstream {
     }
 
     doit(): CONTENT {
-        let location = this.getLocation();
+        let location = needDefault ? this.getLocation() : '';
         let upstreams = this.getUpstream();
         return {
             location: location,
@@ -68,241 +65,150 @@ class Upstream {
     }
 }
 //如果uid或者region有效，则生成一个upstream group, 对于哪种不需要生成group的，还是使用另外一个函数吧
-class UpstreamGroup {
-    metaData: Meta;
-    groupName: string;
-    type: string;
-    index: number = 0;
-    map;
 
-    constructor(meta: Meta) {
-        this.metaData = meta;
-        this.init();
-    }
 
-    init() {
-        if (Array.isArray(this.metaData.regionArray) && this.metaData.regionArray.length) {
-            this.type = 'url_region';
-        } else if (this.metaData.uidArray.length) {
-            this.type = 'url_uid';
-        }
-        this.groupName = this.getGroupName();
-        this.map = Array.isArray(this.metaData.regionArray) && this.metaData.regionArray.length ? this.metaData.regionArray : this.metaData.uidArray;
-    }
-
-    doit() {
-        let location = this.getLocation();
-        let group = this.getGroup();
-        let upstreams = this.getUpstream();
-        return {
-            location: location,
-            group: group,
-            upstreams: upstreams
-        }
-    }
-
-    getLocation() {
-        let url = this.metaData.url || '/';
-        let groupName = this.groupName;
-        return `
-        location ${url} { 
-                    proxy_pass http://$${groupName}; 
-        }
-        `;
-    }
-
-    getGroupName() {
-        let name = '';
-        let rand = (Math.random() + "").slice(-5);
-        name = this.type + "_" + rand;
-        return name;
-    }
-
-    getGroup(): string {
-        let groupName = this.groupName;
-        let cookie = "";
-        let geo1p2 = `
-           #使用geoip2 通过ip获取城市信息
-           geoip2 ${geoipCity} {
-            $geoip2_data_city_name default=Beijing city names en;
-           }`;
-        if (this.type == 'url_region') {
-            cookie = '$geoip2_data_city_name';
-        } else if (this.type == 'url_uid') {
-            cookie = '$COOKIE_uid';
-            geo1p2 = '';
-        }
-        let regName = this.getGroupContent();
-
-        return `
-        ${geo1p2}
-        map ${cookie} $${groupName} {
-            ${regName}
-           
-       } `;
-    }
-
-    getGroupContent(): string {
-        let arr = this.map;
-        let s = `
-                #写正则和对应的upstream的name`;
-        let keyss: string = '';
-
-        keyss = arr.join("|");
-        let name: string = this.getUpstreamName();
-        s += `
-                ~* "${keyss}" ${name};
-            `;
-        s += `default ${defaultUpstream};`;// default
-        return s;
-    }
-
-    //搞到一个个的upstream
-    getUpstreams(): string {
-        let str: string = '';
-        let arr = this.map;
-        arr.forEach(item => {
-            let r = this.getUpstream(item);
-            str += `
-            ${r}
-            `;
-        });
-        return str;
-    }
-
-    getUpstreamName() {
-        return this.groupName + "_" + this.metaData.serverArray[this.index];
-    }
-
-    getUpstream(opt = this.metaData.serverArray): string {
-        let n = this.getUpstreamName();
-        let s = '';
-        opt.forEach(ip => {
-
-            s += `
-                    server ${ip};
-               `;
-        });
-        return `
-                upstream ${n} { 
-                     ip_hash;
-                      ${s}
-                }
-                `;
-    }
-}
-
-class Verify {
-    arr: any[];
-
-    constructor(arr) {
-        this.arr = arr;
-    }
-
-    check() {
-        try {
-            // this.serverSingle();
-            this.url();
-            this.hasDefault();
-            return {
-                code: 0,
-                data: ''
-            };
-        } catch (e) {
-            return e;
-        }
-    }
-
-    hasDefault() {
-        let flag = false;
-        let arr: boolean[] = [];
-        for (let v of this.arr) {
-            arr.push(!!v.default);
-        }
-        if (arr.indexOf(true) == -1) {
-            throw {
-                code: 3,
-                data: `没有default`
-            };
-        } else if (arr.indexOf(true) != arr.lastIndexOf(true)) {
-            throw {
-                code: 4,
-                data: `好几个default`
-            };
-        }
-    }
-
-    getServers() {
-        let arr = [];
-        this.arr.forEach(item => {
-            arr = arr.concat(item.serverArray);
-        });
-        return arr;
-    }
-
-    serverSingle() {//判断ip地址是不是只出现了一次
-        let arr = this.getServers();
-        for (let v of arr) {
-            if (arr.indexOf(v) !== arr.lastIndexOf(v)) {
-                throw {
-                    code: 1,
-                    data: `${v}出现了多次`
-                };
-            }
-        }
-        //ok 啥都没有
-    }
-
-    url() {
-        for (let v of this.arr) {//todo
-            if (Array.isArray(v.urlArray) && !v.urlArray.length) {
-                v.urlArray.push("/");
-                //throw {code: 2, data: "有个没填url"}
-            }
-        }
-    }
-}
 function array2one(arr) {
     let arr2 = [];
     for (let v of arr) {
         if (Array.isArray(v.urlArray) && v.urlArray.length) {
             v.urlArray.forEach(item => {
-                arr2.push((<any>Object).assign({}, v, {url: item}));
+                arr2.push((<any>Object).assign({}, v, {url: item || '/'}));
             });
-        } else if (typeof v.url === "string") {
-            arr2.push(v);
         }
     }
-    arr2.forEach(item => {
-        for (let i in item) {
+    arr2.forEach(item => {//如果数组是[],就干脆干掉
+        if (item.default) {
+            delete item.regionArray;
+            delete item.uidArray;
+        }
+        for (let i in item) {//干掉空数组
             if (Array.isArray(item[i]) && !item[i].length) {
                 delete item[i];
             }
         }
+        delete item.urlArray;//
     });
     return arr2;
 }
 
 function nginx(arr: any[]) {
+    needDefault = true;
+    arr = array2one(arr);
+    allServerHandler(arr);
     let verf = new Verify(arr);
     let re = verf.check();
     if (re.code != 0) {
+        console.log(re);
         return re;
     }
-    arr = array2one(arr);
-    const res = arr.map(item => {
-        return item.uidArray || item.regionArray ? new UpstreamGroup(item).doit() : new Upstream(item).doit();
+    // arr = array2one(arr);
+    arr.forEach(item => {
+        if (item.url == '/' && !item.default) {
+            needDefault = false;
+        }
     });
-    let content = '';
+    let geo = geoIp(arr);
+    let wjgz = wanjianguizong(arr);
+    /*const res = arr.map(item => {
+     delete item.urlArray;
+     if (item.uidArray && item.regionArray) {
+
+     return new three(item, allServers).doit();
+     }
+     return item.uidArray || item.regionArray ? new UpstreamGroup(item, allServers).doit() : new Upstream(item).doit();
+     }); */
+    const res = wjgz.map(item => {
+        return item.servers ? new four(item, allServers).doit() : new Upstream(item).doit();
+    });
+
+    let content = `${geo}`;
+    let groups = '';
+    let upstreams = '';
+    let location = '';
     for (let i of res) {
-        content += i.group || "";
-        content += i.upstreams || "";
-        content += i.location || "";
+        groups += i.group || "";
+        upstreams += i.upstreams || "";
+        location += i.location || "";
     }
+    content += upstreams;
+    content += groups;
+    content += location;
     console.log(content);
     re.content = content;
     return re;
 }
+function geoIp(arr) {
+
+    let flag = false;
+    for (let v of arr) {
+        flag = flag || !!v.regionArray;
+    }
+    if (!flag) {
+        return '';
+    }
+    let geoLevel = level;
+    let geoip_ = eval('geoip_' + geoLevel);
 
 
+    let geo1p2 = `
+           #使用geoip2 通过ip获取位置信息
+           geoip2 ${geoip_} {
+            $geoip2_data_${geoLevel}_name default=Beijing ${geoLevel} names en;
+           }`;
+    return geo1p2;
+
+}
+
+function allServerHandler(arr) {
+    for (let v of arr) {
+        if (v.default) {
+            allServers = [].concat(v.serverArray);
+        }
+    }
+    for (let v of arr) {
+        for (let k of v.serverArray) {
+            if (allServers.indexOf(k) == -1) {
+                allServers.push(k);
+            }
+        }
+    }
+}
 export = nginx;
+
+function wanjianguizong(arr) {
+    let array = [];
+    for (let v of arr) {
+        if (v.default) {
+            array.push(v);
+            continue;
+        }
+        let o = {url: v.url, servers: []};
+
+        //还得处理相同的url归一的问题
+        array.forEach(item => {
+            if (item.url == v.url) {
+                o.servers = item.servers;
+            }
+        });
+        if (v.uidArray) {
+            o.servers.push({
+                uids: v.uidArray,
+                servers: v.serverArray
+            });
+        }
+        //不能是else if 因为有的会uid和地域都有
+        if (v.regionArray) {
+            o.servers.push({
+                regions: v.regionArray,
+                servers: v.serverArray
+            });
+        }
+        o.servers.sort((a,b)=>{
+            if(a.uids){
+                return -1;
+            }
+        });
+        array.push(o);
+    }
+    return array;
+}
