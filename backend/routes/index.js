@@ -5,6 +5,7 @@ const stragety = require('./stragety');
 const webserver = require('./webserver');
 //const cha = require('./cha');
 const city = require('./city');
+const virtualhost = require('./virtualhost');
 
 
 router.use('/slb', slb.routes(), slb.allowedMethods());
@@ -13,6 +14,7 @@ router.use('/stragety', stragety.routes(), stragety.allowedMethods());
 router.use('/webserver', webserver.routes(), webserver.allowedMethods());
 //router.use('/cha', cha.routes(), cha.allowedMethods());
 router.use('/city', city.routes(), city.allowedMethods());
+router.use('/virtualhost', virtualhost.routes(), virtualhost.allowedMethods());
 
 // router.get('/', function *(next) {
 //     console.log('////')

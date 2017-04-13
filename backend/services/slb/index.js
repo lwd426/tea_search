@@ -5,7 +5,7 @@
  * Created by lwd426 on 17/3/30.
  */
 
-var db = require('../../db')
+var db = require('../../datasource/parse')
 const uuid = require('uuid/v1');
 var libStragety = require('../stragety')
 var libNginx = require('../../../lib/nginx')

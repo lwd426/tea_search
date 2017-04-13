@@ -10,6 +10,13 @@ module.exports = {
         },
         timeout: 5
 	}
+	, VH: {
+	    url: '10.118.31.22:8081',
+	    headers: {
+            "Content-Type": "application/json",
+            "SlbAccount": "le-test"
+        }
+    }
     , HOST: `${process.env.API_HOST}`
 	,PORT: 3000
 

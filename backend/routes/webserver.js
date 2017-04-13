@@ -30,7 +30,7 @@ router.del('/', function *(next) {
     var key = this.request.body.key;
     var result = yield lib.deleteWebServer({key:key})
     this.body = {
-        status: 'success',
+        status: result.status,
         data: result
     };
 });
