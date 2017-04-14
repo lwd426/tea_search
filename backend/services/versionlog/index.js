@@ -16,7 +16,18 @@ module.exports = {
      */
     getVersionlogList: function*(tgid) {
         if(tgid){
-            var versionloglist = yield db.get('versionlog', {tgid: tgid});
+            var versionloglist = yield db.get('tgVersion', {tgid: tgid});
+            return versionloglist;
+        }else{
+            return {
+                status: 'failure',
+                info: '没有测试组id参数'
+            }
+        }
+    },
+    getVersionlog: function*(tgid, versionkey) {
+        if(tgid){
+            var versionloglist = yield db.get('tgVersion', {tgid: tgid, objectId: versionkey});
             return versionloglist;
         }else{
             return {

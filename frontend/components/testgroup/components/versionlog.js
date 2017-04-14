@@ -35,7 +35,16 @@ class GLPop extends React.Component{
         return (
             <div>
                 {this.props.data.map((data)=>{
-                    return (<div><div>{data.stra_name}</div><div>{data.stra_status}</div><div>{data.stra_urls}</div><div>{data.stra_uids}</div><div>{data.stra_regions}</div></div>)
+                    return (<div>
+                        <div>策略名称：{data.name}</div>
+                        <div>状态：{data.status}</div>
+                        <div>urls：{data.urlArray.length === 0 ? '无' : data.urlArray.join(' ')}</div>
+                        <div>uids：{data.uidArray.length === 0 ? '无' : data.uidArray.join(' ')}</div>
+                        <div>区域：{data.regionArray.length === 0 ? '无' : data.regionArray.join(' ')}</div>
+                        <div>服务器：{data.serverArray.length === 0 ? '无' : data.serverArray.join(' ')}</div>
+                        <div className="gl-line-div"><span className="gl-line"></span><span className="gl-line"></span></div>
+
+                    </div>)
 
                 })}
             </div>
@@ -68,27 +77,19 @@ class GLVersionlog extends React.Component {
         this.props.contentActions.testgroupActions.goback()
     }
     render() {
-        const data = [{
-            versionkey: '222233dfd-ddfdfdfsdsd-dfdfdfdfd',
-            versioncode: '1.1.1',
-            versiondesc: '增加版本button',
-            versiondate: '2017-04-13 12:00:00',
-            info: [{
-                stra_name: '策略1',
-                stra_urls: ['m.le.com','http://m.xx.com/play.html'],
-                stra_uids: ['11111', '222222'],
-                stra_regions: ['北京','天津'],
-                stra_servers: ['129.333.222.444'],
-                stra_status: 'running'
-            },{
-                stra_name: '策略1',
-                stra_urls: ['m.le.com','http://m.xx.com/play.html'],
-                stra_uids: ['11111', '222222'],
-                stra_regions: ['北京','天津'],
-                stra_servers: ['129.333.222.444'],
-                stra_status: 'stopped'
-            }]
-        }]
+        var _this = this;
+        const {versionloglist} = this.props.content.testgroup;
+        const data = versionloglist.map((version, index)=>{
+            return {
+                versionkey: version.objectId,
+                versioncode: version.versionnum,
+                versiondesc: version.versiondesc,
+                versiondate: version.publishtime,
+                slbid: version.slbid,
+                tgid: version.tgid,
+                info: JSON.parse(version.details)
+            }
+        })
         return (
             <div>
                 <div className="gl-testinfo-btndiv">
@@ -102,15 +103,18 @@ class GLVersionlog extends React.Component {
                         versiondesc: version.versiondesc,
                         versiondate: version.versiondate,
                         details: <Popover
-                            content={<div><GLPop data={version.info}/><a onClick={this.hide}>Close</a></div>}
-                            title="Title"
-                            trigger="click"
-                            visible={this.state.visible}
-                            onVisibleChange={this.handleVisibleChange}
-                             >
-                            <Button icon="book">版本详情</Button>
-                        </Popover>,
-                        operation: <Button>回滚</Button>
+                            content={<div>
+                                <GLPop data={version.info}/></div>}
+                                    title={version.versiondesc}
+                                    trigger="click"
+                                     >
+                                    <Button icon="book">版本详情</Button>
+                                </Popover>,
+                        operation: <Popconfirm title="确认回滚策略组到该版本?" onConfirm={() => {
+                            _this.props.contentActions.testgroupActions.publishback(version.slbid,version.tgid, version.versionkey)
+                        }}>
+                            <Button>回滚</Button>
+                        </Popconfirm>
 
 
                     }

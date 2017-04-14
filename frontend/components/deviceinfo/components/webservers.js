@@ -129,14 +129,6 @@ class GLWebserver extends React.Component {
                 </div>
                 <Table
                     columns={columns}
-                    rowSelection={{
-                        onSelect: (record, selected, selectedRows) => {
-                            {/*var referServers = selectedRows.map((server)=>{*/}
-                                {/*return server.key;*/}
-                            {/*})*/}
-                            {/*this.props.contentActions.deviceinfoActions.setReferServers(referServers);*/}
-                        }
-                    }}
                     dataSource={dataSource}
                     bordered className="gl-testinfo-table"
                     size="middle"

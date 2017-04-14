@@ -46,25 +46,6 @@ class RegistrationForm extends React.Component {
     componentWillReceiveProps =(nextProps)=> {
         return true;
     }
-    handleConfirmBlur = (e) => {
-        const value = e.target.value;
-        this.setState({ confirmDirty: this.state.confirmDirty || !!value });
-    }
-    checkPassword = (rule, value, callback) => {
-        const form = this.props.form;
-        if (value && value !== form.getFieldValue('password')) {
-            callback('Two passwords that you enter is inconsistent!');
-        } else {
-            callback();
-        }
-    }
-    checkConfirm = (rule, value, callback) => {
-        const form = this.props.form;
-        if (value && this.state.confirmDirty) {
-            form.validateFields(['confirm'], { force: true });
-        }
-        callback();
-    }
     changeAddUrlType = (e) => {
         var type = e.target.value;
         this.props.contentActions.testgroupActions.changeAddUrlType(type)
