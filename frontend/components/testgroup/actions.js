@@ -3,6 +3,7 @@ import fetch from '../../fetch'
 const HOST = require('../../../config').HOST;
 
 const testgroup_url = HOST + '/testgroup'
+const versionlog_url = HOST + '/versionlog'
 const stragety_url = HOST + '/stragety'
 const city_url = HOST + '/city'
 const server_url = HOST + '/webserver'
@@ -516,5 +517,21 @@ export function updateStragety(stra_id, tgid , slbid,  data) {
                 }))
             }))
         }))
+    }
+}
+
+export function versionlog_list(tgid, slbid) {
+    return (dispatch, getState) => {
+        return dispatch(fetch.getData(versionlog_url + '?tgid='+tgid,function(err, result){
+            if(err)  return dispatch(getVersionListSuccess([], tgid, slbid))
+            return dispatch(getVersionListSuccess(result.data, tgid, slbid))
+        }))
+    }
+}
+
+export function getVersionListSuccess(list, tgid,slbid) {
+    return {
+        type: TYPES.GET_VERSIONLOG_SUCCESS,
+        list
     }
 }

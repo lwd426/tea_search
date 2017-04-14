@@ -4,16 +4,9 @@ import 'antd.min.css';
 import GLInfo from '../../deviceinfo/components/info'
 import utilscomps from '../../utilscomps'
 
-import { Table, Input, Icon, Button,Modal, Popconfirm } from 'antd';
-const confirm = Modal.confirm;
+import { Table, Input, Icon, Button, Popconfirm } from 'antd';
 const uuid = require('uuid/v1');
 
-function showConfirm() {
-    confirm({
-        title: '请输入版本说明',
-        content: <Input placeholder="版本说明（10字以内）" />
-    });
-}
 
 class GLStragety extends React.Component {
     constructor(props) {

@@ -9,7 +9,15 @@
     float: none;
     width: 240px;
 }
-
+.ant-table table{
+    text-align: center;
+}
+.ant-table-thead > tr > th{
+    text-align: center;
+}
+.gl-btn{
+    margin: 0px 3px;
+}
 .ant-form-item-control>.ant-btn-primary{
     width: 96px;
     margin-left: 10px;

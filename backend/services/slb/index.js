@@ -68,7 +68,10 @@ module.exports = {
         })
         console.log(data)
         //调用禚永然的配置文件生成接口
-        var dd = libNginx(data);
+        var conf = libNginx(data);
+        //调用slb推送服务
+
+        //保存发版信息
         console.log(dd)
 
         //发送
