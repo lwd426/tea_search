@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import './style.css';
 import 'antd.min.css';
 import { Table, Input, Icon, Button, Popconfirm, Collapse } from 'antd';
@@ -37,6 +37,8 @@ class GLMainpage extends React.Component {
     onChange(arr) {
         console.log(arr);
         this.props.contentActions.mainpageActions.changeProjectValue(arr);
+        let projectValue = arr[1];
+        this.props.contentActions.mainpageActions.switchContentShow('none','block')
     }
     disabledDate(current) {
         return current && current.valueOf() > Date.now();
@@ -46,6 +48,8 @@ class GLMainpage extends React.Component {
     }
     componentDidMount(){
         //this.props.contentActions.mainpageActions.getStragety()
+        this.props.contentActions.mainpageActions.getMenulist();
+        this.props.contentActions.mainpageActions.getTestGroupList();
     }
     componentWillReceiveProps(nextProps) {
         console.log('mainpage componentWillReceiveProps');
@@ -55,27 +59,33 @@ class GLMainpage extends React.Component {
     
     render() {
         //const options = this.props.content.mainpage.stragety
-        const options = [{
-            value: 'm',
-            label: 'M站灰度测试',
-            children: [{
-                value: 'button1',
-                label: '按钮颜色测试1',
-            },{
-                value: 'button2',
-                label: '按钮颜色测试2',
-            }],
-        }, {
-            value: 'pc',
-            label: 'PC灰度测试',
-            children: [{
-                value: 'dianbo1',
-                label: '点播页评论1',
-            },{
-                value: 'dianbo2',
-                label: '点播页评论2',
-            }],
-        }];
+        let options = [];
+        let slblist = this.props.content.mainpage.menulist;
+        let testgrouplist = this.props.content.mainpage.testgrouplist;
+        if(slblist.length > 0 ){
+            slblist.forEach(function(outv,index){
+                let obj = {}
+                obj['value'] = outv.objectId;
+                obj['label'] = outv.name;
+
+                if(testgrouplist.length > 0){
+                    let arr = [];
+                    testgrouplist.forEach(function(inv,index){
+                        let inObj = {};
+                        if( outv.objectId == inv.slbid ){
+                            inObj['value'] = inv.objectId;
+                            inObj['label'] = inv.name;
+                            arr.push(inObj);
+                        }
+                    })
+                    obj['children'] = arr;
+                }
+                options[index] = obj;
+            })
+        }
+
+        //let defaultValue = (options.length > 0) ? [ options[0]['value'],options[0]['children'][0]['value'] ] : [];
+        
 
         const options_two = [{
             value: 'BtnClick',
@@ -88,7 +98,7 @@ class GLMainpage extends React.Component {
         return (
             <div className="mainpage">
                 <br />
-                <Cascader options={options} defaultValue={['m','button1']} onChange={this.onChange.bind(this)} />
+                <Cascader options={options} onChange={this.onChange.bind(this)} />
                 <Button style={{float:'right'}}>
                   <Icon type="plus-circle-o" />新建测试组 
                 </Button>
@@ -107,14 +117,13 @@ class GLMainpage extends React.Component {
                                     <span>最近变动： 1天前</span><br/>
                                 </div>
                                 <div className="right" style={{float:'left',width:'33%'}}>
-                                    <span>BtnClick：3.6% (+4.2%)</span><br/>
-                                    <span>PicClick：2.6% (-2.1%)</span><br/>
-                                    <span>PicClick：2.6% (-2.1%)</span><br/>
+                                    <span>BtnClick：3.6%</span> <span className="increase">(+4.2%)</span><br/>
+                                    <span>PicClick：2.6%</span> <span className="decrease">(-2.1%)</span><br/>
+                                    <span>PicClick：2.6%</span> <span className="decrease">(-2.1%)</span><br/>
                                 </div>
                                 <div className="right" style={{float:'left',width:'34%'}}>
                                     <span>流量占比： 20%   运行中</span><br/>
-                                    <span>流量占比： 20%   运行中</span><br/>
-                                    <span>流量占比： 20%   运行中</span><br/>
+                                    
                                 </div>
                                 <div className="clear"></div>
                             </div>
@@ -130,14 +139,13 @@ class GLMainpage extends React.Component {
                                     <span>最近变动： 1天前</span><br/>
                                 </div>
                                 <div className="right" style={{float:'left',width:'33%'}}>
-                                    <span>BtnClick：3.6% (+4.2%)</span><br/>
-                                    <span>PicClick：2.6% (-2.1%)</span><br/>
-                                    <span>PicClick：2.6% (-2.1%)</span><br/>
+                                    <span>BtnClick：3.6%</span> <span className="increase">(+4.2%)</span><br/>
+                                    <span>PicClick：2.6%</span> <span className="decrease">(-2.1%)</span><br/>
+                                    <span>PicClick：2.6%</span> <span className="decrease">(-2.1%)</span><br/>
                                 </div>
                                 <div className="right" style={{float:'left',width:'34%'}}>
                                     <span>流量占比： 20%   运行中</span><br/>
-                                    <span>流量占比： 20%   运行中</span><br/>
-                                    <span>流量占比： 20%   运行中</span><br/>
+                                    
                                 </div>
                                 <div className="clear"></div>
                             </div>
@@ -153,14 +161,13 @@ class GLMainpage extends React.Component {
                                     <span>最近变动： 1天前</span><br/>
                                 </div>
                                 <div className="right" style={{float:'left',width:'33%'}}>
-                                    <span>BtnClick：3.6% (+4.2%)</span><br/>
-                                    <span>PicClick：2.6% (-2.1%)</span><br/>
-                                    <span>PicClick：2.6% (-2.1%)</span><br/>
+                                    <span>BtnClick：3.6%</span> <span className="increase">(+4.2%)</span><br/>
+                                    <span>PicClick：2.6%</span> <span className="decrease">(-2.1%)</span><br/>
+                                    <span>PicClick：2.6%</span> <span className="decrease">(-2.1%)</span><br/>
                                 </div>
                                 <div className="right" style={{float:'left',width:'34%'}}>
                                     <span>流量占比： 20%   运行中</span><br/>
-                                    <span>流量占比： 20%   运行中</span><br/>
-                                    <span>流量占比： 20%   运行中</span><br/>
+                                    
                                 </div>
                                 <div className="clear"></div>
                             </div>
@@ -176,14 +183,13 @@ class GLMainpage extends React.Component {
                                     <span>最近变动： 1天前</span><br/>
                                 </div>
                                 <div className="right" style={{float:'left',width:'33%'}}>
-                                    <span>BtnClick：3.6% (+4.2%)</span><br/>
-                                    <span>PicClick：2.6% (-2.1%)</span><br/>
-                                    <span>PicClick：2.6% (-2.1%)</span><br/>
+                                    <span>BtnClick：3.6%</span> <span className="increase">(+4.2%)</span><br/>
+                                    <span>PicClick：2.6%</span> <span className="decrease">(-2.1%)</span><br/>
+                                    <span>PicClick：2.6%</span> <span className="decrease">(-2.1%)</span><br/>
                                 </div>
                                 <div className="right" style={{float:'left',width:'34%'}}>
                                     <span>流量占比： 20%   运行中</span><br/>
-                                    <span>流量占比： 20%   运行中</span><br/>
-                                    <span>流量占比： 20%   运行中</span><br/>
+                                    
                                 </div>
                                 <div className="clear"></div>
                             </div>

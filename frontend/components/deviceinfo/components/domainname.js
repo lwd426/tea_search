@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+ import React, { Component } from 'react'
 import '../style.css';
 import 'antd.min.css';
 import { Form, Input, Tooltip, Icon, Button, message } from 'antd';
@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import contentactions from '../../actions';
 import EditableCell from './editcell';
+import request from '../../../request';
 
 class RegistrationForm extends React.Component {
     constructor(props) {
@@ -13,55 +14,68 @@ class RegistrationForm extends React.Component {
         this.state = {
             confirmDirty: false,
             value: '',
+            disabled: false,
         }
     }
 
     success = () => {
       message.success('Update success');
     }
-    error = () => {
-      message.error('This is a message of error');
+    error = (mes) => {
+      message.error( mes + '');
     }
     change = (event) => {
         this.setState({
           value:event.target.value//注意事件对象
         });
     }
-    updataSlb = async() => {
+    updataSlb = async () => {
         const objectID = this.props.menu.slbid;
         var slbDomain = this.refs.input.refs.input.value;
+        if(slbDomain == ''){
+            this.error('请输入域名！');
+            return false
+        }
         //actions.updateMenu(name, domainid, objectID)
-        this.props.contentActions.deviceinfoActions.updateSLB(objectID, slbDomain);
-        this.success();
-        //await this.props.contentActions.deviceinfoActions.checkoutSLB(slbDomain);
-        /*fetch('http://10.118.31.22:8081' + '/v2/virtualhost/getbyname/' + slbDomain,{
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json",
-                "SlbAccount": "le-test"
-            }
-        }).then((res) => {
-            return res.json()
-        })
-
-
-        try {
-          let response = await fetch('http://10.118.31.22:8081' + '/v2/virtualhost/getbyname/' + slbDomain);
-          let data = response.json();
-          console.log(data);
-        } catch(e) {
-          console.log("error", e);
-        }*/
-        // 注：这段代码如果想运行，外面需要包一个 async function
-
-        this.refs.domainID.refs.input.value = '111';//到时拿到接口后，填入接口返回的id
+        
+        let res = await request.getVirtualHostByname(slbDomain);
+        console.log(res);
+        if(res.status == 'success'){
+            let domainId = res.data[0]
+            this.refs.domainID.refs.input.value = domainId;//domainID input 填入接口返回的id
+            this.props.contentActions.deviceinfoActions.updateSLB(objectID, slbDomain, domainId);//更新到数据库
+            this.success();
+            this.setState({
+                disabled: true
+            })
+        }else{
+            this.error(res.data)
+            //赋值为原始值
+            let name = nextProps.content.deviceinfo.current_slb_name || '';
+            this.setState({
+              value: name
+            });
+        }
+        
     }
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps = async (nextProps) => {
         console.log('domain componentWillReceiveProps');
         let name = nextProps.content.deviceinfo.current_slb_name || '';
+
+        //第一次进来，若数据库有值则给域名赋值
         this.setState({
           value: name
         });
+        //若域名有值，同样给 domainid 赋值
+        if(name != ''){
+            let res = await request.getVirtualHostByname(name);
+            if(res.status == 'success'){
+                this.refs.domainID.refs.input.value = res.data[0];//domainID input 填入接口返回的id
+                this.setState({
+                    disabled: true
+                })
+            }
+        }
         return true;
     }
     componentDidMount = () => {
@@ -74,7 +88,7 @@ class RegistrationForm extends React.Component {
         return (
             <div className="slbBox">
                 <span className="labelspan">SLB域名 : </span>
-                <Input ref="input" value={value} onChange={this.change}/>
+                <Input ref="input" value={value} disabled={this.state.disabled} onChange={this.change}/>
                 
                 <br/><br/>
                 <span className="labelspan">域名 ID : </span> 
