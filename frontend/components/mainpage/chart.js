@@ -45,7 +45,7 @@ export default class EChart extends React.Component {
             return data_arr;
         }(date_picker);
 
-        console.log(xData);
+        //console.log(xData);
 
         myChart.setOption({
             title: { text: '' },
@@ -121,18 +121,16 @@ export default class EChart extends React.Component {
         let date_picker = nextProps.content.mainpage.date_picker
         this.randerChart(date_picker);
 
-        res = await request.getDateAll('name','2017-03-05','2017-03-08');
-        console.log(res.result.data);
-        this.setState({
-            test: true
-        })
-
-        
         return true;
     }
     render() {
         (async() => {
+            res = await request.getDateAll('name','2017-03-05','2017-03-08');
+            console.log(res.result.data);
             
+            /*this.setState({
+                test: true
+            })*/
         })()
         console.log(res)
         const columns = [{
