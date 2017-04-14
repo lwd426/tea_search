@@ -21,6 +21,7 @@ const initialState = {
     ,savestragetystatus: false //保存策略状态(启动或停止使用)
     ,editting_stragety: undefined //正在编辑的策略
     ,refer_stragety: undefined //正在编辑的策略
+    ,versionloglist: [] //版本列表
     , validateStra: {
         name: {
             status: false,
@@ -49,6 +50,9 @@ let reducer = (state = initialState, action)=> {
     switch (action.type) {
         case TYPES.STRAGETY_LIST:
             return Object.assign({}, state, {stragety: action.stragety, showtype: 'stragety'})
+            break
+        case TYPES.GET_VERSIONLOG_SUCCESS:
+            return Object.assign({}, state, {versionloglist: action.list, showtype: 'versionlog'})
             break
         case TYPES.GOBACK_TO_TESTINFOGROUP:
             return Object.assign({}, state, {showtype: 'testgroup'})

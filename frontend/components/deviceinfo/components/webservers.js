@@ -2,16 +2,10 @@ import React, { Component, PropTypes } from 'react';
 import '../style.css';
 import 'antd.min.css';
 import GLTree from './tree';
-import { Table, Input, Icon, Button, Popconfirm, notification } from 'antd';
+import { Table, Tooltip, Icon, Button, Popconfirm, notification } from 'antd';
 import EditableCell from './editcell';
 const uuid = require('uuid/v1');
 
-const openNotificationWithIcon = (type, title, content) => {
-    notification[type]({
-        message: title,
-        description: content
-    });
-};
 class GLWebserver extends React.Component {
     constructor(props) {
         super(props);
@@ -54,21 +48,28 @@ class GLWebserver extends React.Component {
             title: '操作',
             dataIndex: 'operation',
             render: (text, record) => {
-                console.log(record.refer)
                return ( <span>
                    {record.refer === '是' ? (
                    <Popconfirm title="取消该参照服务器前，请确认该服务器上没有正在生效的策略?" onConfirm={() => {
                        that.props.contentActions.deviceinfoActions.setReferServers([record.key], false);
-                    }}><Icon type="eye" />
+                   }}><Tooltip placement="topLeft" title="设置该服务器为参照服务器" arrowPointAtCenter>
+                       <Button icon="eye-o" className="gl-btn"></Button>
+                   </Tooltip>
+
                    </Popconfirm>) :(<Popconfirm title="设置该服务器为参照服务器?" onConfirm={() => {
                            that.props.contentActions.deviceinfoActions.setReferServers([record.key], true);
-                       }}><Icon type="eye-o" />
+                       }}>
+                           <Tooltip placement="topLeft" title="取消该参照服务器" arrowPointAtCenter>
+                               <Button className="gl-btn" icon="eye" ></Button>
+                           </Tooltip>
                        </Popconfirm>)}
-                   <span className="ant-divider" />
+                   {/*<span className="ant-divider" />*/}
                     <Popconfirm title="确认删除该服务器?" onConfirm={() => {
                         that.props.contentActions.deviceinfoActions.deleteWebServer(record);
                     }}>
-                        <Icon type="delete" />
+                        <Tooltip placement="topLeft" title="删除服务器" arrowPointAtCenter>
+                               <Button className="gl-btn" icon="delete" ></Button>
+                           </Tooltip>
                     </Popconfirm>
                 </span>)
             }
@@ -123,7 +124,7 @@ class GLWebserver extends React.Component {
         return (
             <div>
                 <div className="gl-testinfo-btndiv">
-                    <Button className="gl-right-btn" icon="eye-o" onClick={this.setRefer}>设定为参照服务器</Button>
+                    {/*<Button className="gl-right-btn" icon="eye-o" onClick={this.setRefer}>设定为参照服务器</Button>*/}
                     <Button className="gl-right-btn" icon="plus" onClick={this.handleAdd}>新增服务器</Button>
                 </div>
                 <Table
