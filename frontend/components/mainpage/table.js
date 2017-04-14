@@ -164,7 +164,7 @@ export default class EChart extends React.Component {
     componentWillReceiveProps(nextProps) {
 
         let date_picker = nextProps.content.mainpage.date_picker
-        console.log(date_picker);
+        //console.log(date_picker);
 
         var start = new Date(date_picker[0]).getTime();
         var end = new Date(date_picker[1]).getTime();

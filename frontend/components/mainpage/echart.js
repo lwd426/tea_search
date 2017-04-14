@@ -42,7 +42,7 @@ export default class EChart extends React.Component {
             return data_arr;
         }(date_picker);
 
-        console.log(xData);
+        //console.log(xData);
 
         myChart.setOption({
             title: { text: '' },

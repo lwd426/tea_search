@@ -3,6 +3,7 @@ const HOST = require('../../config').HOST;
 
 const virtualhost_url = HOST + '/virtualhost/getbyname/';
 const data_all_url = 'http://10.100.54.188:8001/db/functions/get_statistic_action';
+const mainpage_all_strategies_url = 'http://10.100.54.188:8006/db/functions/get_all_strategies';
 
 module.exports = {
     getVirtualHostByname : async (name) => {
@@ -44,6 +45,25 @@ module.exports = {
             console.log("error", e);
         }
     },
+    getAllStrategies : async (slbid) => {
+        try {
+            let response = await fetch(mainpage_all_strategies_url,{
+                method: 'POST',
+                headers: {
+                    "X-Parse-Application-Id": "gatedLaunch",
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "Accept": "application/json"
+                },
+                body: {
+                    "slbids": ["iUnU5Tij8P"]
+                }
+            });
+            let data = await response.json();
+            return data;
+        } catch(e) {
+            console.log("error", e);
+        }
+    }
 }
 
 /*fetch('http://10.118.31.22:8081' + '/v2/virtualhost/getbyname/' + slbDomain,{
