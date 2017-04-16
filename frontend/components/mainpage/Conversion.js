@@ -125,7 +125,7 @@ export default class EChart extends React.Component {
     }
     render() {
         (async() => {
-            res = await request.getDateAll('name','2017-03-05','2017-03-08');
+            res = await request.getConversionDataByStragety("['100001', '100002']",'2017-03-05','2017-03-08');
             console.log(res.result.data);
             
             /*this.setState({
