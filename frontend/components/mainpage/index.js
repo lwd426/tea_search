@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import './style.css';
 import 'antd.min.css';
 import { Table, Input, Icon, Button, Popconfirm, Collapse } from 'antd';
-import Chart from './chart.js';
-import EChart from './echart.js';
+import Traffic from './Traffic.js';
+import Conversion from './Conversion.js';
 import Duiji from './duiji.js';
 import request from '../../request';
 
@@ -49,6 +49,14 @@ class GLMainpage extends React.Component {
     }
     collapseCallback(key) {
         console.log(key);
+    }
+    switchContentShow(none, block, arr){
+        let strageties = [];
+        arr.map((val, index) => 
+            strageties.push(val.tag)
+        )
+        console.log(strageties)
+        this.props.contentActions.mainpageActions.switchContentShow(none,block,strageties)
     }
     async componentWillMount(){
         let res = await request.getAllStrategies();
@@ -120,7 +128,7 @@ class GLMainpage extends React.Component {
                                 return v.testGroups.map(function(q, idx){
                                     return(
                                         <Panel header={v.name + '/' + q.name} key={index + '-' +idx}>
-                                            <Button type="primary" className="collbutton" onClick={() =>{_this.props.contentActions.mainpageActions.switchContentShow('none','block',v.objectId)}}>
+                                            <Button type="primary" className="collbutton" onClick={() =>{_this.switchContentShow('none','block',q.strageties)}}>
                                                 查看详情
                                             </Button>
                                             <div style={{padding:20}}>
@@ -182,7 +190,7 @@ class GLMainpage extends React.Component {
                               disabledDate={this.disabledDate.bind(this)}
                             />
                         </div>
-                        <EChart {...this.props}/>
+                        <Traffic {...this.props}/>
                         <MyTable {...this.props}/>
                     </TabPane>
 
@@ -203,7 +211,7 @@ class GLMainpage extends React.Component {
                         <div className="clear"></div>
 
                         <div id = "content_one" style={{display:this.props.content.mainpage.content_one_display}}>
-                            <Chart {...this.props}/>
+                            <Conversion {...this.props}/>
                         </div>
 
                         <div id = "content_two" style={{display: this.props.content.mainpage.content_two_display}}>
