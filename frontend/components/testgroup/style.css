@@ -18,6 +18,64 @@
 
 }
 
+
+
+.ant-input-affix-wrapper .ant-input:not(:first-child) {
+    margin: 2px auto;
+}
+
+.ant-confirm .ant-confirm-btns{
+    display: none;
+    margin-top: 12px;
+    float: right;
+    margin-right: 10%;
+}
+.ant-form-item-label{
+    width: 27% !important;
+}
+
+.ant-form-inline .ant-form-item{
+    width: 100%;
+}
+.gl-version-form{
+    width: 80%;
+    margin: 0 auto;
+}
+
+.gl-version-input{
+    width: 100%;
+    margin: 5px auto;
+}
+.ant-form-inline .ant-form-item > div{
+    width: 70%;
+}
+
+.gl-version-btn{
+    text-align: center;
+    display: block !important;
+    margin-top: 20px;
+}
+.ant-popover-inner-content .gl-line-div{
+    width: 100%;
+}
+.ant-popover-inner-content .gl-line{
+    width: 50%;
+}
+.gl-version-btn button
+{
+    margin: 0px 12px;
+    width: 80px;
+}
+.ant-input-prefix {
+    left: 7px;
+}
+.gl-version-div{
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+
 .add-stragety>div>.title{
     text-align: center;
     height: 30px;
@@ -30,6 +88,7 @@
 
 .ant-confirm-body .ant-confirm-content{
     margin: 0px;
+    margin-top: 24px !important;
 }
 
 .ant-confirm .ant-modal-body{

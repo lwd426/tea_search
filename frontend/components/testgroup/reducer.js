@@ -1,4 +1,5 @@
 //处理数字增加的reducer
+import utilscomps from '../utilscomps'
 import * as TYPES from './constants'
 const initialState = {
     showtype: 'testgroup', //content展示类型
@@ -21,6 +22,7 @@ const initialState = {
     ,savestragetystatus: false //保存策略状态(启动或停止使用)
     ,editting_stragety: undefined //正在编辑的策略
     ,refer_stragety: undefined //正在编辑的策略
+    ,versionModalShow: false//发布版本弹出框状态
     ,versionloglist: [] //版本列表
     , validateStra: {
         name: {
@@ -185,8 +187,12 @@ let reducer = (state = initialState, action)=> {
 
             return Object.assign({}, state, {validateStra: validateStra})
             break
-        case TYPES.PUBLISH:
-            // return Object.assign({}, state, {validStatus: 'failure'})
+        case TYPES.PUBLISH_SUCCESS:
+            utilscomps.showNotification('success', '发布成功', '发布成功！发版日志请版本日志页');
+            return Object.assign({}, state, {versionModalShow: false})
+            break
+        case TYPES.PUBLISH_MODAL:
+            return Object.assign({}, state, {versionModalShow: action.status})
             break
         default:
             return state

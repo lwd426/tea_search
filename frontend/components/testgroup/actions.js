@@ -457,19 +457,27 @@ export function freshStragetylist(stragetylist) {
 /**
  * 发布到服务器
  */
-export function publish(slbid) {
+export function publish(slbid, tgid, versionnum, versiondesc) {
     return (dispatch, getState) => {
-        return dispatch(fetch.getData(slb_publish_url + '?slbid='+slbid,function(err, result){
-            if(err)  (publishresult(false))
-            dispatch(publishresult(result.data))
+        return dispatch(fetch.getData(slb_publish_url + '?slbid='+slbid + '&tgid='+ tgid +'&versionnum='+versionnum + '&versiondesc='+versiondesc,function(err, result){
+            if(err)  (publishSuccess(false))
+            dispatch(publishSuccess(result.data))
         }))
     }
 
 }
 
-export function publishresult() {
+
+export function publishModal(status) {
     return {
-        type: TYPES.PUBLISH
+        type: TYPES.PUBLISH_MODAL,
+        status
+    }
+}
+
+export function publishSuccess() {
+    return {
+        type: TYPES.PUBLISH_SUCCESS
     }
 }
 
@@ -533,5 +541,19 @@ export function getVersionListSuccess(list, tgid,slbid) {
     return {
         type: TYPES.GET_VERSIONLOG_SUCCESS,
         list
+    }
+}
+/**
+ * 回滚到测试组指定该版本
+ * @param slbid
+ * @param tgid
+ * @param versionkey
+ */
+export function publishback(slbid, tgid, versionkey) {
+    return (dispatch, getState) => {
+        return dispatch(fetch.getData(slb_publish_url + '/back?slbid='+slbid + '&tgid='+ tgid +'&versionkey='+versionkey ,function(err, result){
+            if(err)  (publishSuccess(false))
+            dispatch(publishSuccess(result.data))
+        }))
     }
 }

@@ -10,6 +10,10 @@ router.get('/', function *(next) {
     };
 });
 
+
+
+
+
 router.post('/', function *(next) {
     var name = this.request.body.name;
     var result = yield lib.saveSlb(name)
