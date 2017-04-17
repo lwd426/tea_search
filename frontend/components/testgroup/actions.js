@@ -270,7 +270,14 @@ function dataHandler(dispatch, ha,stra_id, slbid,tgid,name,desc,cities,servers,s
             stra_id
         },
         data = {
-            name,desc,cities,servers,serverskey,urls,uids,type
+            stra_name: name,
+            stra_desc: desc,
+            stra_cities: cities.join(';'),
+            stra_servers: servers.join(';'),
+            stra_serverskey: serverskey.join(';'),
+            stra_urls: urls.join(';'),
+            stra_uids: uids.join(';'),
+            type: type
         }
         return dispatch(fetch.updateData(stragety_url,where, data, function(err, result){
             if(err || result.status === 'failure')  return dispatch(saveStragetyResult(false))

@@ -16,8 +16,33 @@ module.exports = {
           result: 200
           }
      */
-    getByName: function*(name) {
-        var data = yield db.get(name);
+    getByName: function*(domianName) {
+        var data = yield db.get('/getbyname/' + domianName);
         return data;
     },
+    // /**
+    //  * 新增slb
+    //  * @param content
+    //  * @returns {*}
+    //  */
+    // postSlbConfig: function *(content) {
+    //     return yield db.post('', content)
+    // },
+    /**
+     * 获取指定域名id的配置文件
+     * @param domainId
+     * @returns {*}
+     */
+    getSlbConfig: function *(domainId) {
+        return yield db.post('/content/', domainId)
+    },
+    /**
+     * 更新指定域名的slb配置文件
+     * @param domainId
+     * @param content
+     * @returns {*}
+     */
+    updateSlbConfig: function *(domainId, content) {
+        return yield db.put('manual/'+ domainId, content)
+    }
 }

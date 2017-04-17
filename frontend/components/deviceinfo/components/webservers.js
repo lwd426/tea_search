@@ -124,7 +124,6 @@ class GLWebserver extends React.Component {
         return (
             <div>
                 <div className="gl-testinfo-btndiv">
-                    {/*<Button className="gl-right-btn" icon="eye-o" onClick={this.setRefer}>设定为参照服务器</Button>*/}
                     <Button className="gl-right-btn" icon="plus" onClick={this.handleAdd}>新增服务器</Button>
                 </div>
                 <Table

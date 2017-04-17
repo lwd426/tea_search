@@ -5,6 +5,7 @@ import utilscomps from '../../components/utilscomps'
 let reducer = (state={wintype: 'mainpage',slbid: '', editting_slb:undefined, add: false, domain: '', domainId: '', menulist: []},action)=>{
     switch(action.type){
         case TYPES.CHANGE_SLB_SUCCESS:
+            console.log('dddd')
             return Object.assign({}, state, { wintype: action.wintype, slbid: action.slbid, domain: action.domain, domainId: action.domainId})
             break
         case TYPES.ADD_TEST_GROUP:

@@ -19,27 +19,27 @@ module.exports = {
      * 保存数据
      * @returns {*}
      */
-    // save:  function* () {
-    //     var args = Array.prototype.slice.call(arguments);
-    //     return new Promise(function (resolve, reject) {
-    //         var result = {};
-    //         var opt = {
-    //             method: 'POST',
-    //             headers: HEADERS,
-    //             timeout: DBC.timeout * 1000 || 5000,
-                // body: JSON.stringify(args[0])
-            // }
-            // request(opt, function (error, response, body) {
-            //     if(body.error) {
-            //         result.error = body.error;
-            //         console.log(body.error)
-            //     }
-            //     result.resp = body;
-            //     resolve(result);
-            // })
-        //
-        // });
-    // },
+    post:  function* (url, data) {
+        var args = Array.prototype.slice.call(arguments);
+        return new Promise(function (resolve, reject) {
+            var result = {};
+            var opt = {
+                method: 'POST',
+                headers: HEADERS,
+                uri: URL + url,
+                body: JSON.stringify(data)
+            }
+            request(opt, function (error, response, body) {
+                if(body.error) {
+                    result.error = body.error;
+                    console.log(body.error)
+                }
+                result.resp = body;
+                resolve(result);
+            })
+
+        });
+    },
     /**
      * 给数据服务触发get请求
      * @param params where条件的请求参数们组成的对象
@@ -47,16 +47,39 @@ module.exports = {
      * @returns {*|exports|module.exports}
      * @ 注意: 一次查询最多只能查出100条
      */
-    get:  function* (params) {
+    get:  function* (url) {
         var args = Array.prototype.slice.call(arguments);
         return new Promise(function (resolve, reject) {
             var result = {};
             var opt = {
                 method: 'GET',
-                uri: 'http://' + URL + '/v2/virtualhost/getbyname/' + args[0],
+                uri:  URL +  url,
                 headers: HEADERS
             }
-            console.log(URL + '/v2/virtualhost/getbyname/' + args[0])
+            // console.log(URL + '/v2/virtualhost/getbyname/' + args[0])
+            request(opt, function (error, response, body) {
+                var body = parseJson(body);
+                if(!body || body.error) {
+                    console.log('Error now! Request Error'+body.error+ ', Please do with it...')
+                }
+                result = body;
+                resolve(result);
+            })
+
+        });
+
+    },
+    update:  function* (url, params) {
+        var args = Array.prototype.slice.call(arguments);
+        return new Promise(function (resolve, reject) {
+            var result = {};
+            var opt = {
+                method: 'PUT',
+                uri: url,
+                headers: HEADERS,
+                body: JSON.stringify(params)
+            }
+            // console.log(URL + '/v2/virtualhost/getbyname/' + args[0])
             request(opt, function (error, response, body) {
                 var body = parseJson(body);
                 if(!body || body.error) {
