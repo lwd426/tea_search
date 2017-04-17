@@ -12,6 +12,7 @@ let initState = {
     date_picker:[moment().subtract(7, 'days').format('YYYY/MM/DD'),moment().format('YYYY/MM/DD')],
     menulist: [],
     testgrouplist: [],
+    main_card_key: "1",
 }
 
 let reducer = (state = initState,action)=>{
@@ -45,9 +46,20 @@ let reducer = (state = initState,action)=>{
             return Object.assign({}, state, {
                 menulist: action.menulist
             })
-        }case TYPES.GET_TESTGROUP_SUCCESS:{
+        }
+        case TYPES.GET_TESTGROUP_SUCCESS:{
             return Object.assign({}, state, {
                 testgrouplist: action.testgrouplist
+            })
+        }
+        case TYPES.MAIN_CARD_KEY:{
+            return Object.assign({}, state, {
+                main_card_key: action.main_card_key
+            })
+        }
+        case TYPES.CASVAL:{
+            return Object.assign({}, state, {
+                casVal: action.casVal
             })
         }
         default:

@@ -99,11 +99,11 @@ export default class EChart extends React.Component {
             })
             let arr_uv = Object.entries(val.uv);
             arr_uv.map((v,i) => {
-                dataArr[i].push(v[1])
-                percentArr[i].push((v[1]*100/val.uv_all).toFixed(2));
+                dataArr[i].push(v[1].count)
+                percentArr[i].push((v[1].count*100/val.uv_all).toFixed(2));
 
-                tableData[index]['visitor' + (i+1)] = v[1];
-                tableData[index]['persent' + (i+1)] = (v[1]*100/val.uv_all).toFixed(2);
+                tableData[index]['visitor' + (i+1)] = v[1].count;
+                tableData[index]['persent' + (i+1)] = (v[1].count*100/val.uv_all).toFixed(2);
             })
         })
         
@@ -248,8 +248,10 @@ export default class EChart extends React.Component {
         let date_picker = nextProps.content.mainpage.date_picker;
         let stragety_arr = nextProps.content.mainpage.strageties;
 
+        let tabsKey = nextProps.content.mainpage.main_card_key
+
         //组件展示出来后在请求数据
-        if(nextProps.content.mainpage.card_container_display == 'block'){
+        if(nextProps.content.mainpage.card_container_display == 'block' && tabsKey == "1"){
             this.randerChart(date_picker, stragety_arr);
         }
         return true;

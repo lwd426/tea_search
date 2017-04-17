@@ -57,6 +57,10 @@ class GLMainpage extends React.Component {
         console.log(strageties)
         this.props.contentActions.mainpageActions.switchContentShow(none,block,strageties)
     }
+    tabChange(key){
+        console.log(key);
+        this.props.contentActions.mainpageActions.switchTable(key);
+    }
     async componentWillMount(){
         let res = await request.getAllStrategies();
         console.log(res.result.data);
@@ -166,7 +170,7 @@ class GLMainpage extends React.Component {
                 </div>
 
                 <div className="card-container" style={{display: this.props.content.mainpage.card_container_display}}>
-                  <Tabs type="card">
+                  <Tabs type="card" onChange={this.tabChange.bind(this)}>
                     <TabPane tab="流量" key="1">
                         <div className="spanBox">
                             <span>流量占比 ：</span> <span> 20% </span>
@@ -193,6 +197,20 @@ class GLMainpage extends React.Component {
                     </TabPane>
 
                     <TabPane tab="转化率(多版本)" key="2">
+
+                        {/*<div className="rangepickerBox">
+                            <RangePicker
+                                defaultValue={[moment().subtract(7, 'days'), moment()]}
+                                format={dateFormat}
+                                onChange={this.rangeOnChange.bind(this)}
+                                disabledDate={this.disabledDate.bind(this)}
+                            />
+                        </div>
+                        <div className="CascaderBox">
+                            <span>优化指标 ：</span>
+                            <Cascader options={options_two} defaultValue={['BtnClick']} onChange={this.onChange} />
+                        </div>
+                        <div className="clear"></div>*/}
 
                         <div id = "content_one" style={{display:this.props.content.mainpage.content_one_display}}>
                             <Conversion {...this.props}/>

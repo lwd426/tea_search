@@ -12,18 +12,18 @@ import { Cascader } from 'antd';
 
 let res='dd';
 
-const options_two = [{
+let options_two = [{
     value: 'BtnClick',
     label: 'BtnClick',
 }, {
     value: 'PicClick',
     label: 'PicClick',
 }];
-export default class EChart extends React.Component {
+export default class Chart extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            test: false
+            options_two: options_two
         }
     }
     rangeOnChange(dates, dateStrings) {
@@ -31,29 +31,45 @@ export default class EChart extends React.Component {
     }
     onChange(arr){
         console.log(arr)
-        //this.props.contentActions.mainpageActions.changeCascader();
+        this.props.contentActions.mainpageActions.changeCascader(arr);
     }
     disabledDate(current) {
         return current && current.valueOf() > Date.now();
     }
-    randerChart = (date_picker) => {
-        // 基于准备好的dom，初始化echarts实例
+    randerChart = async (date_picker, stragety_arr) => {
 
-        var data1 = [20, 13, 33, 45, 40, 25, 24, 50, 10, 60, 50, 25]
-        var data2 = [24, 15, 38, 40, 50, 26, 28, 55, 15, 50, 53, 25]
-        var data3 = [34, 25, 48, 50, 60, 36, 38, 65, 35, 60, 63, 35]
+        let startTime = moment(new Date(date_picker[0])).format('YYYY-MM-DD');
+        let endTime = moment(new Date(date_picker[1])).format('YYYY-MM-DD');
+        let res = await request.getConversionDataByStragety(stragety_arr, startTime, endTime);
+        let responseData = res.result.data;
+        console.log(responseData);
 
-        var myChart = echarts.init(document.getElementById('container'));
-        // 绘制图表
+        let length;
+        let legendDate = [];
+        let seriesArr = [];
+        let percentObj = {};
+
+        let strageties = Object.entries(responseData);
+
+        //设置 option_two
+        options_two = [];
+        for(let key in strageties[0][1]){
+            options_two.push({
+                value: key,
+                label: key
+            })
+            console.log(key)
+        }
+        this.setState({
+            options_two: options_two
+        })
+
+        
         let xData = function() {
             var start = new Date(date_picker[0]).getTime();
             var end = new Date(date_picker[1]).getTime();
             //var str = end.from(start, true); 
-            var length = (end - start)/(24*60*60*1000) + 1;
-
-            data1 = data1.slice(0, length);
-            data2 = data2.slice(0, length);
-            data3 = data3.slice(0, length);
+            length = (end - start)/(24*60*60*1000) + 1;
 
             var data_arr = [];
             var date = moment(new Date(date_picker[0]));
@@ -67,8 +83,42 @@ export default class EChart extends React.Component {
             return data_arr;
         }(date_picker);
 
-        //console.log(xData);
 
+        //循环赋值
+        for(let key in responseData){
+            //console.log(key, ":" , responseData[key]);
+            percentObj[key] = [];
+            for(let k in responseData[key]){
+                percentObj[key][k] = [];
+                responseData[key][k].map((val,index) => {
+                    percentObj[key][k].push((val.click_count*100/val.show_count).toFixed(2));
+                })
+                percentObj[key][k] = percentObj[key][k].slice(0, length);
+            }
+        }
+
+
+        
+        let casVal = this.props.content.mainpage.casVal || options_two[0].value
+        //debugger
+        strageties.map((v,i) => {
+            legendDate.push('版本'+v[0]);
+
+            seriesArr.push({
+                name:'版本'+v[0],
+                type:'line',
+                barMaxWidth : 20,
+                data:percentObj[v[0]][casVal],
+            });
+
+            console.log(percentObj[v[0]][casVal]);
+        });
+
+
+
+
+        var myChart = echarts.init(document.getElementById('container'));
+        // 绘制图表
         myChart.setOption({
             title: { text: '' },
             tooltip: {
@@ -81,7 +131,7 @@ export default class EChart extends React.Component {
                 }
             },
             legend: {
-                data:['版本一','版本二','原始版本']
+                data: legendDate//['版本一','版本二','原始版本']
             },
             xAxis: [
                 {
@@ -96,8 +146,8 @@ export default class EChart extends React.Component {
                 {
                     type: 'value',
                     name: '转化率',
-                    min: 10,
-                    max: 70,
+                    min: 0,
+                    max: 100,
                     interval: 10,
                     axisLabel: {
                         formatter: '{value} %'
@@ -114,47 +164,32 @@ export default class EChart extends React.Component {
                     saveAsImage: { show: true }
                 }
             },
-            series: [
-                {
-                    name:'版本一',
-                    type:'line',
-                    data:data1//[20, 13, 33, 45, 40, 25, 24, 50, 10, 60, 50, 25]
-                },
-                {
-                    name:'版本二',
-                    type:'line',
-                    data:data2//[24, 15, 38, 40, 50, 26, 28, 55, 15, 50, 53, 25]
-                },
-                {
-                    name:'原始版本',
-                    type:'line',
-                    data:data3//[34, 25, 48, 50, 60, 36, 38, 65, 35, 60, 63, 35]
-                }
-            ]
+            series: seriesArr,
         });
     }
 
     componentDidMount() {
-        let date_picker = this.props.content.mainpage.date_picker
-        this.randerChart(date_picker);
+        let date_picker = this.props.content.mainpage.date_picker;
+        let stragety_arr = this.props.content.mainpage.strageties;
+        this.randerChart(date_picker, stragety_arr);
     }
-    async componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps) {
         console.log('chart componentWillReceiveProps');
-        let date_picker = nextProps.content.mainpage.date_picker
-        this.randerChart(date_picker);
+        let date_picker = nextProps.content.mainpage.date_picker;
+        let stragety_arr = nextProps.content.mainpage.strageties;
+
+        if(nextProps.content.mainpage.content_one_display == 'block'){
+            this.randerChart(date_picker, stragety_arr);
+        }
 
         return true;
     }
     render() {
-        (async() => {
-            res = await request.getConversionDataByStragety("['100001', '100002']",'2017-03-05','2017-03-08');
-            console.log(res.result.data);
-            
-            /*this.setState({
-                test: true
-            })*/
-        })()
-        console.log(res)
+        // (async() => {
+        //     res = await request.getConversionDataByStragety("['100001', '100002']",'2017-03-05','2017-03-08');
+        //     console.log(res.result.data);
+        // })()
+        console.log('woir render')
         const columns = [{
           title: '版本',
           dataIndex: 'date',
@@ -231,7 +266,7 @@ export default class EChart extends React.Component {
                 </div>
                 <div className="CascaderBox">
                     <span>优化指标 ：</span>
-                    <Cascader options={options_two} defaultValue={['BtnClick']} onChange={this.onChange} />
+                    <Cascader options={this.state.options_two} defaultValue={['BtnClick']} onChange={this.onChange.bind(this)} />
                 </div>
                 <div className="clear"></div>
 
