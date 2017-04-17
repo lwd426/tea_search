@@ -3,7 +3,7 @@
  * @param url
  * @param urls
  */
-export function checkUrl(url, urls) {
+const checkUrl = module.exports = function checkUrl(url, urls) {
     let reg = /^((=|\^~|~|~\*)\s+|\/)/g;
     let match = url.match(reg);
     let result = true;

@@ -303,8 +303,6 @@ function dataHandler(dispatch, ha,stra_id, slbid,tgid,name,desc,cities,servers,s
  */
 export function validate(editting_status, slbid,tgid,name,desc,cities,servers,serverskey,urls,uids) {
     return (dispatch, getState) => {
-        console.log('ddddd')
-
         var optType = 'save', stra_id = '';
         if(editting_status) {
             optType = 'update';
@@ -313,7 +311,7 @@ export function validate(editting_status, slbid,tgid,name,desc,cities,servers,se
         if(name === '') {
             return dispatch(validateFailure('name', '请填写分流策略名称'));
         }else if(urls.length === 0){
-            return dispatch(validateFailure('urls', '请填写至少一个url'));
+            return dispatch(validateFailure('url', '请填写至少一个url'));
         }else{
             var type = 'normal'
             return dispatch(fetch.getData(stragety_url+ '?slbid='+slbid,function(err, result){
@@ -354,7 +352,6 @@ export function validate(editting_status, slbid,tgid,name,desc,cities,servers,se
                             }
                         })
                     })
-
                     urls.map((url)=>{
                         if(!checkUrl(url)) { //如果url不合法
                             return dispatch(validateFailure('url', '存在不合法的url'));
