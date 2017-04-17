@@ -1,5 +1,6 @@
 import * as TYPES from './constants';
-import fetch from '../../fetch'
+import fetch from '../../utils/fetch'
+import checkUrl from '../../utils/checkUrl'
 const HOST = require('../../../config').HOST;
 
 const testgroup_url = HOST + '/testgroup'
@@ -355,10 +356,12 @@ export function validate(editting_status, slbid,tgid,name,desc,cities,servers,se
                     })
 
                     urls.map((url)=>{
-                        if(urls_of_slb.indexOf(url) !==-1){//url是否重复
+                        if(!checkUrl(url)) { //如果url不合法
+                            return dispatch(validateFailure('url', '存在不合法的url'));
+                        }else if(urls_of_slb.indexOf(url) !==-1){//url是否重复
                             url_exsit = true;
                             url_exsit_info.push(url)
-                        }else if(urls_of_slb.indexOf(url) || url.indexOf(urls_of_slb) || url.match(urls_of_slb)){//url是否包含
+                        }else if(checkUrl(url, urls_of_slb)){//url是否包含
                             url_matched = true;
                             url_matched_info.push({
                                 url: url,

@@ -1,8 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import '../style.css';
 import 'antd.min.css';
-// import GLInfo from '../../deviceinfo/components/info'
-import utilscomps from '../../utilscomps'
 
 import { Table, Input, Icon,Popover, Button, Popconfirm } from 'antd';
 const uuid = require('uuid/v1');
@@ -24,6 +22,7 @@ const columns = [{
         dataIndex: 'operation',
     }];
 
+
 class GLPop extends React.Component{
     constructor(props) {
         super(props);
@@ -43,7 +42,6 @@ class GLPop extends React.Component{
                         <div>区域：{data.regionArray.length === 0 ? '无' : data.regionArray.join(' ')}</div>
                         <div>服务器：{data.serverArray.length === 0 ? '无' : data.serverArray.join(' ')}</div>
                         <div className="gl-line-div"><span className="gl-line"></span><span className="gl-line"></span></div>
-
                     </div>)
 
                 })}
@@ -51,7 +49,6 @@ class GLPop extends React.Component{
         )
     }
 }
-
 class GLVersionlog extends React.Component {
     constructor(props) {
         super(props);
@@ -106,7 +103,6 @@ class GLVersionlog extends React.Component {
                             content={<div>
                                 <GLPop data={version.info}/></div>}
                                     title={version.versiondesc}
-                                    trigger="click"
                                      >
                                     <Button icon="book">版本详情</Button>
                                 </Popover>,

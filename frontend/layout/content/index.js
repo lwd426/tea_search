@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 import { Layout, Breadcrumb} from 'antd';
-import GLServerLog from '../../components/serverlog';
 import GLDeviceInfo from '../../components/deviceinfo';
 import GLDataChart from '../../components/datachart';
 import GLTestInfo from '../../components/testgroup';
@@ -37,7 +36,6 @@ class GLContent extends React.Component {
                     {(()=> {
                         switch(wintype){
                             case 'deviceinfo': return <GLDeviceInfo {...this.props}/>; break;
-                            case 'serverlog': return <GLServerLog {...this.props}/>; break;
                             case 'testinfo': return <GLTestInfo {...this.props}/>; break;
                             case 'datachart': return <GLDataChart {...this.props}/>; break;
                             case 'stragetyinfo': return <GLStragetyInfo {...this.props}/>; break;

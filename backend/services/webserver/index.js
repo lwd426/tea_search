@@ -40,16 +40,22 @@ module.exports = {
                 listofstragety = [];
             }else{
                 listofstragety = yield db.get('stragety', {slbid: slbid}, [{key: 'stra_id', opt: 'in', data: stragetiesinfo.split(';')}]);
-            }
-            var info = listofstragety.map((stragety)=>{
-                return {
-                    stra_name: stragety.get("stra_name"),
-                    stra_id: stragety.get("stra_id"),
-                    stra_servers: stragety.get("stra_servers"),
-                    stra_status: stragety.get("stra_status")
+                var k=0,len2 = listofstragety.length, stras = [];
+                for(;k<len2;k++){
+                    var stragety = listofstragety[k];
+                    var tg = yield db.get('testgroup', {objectId: stragety.get('tgid')});
+                    stras.push({
+                        stra_name: stragety.get("stra_name"),
+                        stra_id: stragety.get("stra_id"),
+                        stra_servers: stragety.get("stra_servers"),
+                        stra_status: stragety.get("stra_status"),
+                        tg_name: tg[0].get('name'),
+                        tg_id: tg[0].id
+                    })
                 }
-            })
-            server.set('stragetiesinfo', info)
+            }
+            server.set('strageties', stras)
+
         }
         return list;
     },
