@@ -3,7 +3,7 @@
  * @param url
  * @param urls
  */
-const checkUrl = module.exports = function (url, urls) {
+const checkUrl = module.exports = function checkUrl(url, urls) {
     let reg = /^((=|\^~|~|~\*)\s+|\/)/g;
     let match = url.match(reg);
     let result = true;
@@ -37,23 +37,23 @@ const checkUrl = module.exports = function (url, urls) {
 };
 
 //正确情况
-checkUrl('= /index.html');
-checkUrl('^~ /index.html');
-checkUrl('~ /vplay_*.html');
-checkUrl('~* /index.html');
-checkUrl('/index.html');
-checkUrl('/');
-
-//错误情况
-checkUrl('$');
-checkUrl('index');
-checkUrl('*index.html');
-checkUrl('$ index.html');
-checkUrl('/index.html\\*');
-
-
-//验证包含情况
-checkUrl('= /index.html', ['/']);
-checkUrl('/index/subdir?a=1#22', ['/']);
-checkUrl('^~ /index.html', ['/']);
-checkUrl('^~ /index.html', ['/']);
+// checkUrl('= /index.html');
+// checkUrl('^~ /index.html');
+// checkUrl('~ /vplay_*.html');
+// checkUrl('~* /index.html');
+// checkUrl('/index.html');
+// checkUrl('/');
+//
+// 错误情况
+// checkUrl('$');
+// checkUrl('index');
+// checkUrl('*index.html');
+// checkUrl('$ index.html');
+// checkUrl('/index.html\\*');
+//
+//
+// 验证包含情况
+// checkUrl('= /index.html', ['/']);
+// checkUrl('/index/subdir?a=1#22', ['/']);
+// checkUrl('^~ /index.html', ['/']);
+// checkUrl('^~ /index.html', ['/']);

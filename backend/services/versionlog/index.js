@@ -37,9 +37,6 @@ module.exports = {
         }
     },
     updateVersionlog: function*(data, where) {
-        console.log(data)
-        console.log(where)
         return yield db.update('tgVersion', where, data);
-        // return result;
     }
 }

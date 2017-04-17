@@ -112,7 +112,7 @@ let reducer = (state = initialState, action)=> {
             break
         case TYPES.GET_SERVERS_SUCCESS:
             var tempservers = action.servers.map((server, index) => {
-                var stragetiesinfo = server.stragetiesinfo;
+                var stragetiesinfo = server.strageties;
                 var status = false;//status为该机器的状态，是否有策略正在运行
                 var statusinfo = '';
                 stragetiesinfo.map((stragety) => {

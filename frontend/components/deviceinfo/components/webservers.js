@@ -1,11 +1,31 @@
 import React, { Component, PropTypes } from 'react';
 import '../style.css';
 import 'antd.min.css';
-import GLTree from './tree';
-import { Table, Tooltip, Icon, Button, Popconfirm, notification } from 'antd';
+import { Table, Tooltip, Icon, Button, Popconfirm,Popover } from 'antd';
 import EditableCell from './editcell';
 const uuid = require('uuid/v1');
+class GLPop extends React.Component{
+    constructor(props) {
+        super(props);
+    }
+    componentWillReceiveProps =(nextProps)=> {
+        return true;
+    }
+    render() {
+        return (
+            <div>
+                {this.props.data.map((data)=>{
+                    return (<div>
+                        <div>策略名称：{data.stra_name}</div>
+                        <div>策略组：{data.tg_name}</div>
+                        <div className="gl-line-div"><span className="gl-line"></span><span className="gl-line"></span></div>
+                    </div>)
 
+                })}
+            </div>
+        )
+    }
+}
 class GLWebserver extends React.Component {
     constructor(props) {
         super(props);
@@ -52,15 +72,15 @@ class GLWebserver extends React.Component {
                    {record.refer === '是' ? (
                    <Popconfirm title="取消该参照服务器前，请确认该服务器上没有正在生效的策略?" onConfirm={() => {
                        that.props.contentActions.deviceinfoActions.setReferServers([record.key], false);
-                   }}><Tooltip placement="topLeft" title="设置该服务器为参照服务器" arrowPointAtCenter>
-                       <Button icon="eye-o" className="gl-btn"></Button>
+                   }}><Tooltip placement="topLeft" title="取消该参照服务器" arrowPointAtCenter>
+                       <Button icon="eye" className="gl-btn"></Button>
                    </Tooltip>
 
                    </Popconfirm>) :(<Popconfirm title="设置该服务器为参照服务器?" onConfirm={() => {
                            that.props.contentActions.deviceinfoActions.setReferServers([record.key], true);
                        }}>
-                           <Tooltip placement="topLeft" title="取消该参照服务器" arrowPointAtCenter>
-                               <Button className="gl-btn" icon="eye" ></Button>
+                           <Tooltip placement="topLeft" title="设定该服务器为该参照服务器" arrowPointAtCenter>
+                               <Button className="gl-btn" icon="eye-o" ></Button>
                            </Tooltip>
                        </Popconfirm>)}
                    {/*<span className="ant-divider" />*/}
@@ -98,8 +118,6 @@ class GLWebserver extends React.Component {
         this.props.contentActions.deviceinfoActions.addWebServer(newData);
     }
     componentWillReceiveProps(nextProps) {
-        // var {notification} = nextProps.content.deviceinfo;
-        // if(notification.show) openNotificationWithIcon(notification.type, notification.title,notification.content)
         return true;
     }
     componentDidMount() {
@@ -107,15 +125,24 @@ class GLWebserver extends React.Component {
     render() {
         const columns = this.columns;
         var dataSource = this.props.content.deviceinfo.webServerList.map((cell, index)=>{
-            var stragetyinfo = '';
-            cell.stragetiesinfo.map((stragety, index)=>{
-                stragetyinfo += stragety.stra_name + ' ';
-            })
+            var stragetyinfo = [];
+            console.log(cell.strageties)
+            cell.strageties ? cell.strageties.map((stragety, index)=>{
+                stragetyinfo.push({
+                    tg_name: stragety.tg_name,
+                    stra_name: stragety.stra_name
+                });
+            }) : '';
             return {
                 key: cell.key,
                 slbid:cell.slbid,
                 ip: cell.ip,
-                stragetyname: stragetyinfo,
+                stragetyname: <Popover
+                    content={<div>
+                        <GLPop data={stragetyinfo}/></div>}
+                    title='已有策略'
+                ><Icon type="exclamation-circle-o" />
+                </Popover>,
                 address: cell.address,
                 backup: cell.backup,
                 refer: cell.refer ? '是' : '否'
@@ -129,7 +156,7 @@ class GLWebserver extends React.Component {
                 <Table
                     columns={columns}
                     dataSource={dataSource}
-                    bordered className="gl-testinfo-table"
+                    className="gl-testinfo-table"
                     size="middle"
                 />
             </div>

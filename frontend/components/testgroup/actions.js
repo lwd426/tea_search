@@ -1,5 +1,6 @@
 import * as TYPES from './constants';
-import fetch from '../../fetch'
+import fetch from '../../utils/fetch'
+import checkUrl from '../../utils/checkUrl'
 const HOST = require('../../../config').HOST;
 
 const testgroup_url = HOST + '/testgroup'
@@ -302,8 +303,6 @@ function dataHandler(dispatch, ha,stra_id, slbid,tgid,name,desc,cities,servers,s
  */
 export function validate(editting_status, slbid,tgid,name,desc,cities,servers,serverskey,urls,uids) {
     return (dispatch, getState) => {
-        console.log('ddddd')
-
         var optType = 'save', stra_id = '';
         if(editting_status) {
             optType = 'update';
@@ -312,7 +311,7 @@ export function validate(editting_status, slbid,tgid,name,desc,cities,servers,se
         if(name === '') {
             return dispatch(validateFailure('name', '请填写分流策略名称'));
         }else if(urls.length === 0){
-            return dispatch(validateFailure('urls', '请填写至少一个url'));
+            return dispatch(validateFailure('url', '请填写至少一个url'));
         }else{
             var type = 'normal'
             return dispatch(fetch.getData(stragety_url+ '?slbid='+slbid,function(err, result){
@@ -353,12 +352,13 @@ export function validate(editting_status, slbid,tgid,name,desc,cities,servers,se
                             }
                         })
                     })
-
                     urls.map((url)=>{
-                        if(urls_of_slb.indexOf(url) !==-1){//url是否重复
+                        if(!checkUrl(url)) { //如果url不合法
+                            return dispatch(validateFailure('url', '存在不合法的url'));
+                        }else if(urls_of_slb.indexOf(url) !==-1){//url是否重复
                             url_exsit = true;
                             url_exsit_info.push(url)
-                        }else if(urls_of_slb.indexOf(url) || url.indexOf(urls_of_slb) || url.match(urls_of_slb)){//url是否包含
+                        }else if(checkUrl(url, urls_of_slb)){//url是否包含
                             url_matched = true;
                             url_matched_info.push({
                                 url: url,

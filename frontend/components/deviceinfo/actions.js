@@ -1,5 +1,5 @@
 import * as TYPES from './constants'
-import fetch from '../../fetch'
+import fetch from '../../utils/fetch'
 const HOST = require('../../../config').HOST;
 
 const slb_list_url = HOST + '/slb';
