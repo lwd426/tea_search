@@ -2,8 +2,8 @@ import 'whatwg-fetch';
 const HOST = require('../../config').HOST;
 
 const virtualhost_url = HOST + '/virtualhost/getbyname/';
-const data_traffic_url = 'http://10.100.54.188:8001/db/functions/get_statistic_uv';
-const data_conversion_url = 'http://10.100.54.188:8001/db/functions/get_statistic_action';
+const data_traffic_url = 'http://10.100.54.188:8006/db/functions/get_statistic_uv';
+const data_conversion_url = 'http://10.100.54.188:8006/db/functions/get_statistic_action';
 
 const mainpage_all_strategies_url = 'http://10.100.54.188:8006/db/functions/get_all_strategies';
 
@@ -32,7 +32,7 @@ module.exports = {
             let response = await fetch(data_traffic_url,{
                 method: 'POST',
                 headers: {
-                    "X-Parse-Application-Id": "agent",
+                    "X-Parse-Application-Id": "gatedLaunch",
                     "Content-Type": "application/x-www-form-urlencoded",
                     "Accept": "application/json"
                 },
@@ -53,7 +53,7 @@ module.exports = {
             let response = await fetch(data_conversion_url,{
                 method: 'POST',
                 headers: {
-                    "X-Parse-Application-Id": "agent",
+                    "X-Parse-Application-Id": "gatedLaunch",
                     "Content-Type": "application/x-www-form-urlencoded",
                     "Accept": "application/json"
                 },

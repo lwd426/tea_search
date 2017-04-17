@@ -1,22 +1,57 @@
 import React from 'react';
 
 import echarts from 'echarts';
+import MyTable from './table.js';
+import { Table, Icon } from 'antd';
 //var echarts = require('echarts');
 import moment from 'moment';
 import request from '../../request';
 
-let res='traffic';
+
+let tableColumns = [], tableData = [];
+
+function inintdata(){
+    tableColumns = [{
+      title: '日期',
+      dataIndex: 'date',
+      key: 'date',
+      width: '10%',
+    }, {
+      title: '用户总量',
+      dataIndex: 'useramount',
+      key: 'useramount',
+      width: '10%',
+    }, {
+      title: '访客数',
+      children: [],
+      width: '25%',
+    }, {
+      title: '访问用户比例',
+      children: [],
+      width: '25%',
+    }];
+};
+inintdata();
+
+
+
 
 export default class EChart extends React.Component {
-
-    randerChart = async (date_picker) => {
-
-
+    constructor(props) {
+        super(props);
+        this.state = {
+            tableData: tableData,
+            tableColumns: tableColumns
+        }
+    }
+    randerChart = async (date_picker, stragety_arr) => {
+        const _this = this;
+        inintdata();
         let startTime = moment(new Date(date_picker[0])).format('YYYY-MM-DD');
         let endTime = moment(new Date(date_picker[1])).format('YYYY-MM-DD');
-        res = await request.getTrafficDataByStragety([100001],startTime,endTime);
-        let data = res.result.data.reverse();
-        console.log(data);
+        let res = await request.getTrafficDataByStragety(stragety_arr, startTime, endTime);
+        let responseData = res.result.data.reverse();
+        console.log(responseData);
 
         let dataArr = [];
         let percentArr = [];
@@ -26,20 +61,49 @@ export default class EChart extends React.Component {
 
         let a = [],b = [];
 
-        let strageties = Object.entries(data[0].uv);
+        let strageties = Object.entries(responseData[0].uv);
+
+        //循环生成变量
         strageties.map((v,i) => {
             dataArr[i] = [];
-            percentArr[i] = [];
+            percentArr[i] = []; 
         });
 
         let dataAll = [];
-        data.map((val,index) => {
-            dataAll.push(val.uv_all);
 
-            let arr_uv = Object.entries(val.uv)
+        //遍历生成 table 设置
+        strageties.map((v,i) => {
+            tableColumns[2].children.push({
+                title: '版本' + v[0],
+                dataIndex: 'visitor' + (i+1),
+                key: 'visitor' + (i+1),
+            });
+            tableColumns[3].children.push({
+                title: '版本' + v[0],
+                dataIndex: 'persent' + (i+1),
+                key: 'persent' + (i+1),
+            });
+        })
+
+        //循环赋值
+        responseData.map((val,index) => {
+            dataAll.push(val.uv_all);
+            tableData.push({
+                key: index + 1,
+                date: '3-4',
+                useramount: val.uv_all,
+                // visitor1: 500,
+                // visitor2: 500,
+                // persent1: '20%',
+                // persent2: '20%',
+            })
+            let arr_uv = Object.entries(val.uv);
             arr_uv.map((v,i) => {
-                dataArr[i].push(v[1])
-                percentArr[i].push(v[1]*100/val.uv_all);
+                dataArr[i].push(v[1].count)
+                percentArr[i].push((v[1].count*100/val.uv_all).toFixed(2));
+
+                tableData[index]['visitor' + (i+1)] = v[1].count;
+                tableData[index]['persent' + (i+1)] = (v[1].count*100/val.uv_all).toFixed(2);
             })
         })
         
@@ -53,12 +117,6 @@ export default class EChart extends React.Component {
             //var str = end.from(start, true); 
             var length = (end - start)/(24*60*60*1000) + 1;
 
-            //data1 = data1.slice(0, length);
-            // data2 = data2.slice(0, length);
-            // data3 = data3.slice(0, length);
-            // data4 = data4.slice(0, length);
-            // data5 = data5.slice(0, length);
-
             //暂时切割长度，后期接口参数功能正常后，去掉
             dataAll = dataAll.slice(0, length)
             dataArr.map((v,i) => {
@@ -67,7 +125,7 @@ export default class EChart extends React.Component {
             percentArr.map((v,i) => {
                 b[i] = v.slice(0, length);
             })
-            //遍历生成配置
+            //遍历生成 echart 配置
             seriesArr = [{
                     name:'总量',
                     type:'bar',
@@ -75,18 +133,18 @@ export default class EChart extends React.Component {
                     data:dataAll
                 }];
             strageties.map((v,i) => {
-                legendDate.push('版本'+v[1]+'访问用户');
+                legendDate.push('版本'+v[0]+'访问用户');
                 seriesArr.push({
-                        name:'版本'+v[1]+'访问用户',
-                        type:'bar',
-                        barMaxWidth : 20,
-                        data:a[i]
-                    })
+                    name:'版本'+v[0]+'访问用户',
+                    type:'bar',
+                    barMaxWidth : 20,
+                    data:a[i]
+                })
             });
             strageties.map((v,i) => {
-                legendDate.push('版本'+v[1]+'访问用户比例');
+                legendDate.push('版本'+v[0]+'访问用户比例');
                 seriesArr.push({
-                    name:'版本'+v[1]+'访问用户比例',
+                    name:'版本'+v[0]+'访问用户比例',
                     type:'line',
                     yAxisIndex: 1,
                     data:b[i]
@@ -102,6 +160,17 @@ export default class EChart extends React.Component {
 
                 date = date.add(1, 'days');
             }
+
+            //表格数据
+            tableData = tableData.slice(0, length);
+            tableData.forEach(function(v, index, arr_self){
+                v.date = data_arr[index]
+            })
+            _this.setState({
+                tableData: tableData,
+                tableColumns: tableColumns
+            })
+
             return data_arr;
         }(date_picker);
 
@@ -119,12 +188,13 @@ export default class EChart extends React.Component {
                 }
             },
             legend: {
-                data: legendDate
+                data: legendDate,
+                top: 0
             },
             xAxis: [
                 {
                     type: 'category',
-                    data: xData,//['03-01','03-02','03-03','03-04','03-05','03-06','03-07','03-08','03-09','03-10','03-11','03-12'],
+                    data: xData,
                     axisPointer: {
                         type: 'shadow'
                     }
@@ -159,23 +229,31 @@ export default class EChart extends React.Component {
                     dataView: { show: true, readOnly: false },
                     magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
                     restore: { show: true },
-                    saveAsImage: { show: true }
-                }
+                    saveAsImage: { show: true },
+                },
+                bottom: 0,
+                right: 50
             },
             series: seriesArr
         });
     }
 
     componentDidMount() {
-        let date_picker = this.props.content.mainpage.date_picker
-        console.log(date_picker);
-        this.randerChart(date_picker);
+        // let date_picker = this.props.content.mainpage.date_picker
+        // console.log(date_picker);
+        // this.randerChart(date_picker);
     }
     componentWillReceiveProps(nextProps) {
         console.log('echart componentWillReceiveProps');
-        let date_picker = nextProps.content.mainpage.date_picker
-        //console.log(date_picker);//然后根据 stragety + rangpicker 请求策略数据，然后 renderChart出来
-        this.randerChart(date_picker);
+        let date_picker = nextProps.content.mainpage.date_picker;
+        let stragety_arr = nextProps.content.mainpage.strageties;
+
+        let tabsKey = nextProps.content.mainpage.main_card_key
+
+        //组件展示出来后在请求数据
+        if(nextProps.content.mainpage.card_container_display == 'block' && tabsKey == "1"){
+            this.randerChart(date_picker, stragety_arr);
+        }
         return true;
     }
 
@@ -183,6 +261,9 @@ export default class EChart extends React.Component {
         return (
             <div>
                 <div id="line" style={{width:'100%',height:400}} className="chart-box"></div>
+                <div className="tableBox">
+                    <Table bordered={true} columns={this.state.tableColumns} dataSource={this.state.tableData} /> 
+                </div>
             </div>          
         )
     }
