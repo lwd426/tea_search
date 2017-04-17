@@ -75,10 +75,11 @@ export function changeDatePicker(dateStrings){
     }
 }
 
-export function switchContentShow(main_display,card_display){
+export function switchContentShow(main_display, card_display, strageties){
     return{
         type:TYPES.MAIN_CONTAINER_DISPLAY,
         main_container_display: main_display,
         card_container_display: card_display,
+        strageties : strageties,
     }
 }
