@@ -16,7 +16,7 @@ module.exports = {
      * @param name
      * @returns {*}
      */
-    saveStragety: function*(uuid, slbid,tgid,name,desc,cities,servers,serverskey,urls,uid,type) {
+    saveStragety: function*(uuid, slbid,tgid,name,desc,cities,servers,serverskey,urls,uids,type) {
         //保存策略
         var data = {
             stra_id : uuid,

@@ -46,14 +46,14 @@ class GLStragety extends React.Component {
             render: (text, record) => (
                 <span>
                   <a href="#" onClick={()=>{
-                      if(record.status === 'running') {
-                          utilscomps.showNotification('warning', '不能修改','此策略正在运行中，请先停止此策略');
-                          return false;
-                      }
                       this.props.contentActions.testgroupActions.handleStragety(record.slbid, record.code, record.status === "running" ? "stopped" : "running")
                   }}> {record.status === 'running' ? '停止' : '启动'}</a>
                   <span className="ant-divider" />
                   <a href="#" onClick={()=>{
+                      if(record.status === 'running') {
+                          utilscomps.showNotification('warning', '不能修改','此策略正在运行中，请先停止此策略');
+                          return false;
+                      }
                       this.props.contentActions.testgroupActions.editStragety(record)
                   }}>修改</a>
                   <span className="ant-divider" />

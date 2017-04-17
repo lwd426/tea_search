@@ -33,7 +33,8 @@ class RegistrationForm extends React.Component {
                 const slbid = _this.props.menu.slbid || '';
                 const tgid = _this.props.content.testgroup.tgid || '';
                 // var type = _this.props.content.testgroup.editting_stragety ? 'modify' : 'add'
-                this.props.contentActions.testgroupActions.validate(slbid,tgid,name,desc,cities,servers,serverskey,urls,uids)
+                var editting_status = _this.props.content.testgroup.editting_status;
+                this.props.contentActions.testgroupActions.validate(editting_status, slbid,tgid,name,desc,cities,servers,serverskey,urls,uids)
             }
         });
     }
@@ -93,7 +94,6 @@ class RegistrationForm extends React.Component {
         }
         this.props.contentActions.testgroupActions.addUids(values);
         this.refs[refname].refs.input.value = '';
-        // var value = ;
     }
     removeSeletedUid = (index) => {
         this.props.contentActions.testgroupActions.deleteUid(index);
@@ -138,6 +138,7 @@ class RegistrationForm extends React.Component {
             this.props.content.testgroup.serverselectedkeys = stragety.serverskey.split(';');
             this.props.content.testgroup.addurls = stragety.urlsvalues.split(';');
             this.props.content.testgroup.adduids = stragety.uidsvalues.split(';');
+            this.props.content.testgroup.editting_stragety = undefined;
         }
         return (
             <Form onSubmit={this.handleSubmit}>
@@ -261,7 +262,7 @@ class RegistrationForm extends React.Component {
                 </FormItem>
 
                 <FormItem {...tailFormItemLayout}>
-                    <Button type="primary" htmlType="submit" size="large">保存</Button>
+                    <Button type="primary" htmlType="submit" size="large">{this.props.content.testgroup.editting_status ? '修改' : '保存' }</Button>
                     <Button type="primary" size="large" onClick={this.props.contentActions.testgroupActions.goback2stragelist}>返回</Button>
                 </FormItem>
             </Form>

@@ -92,10 +92,12 @@ export function changeShowWinType(slbid, wintype) {
     //读取slb信息
     return (dispatch, getState) => {
         return dispatch(fetch.getData(slb_list_url + '?objectId=' + slbid,function(err, result){
+            console.log(err)
             if(err) return dispatch(changeSlbSuccess(''));
             var arr = result.data;
             var domain = arr[0].slbDomain;
-            return dispatch(changeSlbSuccess(wintype, slbid, domain, '2020'));
+            var domainId = arr[0].domainId;
+            return dispatch(changeSlbSuccess(wintype, slbid, domain, domainId));
         }))
     }
 }

@@ -39,7 +39,6 @@ class RegistrationForm extends React.Component {
         //actions.updateMenu(name, domainid, objectID)
         
         let res = await request.getVirtualHostByname(slbDomain);
-        console.log(res);
         if(res.status == 'success'){
             let domainId = res.data[0]
             this.refs.domainID.refs.input.value = domainId;//domainID input 填入接口返回的id
@@ -67,15 +66,15 @@ class RegistrationForm extends React.Component {
           value: name
         });
         //若域名有值，同样给 domainid 赋值
-        if(name != ''){
-            let res = await request.getVirtualHostByname(name);
-            if(res.status == 'success'){
-                this.refs.domainID.refs.input.value = res.data[0];//domainID input 填入接口返回的id
-                this.setState({
-                    disabled: true
-                })
-            }
-        }
+        // if(name != ''){
+        //     let res = await request.getVirtualHostByname(name);
+        //     if(res.status == 'success'){
+        //         this.refs.domainID.refs.input.value = res.data[0];//domainID input 填入接口返回的id
+        //         this.setState({
+        //             disabled: true
+        //         })
+        //     }
+        // }
         return true;
     }
     componentDidMount = () => {
@@ -84,15 +83,15 @@ class RegistrationForm extends React.Component {
     }
     render() {
         let value = this.state.value;
-
+console.log(this.props)
         return (
             <div className="slbBox">
                 <span className="labelspan">SLB域名 : </span>
-                <Input ref="input" value={value} disabled={this.state.disabled} onChange={this.change}/>
+                <Input ref="input" value={this.props.menu.domain}  disabled={this.state.disabled} onChange={this.change}/>
                 
                 <br/><br/>
                 <span className="labelspan">域名 ID : </span> 
-                <Input ref="domainID" disabled={true} /> <br/><br/>
+                <Input ref="domainID" value={this.props.menu.domainId} disabled={true} /> <br/><br/>
                 <Button type="primary" size="large" onClick={this.updataSlb.bind(this)}>保存</Button>
                 <Button type="primary" size="large">取消</Button>
             </div>

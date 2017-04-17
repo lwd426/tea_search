@@ -57,10 +57,18 @@ router.get('/publish/back', function *(next) {
     var slbid = this.query.slbid;
     var versionkey = this.query.versionkey;
     var result = yield lib.publishBack(slbid, tgid, versionkey);
-    this.body = {
-        status: 'success',
-        data: result
-    };
+    if(result){
+        this.body = {
+            status: 'success',
+            data: result
+        };
+    }else{
+        this.body = {
+            status: 'failure',
+            data: '失败'
+        };
+    }
+
 });
 
 module.exports = router;
