@@ -7,7 +7,6 @@ import Conversion from './Conversion.js';
 import Duiji from './duiji.js';
 import request from '../../request';
 
-import MyTable from './table.js';
 
 import { Menu, Dropdown, message } from 'antd';
 //Cascader
@@ -133,7 +132,7 @@ class GLMainpage extends React.Component {
                                             </Button>
                                             <div style={{padding:20}}>
                                                 <div>
-                                                    <span>创建于：2017年3月21日</span>
+                                                    <span>创建于： { moment(new Date(q.createdAt)).format('YYYY-MM-DD') }  </span>
                                                     <span>已运行： 21天</span>
                                                     <span>最近变动： 1天前</span>
                                                 </div>
@@ -191,24 +190,9 @@ class GLMainpage extends React.Component {
                             />
                         </div>
                         <Traffic {...this.props}/>
-                        <MyTable {...this.props}/>
                     </TabPane>
 
                     <TabPane tab="转化率(多版本)" key="2">
-
-                        <div className="rangepickerBox">
-                            <RangePicker
-                                defaultValue={[moment().subtract(7, 'days'), moment()]}
-                                format={dateFormat}
-                                onChange={this.rangeOnChange.bind(this)}
-                                disabledDate={this.disabledDate.bind(this)}
-                            />
-                        </div>
-                        <div className="CascaderBox">
-                            <span>优化指标 ：</span>
-                            <Cascader options={options_two} defaultValue={['BtnClick']} onChange={this.onChange} />
-                        </div>
-                        <div className="clear"></div>
 
                         <div id = "content_one" style={{display:this.props.content.mainpage.content_one_display}}>
                             <Conversion {...this.props}/>

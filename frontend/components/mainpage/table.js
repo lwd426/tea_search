@@ -203,9 +203,9 @@ export default class EChart extends React.Component {
     
     render() {
         return (
-          <div className="tableBox">
-            <Table bordered={true} columns={columns} dataSource={data} /> 
-          </div>       
+            <div className="tableBox">
+                <Table bordered={true} columns={columns} dataSource={data} /> 
+            </div>       
         )
     }
 }
