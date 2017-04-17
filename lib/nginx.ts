@@ -1,8 +1,8 @@
-import {CONTENT, Meta, level, MataS} from './if';
-import {Methods, Verify} from './check';
-import {UpstreamGroup}from './UpstreamGroup';
-import {three}from './three';
-import {four}from './four';
+import { CONTENT, Meta, level, MataS } from './if';
+import { Methods, Verify } from './check';
+import { UpstreamGroup } from './UpstreamGroup';
+import { three } from './three';
+import { four } from './four';
 const defaultUpstream = "defaultUpstream";
 const geoip_city = `/etc/maxmind-city.mmdb`;
 const geoip_subdivisions = `/etc/maxmind-subdivisions.mmdb`;
