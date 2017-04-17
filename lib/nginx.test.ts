@@ -1,19 +1,15 @@
 import nginx = require("./nginx");
 nginx([
 
-    {
-            // urlArray: ['/zyr/','/zyr1'],
-            urlArray: ['= /vplay1234.html'],
-            // uidArray: ['zhuoyongran'],
-            regionArray: ['linyi'],
-            serverArray: ['0.0.0.0'],
+        {
+            urlArray: ['/vplay_.*.html'],
+            serverArray: ["1.1.1.1", "2.2.2.8"],
             default: false
-        },{
-            // urlArray: ['/zyr/','/zyr1'],
-            urlArray: ['= /vplay1234.html'],
-            uidArray: ['zhuoyongran'],
-            // regionArray: ['linyi'],
-            serverArray: ['0.0.0.2'],
+        },
+        {
+            urlArray: ['/yyyyyyyyyyyyyyy'],
+            serverArray: ["1.1.1.1"],
+           // uidArray: ['123'],
             default: false
         },
 
