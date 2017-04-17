@@ -7,9 +7,9 @@ nginx([
             default: false
         },
         {
-            urlArray: ['/'],
+            urlArray: ['/yyyyyyyyyyyyyyy'],
             serverArray: ["1.1.1.1"],
-            uidArray: ['123'],
+           // uidArray: ['123'],
             default: false
         },
 
