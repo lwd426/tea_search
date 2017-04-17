@@ -40,13 +40,35 @@ router.put('/', function *(next) {
 
 router.get('/publish', function *(next) {
     var slbid = this.query.slbid;
+    var tgid = this.query.tgid;
+    var versiondesc = this.query.versiondesc;
+    var versionnum = this.query.versionnum;
     //调用发布接口
-    var result = yield lib.publish(slbid)
+    var result = yield lib.publish(slbid, tgid, versionnum, versiondesc)
     this.body = {
         status: 'success',
         data: result
     };
 });
 
+
+router.get('/publish/back', function *(next) {
+    var tgid = this.query.tgid;
+    var slbid = this.query.slbid;
+    var versionkey = this.query.versionkey;
+    var result = yield lib.publishBack(slbid, tgid, versionkey);
+    if(result){
+        this.body = {
+            status: 'success',
+            data: result
+        };
+    }else{
+        this.body = {
+            status: 'failure',
+            data: '失败'
+        };
+    }
+
+});
 
 module.exports = router;

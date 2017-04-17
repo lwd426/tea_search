@@ -3,19 +3,48 @@ import React from 'react';
 import echarts from 'echarts';
 //var echarts = require('echarts');
 import moment from 'moment';
+import request from '../../request';
 
-
+let res='traffic';
 
 export default class EChart extends React.Component {
 
-    randerChart = (date_picker) => {
+    randerChart = async (date_picker) => {
+
+
+        let startTime = moment(new Date(date_picker[0])).format('YYYY-MM-DD');
+        let endTime = moment(new Date(date_picker[1])).format('YYYY-MM-DD');
+        res = await request.getTrafficDataByStragety([100001],startTime,endTime);
+        let data = res.result.data.reverse();
+        console.log(data);
+
+        let dataArr = [];
+        let percentArr = [];
+        let legendDate = ['总量'];
+        let seriesArr = [];
+        
+
+        let a = [],b = [];
+
+        let strageties = Object.entries(data[0].uv);
+        strageties.map((v,i) => {
+            dataArr[i] = [];
+            percentArr[i] = [];
+        });
+
+        let dataAll = [];
+        data.map((val,index) => {
+            dataAll.push(val.uv_all);
+
+            let arr_uv = Object.entries(val.uv)
+            arr_uv.map((v,i) => {
+                dataArr[i].push(v[1])
+                percentArr[i].push(v[1]*100/val.uv_all);
+            })
+        })
+        
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('line'));
-        var data1 = [2000, 3000, 2700, 3000, 4000, 5000, 4000, 3500, 3000, 2000, 3000, 4000];
-        var data2 = [500, 590, 290, 300, 1000, 1200, 2000, 1000, 1500, 1200, 1500, 1000];
-        var data3 = [600, 690, 390, 500, 1200, 1500, 2200, 800, 1300, 1000, 1100, 1300];
-        var data4 = [20, 13, 33, 45, 40, 25, 24, 50, 10, 60, 50, 25];
-        var data5 = [24, 15, 38, 40, 50, 26, 28, 55, 15, 50, 53, 25];
 
         // 绘制图表
         let xData = function() {
@@ -24,11 +53,45 @@ export default class EChart extends React.Component {
             //var str = end.from(start, true); 
             var length = (end - start)/(24*60*60*1000) + 1;
 
-            data1 = data1.slice(0, length);
-            data2 = data2.slice(0, length);
-            data3 = data3.slice(0, length);
-            data4 = data4.slice(0, length);
-            data5 = data5.slice(0, length);
+            //data1 = data1.slice(0, length);
+            // data2 = data2.slice(0, length);
+            // data3 = data3.slice(0, length);
+            // data4 = data4.slice(0, length);
+            // data5 = data5.slice(0, length);
+
+            //暂时切割长度，后期接口参数功能正常后，去掉
+            dataAll = dataAll.slice(0, length)
+            dataArr.map((v,i) => {
+                a[i] = v.slice(0, length);
+            });
+            percentArr.map((v,i) => {
+                b[i] = v.slice(0, length);
+            })
+            //遍历生成配置
+            seriesArr = [{
+                    name:'总量',
+                    type:'bar',
+                    barMaxWidth : 20,
+                    data:dataAll
+                }];
+            strageties.map((v,i) => {
+                legendDate.push('版本'+v[1]+'访问用户');
+                seriesArr.push({
+                        name:'版本'+v[1]+'访问用户',
+                        type:'bar',
+                        barMaxWidth : 20,
+                        data:a[i]
+                    })
+            });
+            strageties.map((v,i) => {
+                legendDate.push('版本'+v[1]+'访问用户比例');
+                seriesArr.push({
+                    name:'版本'+v[1]+'访问用户比例',
+                    type:'line',
+                    yAxisIndex: 1,
+                    data:b[i]
+                })
+            })
 
             var data_arr = [];
             var date = moment(new Date(date_picker[0]));
@@ -42,7 +105,7 @@ export default class EChart extends React.Component {
             return data_arr;
         }(date_picker);
 
-        console.log(xData);
+        //console.log(xData);
 
         myChart.setOption({
             title: { text: '' },
@@ -56,7 +119,7 @@ export default class EChart extends React.Component {
                 }
             },
             legend: {
-                data:['总量','版本一访问用户','版本二访问用户','版本一访问用户比例','版本二访问用户比例']
+                data: legendDate
             },
             xAxis: [
                 {
@@ -72,8 +135,8 @@ export default class EChart extends React.Component {
                     type: 'value',
                     name: '访问用户',
                     min: 0,
-                    max: 6000,
-                    interval: 1000,
+                    max: 1000000000,
+                    interval: 100000000,
                     axisLabel: {
                         formatter: '{value}'
                     }
@@ -82,7 +145,7 @@ export default class EChart extends React.Component {
                     type: 'value',
                     name: '访问用户比例',
                     min: 0,
-                    max: 60,
+                    max: 100,
                     interval: 10,
                     axisLabel: {
                         formatter: '{value} %'
@@ -99,38 +162,7 @@ export default class EChart extends React.Component {
                     saveAsImage: { show: true }
                 }
             },
-            series: [
-                {
-                    name:'总量',
-                    type:'bar',
-                    barMaxWidth : 20,
-                    data:data1//[2000, 3000, 2700, 3000, 4000, 5000, 4000, 3500, 3000, 2000, 3000, 4000]
-                },
-                {
-                    name:'版本一访问用户',
-                    type:'bar',
-                    barMaxWidth : 20,
-                    data:data2//[500, 590, 290, 300, 1000, 1200, 2000, 1000, 1500, 1200, 1500, 1000]
-                },
-                {
-                    name:'版本二访问用户',
-                    type:'bar',
-                    barMaxWidth : 20,
-                    data:data3//[600, 690, 390, 500, 1200, 1500, 2200, 800, 1300, 1000, 1100, 1300]
-                },
-                {
-                    name:'版本一访问用户比例',
-                    type:'line',
-                    yAxisIndex: 1,
-                    data:data4//[20, 13, 33, 45, 40, 25, 24, 50, 10, 60, 50, 25]
-                },
-                {
-                    name:'版本二访问用户比例',
-                    type:'line',
-                    yAxisIndex: 1,
-                    data:data5//[24, 15, 38, 40, 50, 26, 28, 55, 15, 50, 53, 25]
-                }
-            ]
+            series: seriesArr
         });
     }
 

@@ -5,6 +5,7 @@ import GLTestgroup from './components/testgroup';
 // import * as actions from './actions'
 import GLStragety from './components/stragety';
 import GLAddStragety from './components/stragety_cell';
+import GLVersionLog from './components/versionlog';
 
 
 class GLTestinfo extends React.Component {
@@ -23,6 +24,7 @@ class GLTestinfo extends React.Component {
                             case 'stragety': return <GLStragety {...this.props}/>; break;
                             case 'testgroup': return <GLTestgroup {...this.props}/>; break;
                             case 'addstragety': return <GLAddStragety {...this.props}/>; break;
+                            case 'versionlog': return <GLVersionLog {...this.props}/>; break;
                             default: return <GLTestgroup {...this.props}/>;
                         }
                     })()}

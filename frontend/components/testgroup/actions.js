@@ -3,6 +3,7 @@ import fetch from '../../fetch'
 const HOST = require('../../../config').HOST;
 
 const testgroup_url = HOST + '/testgroup'
+const versionlog_url = HOST + '/versionlog'
 const stragety_url = HOST + '/stragety'
 const city_url = HOST + '/city'
 const server_url = HOST + '/webserver'
@@ -257,6 +258,28 @@ export function saveStragetyResult(result) {
     }
 }
 
+function dataHandler(dispatch, ha,stra_id, slbid,tgid,name,desc,cities,servers,serverskey,urls,uids,type){
+    console.log('ddddd')
+    if(ha === 'save'){
+        return dispatch(fetch.postData(stragety_url,{slbid,tgid,name,desc,cities,servers,serverskey,urls,uids,type}, function(err, result){
+            if(err || result.status === 'failure')  return dispatch(saveStragetyResult(false))
+            return dispatch(edit_stragetylist(tgid,slbid))
+        }))
+    }else{
+        var where = {
+            stra_id
+        },
+        data = {
+            name,desc,cities,servers,serverskey,urls,uids,type
+        }
+        return dispatch(fetch.updateData(stragety_url,where, data, function(err, result){
+            if(err || result.status === 'failure')  return dispatch(saveStragetyResult(false))
+            return dispatch(edit_stragetylist(tgid,slbid))
+        }))
+    }
+
+}
+
 /**
  * 验证策略详情
  * @param slbid slb编码
@@ -270,45 +293,91 @@ export function saveStragetyResult(result) {
  * @param uids 策略生效uid
  * @returns {function(*=, *)}
  */
-export function validate(slbid,tgid,name,desc,cities,servers,serverskey,urls,uids) {
-
+export function validate(editting_status, slbid,tgid,name,desc,cities,servers,serverskey,urls,uids) {
     return (dispatch, getState) => {
+        console.log('ddddd')
+
+        var optType = 'save', stra_id = '';
+        if(editting_status) {
+            optType = 'update';
+            stra_id = editting_status;
+        }
         if(name === '') {
             return dispatch(validateFailure('name', '请填写分流策略名称'));
+        }else if(urls.length === 0){
+            return dispatch(validateFailure('urls', '请填写至少一个url'));
         }else{
             var type = 'normal'
             return dispatch(fetch.getData(stragety_url+ '?slbid='+slbid,function(err, result){
                 var stragetylist = result.data;
                 if(stragetylist.length === 0){//如果当前slb下没有策略，则直接保存
-                    return dispatch(fetch.postData(stragety_url,{slbid,tgid,name,desc,cities,servers,serverskey,urls,uids,type}, function(err, result){
-                        if(err || result.status === 'failure')  return dispatch(saveStragetyResult(false))
-                        return dispatch(edit_stragetylist(tgid,slbid))
-                    }))
+                    dataHandler(dispatch, optType, stra_id, slbid,tgid,name,desc,cities,servers,serverskey,urls,uids,type)
                 }else{
                     var urls_of_slb = []
+                        ,uids_of_slb = []
+                        ,regions_of_slb = []
                         ,url_exsit = false
                         ,url_exsit_info = []
                         ,url_matched = false
                         ,url_matched_info=[]
-                        ,server_exsit=false;
-                    //判断新加urls是否与以上重复
+                        ,server_exsit=false
+                        ,uid_exsit_info=[]
+                        ,uid_exsit = false
+                        ,region_exsit_info = []
+                        ,region_exsit = false;
+                    //遍历获得slb下所有的不重复urls、uid或区域数组
                     stragetylist.map((stragety)=>{
                         var urllist = stragety.stra_urls.split(';');
+                        var uidlist = stragety.stra_uids.split(';');
+                        var regionlist = stragety.stra_cities.split(';');
                         urllist.map((url)=>{
-                            if(urls_of_slb.length ===0 || (url && urls_of_slb.indexOf(url) !==-1)){
+                            if(url && urls_of_slb.indexOf(url) !==-1){
                                 urls_of_slb.push(url)
                             }
                         })
-                        // urls_of_slb = urls_of_slb.concat(stragety.stra_urls.split(';'));
-                    })
-                    if(urls.length !==0) {//填写了url
-                        urls.map((url)=>{
-                            if(urls_of_slb.indexOf(url) !==-1){
-                                url_exsit = true;
-                                url_exsit_info.push(url)
+                        uidlist.map((uid)=>{
+                            if(uid && uids_of_slb.indexOf(uid) !==-1){
+                                uids_of_slb.push(uid)
                             }
                         })
-                        if(url_exsit){//如果url已重复
+                        regionlist.map((region)=>{
+                            if(region && regions_of_slb.indexOf(region) !==-1){
+                                regions_of_slb.push(region)
+                            }
+                        })
+                    })
+
+                    urls.map((url)=>{
+                        if(urls_of_slb.indexOf(url) !==-1){//url是否重复
+                            url_exsit = true;
+                            url_exsit_info.push(url)
+                        }else if(urls_of_slb.indexOf(url) || url.indexOf(urls_of_slb) || url.match(urls_of_slb)){//url是否包含
+                            url_matched = true;
+                            url_matched_info.push({
+                                url: url,
+                                urls_of_slb: urls_of_slb
+                            })
+                        }
+                    })
+                    if(url_exsit || url_matched){//如果url已重复 || 包含
+                        //与slb下的uid或区域是否重复
+                        uids.map((uid)=>{
+                            if(uids_of_slb.indexOf(uid) !==-1) {//url是否重复
+                                uid_exsit = true;
+                                uid_exsit_info.push(uid)
+                            }
+                        });
+                        cities.map((city)=>{
+                            if(regions_of_slb.indexOf(city) !==-1) {//url是否重复
+                                region_exsit = true;
+                                region_exsit_info.push(city)
+                            }
+                        });
+                        if(uid_exsit) {//如果uid或区域重复，则不让保存
+                            return dispatch(validateFailure('uid', '您设置的uid已经被配置到其他测试项目，请修改url或uid后重新添加（规则：url和已存在的url存在重复或包含关系时，uid不能重复）'));
+                        }else if(region_exsit) {//如果区域重复，则不让保存
+                            return dispatch(validateFailure('region', '您设置的区域已经被配置到其他测试项目（规则：url和已存在的url存在重复或包含关系时，region不能重复）'));
+                        }else{
                             //server是否与重复urls策略服务器们重复
                             url_exsit_info.map((url)=>{
                                 stragetylist.map((stragety)=>{
@@ -322,58 +391,27 @@ export function validate(slbid,tgid,name,desc,cities,servers,serverskey,urls,uid
                                     }
                                 })
                             })
-                        }else{//如果url不重复，看是否包含
-                            urls_of_slb.map((url_of_slb)=>{
-                                urls.map((url)=>{
+                            if((url_exsit || url_matched) && !server_exsit){ //url有冲突，但server不重复，保存成功
+                                // return dispatch(fetch.postData(stragety_url,{slbid,tgid,name,desc,cities,servers,serverskey,urls,uids,type}, function(err, result){
+                                //     if(err || result.status === 'failure')  return dispatch(saveStragetyResult(false))
+                                //     return dispatch(edit_stragetylist(tgid,slbid))
+                                // }))
+                                dataHandler(dispatch, optType, stra_id, slbid,tgid,name,desc,cities,servers,serverskey,urls,uids,type)
 
-                                    if(url_of_slb.indexOf(url) || url.indexOf(url_of_slb) || url.match(url_of_slb)){
-                                        url_matched = true;
-                                        url_matched_info.push({
-                                            url: url,
-                                            url_of_slb: url_of_slb
-                                        })
-                                    }
-                                })
-                            })
-                        }
-
-                        if((!url_exsit && !url_matched) || (url_exsit && !server_exsit)) {//如果不重复也不包含，则直接保存 || 重复，server不重复，直接保存
-                            return dispatch(fetch.postData(stragety_url,{slbid,tgid,name,desc,cities,servers,serverskey,urls,uids,type}, function(err, result){
-                                if(err || result.status === 'failure')  return dispatch(saveStragetyResult(false))
-                                return dispatch(edit_stragetylist(tgid,slbid))
-                            }))
-                        }else if(!url_exsit && url_matched){//url不重复，url包含，则不让保存
-                            return dispatch(validateFailure('url', 'url与已经设置的url存在包含关系，请确认后重新添加（规则：url不能存在包含关系）'));
-                        }else if(url_exsit && server_exsit){//url重复，机器重复，不让保存
-                            return dispatch(validateFailure('url','您选择的分流服务器已经设置了相同的url。请换一台分流服务器或修改url（规则：url和分流服务器至少有一个不相同）'
-                            ));
-                        }
-
-                    }else if(uids.length !==0 || cities.length !==0) {//没填写url,填写uid或区域信息
-                        stragetylist.map((stragety)=>{
-                            if(!stragety.stra_urls){//url为空
-                                servers.map((server)=>{
-                                    if(stragety.stra_servers.split(';').indexOf(server) !==-1){
-                                        server_exsit = true
-                                    }
-                                })
-
+                            }else{//url冲突，机器重复，不让保存
+                                return dispatch(validateFailure('url','您选择的分流服务器已经设置了相同的url。请换一台分流服务器或修改url（规则：url和分流服务器至少有一个不相同）'));
                             }
-                        })
-                        if(server_exsit){
-                            return  dispatch(validateFailure('server','分流服务器已经被占用（规则：url为空时，必须选择未被占用的分流服务器）'
-                            ));
-                        }else{
-                            return dispatch(fetch.postData(stragety_url,{slbid,tgid,name,desc,cities,servers,serverskey,urls,uids,type}, function(err, result){
-                                if(err || result.status === 'failure')  return dispatch(saveStragetyResult(false))
-                                return dispatch(edit_stragetylist(tgid,slbid))
-                            }))
                         }
-                    }else{//没填写url,也没填写uid
-                        // 不让保存
-                        return dispatch(validateFailure('url,uid','url、uid至少选择一项'
-                        ));
-                    }
+
+                    }else{//url没重复、没包含关系
+                        dataHandler(dispatch, optType, slbid,tgid,name,desc,cities,servers,serverskey,urls,uids,type)
+
+                        // return dispatch(fetch.postData(stragety_url,{slbid,tgid,name,desc,cities,servers,serverskey,urls,uids,type}, function(err, result){
+                        //         if(err || result.status === 'failure')  return dispatch(saveStragetyResult(false))
+                        //         return dispatch(edit_stragetylist(tgid,slbid))
+                        //     }))
+                        }
+
                 }
             }))
         }
@@ -456,19 +494,27 @@ export function freshStragetylist(stragetylist) {
 /**
  * 发布到服务器
  */
-export function publish(slbid) {
+export function publish(slbid, tgid, versionnum, versiondesc) {
     return (dispatch, getState) => {
-        return dispatch(fetch.getData(slb_publish_url + '?slbid='+slbid,function(err, result){
-            if(err)  (publishresult(false))
-            dispatch(publishresult(result.data))
+        return dispatch(fetch.getData(slb_publish_url + '?slbid='+slbid + '&tgid='+ tgid +'&versionnum='+versionnum + '&versiondesc='+versiondesc,function(err, result){
+            if(err)  (publishSuccess(false))
+            dispatch(publishSuccess(result.data))
         }))
     }
 
 }
 
-export function publishresult() {
+
+export function publishModal(status) {
     return {
-        type: TYPES.PUBLISH
+        type: TYPES.PUBLISH_MODAL,
+        status
+    }
+}
+
+export function publishSuccess() {
+    return {
+        type: TYPES.PUBLISH_SUCCESS
     }
 }
 
@@ -515,6 +561,37 @@ export function updateStragety(stra_id, tgid , slbid,  data) {
                     dispatch(getStragetyListSuccess(result.data, tgid, slbid))
                 }))
             }))
+        }))
+    }
+}
+
+export function versionlog_list(tgid, slbid) {
+    return (dispatch, getState) => {
+        return dispatch(fetch.getData(versionlog_url + '?tgid='+tgid,function(err, result){
+            if(err)  return dispatch(getVersionListSuccess([], tgid, slbid))
+            return dispatch(getVersionListSuccess(result.data, tgid, slbid))
+        }))
+    }
+}
+
+export function getVersionListSuccess(list, tgid,slbid) {
+    return {
+        type: TYPES.GET_VERSIONLOG_SUCCESS,
+        list
+    }
+}
+/**
+ * 回滚到测试组指定该版本
+ * @param slbid
+ * @param tgid
+ * @param versionkey
+ */
+export function publishback(slbid, tgid, versionkey) {
+    return (dispatch, getState) => {
+        return dispatch(fetch.getData(slb_publish_url + '/back?slbid='+slbid + '&tgid='+ tgid +'&versionkey='+versionkey ,function(err, result){
+            if(err || result.status === 'failure')  return dispatch(publishSuccess(false))
+            dispatch(publishSuccess(true));
+            return dispatch(versionlog_list(tgid, slbid))
         }))
     }
 }

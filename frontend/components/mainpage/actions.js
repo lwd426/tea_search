@@ -1,15 +1,55 @@
 import * as TYPES from './constants';
+import fetch from '../../fetch';
+const HOST = require('../../../config').HOST;
+
+const slb_list_url = HOST + '/slb'
+const testgroup_url = HOST + '/testgroup';
+const stragety_url = HOST + '/stragety';
+
 
 /**
- * 进入编辑策略页面
- * @returns {{type}}
+ * 获取slb列表
+ * @returns {function(*, *)}
  */
-export function xxx(stragety) {
-    return {
-        type: TYPES.EDIT_STRAGETY_INFO,
-        stragety: stragety
+export function getMenulist() {
+    return (dispatch, getState) => {
+        return dispatch(fetch.getData(slb_list_url,function(err, result){
+            if(!err)  getMenuListSuccess([])
+            dispatch(getMenuListSuccess(result.data));
+        }))
     }
 }
+function getMenuListSuccess(menulist){
+    return {
+        type: TYPES.GET_MENUDATA_SUCCESS,
+        menulist
+    }
+}
+
+
+/**
+ * 获取测试项目列表
+ * @returns {function(*, *)}
+ */
+export function getTestGroupList() {
+    return (dispatch, getState) => {
+        return dispatch(fetch.getData(testgroup_url,function(err, result){
+            if(err)  return dispatch(getTestGroupListSuccess([]))
+            return dispatch(getTestGroupListSuccess(result.data))
+        }))
+    }
+}
+function getTestGroupListSuccess(list) {
+    return {
+        type: TYPES.GET_TESTGROUP_SUCCESS,
+        testgrouplist: list,
+    }
+}
+
+
+
+//获取策略...
+
 
 export function changeContentDisplay(one_display,two_display,key){
     key = (key ? key : '')
@@ -35,10 +75,11 @@ export function changeDatePicker(dateStrings){
     }
 }
 
-export function switchContentShow(main_display,card_display){
+export function switchContentShow(main_display, card_display, strageties){
     return{
         type:TYPES.MAIN_CONTAINER_DISPLAY,
         main_container_display: main_display,
         card_container_display: card_display,
+        strageties : strageties,
     }
 }

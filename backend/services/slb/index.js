@@ -7,7 +7,11 @@
 
 var db = require('../../datasource/parse')
 const uuid = require('uuid/v1');
+// var parseJson = require('json-superparser');
 var libStragety = require('../stragety')
+var libVersion = require('../versionlog')
+var moment = require('moment')
+
 var libNginx = require('../../../lib/nginx')
 
 module.exports = {
@@ -29,7 +33,7 @@ module.exports = {
      *
      * @param slbid
      */
-    publish: function* (slbid) {
+    publish: function* (slbid, tgid, versionnum, versiondesc) {
         //获取slb所有的信息
         var stragetylist = yield libStragety.getStragetyList({slbid: slbid})
         //循环策略列表，生成指定数据结构
@@ -44,9 +48,17 @@ module.exports = {
          }
          ]
          */
-        var data = [];
+        var data = [],data4log = [];
         stragetylist.map((stragety)=>{
             var temp = {
+                urlArray: [],
+                uidArray: [],
+                regionArray: [],
+                serverArray: [],
+                default: false
+            },temp4log = {
+                name: '',
+                status: '',
                 urlArray: [],
                 uidArray: [],
                 regionArray: [],
@@ -65,12 +77,68 @@ module.exports = {
             temp.serverArray = servers;
             temp.default = isdefault;
             data.push(temp)
+            temp4log.urlArray = urls;
+            temp4log.uidArray = uids;
+            temp4log.regionArray = cities;
+            temp4log.serverArray = servers;
+            temp4log.default = isdefault;
+            temp4log.name= stragety.get('stra_name') || '';
+            temp4log.status= stragety.get('stra_status') || '';
+            data4log.push(temp4log)
         })
-        console.log(data)
         //调用禚永然的配置文件生成接口
-        var dd = libNginx(data);
-        console.log(dd)
+        // var conf = libNginx(data);
+        //调用slb推送服务
 
+        //保存发版信息
+        var version = {
+            publishtime: moment().format('YYYY-MM-DD hh:mm:ss'),
+            versiondesc: versiondesc,
+            versionnum: versionnum,
+            details:  JSON.stringify(data4log),
+            slbid: slbid,
+            tgid: tgid
+        }
+        // console.log(JSON.stringify(version.details))
+        return yield db.save('tgVersion', version)
+
+        //发送
+    },
+    publishBack: function* (slbid, tgid, versionkey) {
+        //获取slb所有的策略信息（除了回滚的策略组）
+        var stragetylist = yield libStragety.getStragetyList({slbid: slbid}, [{opt: 'noEqual', key: 'tgid', data: tgid}]);
+        //获取回滚策略组的版本信息
+        var stragetylistOfTg = yield libVersion.getVersionlog(tgid , versionkey);
+        stragetylistOfTg = stragetylistOfTg[0];
+        //循环策略列表，生成指定数据结构
+        var data = [];
+        stragetylist.map((stragety)=> {
+            var temp = {
+                urlArray: [],
+                uidArray: [],
+                regionArray: [],
+                serverArray: [],
+                default: false
+            };
+            temp.urlArray = stragety.get("stra_urls") ? stragety.get("stra_urls").split(";") : [],
+            temp.uidArray = stragety.get("stra_uids") ? stragety.get("stra_uids").split(";") : [],
+            temp.regionArray = stragety.get("stra_cities") ? stragety.get("stra_cities").split(";") : [],
+            temp.serverArray = stragety.get("stra_servers") ? stragety.get("stra_servers").split(";") : [],
+            temp.default = stragety.get("is_default") || false;
+            data.push(temp)
+        });
+        //循环被回滚项
+        var backtgDetails = JSON.parse(stragetylistOfTg.get('details')) || [];
+        //拼接获得该slb下所有的策略组信息
+        var data = data.concat(backtgDetails);
+
+        //调用禚永然的接口生成新的配置文件
+        // var conf = libNginx(data);
+        //调用slb推送服务
+
+        //更新该被回滚的策略组的发布时间为当前时间，其他信息不变
+        var result = yield libVersion.updateVersionlog({'publishtime': moment().format('YYYY-MM-DD hh:mm:ss')},{'objectId':stragetylistOfTg.id })
+        return result;
         //发送
     },
     /**

@@ -16,6 +16,18 @@
     margin: 0 auto !important;
 }
 
+.show-input-edit-testgroup{
+    height: 40px;
+    padding: 0px 10px;
+    background: #404040 !important;
+    border: 0px !important;
+    border-bottom: 1px solid #d9d9d9 !important;
+    border-radius: 0px !important;
+    width: 82% !important;
+    color: rgb(202, 198, 198) !important;
+    margin: 0 auto !important;
+}
+
 .delete-menu{
     width:20px;
 }

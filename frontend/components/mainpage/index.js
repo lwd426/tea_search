@@ -1,10 +1,11 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import './style.css';
 import 'antd.min.css';
 import { Table, Input, Icon, Button, Popconfirm, Collapse } from 'antd';
-import Chart from './chart.js';
-import EChart from './echart.js';
+import Traffic from './Traffic.js';
+import Conversion from './Conversion.js';
 import Duiji from './duiji.js';
+import request from '../../request';
 
 import MyTable from './table.js';
 
@@ -28,15 +29,20 @@ const Panel = Collapse.Panel;
 class GLMainpage extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            mainpage_data: [],
+        }
     }
     rangeOnChange(dates, dateStrings) {
-        console.log('From: ', dates[0], ', to: ', dates[1]);
-        console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
+        //console.log('From: ', dates[0], ', to: ', dates[1]);
+        //console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
         this.props.contentActions.mainpageActions.changeDatePicker(dateStrings);
     }
     onChange(arr) {
         console.log(arr);
         this.props.contentActions.mainpageActions.changeProjectValue(arr);
+        let projectValue = arr[1];
+        this.props.contentActions.mainpageActions.switchContentShow('none','block')
     }
     disabledDate(current) {
         return current && current.valueOf() > Date.now();
@@ -44,8 +50,25 @@ class GLMainpage extends React.Component {
     collapseCallback(key) {
         console.log(key);
     }
+    switchContentShow(none, block, arr){
+        let strageties = [];
+        arr.map((val, index) => 
+            strageties.push(val.tag)
+        )
+        console.log(strageties)
+        this.props.contentActions.mainpageActions.switchContentShow(none,block,strageties)
+    }
+    async componentWillMount(){
+        let res = await request.getAllStrategies();
+        console.log(res.result.data);
+
+        this.setState({
+            mainpage_data: res.result.data
+        })
+    }
     componentDidMount(){
-        //this.props.contentActions.mainpageActions.getStragety()
+        //this.props.contentActions.mainpageActions.getMenulist();
+        //this.props.contentActions.mainpageActions.getTestGroupList();
     }
     componentWillReceiveProps(nextProps) {
         console.log('mainpage componentWillReceiveProps');
@@ -54,28 +77,30 @@ class GLMainpage extends React.Component {
     }
     
     render() {
-        //const options = this.props.content.mainpage.stragety
-        const options = [{
-            value: 'm',
-            label: 'M站灰度测试',
-            children: [{
-                value: 'button1',
-                label: '按钮颜色测试1',
-            },{
-                value: 'button2',
-                label: '按钮颜色测试2',
-            }],
-        }, {
-            value: 'pc',
-            label: 'PC灰度测试',
-            children: [{
-                value: 'dianbo1',
-                label: '点播页评论1',
-            },{
-                value: 'dianbo2',
-                label: '点播页评论2',
-            }],
-        }];
+        let options = [];
+        let slblist = this.state.mainpage_data;
+
+        if(slblist.length > 0 ){
+            slblist.forEach(function(v,index){
+                let obj = {}
+                obj['value'] = v.objectId;
+                obj['label'] = v.name;
+
+                if(v.testGroups.length > 0){
+                    let arr = [];
+                    v.testGroups.forEach(function(test_v,index){
+                        let inObj ={};
+                        inObj['value'] = test_v.objectId;
+                        inObj['label'] = test_v.name;
+                        arr.push(inObj)
+                    })
+                    obj['children'] = arr;
+                }
+                options[index] = obj;
+            })
+        }
+        //let defaultValue = (options.length > 0) ? [ options[0]['value'],options[0]['children'][0]['value'] ] : [];
+        
 
         const options_two = [{
             value: 'BtnClick',
@@ -85,109 +110,59 @@ class GLMainpage extends React.Component {
             label: 'PicClick',
         }];
 
+        const _this = this;
+
         return (
             <div className="mainpage">
                 <br />
-                <Cascader options={options} defaultValue={['m','button1']} onChange={this.onChange.bind(this)} />
-                <Button style={{float:'right'}}>
-                  <Icon type="plus-circle-o" />新建测试组 
-                </Button>
+                <Cascader options={options} onChange={this.onChange.bind(this)} />
+                {/*<Button style={{float:'right'}}>
+                    <Icon type="plus-circle-o" />新建测试组 
+                </Button>*/}
 
                 <div className="main-container" style={{display: this.props.content.mainpage.main_container_display}}>
 
-                    <Collapse defaultActiveKey={['1','2','3','4']} onChange={this.collapseCallback}>
-                        <Panel header="M站灰度测试/按钮颜色测试1  (4条分流策略  3条运行中)" key="1">
-                            <Button type="primary" className="collbutton" onClick={() =>{this.props.contentActions.mainpageActions.switchContentShow('none','block')}}>
-                                查看详情
-                            </Button>
-                            <div style={{padding:20}}>
-                                <div className="left" style={{float:'left',width:'33%'}}>
-                                    <span>创建于：2017年3月21日</span><br/>
-                                    <span>已运行： 21天</span><br/>
-                                    <span>最近变动： 1天前</span><br/>
-                                </div>
-                                <div className="right" style={{float:'left',width:'33%'}}>
-                                    <span>BtnClick：3.6% (+4.2%)</span><br/>
-                                    <span>PicClick：2.6% (-2.1%)</span><br/>
-                                    <span>PicClick：2.6% (-2.1%)</span><br/>
-                                </div>
-                                <div className="right" style={{float:'left',width:'34%'}}>
-                                    <span>流量占比： 20%   运行中</span><br/>
-                                    <span>流量占比： 20%   运行中</span><br/>
-                                    <span>流量占比： 20%   运行中</span><br/>
-                                </div>
-                                <div className="clear"></div>
-                            </div>
-                        </Panel>
-                        <Panel header="M站灰度测试/按钮颜色测试2  (4条分流策略  3条运行中)" key="2">
-                            <Button type="primary" className="collbutton" onClick={() =>{this.props.contentActions.mainpageActions.switchContentShow('none','block')}}>
-                                查看详情
-                            </Button>
-                            <div style={{padding:20}}>
-                                <div className="left" style={{float:'left',width:'33%'}}>
-                                    <span>创建于：2017年3月21日</span><br/>
-                                    <span>已运行： 21天</span><br/>
-                                    <span>最近变动： 1天前</span><br/>
-                                </div>
-                                <div className="right" style={{float:'left',width:'33%'}}>
-                                    <span>BtnClick：3.6% (+4.2%)</span><br/>
-                                    <span>PicClick：2.6% (-2.1%)</span><br/>
-                                    <span>PicClick：2.6% (-2.1%)</span><br/>
-                                </div>
-                                <div className="right" style={{float:'left',width:'34%'}}>
-                                    <span>流量占比： 20%   运行中</span><br/>
-                                    <span>流量占比： 20%   运行中</span><br/>
-                                    <span>流量占比： 20%   运行中</span><br/>
-                                </div>
-                                <div className="clear"></div>
-                            </div>
-                        </Panel>
-                        <Panel header="PC灰度测试/点播页评论1  (4条分流策略  3条运行中)" key="3">
-                            <Button type="primary" className="collbutton" onClick={() =>{this.props.contentActions.mainpageActions.switchContentShow('none','block')}}>
-                                查看详情
-                            </Button>
-                            <div style={{padding:20}}>
-                                <div className="left" style={{float:'left',width:'33%'}}>
-                                    <span>创建于：2017年3月21日</span><br/>
-                                    <span>已运行： 21天</span><br/>
-                                    <span>最近变动： 1天前</span><br/>
-                                </div>
-                                <div className="right" style={{float:'left',width:'33%'}}>
-                                    <span>BtnClick：3.6% (+4.2%)</span><br/>
-                                    <span>PicClick：2.6% (-2.1%)</span><br/>
-                                    <span>PicClick：2.6% (-2.1%)</span><br/>
-                                </div>
-                                <div className="right" style={{float:'left',width:'34%'}}>
-                                    <span>流量占比： 20%   运行中</span><br/>
-                                    <span>流量占比： 20%   运行中</span><br/>
-                                    <span>流量占比： 20%   运行中</span><br/>
-                                </div>
-                                <div className="clear"></div>
-                            </div>
-                        </Panel>
-                        <Panel header="PC灰度测试/点播页评论2  (4条分流策略  3条运行中)" key="4">
-                            <Button type="primary" className="collbutton" onClick={() =>{this.props.contentActions.mainpageActions.switchContentShow('none','block')}}>
-                                查看详情
-                            </Button>
-                            <div style={{padding:20}}>
-                                <div className="left" style={{float:'left',width:'33%'}}>
-                                    <span>创建于：2017年3月21日</span><br/>
-                                    <span>已运行： 21天</span><br/>
-                                    <span>最近变动： 1天前</span><br/>
-                                </div>
-                                <div className="right" style={{float:'left',width:'33%'}}>
-                                    <span>BtnClick：3.6% (+4.2%)</span><br/>
-                                    <span>PicClick：2.6% (-2.1%)</span><br/>
-                                    <span>PicClick：2.6% (-2.1%)</span><br/>
-                                </div>
-                                <div className="right" style={{float:'left',width:'34%'}}>
-                                    <span>流量占比： 20%   运行中</span><br/>
-                                    <span>流量占比： 20%   运行中</span><br/>
-                                    <span>流量占比： 20%   运行中</span><br/>
-                                </div>
-                                <div className="clear"></div>
-                            </div>
-                        </Panel>
+                    <Collapse defaultActiveKey={['0-0','0-1']} onChange={this.collapseCallback}>
+                        {this.state.mainpage_data.map(function(v, index){
+                            if(v.testGroups.length > 0){
+                                return v.testGroups.map(function(q, idx){
+                                    return(
+                                        <Panel header={v.name + '/' + q.name} key={index + '-' +idx}>
+                                            <Button type="primary" className="collbutton" onClick={() =>{_this.switchContentShow('none','block',q.strageties)}}>
+                                                查看详情
+                                            </Button>
+                                            <div style={{padding:20}}>
+                                                <div>
+                                                    <span>创建于：2017年3月21日</span>
+                                                    <span>已运行： 21天</span>
+                                                    <span>最近变动： 1天前</span>
+                                                </div>
+                                                <div style={{marginTop:10}}>
+                                                    {
+                                                        q.strageties.map((s, i) => 
+                                                            <div key={index + '-' + idx + '-' + i}>
+                                                                <div className="left" style={{float:'left',width:'33%'}}>
+                                                                    <span>{s.stra_name}</span>
+                                                                </div>
+                                                                <div className="right" style={{float:'left',width:'33%'}}>
+                                                                    <span>流量占比： 20%</span>
+                                                                </div>
+                                                                <div className="right" style={{float:'left',width:'34%'}}>
+                                                                    <span>运行中</span><br/>
+                                                                </div>
+                                                                <div className="clear"></div>
+                                                            </div>
+                                                        )
+                                                    }
+                                                </div>
+                                                
+                                            </div>
+                                        </Panel>
+                                    )
+                                })
+                            }
+                        })}
+
                     </Collapse>
                 </div>
 
@@ -215,7 +190,7 @@ class GLMainpage extends React.Component {
                               disabledDate={this.disabledDate.bind(this)}
                             />
                         </div>
-                        <EChart {...this.props}/>
+                        <Traffic {...this.props}/>
                         <MyTable {...this.props}/>
                     </TabPane>
 
@@ -236,7 +211,7 @@ class GLMainpage extends React.Component {
                         <div className="clear"></div>
 
                         <div id = "content_one" style={{display:this.props.content.mainpage.content_one_display}}>
-                            <Chart {...this.props}/>
+                            <Conversion {...this.props}/>
                         </div>
 
                         <div id = "content_two" style={{display: this.props.content.mainpage.content_two_display}}>

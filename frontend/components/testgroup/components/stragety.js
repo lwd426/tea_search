@@ -2,17 +2,16 @@ import React, { Component, PropTypes } from 'react'
 import '../style.css';
 import 'antd.min.css';
 import GLInfo from '../../deviceinfo/components/info'
-import { Table, Input, Icon, Button,Modal, Popconfirm } from 'antd';
-const confirm = Modal.confirm;
+import GLVersionForm from './version_form'
+import utilscomps from '../../utilscomps'
+
+import { Table, Input, Icon, Button, Form, Modal, Popconfirm } from 'antd';
+const FormItem = Form.Item;
 const uuid = require('uuid/v1');
-
-function showConfirm() {
-    confirm({
-        title: '请输入版本说明',
-        content: <Input placeholder="版本说明（10字以内）" />
-    });
+const confirm = Modal.confirm;
+function hasErrors(fieldsError) {
+    return Object.keys(fieldsError).some(field => fieldsError[field]);
 }
-
 class GLStragety extends React.Component {
     constructor(props) {
         super(props);
@@ -51,10 +50,18 @@ class GLStragety extends React.Component {
                   }}> {record.status === 'running' ? '停止' : '启动'}</a>
                   <span className="ant-divider" />
                   <a href="#" onClick={()=>{
+                      if(record.status === 'running') {
+                          utilscomps.showNotification('warning', '不能修改','此策略正在运行中，请先停止此策略');
+                          return false;
+                      }
                       this.props.contentActions.testgroupActions.editStragety(record)
                   }}>修改</a>
                   <span className="ant-divider" />
                   <Popconfirm title="确认删除策略?" onConfirm={() => {
+                      if(record.status === 'running') {
+                          utilscomps.showNotification('warning', '不能删除','此策略正在运行中，删除前请先停止此策略');
+                          return false;
+                      }
                       this.props.contentActions.testgroupActions.deleteStragety(record.code,record.slbid, record.testgroupcode)
                   }}>
                     <a href="#">删除</a>
@@ -119,14 +126,10 @@ class GLStragety extends React.Component {
     goBack = () => {
         this.props.contentActions.testgroupActions.goback()
     }
-    publish = () => {
-        // showConfirm()
-        const {slbid} = this.props.content.testgroup;
-        this.props.contentActions.testgroupActions.publish(slbid)
-    }
     render() {
         const columns = this.columns;
-        const  dataSource = this.props.content.testgroup.stragetylist.map((cell, index)=>{
+        const {stragetylist, versionModalShow} = this.props.content.testgroup
+        const  dataSource = stragetylist.map((cell, index)=>{
             return {
                 key: cell.stra_id,
                 slbid:cell.slbid,
@@ -149,12 +152,19 @@ class GLStragety extends React.Component {
                 description: <GLInfo urls={cell.stra_urls.split(';')} servers={cell.stra_servers.split(';')} uids={cell.stra_uids.split(';')}/>
             }
         });
+        var _this = this;
         return (
 
             <div>
                 <div className="gl-testinfo-btndiv">
                     <Button className="gl-left-btn" icon="double-left" onClick={this.goBack}>返回</Button>
-                    <Button className="gl-left-btn" icon="upload" onClick={this.publish}>发布到服务器</Button>
+                    <Button className="gl-left-btn" icon="upload" onClick={()=>{
+                        this.props.contentActions.testgroupActions.publishModal(true);
+                    }}>发布到服务器</Button>
+                    <Modal title="请输入发布版本的必要信息" visible={versionModalShow} footer={null}
+                    >
+                        <GLVersionForm {..._this.props} />
+                    </Modal>
                     <Button className="gl-right-btn" icon="compass" onClick={this.generateReferVersion}>生成原始版本</Button>
                     <Button className="gl-right-btn" icon="tag" onClick={this.generateTags}>生成数据标签</Button>
                     <Button className="gl-right-btn" icon="plus" onClick={this.handleAdd}>新增策略</Button>

@@ -52,6 +52,7 @@ router.put('/', function *(next) {
 router.put('/refer', function *(next) {
     var where = this.request.body.where;
     var data = this.request.body.data;
+    if(!data.refer) data.stragetiesinfo = '';
     var result = yield lib.updateWebServer(data, undefined, [{opt: 'in', key: 'key', data: where.data}])
     this.body = {
         status: 'success',

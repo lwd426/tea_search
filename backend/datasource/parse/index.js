@@ -40,6 +40,8 @@ module.exports = {
                         case "in": Quwey.containedIn(opt.key, opt.data);break;
                         case "limit": Quwey.limit(opt.data);break;
                         case "noEqual": Quwey.notEqualTo(opt.key, opt.data);break;
+                        case "desc": Quwey.descending(opt.key);break;
+                        case "asc": Quwey.ascending(opt.key);break;
                     }
                 })
             }
@@ -109,7 +111,6 @@ module.exports = {
                     switch(updateData.opt){
                         case "in": Quwey.containedIn(otherOpts.key, otherOpts.data);
                     }
-                    var dd = results[i].get(key);
                     if(type === 'add' && results[i].get(key) && results[i].get(key).indexOf(updateData[key]) === -1){
                         results[i].set(key,results[i].get(key)+';' + updateData[key]);
                     }else{

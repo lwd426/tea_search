@@ -2,8 +2,18 @@ import React from 'react';
 import echarts from 'echarts';
 import {Table,Button,Icon} from 'antd';
 import moment from 'moment';
+import request from '../../request';
+
+let res='dd';
 
 export default class EChart extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            test: false
+        }
+    }
+
     randerChart = (date_picker) => {
         // 基于准备好的dom，初始化echarts实例
 
@@ -35,7 +45,7 @@ export default class EChart extends React.Component {
             return data_arr;
         }(date_picker);
 
-        console.log(xData);
+        //console.log(xData);
 
         myChart.setOption({
             title: { text: '' },
@@ -106,13 +116,23 @@ export default class EChart extends React.Component {
         let date_picker = this.props.content.mainpage.date_picker
         this.randerChart(date_picker);
     }
-    componentWillReceiveProps(nextProps) {
+    async componentWillReceiveProps(nextProps) {
         console.log('chart componentWillReceiveProps');
         let date_picker = nextProps.content.mainpage.date_picker
         this.randerChart(date_picker);
+
         return true;
     }
     render() {
+        (async() => {
+            res = await request.getConversionDataByStragety("['100001', '100002']",'2017-03-05','2017-03-08');
+            console.log(res.result.data);
+            
+            /*this.setState({
+                test: true
+            })*/
+        })()
+        console.log(res)
         const columns = [{
           title: '版本',
           dataIndex: 'date',

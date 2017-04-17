@@ -26,9 +26,9 @@ export function getSlbName(name){
     }
 }
 
-export function updateSLB(objectId, slbDomain) {
+export function updateSLB(objectId, slbDomain, domainId) {
     return (dispatch, getState) => {
-        return dispatch(fetch.updateData(slb_list_url,{objectId: objectId}, {slbDomain: slbDomain}, function(err, result){
+        return dispatch(fetch.updateData(slb_list_url,{objectId: objectId}, {slbDomain: slbDomain, domainId: domainId}, function(err, result){
             if(err){
                 return false;
             }
@@ -92,7 +92,7 @@ export function deleteWebServer(server) {
                     dispatch(deleteWebServerList(result.data))
                 }))
             }else{
-                return dispatch(showNotification('不能删除！', result.data.info, 'error'))
+                return dispatch(showNotification('不能删除！', result.data.info, 'warning'))
             }
 
         }))

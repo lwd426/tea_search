@@ -46,7 +46,17 @@ class GLMenu extends React.Component {
         let {actions} = this.props;
         this.props.menuActions.deleteTestGroup(id);
     }
+    editMenu = (slbid, slbname) =>{
+        this.props.menuActions.editSlbClick(slbid, slbname);
+    }
+    editConfirm = (slbid)=>{
+        var slbname = this.refs.edit.refs.input.value;
+
+        console.log(slbname)
+        this.props.menuActions.editSlb(slbid, slbname);
+    }
     changeMenu =(item)=>{
+        if(!item.key) return false;
         if(item.key.indexOf(',') === -1) return false;
         var code = item.key.split(',')
         this.props.menuActions.changeShowWinType(code[0], code[1]);
@@ -59,12 +69,14 @@ class GLMenu extends React.Component {
                     key={e.objectId}
                     title={<Tooltip placement="right" title={
                         <span>
-                            <Icon className="edit-menu"type="edit" />
+                            <Icon className="edit-menu"type="edit" onClick={this.editMenu.bind(this, e.objectId, e.name)} />
                             <Popconfirm title="确认删除?" onConfirm={this.confirmDelete.bind(this, e.objectId)}  okText="Yes" cancelText="No">
                                 <Icon className="delete-menu" type="delete" />
                             </Popconfirm>
                         </span>}>
-                        <span><Icon type="database" /><span className="nav-text">{e.name}</span></span>
+                        <span><Icon type="database" />
+                            {this.props.menu.editting_slb && this.props.menu.editting_slb.slbid === e.objectId ? (<Input defaultValue={e.name}  onPressEnter={this.editConfirm.bind(this, e.objectId)} className="show-input-edit-testgroup" placeholder="请输入测试组名称" ref="edit"/>) : (<span className="nav-text">{e.name}</span>)}
+                        </span>
                            </Tooltip>}
                     >
                     <Menu.Item key={e.objectId+",deviceinfo"}><Icon type="hdd" />设备信息</Menu.Item>

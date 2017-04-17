@@ -9,7 +9,9 @@ let initState = {
     content_two_display: 'none',
     content_two_key: 1,
     stragety: [],
-    date_picker:[moment().subtract(7, 'days').format('YYYY/MM/DD'),moment().format('YYYY/MM/DD')]
+    date_picker:[moment().subtract(7, 'days').format('YYYY/MM/DD'),moment().format('YYYY/MM/DD')],
+    menulist: [],
+    testgrouplist: [],
 }
 
 let reducer = (state = initState,action)=>{
@@ -36,6 +38,16 @@ let reducer = (state = initState,action)=>{
             return Object.assign({}, state, {
                 main_container_display: action.main_container_display,
                 card_container_display: action.card_container_display,
+                strageties : action.strageties,
+            })
+        }
+        case TYPES.GET_MENUDATA_SUCCESS:{
+            return Object.assign({}, state, {
+                menulist: action.menulist
+            })
+        }case TYPES.GET_TESTGROUP_SUCCESS:{
+            return Object.assign({}, state, {
+                testgrouplist: action.testgrouplist
             })
         }
         default:

@@ -79,7 +79,9 @@ class GLTestgroup extends React.Component {
             render: (text, test) => {
                 return (
                 <span>
-                  <a href="#" onClick={that.showBackWindow}>版本日志</a>
+                  <a href="#" onClick={()=>{
+                      that.props.contentActions.testgroupActions.versionlog_list(test.code, that.props.menu.slbid)
+                  }}>版本日志</a>
                   <span className="ant-divider" />
                   <a href="#" onClick={() => {
                       that.props.contentActions.testgroupActions.edit_stragetylist(test.code, that.props.menu.slbid)
