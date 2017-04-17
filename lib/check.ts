@@ -231,14 +231,17 @@ class Verify {
     }
 
     private lack() {
-        for (let v of this.arr) {
+        for (let i=0;i<this.arr.length;i++) {
+            const v=this.arr[i];
             const noUid = !v.uidArray || Array.isArray(v.uidArray) && !v.uidArray.length;
             const noReg = !v.regionArray || Array.isArray(v.regionArray) && !v.regionArray.length;
             if (noReg && noUid && !v.default) {
-                throw {
-                    code: CODE.NO_UID_REGION,
-                    data: v
-                }
+                console.log("因为没有uid或者地域信息，删除",v);
+                this.arr.splice(i,0);
+                /*throw {
+                 code: CODE.NO_UID_REGION,
+                 data: v
+                 }*/
             }
         }
     }
