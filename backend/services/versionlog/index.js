@@ -16,7 +16,7 @@ module.exports = {
      */
     getVersionlogList: function*(tgid) {
         if(tgid){
-            var versionloglist = yield db.get('tgVersion', {tgid: tgid});
+            var versionloglist = yield db.get('tgVersion', {tgid: tgid},[{opt:'desc', key: 'publishtime'}]);
             return versionloglist;
         }else{
             return {
@@ -35,5 +35,11 @@ module.exports = {
                 info: '没有测试组id参数'
             }
         }
+    },
+    updateVersionlog: function*(data, where) {
+        console.log(data)
+        console.log(where)
+        return yield db.update('tgVersion', where, data);
+        // return result;
     }
 }

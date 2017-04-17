@@ -21,6 +21,7 @@ const initialState = {
     ,validatestatus: 'failure' //保存策略时验证的状态
     ,savestragetystatus: false //保存策略状态(启动或停止使用)
     ,editting_stragety: undefined //正在编辑的策略
+    ,editting_status: false //正在编辑的策略
     ,refer_stragety: undefined //正在编辑的策略
     ,versionModalShow: false//发布版本弹出框状态
     ,versionloglist: [] //版本列表
@@ -60,7 +61,7 @@ let reducer = (state = initialState, action)=> {
             return Object.assign({}, state, {showtype: 'testgroup'})
             break
         case TYPES.GOBACK_TO_STRAGETYLIST:
-            return Object.assign({}, state, {showtype: 'stragety', editting_stragety: undefined})
+            return Object.assign({}, state, {showtype: 'stragety', editting_stragety: undefined, editting_status: false})
             break
         case TYPES.GET_TESTGROUP_SUCCESS:
             return Object.assign({}, state, {testgrouplist: action.testgrouplist})
@@ -79,11 +80,12 @@ let reducer = (state = initialState, action)=> {
                 showtype: 'stragety',
                 slbid: action.slbid,
                 tgid: action.tgid,
-                editting_stragety: undefined
+                editting_stragety: undefined,
+                editting_status: false
             })
             break
         case TYPES.ADD_STRAGETY:
-            return Object.assign({}, state, {showtype: 'addstragety', editting_stragety: undefined, serverselectedkeys:[],addurls: [], adduids: []})
+            return Object.assign({}, state, {showtype: 'addstragety', editting_stragety: undefined, editting_status: false, serverselectedkeys:[],addurls: [], adduids: []})
             break
         case TYPES.ADD_URL_TYPE:
             return Object.assign({}, state, {addurltype: action.addurltype})
@@ -146,6 +148,8 @@ let reducer = (state = initialState, action)=> {
             state.stragetylist.map((stra)=>{
                 if(stra.stra_id === action.stra_id) stra.stra_status = action.status;
             })
+            var status = action.status  === 'running' ? '运行' : '停止';
+            utilscomps.showNotification('success', '操作成功', '策略已经' + status );
             return Object.assign({}, state, {stragetylist: state.stragetylist})
             break
         case TYPES.EDIT_STRAGETY:
@@ -154,10 +158,10 @@ let reducer = (state = initialState, action)=> {
             var uids = stra.uidsvalues.split(';');
             if(urls[0] === '') urls = [];
             if(uids[0] === '') uids = [];
-            console.log('ddd')
             return Object.assign({}, state, {
                 showtype: 'addstragety',
                 editting_stragety: stra,
+                editting_status: stra.code,
                 addurls: urls,
                 adduids: uids,
                 serverselectedkeys: stra.serverskey.split(';')
