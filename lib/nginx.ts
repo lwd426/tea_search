@@ -17,6 +17,7 @@ class Upstream {//default
 
     constructor(meta: Meta) {
         this.metaData = meta;
+        this.metaData.serverArray = allServers;//先这么写吧
         this.init();
     }
 
@@ -83,7 +84,12 @@ function array2one(arr) {
         }
         for (let i in item) {//干掉空数组
             if (Array.isArray(item[i]) && !item[i].length) {
-                delete item[i];
+                if (item.default) {
+
+                } else {
+                    delete item[i];
+                }
+
             }
         }
         delete item.urlArray;//
@@ -166,6 +172,9 @@ function allServerHandler(arr) {
         }
     }
     for (let v of arr) {
+        if (v.default) {
+            continue;
+        }
         for (let k of v.serverArray) {
             if (allServers.indexOf(k) == -1) {
                 allServers.push(k);
