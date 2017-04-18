@@ -57,11 +57,26 @@ router.get('/publish', function *(next) {
     //调用发布接口
     var result = yield lib.publish(slbid, tgid, versionnum, versiondesc);
     //更新测试组的发布时间信息
-    if(result.status === 'success') result = yield libTg.updateTest({time: moment().format('YYYY-MM-DD HH:mm'), version: result.stra_info}, {objectId: tgid})
-    this.body = {
-        status: 'success',
-        data: result
-    };
+    if(result.status && result.status === 'failure'){
+        this.body = {
+            status: 'failure',
+            data: result.info
+        };
+    }else if(result.status === 'success') {
+        result = yield libTg.updateTest({time: moment().format('YYYY-MM-DD HH:mm'), version: result.stra_info}, {objectId: tgid})
+        if(result){
+            this.body = {
+                status: 'success',
+                data: result
+            };
+        }else{
+            this.body = {
+                status: 'failure',
+                data: '失败'
+            };
+        }
+    }
+
 });
 
 
@@ -72,19 +87,26 @@ router.get('/publish/back', function *(next) {
     var result = yield lib.publishBack(slbid, tgid, versionkey);
     console.log(result)
     //更新测试组的发布时间信息
-    if(result.status === 'success') result = yield libTg.updateTest({time: moment().format('YYYY-MM-DD HH:mm'), version: result.stra_info}, {objectId: tgid})
-    if(result){
-        this.body = {
-            status: 'success',
-            data: result
-        };
-    }else{
+    if(result.status && result.status === 'failure'){
         this.body = {
             status: 'failure',
-            data: '失败'
+            data: result.info
         };
-    }
+    }else if(result.status === 'success') {
+        result = yield libTg.updateTest({time: moment().format('YYYY-MM-DD HH:mm'), version: result.stra_info}, {objectId: tgid});
 
+        if(result){
+            this.body = {
+                status: 'success',
+                data: result
+            };
+        }else{
+            this.body = {
+                status: 'failure',
+                data: '失败'
+            };
+        }
+    }
 });
 
 module.exports = router;

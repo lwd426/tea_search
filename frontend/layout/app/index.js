@@ -47,7 +47,9 @@ class App extends React.Component {
                 >
                     <div className="logo" />
                     <GLMenu mode={this.props.app.mode}/>
-                    {/*<Button icon="plus" className="add-test-group-btn" onClick={this.addTestGroup}>添加</Button>*/}
+                    <Button icon="plus" className="add-test-group-btn" onClick={()=>{
+                        this.props.appActions.setAddSLBModalStatus(true)
+                    }}>添加</Button>
                 </Sider>
                 <Layout>
                     <GLContent showtype="group" {...this.props}/>

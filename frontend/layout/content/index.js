@@ -49,9 +49,9 @@ class GLContent extends React.Component {
                 >
                     <GLAddSlb {...this.props} />
                 </Modal>
-                <Button className="gl-addslb-btn" icon="add" onClick={()=>{
-                    this.props.contActions.setAddSLBModalStatus(true)
-                }}>新增测试项</Button>
+                {/*<Button className="gl-addslb-btn" icon="add" onClick={()=>{*/}
+                    {/*this.props.contActions.setAddSLBModalStatus(true)*/}
+                {/*}}>新增测试项</Button>*/}
             </Content>
         );
     }
