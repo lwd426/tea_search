@@ -62,6 +62,11 @@ let reducer = (state = initState,action)=>{
                 casVal: action.casVal
             })
         }
+        case TYPES.OPTIONS:{
+            return Object.assign({}, state, {
+                options_two: action.options_two
+            })
+        }
         default:
             return state
     }

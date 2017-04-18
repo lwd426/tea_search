@@ -1,6 +1,7 @@
 import * as TYPES from './constants';
 import fetch from '../../utils/fetch';
 const HOST = require('../../../config').HOST;
+import request from '../../request';
 
 const slb_list_url = HOST + '/slb'
 const testgroup_url = HOST + '/testgroup';
@@ -95,5 +96,31 @@ export function changeCascader(arr){
     return{
         type:TYPES.CASVAL,
         casVal: arr[0]
+    }
+}
+
+export function setCascaderOptionstow(){
+    return async (dispatch) => {
+        console.log('riri')
+        let res = await request.getConversionDataByStragety('','2017-03-05','2017-03-08');
+        let responseData = res.result.data;
+        console.log(responseData);
+
+        let strageties = Object.entries(responseData);
+
+        //设置 option_two
+        let options_two = [];
+        for(let key in strageties[0][1]){
+            options_two.push({
+                value: key,
+                label: key
+            })
+            console.log(key)
+        }
+        return dispatch({
+            type:TYPES.OPTIONS,
+            options_two: options_two
+        })
+
     }
 }

@@ -7,3 +7,4 @@ export const GET_MENUDATA_SUCCESS = 'GET_MENUDATA_SUCCESS';
 export const GET_TESTGROUP_SUCCESS = 'GET_TESTGROUP_SUCCESS';
 export const MAIN_CARD_KEY = 'MAIN_CARD_KEY';
 export const CASVAL = 'CASVAL';
+export const OPTIONS = 'OPTIONS';
