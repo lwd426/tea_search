@@ -1,5 +1,7 @@
 var router = require('koa-router')();
 var lib = require('../services/slb')
+var libTg = require('../services/testgroup');
+var moment = require('moment')
 
 router.get('/', function *(next) {
     var result = yield lib.getSlbList()
@@ -44,7 +46,9 @@ router.get('/publish', function *(next) {
     var versiondesc = this.query.versiondesc;
     var versionnum = this.query.versionnum;
     //调用发布接口
-    var result = yield lib.publish(slbid, tgid, versionnum, versiondesc)
+    var result = yield lib.publish(slbid, tgid, versionnum, versiondesc);
+    //更新测试组的发布时间信息
+    if(result.status === 'success') result = yield libTg.updateTest({time: moment().format('YYYY-MM-DD HH:mm'), version: result.stra_info}, {objectId: tgid})
     this.body = {
         status: 'success',
         data: result
@@ -57,6 +61,9 @@ router.get('/publish/back', function *(next) {
     var slbid = this.query.slbid;
     var versionkey = this.query.versionkey;
     var result = yield lib.publishBack(slbid, tgid, versionkey);
+    console.log(result)
+    //更新测试组的发布时间信息
+    if(result.status === 'success') result = yield libTg.updateTest({time: moment().format('YYYY-MM-DD HH:mm'), version: result.stra_info}, {objectId: tgid})
     if(result){
         this.body = {
             status: 'success',

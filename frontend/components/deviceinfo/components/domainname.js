@@ -59,31 +59,33 @@ class RegistrationForm extends React.Component {
     }
     componentWillReceiveProps = async (nextProps) => {
         console.log('domain componentWillReceiveProps');
-        let name = nextProps.content.deviceinfo.current_slb_name || '';
+        let name = this.props.menu.domain || '';
+        let {domain, domainId} = this.props.menu;
 
         //第一次进来，若数据库有值则给域名赋值
-        this.setState({
-          value: name
-        });
+        // this.setState({
+        //   value: name
+        // });
         //若域名有值，同样给 domainid 赋值
-        // if(name != ''){
-        //     let res = await request.getVirtualHostByname(name);
-        //     if(res.status == 'success'){
-        //         this.refs.domainID.refs.input.value = res.data[0];//domainID input 填入接口返回的id
-        //         this.setState({
-        //             disabled: true
-        //         })
-        //     }
-        // }
+        if(domain != '' && !domainId){
+            let res = await request.getVirtualHostByname(name);
+            if(res.status == 'success'){
+                this.refs.domainID.refs.input.value = res.data[0];//domainID input 填入接口返回的id
+
+            }
+            this.setState({
+                disabled: true
+            })
+        }
+
         return true;
     }
     componentDidMount = () => {
-        const objectID = this.props.menu.slbid;
-        this.props.contentActions.deviceinfoActions.getSLB(objectID);
+        // const objectID = this.props.menu.slbid;
+        // this.props.contentActions.deviceinfoActions.getSLB(objectID);
     }
     render() {
         let value = this.state.value;
-console.log(this.props)
         return (
             <div className="slbBox">
                 <span className="labelspan">SLB域名 : </span>
@@ -93,7 +95,6 @@ console.log(this.props)
                 <span className="labelspan">域名 ID : </span> 
                 <Input ref="domainID" value={this.props.menu.domainId} disabled={true} /> <br/><br/>
                 <Button type="primary" size="large" onClick={this.updataSlb.bind(this)}>保存</Button>
-                <Button type="primary" size="large">取消</Button>
             </div>
         );
     }

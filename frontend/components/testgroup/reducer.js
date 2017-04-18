@@ -169,6 +169,7 @@ let reducer = (state = initialState, action)=> {
 
             break
         case TYPES.FRESH_STRAGETYLIST:
+            utilscomps.showNotification('success', '生成标签成功', '请通知相关开发人员，进行标签修改或添加！');
             return Object.assign({}, state, {stragetylist: action.stragetylist})
             break
         case TYPES.VALIDATE_FAILURE:

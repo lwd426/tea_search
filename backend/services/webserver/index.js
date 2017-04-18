@@ -30,7 +30,7 @@ module.exports = {
      * @returns {*}
      */
     getWebServerList: function*(slbid) {
-        var list = yield db.get('webServer', {slbid: slbid});
+        var list = yield db.get('webServer', {slbid: slbid}, [{opt: 'desc', key: 'createdAt'}]);
         var len = list.length, i=0;
         for(;i<len;i++){
             var server = list[i];

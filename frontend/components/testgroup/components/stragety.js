@@ -165,7 +165,7 @@ class GLStragety extends React.Component {
                     >
                         <GLVersionForm {..._this.props} />
                     </Modal>
-                    <Button className="gl-right-btn" icon="compass" onClick={this.generateReferVersion}>生成原始版本</Button>
+                    <Button className="gl-right-btn" icon="compass" onClick={this.generateReferVersion}>生成基准版本</Button>
                     <Button className="gl-right-btn" icon="tag" onClick={this.generateTags}>生成数据标签</Button>
                     <Button className="gl-right-btn" icon="plus" onClick={this.handleAdd}>新增策略</Button>
                 </div>

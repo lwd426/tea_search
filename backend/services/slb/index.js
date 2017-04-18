@@ -104,7 +104,14 @@ module.exports = {
             tgid: tgid
         }
         // console.log(JSON.stringify(version.details))
-        return yield db.save('tgVersion', version)
+        var result = yield db.save('tgVersion', version);
+        if(result){
+            result = {
+                status: 'success',
+                stra_info: versionnum + '-' + versiondesc
+            }
+        }
+        return result;
 
         //发送
     },
@@ -112,8 +119,8 @@ module.exports = {
         //获取slb所有的策略信息（除了回滚的策略组）
         var stragetylist = yield libStragety.getStragetyList({slbid: slbid}, [{opt: 'noEqual', key: 'tgid', data: tgid}]);
         //获取回滚策略组的版本信息
-        var stragetylistOfTg = yield libVersion.getVersionlog(tgid , versionkey);
-        stragetylistOfTg = stragetylistOfTg[0];
+        var version = yield libVersion.getVersionlog(tgid , versionkey);
+        version = version[0];
         //循环策略列表，生成指定数据结构
         var data = [];
         stragetylist.map((stragety)=> {
@@ -134,7 +141,7 @@ module.exports = {
             }
         });
         //循环被回滚项
-        var backtgDetails = JSON.parse(stragetylistOfTg.get('details')) || [];
+        var backtgDetails = JSON.parse(version.get('details')) || [];
         //拼接获得该slb下所有的策略组信息
         var data = data.concat(backtgDetails);
 
@@ -144,7 +151,13 @@ module.exports = {
         // yield libVirtualHost.updateSlbConfig(conf)
 
         //更新该被回滚的策略组的发布时间为当前时间，其他信息不变
-        var result = yield libVersion.updateVersionlog({'publishtime': moment().format('YYYY-MM-DD hh:mm:ss')},{'objectId':stragetylistOfTg.id })
+        var result = yield libVersion.updateVersionlog({'publishtime': moment().format('YYYY-MM-DD hh:mm:ss')},{'objectId':version.id })
+        if(result){
+            result = {
+                status: 'success',
+                stra_info: version.get('versionnum') + '-' + version.get('versiondesc')
+            }
+        }
         return result;
         //发送
     },
