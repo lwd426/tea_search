@@ -42,6 +42,7 @@ module.exports = {
                         case "noEqual": Quwey.notEqualTo(opt.key, opt.data);break;
                         case "desc": Quwey.descending(opt.key);break;
                         case "asc": Quwey.ascending(opt.key);break;
+                        case "noExsit": Quwey.doesNotExist(opt.key);break;
                     }
                 })
             }

@@ -2,6 +2,7 @@ import * as TYPES from './constants';
 import fetch from '../../utils/fetch'
 import checkUrl from '../../utils/checkUrl'
 const HOST = require('../../../config').HOST;
+import utilscomps from '../utilscomps'
 
 const testgroup_url = HOST + '/testgroup'
 const versionlog_url = HOST + '/versionlog'
@@ -503,11 +504,16 @@ export function freshStragetylist(stragetylist) {
 /**
  * 发布到服务器
  */
-export function publish(slbid, tgid, versionnum, versiondesc) {
+export function publish(domainId,slbid, tgid, versionnum, versiondesc) {
     return (dispatch, getState) => {
-        return dispatch(fetch.getData(slb_publish_url + '?slbid='+slbid + '&tgid='+ tgid +'&versionnum='+versionnum + '&versiondesc='+versiondesc,function(err, result){
-            if(err)  (publishSuccess(false))
-            dispatch(publishSuccess(result.data))
+        return dispatch(fetch.getData(slb_publish_url + '?domainId='+domainId+ '&slbid='+slbid + '&tgid='+ tgid +'&versionnum='+versionnum + '&versiondesc='+versiondesc,function(err, result){
+            if(err || result.status === 'failure')  {
+                dispatch(publishSuccess(false, result.data))
+            }else{
+                dispatch(publishSuccess(true, result.data))
+            }
+
+
         }))
     }
 
@@ -521,9 +527,11 @@ export function publishModal(status) {
     }
 }
 
-export function publishSuccess() {
+export function publishSuccess(status, data) {
     return {
-        type: TYPES.PUBLISH_SUCCESS
+        type: TYPES.PUBLISH_SUCCESS,
+        status,
+        data
     }
 }
 
@@ -595,11 +603,11 @@ export function getVersionListSuccess(list, tgid,slbid) {
  * @param tgid
  * @param versionkey
  */
-export function publishback(slbid, tgid, versionkey) {
+export function publishback(domainId, slbid, tgid, versionkey) {
     return (dispatch, getState) => {
-        return dispatch(fetch.getData(slb_publish_url + '/back?slbid='+slbid + '&tgid='+ tgid +'&versionkey='+versionkey ,function(err, result){
-            if(err || result.status === 'failure')  return dispatch(publishSuccess(false))
-            dispatch(publishSuccess(true));
+        return dispatch(fetch.getData(slb_publish_url + '/back?domainId='+domainId+ '&slbid='+slbid + '&tgid='+ tgid +'&versionkey='+versionkey ,function(err, result){
+            if(err || result.status === 'failure')  return dispatch(publishSuccess(false, result.data))
+            dispatch(publishSuccess(true, result.data));
             return dispatch(versionlog_list(tgid, slbid))
         }))
     }

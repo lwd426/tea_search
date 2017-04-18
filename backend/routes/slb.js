@@ -51,11 +51,12 @@ router.put('/', function *(next) {
 
 router.get('/publish', function *(next) {
     var slbid = this.query.slbid;
+    var domainId = this.query.domainId;
     var tgid = this.query.tgid;
     var versiondesc = this.query.versiondesc;
     var versionnum = this.query.versionnum;
     //调用发布接口
-    var result = yield lib.publish(slbid, tgid, versionnum, versiondesc);
+    var result = yield lib.publish(domainId,slbid, tgid, versionnum, versiondesc);
     //更新测试组的发布时间信息
     if(result.status && result.status === 'failure'){
         this.body = {
@@ -82,9 +83,10 @@ router.get('/publish', function *(next) {
 
 router.get('/publish/back', function *(next) {
     var tgid = this.query.tgid;
+    var domainId = this.query.domainId;
     var slbid = this.query.slbid;
     var versionkey = this.query.versionkey;
-    var result = yield lib.publishBack(slbid, tgid, versionkey);
+    var result = yield lib.publishBack(domainId,slbid, tgid, versionkey);
     console.log(result)
     //更新测试组的发布时间信息
     if(result.status && result.status === 'failure'){

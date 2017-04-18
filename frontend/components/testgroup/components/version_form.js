@@ -18,7 +18,8 @@ class HorizontalLoginForm extends React.Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 const {slbid, tgid} = this.props.content.testgroup;
-                this.props.contentActions.testgroupActions.publish(slbid, tgid, values.versionnum, values.versiondesc)
+                var domainId = this.props.menu.domainId;
+                this.props.contentActions.testgroupActions.publish(domainId, slbid, tgid, values.versionnum, values.versiondesc)
 
             }
         });
