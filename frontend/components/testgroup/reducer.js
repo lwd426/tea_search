@@ -193,8 +193,14 @@ let reducer = (state = initialState, action)=> {
             return Object.assign({}, state, {validateStra: validateStra})
             break
         case TYPES.PUBLISH_SUCCESS:
-            utilscomps.showNotification('success', '发布成功', '发布成功！发版日志请版本日志页');
-            return Object.assign({}, state, {versionModalShow: false})
+            if(action.status) {
+                utilscomps.showNotification('success', '发布成功', '发布成功！发版日志请版本日志页');
+                return Object.assign({}, state, {versionModalShow: false})
+            }else{
+                utilscomps.showNotification('error', '发布失败', '失败原因：' + action.data );
+                return state;
+            }
+
             break
         case TYPES.PUBLISH_MODAL:
             return Object.assign({}, state, {versionModalShow: action.status})

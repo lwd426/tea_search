@@ -11,7 +11,7 @@ module.exports = {
         timeout: 5
 	}
 	, VH: {
-	    url: 'http://10.118.31.22:8081/v2/virtualhost',
+	    url: 'http://10.118.31.22:8081/v2/virtualhost/',
 	    headers: {
             "Content-Type": "application/json",
             "SlbAccount": "le-test"
