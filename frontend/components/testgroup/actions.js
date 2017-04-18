@@ -87,6 +87,8 @@ export function getCitiesSuccess(list) {
 export function getServers(slbid) {
     return (dispatch, getState) => {
         return dispatch(fetch.getData(server_url+ '?slbid='+slbid,function(err, result){
+            console.log('dddddd')
+
             if(err)  return  dispatch(getServersSuccess([]))
             return dispatch(getServersSuccess(result.data))
         }))

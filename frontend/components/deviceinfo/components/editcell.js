@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import 'antd.min.css';
+import utilscomps from '../../utilscomps'
 import {  Table, Input, Icon, Button, Popconfirm  } from 'antd';
 class EditableCell extends React.Component {
     constructor(props) {
@@ -9,11 +10,21 @@ class EditableCell extends React.Component {
             editable: false,
         }
     }
+    componentDidMount(){
+        let {item, value} = this.props;
+        if(item === 'ip' && value === '') this.setState({
+            editable: true
+        })
+    }
     handleChange = (e) => {
         const value = e.target.value;
         this.setState({ value });
     }
     check = () => {
+        if(this.state.value === ''){
+            utilscomps.showNotification('error', '提示', '服务器必须添加ip！' );
+            return false;
+        }
         this.setState({ editable: false });
         if (this.props.onChange) {
             this.props.onChange(this.state.value);
@@ -24,6 +35,7 @@ class EditableCell extends React.Component {
     }
     render() {
         const { value, editable } = this.state;
+
         return (
             <div className="editable-cell">
                 {

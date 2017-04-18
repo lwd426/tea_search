@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { Layout, Button} from 'antd';
+import { Layout, Button, Modal} from 'antd';
 import GLMenu from '../menu'
 import GLContent from '../content'
 import { bindActionCreators } from 'redux'
@@ -47,10 +47,10 @@ class App extends React.Component {
                 >
                     <div className="logo" />
                     <GLMenu mode={this.props.app.mode}/>
-                    <Button icon="plus" className="add-test-group-btn" onClick={this.addTestGroup}>添加</Button>
+                    {/*<Button icon="plus" className="add-test-group-btn" onClick={this.addTestGroup}>添加</Button>*/}
                 </Sider>
                 <Layout>
-                    <GLContent showtype="group"/>
+                    <GLContent showtype="group" {...this.props}/>
                     <Footer style={{ textAlign: 'center' }}>
                         Ant Design ©2016 Created by Ant UED
                     </Footer>

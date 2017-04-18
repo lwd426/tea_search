@@ -1,6 +1,7 @@
 var router = require('koa-router')();
 var lib = require('../services/slb')
 var libTg = require('../services/testgroup');
+var libVir = require('../services/virtualhost');
 var moment = require('moment')
 
 router.get('/', function *(next) {
@@ -15,11 +16,19 @@ router.get('/', function *(next) {
 
 router.post('/', function *(next) {
   var name = this.request.body.name;
-  var result = yield lib.saveSlb(name)
+  var domain = this.request.body.domain;
+  var domainId = yield libVir.getByName(domain);
+  if(!domainId){
+      this.body = {
+          status: 'failure',
+          data: domainId
+      };
+  }
+  var result = yield lib.saveSlb(name,domain, domainId);
     this.body = {
-    status: 'success',
-    data: result
-};
+        status: 'success',
+        data: result
+    };
 });
 
 router.del('/', function *(next) {

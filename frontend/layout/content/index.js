@@ -1,19 +1,21 @@
 import React, { Component, PropTypes } from 'react'
-import { Layout, Breadcrumb} from 'antd';
 import GLDeviceInfo from '../../components/deviceinfo';
 import GLDataChart from '../../components/datachart';
 import GLTestInfo from '../../components/testgroup';
 import GLMainPage from '../../components/mainpage';
-import * as actions from '../app/actions'
-import * as menuactions from '../menu/actions'
-import contentactions from '../../components/actions'
+import { Button, Modal ,Layout, Breadcrumb} from 'antd';
 
 import '../app/app.css';
 import './style.css';
 import 'antd.min.css';
+import GLAddSlb from './addModal'
+import * as actions from '../app/actions'
+import * as menuactions from '../menu/actions'
+import * as contActions from './actions'
+import contentactions from '../../components/actions'
+
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-
 const {  Content} = Layout;
 
 class GLContent extends React.Component {
@@ -43,6 +45,13 @@ class GLContent extends React.Component {
                         }
                     })()}
                 </div>
+                <Modal title="新建测试项"  footer={null} visible={this.props.cont.showSlbModal}
+                >
+                    <GLAddSlb {...this.props} />
+                </Modal>
+                <Button className="gl-addslb-btn" icon="add" onClick={()=>{
+                    this.props.contActions.setAddSLBModalStatus(true)
+                }}>新增测试项</Button>
             </Content>
         );
     }
@@ -54,7 +63,8 @@ function mapStateToProps(state) {
     return{
             menu: state.menu,
             app: state.app,
-            content: state.content
+            content: state.content,
+            cont: state.cont
     }
 }
 //将action的所有方法绑定到props上
@@ -63,7 +73,8 @@ function mapDispatchToProps(dispatch) {
 return {
     appActions:bindActionCreators(actions,dispatch),
     menuActions:bindActionCreators(menuactions,dispatch),
-    contentActions: contentactions(dispatch)
+    contentActions: contentactions(dispatch),
+    contActions: bindActionCreators(contActions,dispatch)
 }
 }
 

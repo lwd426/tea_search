@@ -7,3 +7,9 @@
 .ant-layout-content{
     background: #ffffff;
 }
+
+.gl-addslb-btn{
+    position: absolute;
+    top: 10px;
+    right: 30px;
+}

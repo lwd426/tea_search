@@ -35,6 +35,7 @@ module.exports = {
         for(;i<len;i++){
             var server = list[i];
             var listofstragety = '';
+            var stras = [];
             var stragetiesinfo = server.get('stragetiesinfo') ;
             if(!stragetiesinfo || stragetiesinfo.split(';').length === 0) {
                 listofstragety = [];

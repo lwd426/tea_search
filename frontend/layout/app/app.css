@@ -47,10 +47,8 @@
 }
 
 .ant-layout-sider-trigger{
-    width: 50% !important;
-    margin-left: 50%;
+    width: 100% !important;
     border-top: 1px solid #949090 !important;
-    border-left: 1px solid #949090 !important;
 }
 
 .add-test-group-btn {
