@@ -81,7 +81,6 @@ class GLMainpage extends React.Component {
     async componentWillMount(){
         let res = await request.getAllStrategies();
         console.log(res.result.data);
-
         this.setState({
             mainpage_data: res.result.data
         })
@@ -142,7 +141,7 @@ class GLMainpage extends React.Component {
 
                 <div className="main-container" style={{display: this.props.content.mainpage.main_container_display}}>
 
-                    <Collapse defaultActiveKey={['0-0','0-1']} onChange={this.collapseCallback}>
+                    <Collapse defaultActiveKey={['1-0','1-1','1-2']} onChange={this.collapseCallback}>
                         {this.state.mainpage_data.map(function(v, index){
                             if(v.testGroups.length > 0){
                                 return v.testGroups.map(function(q, idx){
