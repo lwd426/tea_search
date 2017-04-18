@@ -27,7 +27,8 @@ class GLServerTree extends React.Component {
             return {
                 label: server.status ?  server.ip + '(' +server.statusinfo +')' : server.ip ,
                 value: server.key,
-                key: server.key
+                key: server.key,
+                disabled: server.refer
             }
         })
         const tProps = {
