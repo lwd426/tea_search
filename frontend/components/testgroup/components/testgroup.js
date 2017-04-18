@@ -20,6 +20,7 @@ class GLTestgroup extends React.Component {
             dataIndex: 'name',
             render: (text, record, index) => (
                 <EditableCell
+                    item="name"
                     value={text}
                     onChange={this.onCellChange(index, 'name')}
                 />

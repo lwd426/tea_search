@@ -39,6 +39,7 @@ class GLWebserver extends React.Component {
             render: (text, record, index) => (
                 <EditableCell
                     value={text}
+                    item="ip"
                     onChange={this.onCellChange(index, 'ip')}
                 />
             )
@@ -54,6 +55,7 @@ class GLWebserver extends React.Component {
             render: (text, record, index) => (
                 <EditableCell
                     value={text}
+                    item="dataCeter"
                     onChange={this.onCellChange(index, 'address')}
                 />
             ),
@@ -63,6 +65,7 @@ class GLWebserver extends React.Component {
             render: (text, record, index) => (
                 <EditableCell
                     value={text}
+                    item="backup"
                     onChange={this.onCellChange(index, 'backup')}
                 />
             ),
@@ -75,14 +78,14 @@ class GLWebserver extends React.Component {
                    <Popconfirm title="取消该参照服务器前，请确认该服务器上没有正在生效的策略?" onConfirm={() => {
                        that.props.contentActions.deviceinfoActions.setReferServers([record.key], false);
                    }}><Tooltip placement="bottomLeft" title="取消该参照服务器" arrowPointAtCenter>
-                       <Button icon="eye" className="gl-btn"></Button>
+                       <Button icon="star" className="gl-btn"></Button>
                    </Tooltip>
 
                    </Popconfirm>) :(<Popconfirm title="设置该服务器为参照服务器?" onConfirm={() => {
                            that.props.contentActions.deviceinfoActions.setReferServers([record.key], true);
                        }}>
                            <Tooltip placement="bottomLeft" title="设定该服务器为该参照服务器" arrowPointAtCenter>
-                               <Button className="gl-btn" icon="eye-o" ></Button>
+                               <Button className="gl-btn" icon="star-o" ></Button>
                            </Tooltip>
                        </Popconfirm>)}
                    {/*<span className="ant-divider" />*/}

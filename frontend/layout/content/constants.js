@@ -1,3 +1,2 @@
-/**
- * Created by lwd426 on 17/3/29.
- */
+export const SHOW_ADD_SLB_MODAL = 'SHOW_ADD_SLB_MODAL'
+

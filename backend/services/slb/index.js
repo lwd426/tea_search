@@ -94,6 +94,25 @@ module.exports = {
         // var conf = libNginx(data);
         //调用slb推送服务
         // yield libVirtualHost.updateSlbConfig(conf)
+
+
+        //调用禚永然的接口生成新的配置文件
+        var confResult = libNginx(data);
+        var result = '';
+        if(confResult.code === 0) {
+            //调用slb推送服务
+            result = yield libVirtualHost.updateSlbConfig(confResult.content);
+            //错误判断
+            if(result.status === 'failure') {
+                return result;
+            }
+        }else{
+            result = {
+                status: 'failure',
+                info: confResult.data
+            }
+            return result;
+        }
         //保存发版信息
         var version = {
             publishtime: moment().format('YYYY-MM-DD hh:mm:ss'),
@@ -146,12 +165,25 @@ module.exports = {
         var data = data.concat(backtgDetails);
 
         //调用禚永然的接口生成新的配置文件
-        // var conf = libNginx(data);
-        //调用slb推送服务
-        // yield libVirtualHost.updateSlbConfig(conf)
+        var confResult = libNginx(data);
+        var result = '';
+        if(confResult.code === 0) {
+            //调用slb推送服务
+            result = yield libVirtualHost.updateSlbConfig(confResult.content);
+            //错误判断
+            if(result.status === 'failure') {
+                return result;
+            }
+        }else{
+            result = {
+                status: 'failure',
+                info: confResult.data
+            }
+            return result;
+        }
 
         //更新该被回滚的策略组的发布时间为当前时间，其他信息不变
-        var result = yield libVersion.updateVersionlog({'publishtime': moment().format('YYYY-MM-DD hh:mm:ss')},{'objectId':version.id })
+        result = yield libVersion.updateVersionlog({'publishtime': moment().format('YYYY-MM-DD hh:mm:ss')},{'objectId':version.id })
         if(result){
             result = {
                 status: 'success',

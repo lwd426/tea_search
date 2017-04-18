@@ -79,14 +79,21 @@ module.exports = {
                 headers: HEADERS,
                 body: JSON.stringify(params)
             }
-            // console.log(URL + '/v2/virtualhost/getbyname/' + args[0])
+            console.log(URL + '/v2/virtualhost/getbyname/' + args[0])
             request(opt, function (error, response, body) {
                 var body = parseJson(body);
                 if(!body || body.error) {
                     console.log('Error now! Request Error'+body.error+ ', Please do with it...')
+                    resolve({
+                        status: 'failure',
+                        info: body.error
+                    })
                 }
                 result = body;
-                resolve(result);
+                resolve({
+                    status: 'success',
+                    info: result
+                })
             })
 
         });

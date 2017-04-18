@@ -43,6 +43,6 @@ module.exports = {
      * @returns {*}
      */
     updateSlbConfig: function *(domainId, content) {
-        return yield db.put('manual/'+ domainId, content)
+        return yield db.update('manual/'+ domainId, content)
     }
 }
