@@ -4,6 +4,8 @@ import 'antd.min.css';
 import { Table, Tooltip, Icon, Button, Popconfirm,Popover } from 'antd';
 import EditableCell from './editcell';
 const uuid = require('uuid/v1');
+import utilscomps from '../../utilscomps'
+
 class GLPop extends React.Component{
     constructor(props) {
         super(props);
@@ -72,14 +74,14 @@ class GLWebserver extends React.Component {
                    {record.refer === '是' ? (
                    <Popconfirm title="取消该参照服务器前，请确认该服务器上没有正在生效的策略?" onConfirm={() => {
                        that.props.contentActions.deviceinfoActions.setReferServers([record.key], false);
-                   }}><Tooltip placement="topLeft" title="取消该参照服务器" arrowPointAtCenter>
+                   }}><Tooltip placement="bottomLeft" title="取消该参照服务器" arrowPointAtCenter>
                        <Button icon="eye" className="gl-btn"></Button>
                    </Tooltip>
 
                    </Popconfirm>) :(<Popconfirm title="设置该服务器为参照服务器?" onConfirm={() => {
                            that.props.contentActions.deviceinfoActions.setReferServers([record.key], true);
                        }}>
-                           <Tooltip placement="topLeft" title="设定该服务器为该参照服务器" arrowPointAtCenter>
+                           <Tooltip placement="bottomLeft" title="设定该服务器为该参照服务器" arrowPointAtCenter>
                                <Button className="gl-btn" icon="eye-o" ></Button>
                            </Tooltip>
                        </Popconfirm>)}
@@ -87,7 +89,7 @@ class GLWebserver extends React.Component {
                     <Popconfirm title="确认删除该服务器?" onConfirm={() => {
                         that.props.contentActions.deviceinfoActions.deleteWebServer(record);
                     }}>
-                        <Tooltip placement="topLeft" title="删除服务器" arrowPointAtCenter>
+                        <Tooltip placement="bottomRight" title="删除服务器" arrowPointAtCenter>
                                <Button className="gl-btn" icon="delete" ></Button>
                            </Tooltip>
                     </Popconfirm>
@@ -104,6 +106,11 @@ class GLWebserver extends React.Component {
         };
     }
     handleAdd = () => {
+        let {webServerList} = this.props.content.deviceinfo;
+        if(webServerList && webServerList[0] && webServerList[0].ip === ''){
+            utilscomps.showNotification('warning', '提示', '您有为添加完成的服务器，请先添加完毕！' );
+            return false;
+        }
         const slbid = this.props.menu.slbid || '';
         let key = uuid();
         const newData = {

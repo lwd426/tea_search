@@ -17,12 +17,12 @@ module.exports = {
      */
     saveTestgroup: function*(name, code, slbid) {
         var data = {
-            name: '请输入',
+            name: '',
             code: code,
             slbid: slbid,
-            status: '新上',
-            flowaccounting: '未配置',
-            time: moment().format('YYYY-MM-DD HH:mm'),
+            status: 'new',
+            flowaccounting: '-',
+            time: '-',
             version: '-'
 
         }
@@ -36,7 +36,7 @@ module.exports = {
      * @returns {*}
      */
     getTestgroupList: function*(slbid) {
-        var list = yield db.get('testgroup', {slbid: slbid});
+        var list = yield db.get('testgroup', {slbid: slbid},[{opt: 'desc', key: 'createdAt'}]);
         return list;
     },
     /**

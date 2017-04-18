@@ -3,6 +3,7 @@ import '../style.css';
 import 'antd.min.css';
 import EditableCell from './editcell'
 const uuid = require('uuid/v1');
+import utilscomps from '../../utilscomps'
 
 import { Table, Button, Modal, Popconfirm } from 'antd';
 
@@ -72,8 +73,12 @@ class GLTestgroup extends React.Component {
         // this.setState({ dataSource });
     }
     handleAdd = () => {
+        let {testgrouplist} = this.props.content.testgroup;
+        if(testgrouplist && testgrouplist[0] && testgrouplist[0].name === ''){
+            utilscomps.showNotification('warning', '提示', '您有为添加完成的策略组，请先添加完毕！' );
+            return false;
+        }
         const slbid = this.props.menu.slbid || '';
-
         let count = uuid();
         let newData =  {
             key: count ,
@@ -81,7 +86,7 @@ class GLTestgroup extends React.Component {
             code:  count,
             name: '',
             status: '-',
-            flowaccounting: '未配置',
+            flowaccounting: '',
             time:'',
             version: ''}
 
