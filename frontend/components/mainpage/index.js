@@ -49,7 +49,7 @@ class GLMainpage extends React.Component {
     collapseCallback(key) {
         console.log(key);
     }
-    switchContentShow(none, block, arr){
+    switchContentShow(none, block, arr, currentCasVal){
         let strageties = [];
         arr.map((val, index) => {
             if(val.tag){
@@ -69,7 +69,7 @@ class GLMainpage extends React.Component {
                 } 
             })
             str += ']';
-            this.props.contentActions.mainpageActions.switchContentShow(none,block,str)
+            this.props.contentActions.mainpageActions.switchContentShow(none,block,str,currentCasVal)
         }else{
             alert('此项目无数据！')
         }
@@ -102,14 +102,14 @@ class GLMainpage extends React.Component {
         if(slblist.length > 0 ){
             slblist.forEach(function(v,index){
                 let obj = {}
-                obj['value'] = v.objectId;
+                obj['value'] = v.name;
                 obj['label'] = v.name;
 
                 if(v.testGroups.length > 0){
                     let arr = [];
                     v.testGroups.forEach(function(test_v,index){
                         let inObj ={};
-                        inObj['value'] = test_v.objectId;
+                        inObj['value'] = test_v.name;
                         inObj['label'] = test_v.name;
                         arr.push(inObj)
                     })
@@ -130,11 +130,12 @@ class GLMainpage extends React.Component {
         }];
 
         const _this = this;
-
+        const currentCasVal = this.props.content.mainpage.currentCasVal || ["Please "];
+        console.log(currentCasVal)
         return (
             <div className="mainpage">
                 <br />
-                <Cascader options={options} onChange={this.onChange.bind(this)} />
+                <Cascader options={options} onChange={this.onChange.bind(this)} value={currentCasVal}/>
                 {/*<Button style={{float:'right'}}>
                     <Icon type="plus-circle-o" />新建测试组 
                 </Button>*/}
@@ -147,7 +148,10 @@ class GLMainpage extends React.Component {
                                 return v.testGroups.map(function(q, idx){
                                     return(
                                         <Panel header={v.name + '/' + q.name} key={index + '-' +idx}>
-                                            <Button type="primary" className="collbutton" onClick={() =>{_this.switchContentShow('none','block',q.strageties)}}>
+                                            <Button type="primary" className="collbutton" onClick={() =>{
+                                                let currentCasVal = [v.name, q.name];
+                                                _this.switchContentShow('none','block', q.strageties, currentCasVal)
+                                            }}>
                                                 查看详情
                                             </Button>
                                             <div style={{padding:20}}>
