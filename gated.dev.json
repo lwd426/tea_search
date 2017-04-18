@@ -12,7 +12,8 @@
       "pid": "./run/gated.pid",
       "watch": [
         "*",
-        "backend/"
+        "backend/*/*.js",
+        "backend/*/*/*.js"
       ],
       "node_args": [
         "--harmony-async-await"

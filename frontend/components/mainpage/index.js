@@ -51,11 +51,28 @@ class GLMainpage extends React.Component {
     }
     switchContentShow(none, block, arr){
         let strageties = [];
-        arr.map((val, index) => 
-            strageties.push(val.tag)
-        )
-        console.log(strageties)
-        this.props.contentActions.mainpageActions.switchContentShow(none,block,strageties)
+        arr.map((val, index) => {
+            if(val.tag){
+                strageties.push(val.tag)
+            }  
+        })
+
+        let length = strageties.length;
+        if(length > 0){
+            let str = '[';
+            strageties.map((val, index) => {
+                str += '"'
+                str += val;
+                str += '"';
+                if(index < (length - 1)){
+                    str += ','
+                } 
+            })
+            str += ']';
+            this.props.contentActions.mainpageActions.switchContentShow(none,block,str)
+        }else{
+            alert('此项目无数据！')
+        }
     }
     tabChange(key){
         console.log(key);

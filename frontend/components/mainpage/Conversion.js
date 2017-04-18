@@ -12,19 +12,11 @@ import { Cascader } from 'antd';
 
 let res='dd';
 
-let options_two = [{
-    value: 'BtnClick',
-    label: 'BtnClick',
-}, {
-    value: 'PicClick',
-    label: 'PicClick',
-}];
+let options_two = [];
+
 export default class Chart extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            options_two: options_two
-        }
     }
     rangeOnChange(dates, dateStrings) {
         this.props.contentActions.mainpageActions.changeDatePicker(dateStrings);
@@ -52,17 +44,14 @@ export default class Chart extends React.Component {
         let strageties = Object.entries(responseData);
 
         //设置 option_two
-        options_two = [];
+        /*let options_two = [];
         for(let key in strageties[0][1]){
             options_two.push({
                 value: key,
                 label: key
             })
             console.log(key)
-        }
-        this.setState({
-            options_two: options_two
-        })
+        }*/
 
         
         let xData = function() {
@@ -99,7 +88,7 @@ export default class Chart extends React.Component {
 
 
         
-        let casVal = this.props.content.mainpage.casVal || options_two[0].value
+        let casVal = this.props.content.mainpage.casVal || this.props.content.mainpage.options_two[0].value
         //debugger
         strageties.map((v,i) => {
             legendDate.push('版本'+v[0]);
@@ -189,7 +178,6 @@ export default class Chart extends React.Component {
         //     res = await request.getConversionDataByStragety("['100001', '100002']",'2017-03-05','2017-03-08');
         //     console.log(res.result.data);
         // })()
-        console.log('woir render')
         const columns = [{
           title: '版本',
           dataIndex: 'date',
@@ -252,7 +240,6 @@ export default class Chart extends React.Component {
           click: 62,
           persent: '20%',
         }];
-
         return (
             <div>
                 <br />
@@ -266,7 +253,7 @@ export default class Chart extends React.Component {
                 </div>
                 <div className="CascaderBox">
                     <span>优化指标 ：</span>
-                    <Cascader options={this.state.options_two} defaultValue={['BtnClick']} onChange={this.onChange.bind(this)} />
+                    <Cascader options={this.props.content.mainpage.options_two} defaultValue={[this.props.content.mainpage.options_two[0].value]} onChange={this.onChange.bind(this)} />
                 </div>
                 <div className="clear"></div>
 

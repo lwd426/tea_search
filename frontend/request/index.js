@@ -33,14 +33,14 @@ module.exports = {
                 method: 'POST',
                 headers: {
                     "X-Parse-Application-Id": "gatedLaunch",
-                    "Content-Type": "application/x-www-form-urlencoded",
+                    "Content-Type": "application/json",
                     "Accept": "application/json"
                 },
-                body: {
+                body: JSON.stringify({
                     "start": start,
                     "end": end,
                     "gls": stragetys
-                }
+                })
             });
             let data = await response.json();
             return data;
@@ -50,18 +50,19 @@ module.exports = {
     },
     getConversionDataByStragety : async (stragetys, start, end) => {
         try {
+            let stragetys = stragetys ? stragetys : '';
             let response = await fetch(data_conversion_url,{
                 method: 'POST',
                 headers: {
                     "X-Parse-Application-Id": "gatedLaunch",
-                    "Content-Type": "application/x-www-form-urlencoded",
+                    "Content-Type": "application/json",
                     "Accept": "application/json"
                 },
-                body: {
+                body: JSON.stringify({
                     "start": start,
                     "end": end,
                     "gls": stragetys
-                }
+                })
             });
             let data = await response.json();
             return data;

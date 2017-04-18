@@ -50,6 +50,7 @@ export default class EChart extends React.Component {
         let startTime = moment(new Date(date_picker[0])).format('YYYY-MM-DD');
         let endTime = moment(new Date(date_picker[1])).format('YYYY-MM-DD');
         let res = await request.getTrafficDataByStragety(stragety_arr, startTime, endTime);
+
         let responseData = res.result.data.reverse();
         console.log(responseData);
 
@@ -57,9 +58,6 @@ export default class EChart extends React.Component {
         let percentArr = [];
         let legendDate = ['总量'];
         let seriesArr = [];
-        
-
-        let a = [],b = [];
 
         let strageties = Object.entries(responseData[0].uv);
 
@@ -86,6 +84,7 @@ export default class EChart extends React.Component {
         })
 
         //循环赋值
+        tableData = [];
         responseData.map((val,index) => {
             dataAll.push(val.uv_all);
             tableData.push({
@@ -118,13 +117,13 @@ export default class EChart extends React.Component {
             var length = (end - start)/(24*60*60*1000) + 1;
 
             //暂时切割长度，后期接口参数功能正常后，去掉
-            dataAll = dataAll.slice(0, length)
-            dataArr.map((v,i) => {
-                a[i] = v.slice(0, length);
-            });
-            percentArr.map((v,i) => {
-                b[i] = v.slice(0, length);
-            })
+            // dataAll = dataAll.slice(0, length)
+            // dataArr.map((v,i) => {
+            //     a[i] = v.slice(0, length);
+            // });
+            // percentArr.map((v,i) => {
+            //     b[i] = v.slice(0, length);
+            // })
             //遍历生成 echart 配置
             seriesArr = [{
                     name:'总量',
@@ -138,7 +137,7 @@ export default class EChart extends React.Component {
                     name:'版本'+v[0]+'访问用户',
                     type:'bar',
                     barMaxWidth : 20,
-                    data:a[i]
+                    data:dataArr[i]
                 })
             });
             strageties.map((v,i) => {
@@ -147,7 +146,7 @@ export default class EChart extends React.Component {
                     name:'版本'+v[0]+'访问用户比例',
                     type:'line',
                     yAxisIndex: 1,
-                    data:b[i]
+                    data:percentArr[i]
                 })
             })
 
@@ -162,10 +161,10 @@ export default class EChart extends React.Component {
             }
 
             //表格数据
-            tableData = tableData.slice(0, length);
             tableData.forEach(function(v, index, arr_self){
                 v.date = data_arr[index]
             })
+            console.log(tableData)
             _this.setState({
                 tableData: tableData,
                 tableColumns: tableColumns
@@ -242,6 +241,7 @@ export default class EChart extends React.Component {
         // let date_picker = this.props.content.mainpage.date_picker
         // console.log(date_picker);
         // this.randerChart(date_picker);
+        this.props.contentActions.mainpageActions.setCascaderOptionstow();
     }
     componentWillReceiveProps(nextProps) {
         console.log('echart componentWillReceiveProps');
