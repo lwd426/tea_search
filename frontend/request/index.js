@@ -50,7 +50,6 @@ module.exports = {
     },
     getConversionDataByStragety : async (stragetys, start, end) => {
         try {
-            let stragetys = stragetys ? stragetys : '';
             let response = await fetch(data_conversion_url,{
                 method: 'POST',
                 headers: {
@@ -71,17 +70,18 @@ module.exports = {
         }
     },
     getAllStrategies : async (slbid) => {
+        console.log('vvv')
         try {
             let response = await fetch(mainpage_all_strategies_url,{
                 method: 'POST',
                 headers: {
                     "X-Parse-Application-Id": "gatedLaunch",
-                    "Content-Type": "application/x-www-form-urlencoded",
+                    "Content-Type": "application/json",
                     "Accept": "application/json"
                 },
-                body: {
-                    "slbids": ["iUnU5Tij8P"]
-                }
+                // body: JSON.stringify({
+                //     "slbids": ["iUnU5Tij8P"]
+                // })
             });
             let data = await response.json();
             return data;
