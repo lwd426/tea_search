@@ -3,7 +3,36 @@ import echarts from 'echarts';
 import {Table,Button,Icon} from 'antd';
 import moment from 'moment';
 
+//DatePicker
+import { DatePicker } from 'antd';
+const { MonthPicker, RangePicker } = DatePicker;
+import { Cascader } from 'antd';
+
+
+
+let options_two = [{
+    value: 'BtnClick',
+    label: 'BtnClick',
+}, {
+    value: 'PicClick',
+    label: 'PicClick',
+}];
+
+
 export default class EChart extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+    rangeOnChange(dates, dateStrings) {
+        this.props.contentActions.mainpageActions.changeDatePicker(dateStrings);
+    }
+    onChange(arr){
+        console.log(arr)
+        //this.props.contentActions.mainpageActions.changeCascader();
+    }
+    disabledDate(current) {
+        return current && current.valueOf() > Date.now();
+    }
     randerChart = (date_picker) => {
         // 基于准备好的dom，初始化echarts实例
 
@@ -168,6 +197,20 @@ export default class EChart extends React.Component {
 
         return (
             <div>
+                <div className="rangepickerBox">
+                    <RangePicker
+                        defaultValue={[moment().subtract(7, 'days'), moment()]}
+                        format={'YYYY/MM/DD'}
+                        onChange={this.rangeOnChange.bind(this)}
+                        disabledDate={this.disabledDate.bind(this)}
+                    />
+                </div>
+                <div className="CascaderBox">
+                    <span>优化指标 ：</span>
+                    <Cascader options={options_two} defaultValue={['BtnClick']} onChange={this.onChange} />
+                </div>
+                <div className="clear"></div>
+
                 <div id="duiji" style={{width:'100%',height:400}} ></div>
                 <Table bordered={true} columns={columns} dataSource={data} title={() => '按日期'}/>  
             </div>      

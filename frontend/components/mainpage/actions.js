@@ -83,3 +83,17 @@ export function switchContentShow(main_display, card_display, strageties){
         strageties : strageties,
     }
 }
+
+export function switchTable(key){
+    return{
+        type:TYPES.MAIN_CARD_KEY,
+        main_card_key: key
+    }
+}
+
+export function changeCascader(arr){
+    return{
+        type:TYPES.CASVAL,
+        casVal: arr[0]
+    }
+}

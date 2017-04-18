@@ -7,7 +7,6 @@ import Conversion from './Conversion.js';
 import Duiji from './duiji.js';
 import request from '../../request';
 
-import MyTable from './table.js';
 
 import { Menu, Dropdown, message } from 'antd';
 //Cascader
@@ -57,6 +56,10 @@ class GLMainpage extends React.Component {
         )
         console.log(strageties)
         this.props.contentActions.mainpageActions.switchContentShow(none,block,strageties)
+    }
+    tabChange(key){
+        console.log(key);
+        this.props.contentActions.mainpageActions.switchTable(key);
     }
     async componentWillMount(){
         let res = await request.getAllStrategies();
@@ -133,7 +136,7 @@ class GLMainpage extends React.Component {
                                             </Button>
                                             <div style={{padding:20}}>
                                                 <div>
-                                                    <span>创建于：2017年3月21日</span>
+                                                    <span>创建于： { moment(new Date(q.createdAt)).format('YYYY-MM-DD') }  </span>
                                                     <span>已运行： 21天</span>
                                                     <span>最近变动： 1天前</span>
                                                 </div>
@@ -167,7 +170,7 @@ class GLMainpage extends React.Component {
                 </div>
 
                 <div className="card-container" style={{display: this.props.content.mainpage.card_container_display}}>
-                  <Tabs type="card">
+                  <Tabs type="card" onChange={this.tabChange.bind(this)}>
                     <TabPane tab="流量" key="1">
                         <div className="spanBox">
                             <span>流量占比 ：</span> <span> 20% </span>
@@ -191,12 +194,11 @@ class GLMainpage extends React.Component {
                             />
                         </div>
                         <Traffic {...this.props}/>
-                        <MyTable {...this.props}/>
                     </TabPane>
 
                     <TabPane tab="转化率(多版本)" key="2">
 
-                        <div className="rangepickerBox">
+                        {/*<div className="rangepickerBox">
                             <RangePicker
                                 defaultValue={[moment().subtract(7, 'days'), moment()]}
                                 format={dateFormat}
@@ -208,7 +210,7 @@ class GLMainpage extends React.Component {
                             <span>优化指标 ：</span>
                             <Cascader options={options_two} defaultValue={['BtnClick']} onChange={this.onChange} />
                         </div>
-                        <div className="clear"></div>
+                        <div className="clear"></div>*/}
 
                         <div id = "content_one" style={{display:this.props.content.mainpage.content_one_display}}>
                             <Conversion {...this.props}/>

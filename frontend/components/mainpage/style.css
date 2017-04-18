@@ -1,3 +1,4 @@
+.main-container{padding-right:100px;}
 .editable-cell {
     position: relative;
 }
@@ -80,7 +81,7 @@
 }
 .clear{clear: both;}
 #content_two{position: relative;}
-#content_two .back{position: absolute;top:-70px;}
+#content_two .back{position: absolute;top:0px;}
 .tableBox{position: relative;}
 .tableBox .export{position: absolute;top:55px;right: 60px;}
 #content_one .ant-table-wrapper,#content_two .ant-table-wrapper{padding: 0 80px;}
