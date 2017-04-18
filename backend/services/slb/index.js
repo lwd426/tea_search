@@ -91,9 +91,9 @@ module.exports = {
             }
         })
         //调用禚永然的配置文件生成接口
-        // var conf = libNginx(data);
+        var conf = libNginx(data);
         //调用slb推送服务
-        // yield libVirtualHost.updateSlbConfig(conf)
+        yield libVirtualHost.updateSlbConfig(conf)
         //保存发版信息
         var version = {
             publishtime: moment().format('YYYY-MM-DD hh:mm:ss'),
@@ -146,9 +146,9 @@ module.exports = {
         var data = data.concat(backtgDetails);
 
         //调用禚永然的接口生成新的配置文件
-        // var conf = libNginx(data);
+        var conf = libNginx(data);
         //调用slb推送服务
-        // yield libVirtualHost.updateSlbConfig(conf)
+        yield libVirtualHost.updateSlbConfig(conf)
 
         //更新该被回滚的策略组的发布时间为当前时间，其他信息不变
         var result = yield libVersion.updateVersionlog({'publishtime': moment().format('YYYY-MM-DD hh:mm:ss')},{'objectId':version.id })
