@@ -70,7 +70,6 @@ module.exports = {
         }
     },
     getAllStrategies : async (slbid) => {
-        console.log('vvv')
         try {
             let response = await fetch(mainpage_all_strategies_url,{
                 method: 'POST',
