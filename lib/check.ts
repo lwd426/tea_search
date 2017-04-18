@@ -236,7 +236,7 @@ class Verify {
             const noUid = !v.uidArray || Array.isArray(v.uidArray) && !v.uidArray.length;
             const noReg = !v.regionArray || Array.isArray(v.regionArray) && !v.regionArray.length;
             if (noReg && noUid && !v.default) {
-                console.log("因为没有uid或者地域信息，删除",v);
+                // console.log("因为没有uid或者地域信息，删除",v);
                 this.arr.splice(i,1);
                 i--;
                 /*throw {
