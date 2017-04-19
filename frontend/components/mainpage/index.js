@@ -6,6 +6,7 @@ import Traffic from './Traffic.js';
 import Conversion from './Conversion.js';
 import Duiji from './duiji.js';
 import request from '../../request';
+import { setMainPageOptions } from './lib';
 
 
 import { Menu, Dropdown, message } from 'antd';
@@ -111,49 +112,21 @@ class GLMainpage extends React.Component {
         let slblist = this.state.mainpage_data;
 
         let option_idx = 0;
-        if(slblist.length > 0 ){
-            slblist.forEach(function(v,index){
-                let obj = {}
-                obj['value'] = v.objectId;
-                obj['label'] = v.name;
 
-                if(v.testGroups.length > 0){
+        if(slblist.length > 0 ){
+            slblist.forEach(function(slb,index){
+                let obj = {}
+                obj['value'] = slb.objectId;
+                obj['label'] = slb.name;
+
+                if(slb.testGroups.length > 0){
                     let arr = [];
-                    v.testGroups.forEach(function(test_v,index){
-                        let inObj ={};
-                        if(test_v.strageties.length > 0){
-                            let strageties = [] //各个策略的tag 数组
-                            test_v.strageties.forEach(function(stragety,index){
-                                if(stragety.tag){
-                                    strageties.push(stragety.tag)
-                                }
-                            })
-                            if(strageties.length > 0){
-                                inObj['value'] = test_v.objectId;
-                                inObj['label'] = test_v.name;
-                                inObj['strageties'] = strageties;
-                            }else{
-                                inObj['value'] = test_v.objectId;
-                                inObj['label'] = test_v.name + '（所有策略未发布）';
-                                inObj['disabled'] = true;
-                            }
-                            
-                            arr.push(inObj)
-                        }else{
-                            inObj['value'] = test_v.objectId;
-                            inObj['label'] = test_v.name + '（项目下无策略）'
-                            inObj['disabled'] = true;
-                            arr.push(inObj)
-                        }
-                        
-                    })
+                    arr = setMainPageOptions(slb.testGroups, arr, 'running');
+                    arr = setMainPageOptions(slb.testGroups, arr, 'new');
+                    arr = setMainPageOptions(slb.testGroups, arr, 'stopped');
                     obj['children'] = arr;
-                    options[option_idx] = obj;
-                    option_idx ++;
-                }/*else{
-                    obj['label'] = v.name + '（此测试组下无项目）'
-                    obj['disabled'] = true;
-                }*/
+                    options.push(obj);
+                }
             })
         }
         //let defaultValue = (options.length > 0) ? [ options[0]['value'],options[0]['children'][0]['value'] ] : [];
