@@ -7,6 +7,8 @@
 
 var db = require('../../datasource/parse')
 const uuid = require('uuid/v1');
+var libStra = require('../stragety');
+
 var moment = require('moment');
 
 module.exports = {
@@ -37,6 +39,27 @@ module.exports = {
      */
     getTestgroupList: function*(slbid) {
         var list = yield db.get('testgroup', {slbid: slbid},[{opt: 'desc', key: 'createdAt'}]);
+        // 决定测试项目状态的逻辑：
+        // 1. 发布时间为空则为new
+        // 2. 策略如果有running,则为运行中
+        // 3. 如果所有策略有没有running的，则为停止状态
+        // var i = 0, len = list.length;
+        // for(;i<len;i++){
+        //     var tg = list[i];
+        //     var publistime = tg.get('time');
+        //     if(publistime === '-'){
+        //         tg.set('status', 'new')
+        //     }else{
+        //         var strageties = yield libStra.getStragetyInfos({tgid: tg.id})
+        //         var status = 'stopped'
+        //         strageties.map((stra)=>{
+        //             if(stra.get('stra_status') === 'running'){
+        //                 status = 'running'
+        //             }
+        //         })
+        //         tg.set('status', status)
+        //     }
+        // }
         return list;
     },
     /**

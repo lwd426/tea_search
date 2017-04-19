@@ -136,7 +136,6 @@ class GLWebserver extends React.Component {
         const columns = this.columns;
         var dataSource = this.props.content.deviceinfo.webServerList.map((cell, index)=>{
             var stragetyinfo = [];
-            console.log(cell.strageties)
             cell.strageties ? cell.strageties.map((stragety, index)=>{
                 stragetyinfo.push({
                     tg_name: stragety.tg_name,

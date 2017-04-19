@@ -8,19 +8,14 @@ const TabPane = Tabs.TabPane;
 class GLDeviceInfo extends React.Component {
     constructor(props) {
         super(props);
-        var _this = this;
-        // this.state = {
-        //     activeKey: panes[0].key,
-        //     panes,
-        // };
     }
     componentWillReceiveProps(nextProps) {
-
+        if(nextProps.menu.slbid === this.props.menu.slbid) return false;
+        this.props.contentActions.deviceinfoActions.getWebServerList(nextProps.menu.slbid);
         return true;
     }
     componentWillMount(){
-        const slbid = this.props.menu.slbid || '';
-        this.props.contentActions.deviceinfoActions.getWebServerList(slbid);
+        this.props.contentActions.deviceinfoActions.getWebServerList(this.props.menu.slbid);
     }
     // onChange = (activeKey) => {
     //     if(activeKey == 2){

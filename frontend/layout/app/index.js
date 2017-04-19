@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { Layout, Button, Modal} from 'antd';
+import { Layout, Button,Icon, Modal} from 'antd';
 import GLMenu from '../menu'
 import GLContent from '../content'
 import { bindActionCreators } from 'redux'
@@ -39,24 +39,36 @@ class App extends React.Component {
     render() {
         return (
             <Layout>
-                <Header style={{ background: '#fff', padding: 0 }} />
-                <Sider
-                    collapsible
-                    collapsed={this.props.app.collapsed}
-                    onCollapse={this.onCollapse}
-                >
-                    <div className="logo" />
-                    <GLMenu mode={this.props.app.mode}/>
-                    <Button icon="plus" className="add-test-group-btn" onClick={()=>{
-                        this.props.appActions.setAddSLBModalStatus(true)
-                    }}>添加</Button>
-                </Sider>
-                <Layout>
-                    <GLContent showtype="group" {...this.props}/>
+                <div className="app-container" >
+                    <Header>
+                        <Button className="button-div-header" onClick={()=>{
+                            Modal.success({
+                                title: VERSIONINFO.title,
+                                content: VERSIONINFO.content
+                            });
+                        }}><Icon type="notification" /> 发版说明</Button>
+                        乐视视频灰度发布系统
+                    </Header>
+                    <Content>
+                        <Sider
+                                collapsible
+                                collapsed={this.props.app.collapsed}
+                                onCollapse={this.onCollapse}
+                            >
+                            <div className="logo" ></div>
+                            <GLMenu mode={this.props.app.mode}/>
+                            <Button icon="plus" className="add-test-group-btn" onClick={()=>{
+                                this.props.appActions.setAddSLBModalStatus(true)
+                            }}>添加</Button>
+                        </Sider>
+                        <Layout className="gl-right-layout">
+                            <GLContent showtype="group" {...this.props}/>
+                        </Layout>
+                    </Content>
                     <Footer style={{ textAlign: 'center' }}>
-                        Ant Design ©2016 Created by Ant UED
+                        le.com ©2017 Created by le.com
                     </Footer>
-                </Layout>
+                </div>
             </Layout>
         );
     }

@@ -1,6 +1,7 @@
 var router = require('koa-router')();
 var lib = require('../services/slb')
 var libTg = require('../services/testgroup');
+var libStragety = require('../services/stragety')
 var libVir = require('../services/virtualhost');
 var moment = require('moment')
 
@@ -64,7 +65,14 @@ router.get('/publish', function *(next) {
             data: result.info
         };
     }else if(result.status === 'success') {
-        result = yield libTg.updateTest({time: moment().format('YYYY-MM-DD HH:mm'), version: result.stra_info}, {objectId: tgid})
+            var strageties = yield libStragety.getStragetyInfos({tgid: tgid})
+            var status = 'stopped'
+            strageties.map((stra)=>{
+                if(stra.get('stra_status') === 'running'){
+                    status = 'running'
+                }
+            })
+        result = yield libTg.updateTest({time: moment().format('YYYY-MM-DD HH:mm'), version: result.stra_info, status: status}, {objectId: tgid})
         if(result){
             this.body = {
                 status: 'success',

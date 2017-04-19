@@ -19,7 +19,13 @@
 }
 
 .ant-layout-footer{
-    padding: 12px 50px !important;
+    width: 100%;
+    padding: 8px 50px !important;
+    color: rgba(0, 0, 0, 0.65);
+    font-size: 12px;
+    position: fixed;
+    bottom: 0px;
+    background: #FFFFFF;
 }
 
 .ant-breadcrumb{
@@ -45,6 +51,17 @@
 #components-layout-demo-side .ant-layout-sider-collapsed .ant-menu-submenu-vertical > .ant-menu-submenu-title:after {
     display: none;
 }
+.app-container{
+    display: table;
+    height: 100%;
+    width: 100%;
+    font-family: fantasy;
+}
+
+.ant-menu-root{
+    margin-bottom: 86px !important;
+}
+
 
 .ant-layout-sider-trigger{
     width: 50% !important;
@@ -52,14 +69,57 @@
     border-top: 1px solid #949090 !important;
     border-left: 1px solid #949090 !important;
 }
+.ant-layout-sider{
+    width: 20% !important;
+    float: left;
+}
 
+.ant-layout-sider-trigger{
+    bottom: 34px !important;
+}
+.gl-right-layout{
+    width: 80% !important;
+    background: #ffffff;
+}
+.gl-right-layout>div{
+    display: block;
+}
+
+.gl-content{
+    display: block;
+}
+.ant-layout-content{
+    display: -webkit-box;
+    width: 100%;
+    margin: 40px 0 0 !important;
+    min-height: 604px;
+    z-index: 0;
+    background: #ffffff;
+}
+.ant-layout-header{
+    width: 100%;
+    position: fixed;
+    z-index: 10;
+    padding: 0 20px!important;
+    font-size: 17px;
+    background: #3b3b3b!important;
+    color: #fff!important;
+    border-radius: 0!important;
+    font-family: inherit!important;
+    height: 40px !important;
+    line-height: 40px !important;
+}
+.button-div-header{
+    float: right;
+    margin: 6px 0px;
+}
 .add-test-group-btn {
     padding: 0px;
     margin-left: 0%;
     position: absolute !important;
     text-align: center;
     width: 50%;
-    bottom: 0;
+    bottom: 34px;
     cursor: pointer;
     height: 48px;
     border: 0px !important;

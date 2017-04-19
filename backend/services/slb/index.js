@@ -52,7 +52,6 @@ module.exports = {
          */
         var data = [],data4log = [];
         var referServers = yield libServer.getServersInfo({slbid: slbid}, [{opt: 'noExist', key: 'stragetiesinfo'}])
-        console.log(referServers.length)
         stragetylist.map((stragety)=>{
             if(stragety.get('stra_status') === 'running') {
 
