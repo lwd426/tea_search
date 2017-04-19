@@ -29,7 +29,7 @@ class GLContent extends React.Component {
     render() {
         let wintype = this.props.menu.wintype;
         return (
-            <Content style={{ margin: '0 16px' }}>
+            <div className="gl-content">
                 {/*<Breadcrumb style={{ margin: '12px 0' }}>*/}
                     {/*<Breadcrumb.Item>SLB域名1</Breadcrumb.Item>*/}
                     {/*<Breadcrumb.Item>Web服务器管理</Breadcrumb.Item>*/}
@@ -52,7 +52,7 @@ class GLContent extends React.Component {
                 {/*<Button className="gl-addslb-btn" icon="add" onClick={()=>{*/}
                     {/*this.props.contActions.setAddSLBModalStatus(true)*/}
                 {/*}}>新增测试项</Button>*/}
-            </Content>
+            </div>
         );
     }
 }

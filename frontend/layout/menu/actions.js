@@ -2,6 +2,7 @@ import * as TYPES from './constants'
 import fetch from '../../utils/fetch'
 const HOST = require('../../../config').HOST;
 const slb_list_url = HOST + '/slb'
+import * as tgActions from '../../components/testgroup/actions'
 
 
 /**
@@ -92,11 +93,11 @@ export function changeShowWinType(slbid, wintype) {
     //读取slb信息
     return (dispatch, getState) => {
         return dispatch(fetch.getData(slb_list_url + '?objectId=' + slbid,function(err, result){
-            console.log(err)
             if(err) return dispatch(changeSlbSuccess(''));
             var arr = result.data;
             var domain = arr[0].slbDomain;
             var domainId = arr[0].domainId;
+            dispatch(tgActions.goback())
             return dispatch(changeSlbSuccess(wintype, slbid, domain, domainId));
         }))
     }

@@ -88,8 +88,6 @@ export function getCitiesSuccess(list) {
 export function getServers(slbid) {
     return (dispatch, getState) => {
         return dispatch(fetch.getData(server_url+ '?slbid='+slbid,function(err, result){
-            console.log('dddddd')
-
             if(err)  return  dispatch(getServersSuccess([]))
             return dispatch(getServersSuccess(result.data))
         }))
@@ -263,7 +261,6 @@ export function saveStragetyResult(result) {
 }
 
 function dataHandler(dispatch, ha,stra_id, slbid,tgid,name,desc,cities,servers,serverskey,urls,uids,type){
-    console.log('ddddd')
     if(ha === 'save'){
         return dispatch(fetch.postData(stragety_url,{slbid,tgid,name,desc,cities,servers,serverskey,urls,uids,type}, function(err, result){
             if(err || result.status === 'failure')  return dispatch(saveStragetyResult(false))

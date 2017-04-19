@@ -66,6 +66,16 @@ module.exports = {
         return stragetylist;
     },
     /**
+     * 获取单纯的策略信息列表
+     * @param opts
+     * @returns {*}
+     */
+    getStragetyInfos: function*(where, opts) {
+        if(!opts) opts = []
+        var stragetylist =  yield db.get('stragety',where, opts);
+        return stragetylist;
+    },
+    /**
      * 删除策略信息
      * @param id
      * @returns {*}

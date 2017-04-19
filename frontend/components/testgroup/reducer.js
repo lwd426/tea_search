@@ -85,7 +85,29 @@ let reducer = (state = initialState, action)=> {
             })
             break
         case TYPES.ADD_STRAGETY:
-            return Object.assign({}, state, {showtype: 'addstragety', editting_stragety: undefined, editting_status: false, serverselectedkeys:[],addurls: [], adduids: []})
+            var initStatus = {
+                name: {
+                    status: false,
+                    info: '请输入分流策略名称'
+                },
+                server: {
+                    status: false,
+                    info: '请选择分流服务器'
+                },
+                url: {
+                    status: false,
+                    info: ''
+                },
+                uid: {
+                    status: false,
+                    info: ''
+                },
+                region: {
+                    status: false,
+                    info: ''
+                }
+            }
+            return Object.assign({}, state, {showtype: 'addstragety', validateStra: initStatus,  editting_stragety: undefined, editting_status: false, serverselectedkeys:[],addurls: [], adduids: []})
             break
         case TYPES.ADD_URL_TYPE:
             return Object.assign({}, state, {addurltype: action.addurltype})
