@@ -110,6 +110,7 @@ class GLMainpage extends React.Component {
         let options = [];
         let slblist = this.state.mainpage_data;
 
+        let option_idx = 0;
         if(slblist.length > 0 ){
             slblist.forEach(function(v,index){
                 let obj = {}
@@ -147,11 +148,12 @@ class GLMainpage extends React.Component {
                         
                     })
                     obj['children'] = arr;
-                }else{
+                    options[option_idx] = obj;
+                    option_idx ++;
+                }/*else{
                     obj['label'] = v.name + '（此测试组下无项目）'
                     obj['disabled'] = true;
-                }
-                options[index] = obj;
+                }*/
             })
         }
         //let defaultValue = (options.length > 0) ? [ options[0]['value'],options[0]['children'][0]['value'] ] : [];
@@ -259,7 +261,7 @@ class GLMainpage extends React.Component {
                         <Traffic {...this.props}/>
                     </TabPane>
 
-                    <TabPane tab="转化率(多版本)" key="2">
+                    <TabPane tab="转化率" key="2">
 
                         {/*<div className="rangepickerBox">
                             <RangePicker

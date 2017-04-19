@@ -161,7 +161,12 @@ class GLWebserver extends React.Component {
         return (
             <div>
                 <div className="gl-testinfo-btndiv">
+                    <div className="slbInformation">
+                        <span className="labelspan">SLB域名 : {this.props.menu.domain}</span>
+                        <span className="labelspan">域名 ID : {this.props.menu.domainId}</span> 
+                    </div>
                     <Button className="gl-right-btn" icon="plus" onClick={this.handleAdd}>新增服务器</Button>
+                    <div className="clear"></div>
                 </div>
                 <Table
                     columns={columns}
