@@ -36,7 +36,7 @@ const initialState = {
         },
         url: {
             status: false,
-            info: ''
+            info: '规则：请填写相对路径（不能包含域名）；支持正则表达式；如：/ 或 /index.html 或 ^~ /index.html 或 ~* /index.html'
         },
         uid: {
             status: false,

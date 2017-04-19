@@ -213,7 +213,7 @@ class RegistrationForm extends React.Component {
                             <Input size="large" ref="urlinputsingle" className="gl-input-with-btn"/>
                             <Button size="large" className="gl-input-btn" onClick={this.addUrl}>添加</Button>
                         </div> :  <div>
-                            <Input type="textarea" ref="urlinputmultiple" className="gl-input-with-btn" placeholder="请输入策略生效的url。添加多个，以;分隔" rows={2} />
+                            <Input type="textarea" ref="urlinputmultiple" className="gl-input-with-btn" placeholder="请输入策略生效的url。添加多个，以;分隔 。 规则：请填写相对路径（不能包含域名）；支持正则表达式；如：/ 或 /index.html 或 ^~ /index.html 或 ~* /index.html" rows={2} />
                             <Button size="large" className="gl-input-btn" onClick={this.addUrl}>添加</Button>
                         </div>}
 
