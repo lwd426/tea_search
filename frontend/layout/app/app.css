@@ -52,7 +52,7 @@
     display: none;
 }
 .app-container{
-    display: table;
+    /*display: table;*/
     height: 100%;
     width: 100%;
     font-family: fantasy;
@@ -70,7 +70,7 @@
     border-left: 1px solid #949090 !important;
 }
 .ant-layout-sider{
-    width: 20% !important;
+    width: 16% !important;
     float: left;
 }
 
@@ -78,7 +78,7 @@
     bottom: 34px !important;
 }
 .gl-right-layout{
-    width: 80% !important;
+    width: 84% !important;
     background: #ffffff;
 }
 .gl-right-layout>div{

@@ -43,6 +43,8 @@
 }
 
 .mainpage{
+    height:100%;
+    overflow-y: auto;
     padding:12px;
     position: relative;
 }
