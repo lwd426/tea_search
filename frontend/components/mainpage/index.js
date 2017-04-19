@@ -37,11 +37,22 @@ class GLMainpage extends React.Component {
         //console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
         this.props.contentActions.mainpageActions.changeDatePicker(dateStrings);
     }
-    onChange(arr) {
-        console.log(arr);
-        this.props.contentActions.mainpageActions.changeProjectValue(arr);
-        let projectValue = arr[1];
-        this.props.contentActions.mainpageActions.switchContentShow('none','block')
+    onChange(value_arr, selectedOptions) {
+        //this.props.contentActions.mainpageActions.changeProjectValue(value_arr);
+        let stragety_arr = selectedOptions[1].strageties;
+        let length = stragety_arr.length;
+        let str = '[';
+        stragety_arr.map((val,index) => {
+            str += '"'
+            str += val;
+            str += '"';
+            if(index < (length - 1)){
+                str += ','
+            }
+        })
+        str += ']';
+
+        this.props.contentActions.mainpageActions.switchContentShow('none','block',str,value_arr)
     }
     disabledDate(current) {
         return current && current.valueOf() > Date.now();
