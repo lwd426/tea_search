@@ -47,14 +47,11 @@ export default class EChart extends React.Component {
     randerChart = async (date_picker, stragety_arr) => {
         const _this = this;
         inintdata();
-        console.log('uuuuuuuuuuuuuuuuuuuuuu')
         let startTime = moment(new Date(date_picker[0])).format('YYYY-MM-DD');
         let endTime = moment(new Date(date_picker[1])).format('YYYY-MM-DD');
         let res = await request.getTrafficDataByStragety(stragety_arr, startTime, endTime);
 
-console.log(res)
         let responseData = res.result.data.reverse();
-        console.log(responseData);
 
         let dataArr = [];
         let percentArr = [];
