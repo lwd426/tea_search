@@ -194,7 +194,6 @@ export default class EChart extends React.Component {
           click: 62,
           persent: '20%',
         }];
-
         return (
             <div>
                 <div className="rangepickerBox">
@@ -207,7 +206,7 @@ export default class EChart extends React.Component {
                 </div>
                 <div className="CascaderBox">
                     <span>优化指标 ：</span>
-                    <Cascader options={options_two} defaultValue={['BtnClick']} onChange={this.onChange} />
+                    <Cascader options={this.props.content.mainpage.options_two} defaultValue={[this.props.content.mainpage.options_two[0].value]} onChange={this.onChange} />
                 </div>
                 <div className="clear"></div>
 

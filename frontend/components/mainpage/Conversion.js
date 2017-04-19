@@ -9,14 +9,22 @@ import { DatePicker } from 'antd';
 const { MonthPicker, RangePicker } = DatePicker;
 import { Cascader } from 'antd';
 
-
-let res='dd';
-
-let options_two = [];
+let tableData = [{
+          key: '1',
+          date: '原始版本',
+          uv: 3000,
+          pv: 500,
+          show: 43,
+          click: 22,
+          persent: '20%',
+        }];
 
 export default class Chart extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            tableData: tableData
+        }
     }
     rangeOnChange(dates, dateStrings) {
         this.props.contentActions.mainpageActions.changeDatePicker(dateStrings);
@@ -41,19 +49,12 @@ export default class Chart extends React.Component {
         let seriesArr = [];
         let percentObj = {};
 
+        let uvObj = {};
+        let pvObj = {};
+        let showObj = {};
+        let clickObj = {};
+
         let strageties = Object.entries(responseData);
-
-        //设置 option_two
-        /*let options_two = [];
-        for(let key in strageties[0][1]){
-            options_two.push({
-                value: key,
-                label: key
-            })
-            console.log(key)
-        }*/
-
-        
         let xData = function() {
             var start = new Date(date_picker[0]).getTime();
             var end = new Date(date_picker[1]).getTime();
@@ -72,24 +73,34 @@ export default class Chart extends React.Component {
             return data_arr;
         }(date_picker);
 
-
         //循环赋值
         for(let key in responseData){
-            //console.log(key, ":" , responseData[key]);
             percentObj[key] = [];
+            uvObj[key] = [];
+            pvObj[key] = [];
+            showObj[key] = [];
+            clickObj[key] = [];
+
             for(let k in responseData[key]){
                 percentObj[key][k] = [];
+                uvObj[key][k] = [];
+                pvObj[key][k] = [];
+                showObj[key][k] = [];
+                clickObj[key][k] = [];
+
                 responseData[key][k].map((val,index) => {
                     percentObj[key][k].push((val.click_count*100/val.show_count).toFixed(2));
+                    uvObj[key][k].push(val.uv);
+                    pvObj[key][k].push(val.pv);
+                    showObj[key][k].push(val.show_count);
+                    clickObj[key][k].push(val.click_count);
                 })
-                percentObj[key][k] = percentObj[key][k].slice(0, length);
             }
         }
 
 
         
         let casVal = this.props.content.mainpage.casVal || this.props.content.mainpage.options_two[0].value
-        //debugger
         strageties.map((v,i) => {
             legendDate.push('版本'+v[0]);
 
@@ -102,9 +113,6 @@ export default class Chart extends React.Component {
 
             console.log(percentObj[v[0]][casVal]);
         });
-
-
-
 
         var myChart = echarts.init(document.getElementById('container'));
         // 绘制图表
@@ -155,6 +163,32 @@ export default class Chart extends React.Component {
             },
             series: seriesArr,
         });
+
+        //table
+        function getAverageNumArr(arr){
+            let sum = 0;
+            let length = arr.length
+            arr.map((v,i) => {
+                sum += v;
+            })
+            let average = sum/length;
+            return average
+        }
+        tableData = []
+        strageties.map((v,i) => {
+            tableData.push({
+                key: v[0],
+                date: '版本'+v[0],
+                uv: getAverageNumArr(uvObj[v[0]][casVal]),
+                pv: getAverageNumArr(pvObj[v[0]][casVal]),
+                show: getAverageNumArr(showObj[v[0]][casVal]),
+                click: getAverageNumArr(clickObj[v[0]][casVal]),
+                persent: getAverageNumArr(percentObj[v[0]][casVal]),
+            })
+        })
+        this.setState({
+            tableData: tableData
+        })
     }
 
     componentDidMount() {
@@ -178,13 +212,14 @@ export default class Chart extends React.Component {
         //     res = await request.getConversionDataByStragety("['100001', '100002']",'2017-03-05','2017-03-08');
         //     console.log(res.result.data);
         // })()
-        const columns = [{
+        let tableColumns = [{
           title: '版本',
           dataIndex: 'date',
           key: 'date',
           width: '20%',
           render: (text, record, index) => (
             <a href="#" onClick={() => {
+                console.log(record)
                 this.props.contentActions.mainpageActions.changeContentDisplay('none','block',record.key);
             }}>
                 {text}
@@ -192,18 +227,18 @@ export default class Chart extends React.Component {
           )
         }, {
           title: 'UV 访客数',
-          dataIndex: 'useramount',
-          key: 'useramount',
+          dataIndex: 'uv',
+          key: 'uv',
           width: '20%',
         }, {
           title: 'PV 浏览数',
-          dataIndex: 'visitor',
-          key: 'visitor',
+          dataIndex: 'pv',
+          key: 'pv',
           width: '20%',
         }, {
           title: '曝光',
-          dataIndex: 'appear',
-          key: 'appear',
+          dataIndex: 'show',
+          key: 'show',
         }, {
           title: '点击',
           dataIndex: 'click',
@@ -212,33 +247,6 @@ export default class Chart extends React.Component {
           title: '转化率',
           dataIndex: 'persent',
           key: 'persent',
-        }];
-
-
-        const data = [{
-          key: '1',
-          date: '原始版本',
-          useramount: 3000,
-          visitor: 500,
-          appear: 43,
-          click: 22,
-          persent: '20%',
-        }, {
-          key: '2',
-          date: '测试版本一',
-          useramount: 3000,
-          visitor: 500,
-          appear: 46,
-          click: 28,
-          persent: '20%',
-        }, {
-          key: '3',
-          date: '测试版本二',
-          useramount: 3000,
-          visitor: 500,
-          appear: 83,
-          click: 62,
-          persent: '20%',
         }];
         return (
             <div>
@@ -260,7 +268,7 @@ export default class Chart extends React.Component {
                 <div id="container" style={{width:'100%',height:400}} className="chart-box"></div>
                 <div className="tableBox">
                     <Button className="export">导出</Button>
-                    <Table bordered={true} columns={columns} dataSource={data} title={() => '日均'}/> 
+                    <Table bordered={true} columns={tableColumns} dataSource={this.state.tableData} title={() => '日均'}/> 
                 </div>
             </div>      
         )

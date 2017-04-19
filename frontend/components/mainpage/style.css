@@ -44,6 +44,7 @@
 
 .mainpage{
     padding:12px;
+    position: relative;
 }
 .mainpage .ant-cascader-picker{
     width:250px;
@@ -98,3 +99,7 @@
 .ant-collapse > .ant-collapse-item .collbutton{position:absolute;top:8px;right:20px}
 .increase{color:red}
 .decrease{color:green}
+.device_button,.stragety_button{position: absolute;top:30px;}
+.device_button{right: 160px;}
+.stragety_button{right: 50px;}
+.ant-tabs-nav{margin-left: 40%;}

@@ -39,7 +39,8 @@ let reducer = (state = initState,action)=>{
             return Object.assign({}, state, {
                 main_container_display: action.main_container_display,
                 card_container_display: action.card_container_display,
-                strageties : action.strageties,
+                strageties: action.strageties,
+                currentCasVal: action.currentCasVal,
             })
         }
         case TYPES.GET_MENUDATA_SUCCESS:{

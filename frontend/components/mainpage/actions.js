@@ -76,12 +76,13 @@ export function changeDatePicker(dateStrings){
     }
 }
 
-export function switchContentShow(main_display, card_display, strageties){
+export function switchContentShow(main_display, card_display, strageties, currentCasVal){
     return{
         type:TYPES.MAIN_CONTAINER_DISPLAY,
         main_container_display: main_display,
         card_container_display: card_display,
-        strageties : strageties,
+        strageties: strageties,
+        currentCasVal: currentCasVal
     }
 }
 
