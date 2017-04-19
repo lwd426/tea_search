@@ -43,6 +43,8 @@
 }
 
 .mainpage{
+    height:100%;
+    overflow-y: auto;
     padding:12px;
     position: relative;
 }
@@ -103,3 +105,4 @@
 .device_button{right: 160px;}
 .stragety_button{right: 50px;}
 .ant-tabs-nav{margin-left: 40%;}
+

@@ -171,7 +171,7 @@ let reducer = (state = initialState, action)=> {
                 if(stra.stra_id === action.stra_id) stra.stra_status = action.status;
             })
             var status = action.status  === 'running' ? '运行' : '停止';
-            utilscomps.showNotification('success', '操作成功', '策略已经' + status );
+            utilscomps.showNotification('warning', '操作成功', '策略已经' + status + ', 必须点击"发布到服务器"按钮，此次操作才能生效' );
             return Object.assign({}, state, {stragetylist: state.stragetylist})
             break
         case TYPES.EDIT_STRAGETY:
