@@ -102,18 +102,43 @@ class GLMainpage extends React.Component {
         if(slblist.length > 0 ){
             slblist.forEach(function(v,index){
                 let obj = {}
-                obj['value'] = v.name;
+                obj['value'] = v.objectId;
                 obj['label'] = v.name;
 
                 if(v.testGroups.length > 0){
                     let arr = [];
                     v.testGroups.forEach(function(test_v,index){
                         let inObj ={};
-                        inObj['value'] = test_v.name;
-                        inObj['label'] = test_v.name;
-                        arr.push(inObj)
+                        if(test_v.strageties.length > 0){
+                            let strageties = [] //各个策略的tag 数组
+                            test_v.strageties.forEach(function(stragety,index){
+                                if(stragety.tag){
+                                    strageties.push(stragety.tag)
+                                }
+                            })
+                            if(strageties.length > 0){
+                                inObj['value'] = test_v.objectId;
+                                inObj['label'] = test_v.name;
+                                inObj['strageties'] = strageties;
+                            }else{
+                                inObj['value'] = test_v.objectId;
+                                inObj['label'] = test_v.name + '（所有策略未发布）';
+                                inObj['disabled'] = true;
+                            }
+                            
+                            arr.push(inObj)
+                        }else{
+                            inObj['value'] = test_v.objectId;
+                            inObj['label'] = test_v.name + '（项目下无策略）'
+                            inObj['disabled'] = true;
+                            arr.push(inObj)
+                        }
+                        
                     })
                     obj['children'] = arr;
+                }else{
+                    obj['label'] = v.name + '（此测试组下无项目）'
+                    obj['disabled'] = true;
                 }
                 options[index] = obj;
             })
@@ -130,26 +155,25 @@ class GLMainpage extends React.Component {
         }];
 
         const _this = this;
+        let colkey = 0;
         const currentCasVal = this.props.content.mainpage.currentCasVal || ["Please "];
         console.log(currentCasVal)
         return (
             <div className="mainpage">
                 <br />
-                <Cascader options={options} onChange={this.onChange.bind(this)} value={currentCasVal}/>
-                {/*<Button style={{float:'right'}}>
-                    <Icon type="plus-circle-o" />新建测试组 
-                </Button>*/}
+                <Cascader options={options} onChange={this.onChange.bind(this)} value={currentCasVal} expandTrigger='hover' />
 
                 <div className="main-container" style={{display: this.props.content.mainpage.main_container_display}}>
 
-                    <Collapse defaultActiveKey={['1-0','1-1','1-2']} onChange={this.collapseCallback}>
+                    <Collapse defaultActiveKey={['1','2','3']} onChange={this.collapseCallback}>
                         {this.state.mainpage_data.map(function(v, index){
                             if(v.testGroups.length > 0){
                                 return v.testGroups.map(function(q, idx){
+                                    colkey ++;
                                     return(
-                                        <Panel header={v.name + '/' + q.name} key={index + '-' +idx}>
+                                        <Panel header={v.name + '/' + q.name} key={colkey}>
                                             <Button type="primary" className="collbutton" onClick={() =>{
-                                                let currentCasVal = [v.name, q.name];
+                                                let currentCasVal = [v.objectId, q.objectId];
                                                 _this.switchContentShow('none','block', q.strageties, currentCasVal)
                                             }}>
                                                 查看详情
@@ -171,7 +195,7 @@ class GLMainpage extends React.Component {
                                                                     <span>流量占比： 20%</span>
                                                                 </div>
                                                                 <div className="right" style={{float:'left',width:'34%'}}>
-                                                                    <span>运行中</span><br/>
+                                                                    <span>{s.tag ? '运行中' : '没有运行'}</span><br/>
                                                                 </div>
                                                                 <div className="clear"></div>
                                                             </div>
@@ -190,6 +214,14 @@ class GLMainpage extends React.Component {
                 </div>
 
                 <div className="card-container" style={{display: this.props.content.mainpage.card_container_display}}>
+                
+                <Button className="device_button" type="primary">
+                    设备信息 
+                </Button>
+                <Button className="stragety_button" type="primary">
+                    策略维护 
+                </Button>
+
                   <Tabs type="card" onChange={this.tabChange.bind(this)}>
                     <TabPane tab="流量" key="1">
                         <div className="spanBox">
