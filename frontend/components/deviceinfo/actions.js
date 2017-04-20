@@ -1,6 +1,8 @@
 import * as TYPES from './constants'
 import fetch from '../../utils/fetch'
 const HOST = require('../../../config').HOST;
+import utilscomps from '../utilscomps'
+import * as contActions from '../../layout/content/actions'
 
 const slb_list_url = HOST + '/slb';
 const web_list_url = HOST + '/webserver';
@@ -51,22 +53,19 @@ function updateWebServerList(list) {
     }
 }
 
-export function addWebServer(group){
+export function addWebServer(data){
     return (dispatch, getState) => {
-        return dispatch(fetch.postData(web_list_url,{
-                key: group.key, 
-                slbid: group.slbid, 
-                ip: '',
-                stragetyname: '',
-                address: '',
-                backup: '',
-                refer: false
-            }, function(err, result){
-            if(err)  return dispatch(postData([]))
-            return dispatch(fetch.getData(web_list_url + '?slbid=' + group.slbid,function(err, result){
-                if(err) return dispatch(updateWebServerList([]));
-                return dispatch(updateWebServerList(result.data));
-            }))
+        return dispatch(fetch.postData(web_list_url,data, function(err, result){
+            if(err || result.status ==='failure') {
+                utilscomps.showNotification('error', '失败', '添加失败，失败原因：'+result.data );
+            }else{
+                return dispatch(fetch.getData(web_list_url + '?slbid=' + data.slbid,function(err, result){
+                    if(err) return dispatch(updateWebServerList([]));
+                    dispatch(contActions.setAddServerModalStatus(false))
+                    utilscomps.showNotification('success', '新建成功', '服务器已经新建成功');
+                    return dispatch(updateWebServerList(result.data));
+                }))
+            }
         }))
     }
 }

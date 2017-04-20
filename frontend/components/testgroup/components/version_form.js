@@ -20,7 +20,6 @@ class HorizontalLoginForm extends React.Component {
                 const {slbid, tgid} = this.props.content.testgroup;
                 var domainId = this.props.menu.domainId;
                 this.props.contentActions.testgroupActions.publish(domainId, slbid, tgid, values.versionnum, values.versiondesc)
-
             }
         });
     }

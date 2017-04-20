@@ -9,12 +9,11 @@ var db = require('../../datasource/parse')
 var moment = require('moment');
 
 module.exports = {
-    saveWebServer: function*(key, slbid, ip, stragetyname, address, backup, refer) {
+    saveWebServer: function*(key, slbid, ip, address, backup, refer) {
         var data = {
             key: key, 
             slbid: slbid, 
             ip: ip, 
-            stragetyname: stragetyname,
             address: address,
             backup: backup,
             refer: refer,
@@ -23,7 +22,14 @@ module.exports = {
         // { key:1, id: 1, name: '按照按钮测试', status: 'running', flowaccounting: '未配置',  time:'2017-03-29 10:00:00',version: 'v1.0.0'}
 
         var result = yield db.save('webServer', data)
-        return result;
+        if (result.code) return {
+            status: 'failure',
+            data: result.message
+        }
+        return {
+            status:'success',
+            data: result
+        }
     },
     /**
      * 获取WebServer列表

@@ -10,15 +10,9 @@ function hasErrors(fieldsError) {
 
 class HorizontalLoginForm extends React.Component {
     componentDidMount() {
-        // To disabled submit button at the beginning.
-        // this.props.form.validateFields();
     }
     componentWillReceiveProps(nextProps){
         if(!this.props.cont.showSlbModal){
-            this.props.form.setFieldsValue({
-                'name': '',
-                'domain': ''
-            })
             this.props.cont.validateDomain = {
                 name: {
                     status: '',
@@ -38,12 +32,11 @@ class HorizontalLoginForm extends React.Component {
             if (!err) {
                 const {domainId} = this.props.cont;
                 this.props.contActions.addSlb(values.name, values.domain, domainId)
-
+                this.props.form.setFieldsValue({
+                    'name': ''
+                })
             }
         });
-    }
-    closeModal =()=> {
-        this.props.contentActions.testgroupActions.publishModal(false)
     }
     render() {
         const { getFieldDecorator, getFieldsError,getFieldValue, getFieldError, isFieldTouched } = this.props.form;
@@ -93,6 +86,9 @@ class HorizontalLoginForm extends React.Component {
                 </FormItem>
                 <FormItem className="gl-version-btn">
                     <Button onClick={()=>{
+                        this.props.form.setFieldsValue({
+                            'name': '',
+                        })
                         this.props.contActions.setAddSLBModalStatus(false)
                     }}>不了</Button>
                     <Button htmlType="submit" disabled={hasErrors(getFieldsError())}>确定</Button>

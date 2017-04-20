@@ -113,6 +113,8 @@
 .button-div-header{
     float: right;
     margin: 6px 0px;
+    color: #ffffff;
+    background: #3b3b3b;
 }
 .add-test-group-btn {
     padding: 0px;

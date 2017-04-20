@@ -14,16 +14,12 @@ router.post('/', function *(next) {
     var key = this.request.body.key;
     var slbid = this.request.body.slbid;
     var ip = this.request.body.ip;
-    var stragetyname = this.request.body.stragetyname;
     var address = this.request.body.address;
     var backup = this.request.body.backup;
     var refer = this.request.body.refer;
 
-    var result = yield lib.saveWebServer(key, slbid, ip, stragetyname, address, backup, refer)
-    this.body = {
-        status: 'success',
-        data: result
-    };
+    var result = yield lib.saveWebServer(key, slbid, ip, address, backup, refer)
+    this.body = result;
 });
 
 router.del('/', function *(next) {

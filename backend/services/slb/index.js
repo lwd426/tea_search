@@ -37,7 +37,7 @@ module.exports = {
             }
         return {
             status:'success',
-            data: data
+            data: result
         }
 
     },

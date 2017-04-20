@@ -3,7 +3,7 @@ import fetch from '../../utils/fetch'
 import checkUrl from '../../utils/checkUrl'
 const HOST = require('../../../config').HOST;
 import utilscomps from '../utilscomps'
-
+import * as contActions from '../../layout/content/actions'
 const testgroup_url = HOST + '/testgroup'
 const versionlog_url = HOST + '/versionlog'
 const stragety_url = HOST + '/stragety'
@@ -167,11 +167,16 @@ export function goback2stragelist() {
 export function addTestGroup(group){
     return (dispatch, getState) => {
         return dispatch(fetch.postData(testgroup_url,{name: group.name, code: group.code, slbid: group.slbid}, function(err, result){
-            if(err)  return dispatch(postData([]))
-            return dispatch(fetch.getData(testgroup_url+ '?slbid='+group.slbid,function(err, result){
-                if(err)  return dispatch(getTestGroupListSuccess([]))
-                return dispatch(getTestGroupListSuccess(result.data))
-            }))
+            if(err || result.status ==='failure') {
+                utilscomps.showNotification('error', '失败', '添加失败，失败原因：'+result.data );
+            }else{
+                return dispatch(fetch.getData(testgroup_url+ '?slbid='+group.slbid,function(err, result){
+                    if(err)  return dispatch(getTestGroupListSuccess([]))
+                    dispatch(contActions.setAddTgModalStatus(false))
+                    utilscomps.showNotification('success', '新建成功', '策略组已经新建成功！');
+                    return dispatch(getTestGroupListSuccess(result.data))
+                }))
+            }
         }))
     }
 }
@@ -240,13 +245,7 @@ export function updateTest(where, data) {
         }))
     }
 }
-export function validateFailure(keyval, infoval) {
-    return {
-        type: TYPES.VALIDATE_FAILURE,
-        key: keyval,
-        info: infoval
-    }
-}
+
 // export function validateSuccesss() {
 //     return {
 //         type: VALIDATE_SUCCESS
@@ -508,6 +507,7 @@ export function publish(domainId,slbid, tgid, versionnum, versiondesc) {
                 dispatch(publishSuccess(false, result.data))
             }else{
                 dispatch(publishSuccess(true, result.data))
+                return dispatch(edit_stragetylist(tgid, slbid))
             }
 
 
