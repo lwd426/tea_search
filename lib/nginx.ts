@@ -97,8 +97,21 @@ function array2one(arr) {
     return arr2;
 }
 
-function nginx(arr: any[]) {
+function nginx(arr: any[], domain = 'test.m.le.com', port = '80') {
     needDefault = true;
+    //let domain = 'test.m.le.com';//todo
+    //先加上开始
+    arr.forEach(item => {
+        for (let i = 0; i < item.serverArray.length; i++) {
+            let vs = item.serverArray[i].split('.');
+            let v3 = vs[3];
+            vs[3] = '188';
+            item.serverArray[i] = vs.join(".") + ":9" + v3;
+        }
+    });
+    //先加上结束
+
+
     arr = array2one(arr);
     allServerHandler(arr);
     let verf = new Verify(arr);
@@ -138,7 +151,15 @@ function nginx(arr: any[]) {
     }
     content += upstreams;
     content += groups;
-    content += location;
+    content += `
+    server {
+        listen  ${port};
+        server_name ${domain};
+        ${location}
+    }
+    `;
+    // content += location;
+
     console.log(content);
     re.content = content;
     return re;

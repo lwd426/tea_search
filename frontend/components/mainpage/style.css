@@ -105,4 +105,14 @@
 .device_button{right: 160px;}
 .stragety_button{right: 50px;}
 .ant-tabs-nav{margin-left: 40%;}
+.tableBox{font-family: arial;}
+.ant-cascader-picker-label{padding:2px 12px 0 8px;}
+.ant-cascader-picker-clear{display: none;}
+.ant-cascader-menu .ant-cascader-menu-item-disabled[title ='运行中']{color:#555;font-weight:bold;padding-left:9px;}
+.ant-cascader-menu .ant-cascader-menu-item-disabled[title ='新生成']{color:#555;font-weight:bold;padding-left:9px;}
+.ant-cascader-menu .ant-cascader-menu-item-disabled[title ='已停止']{color:#555;font-weight:bold;padding-left:9px;}
+
+
+
+
 
