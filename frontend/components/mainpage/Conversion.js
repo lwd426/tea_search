@@ -253,7 +253,7 @@ export default class Chart extends React.Component {
                 <br />
                 <div className="rangepickerBox">
                     <RangePicker
-                        defaultValue={[moment().subtract(7, 'days'), moment()]}
+                        defaultValue={[moment().subtract(4, 'days'), moment()]}
                         format={'YYYY/MM/DD'}
                         onChange={this.rangeOnChange.bind(this)}
                         disabledDate={this.disabledDate.bind(this)}
