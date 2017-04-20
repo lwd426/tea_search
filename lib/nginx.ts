@@ -39,13 +39,13 @@ class Upstream {//default
         let upStreamName = this.upStreamName;
         return `
         location ${url} { 
-                    proxy_pass http://$${upStreamName}; 
+                    proxy_pass http://${upStreamName}; 
         }
         `;
     }
 
     getUpstreamName() {
-        return this.metaData.url == "/" ? defaultUpstream : this.type + "_" + this.metaData.serverArray[this.index];
+        return this.metaData.url == "/" ? defaultUpstream : this.type + "_" + this.metaData.serverArray[this.index].replace(/\./g,'_').replace(/\:/g,'_');
     }
 
     getUpstream(): string {
