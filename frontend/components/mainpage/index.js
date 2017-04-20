@@ -165,15 +165,15 @@ class GLMainpage extends React.Component {
                                                 查看详情
                                             </Button>
                                             <div style={{padding:20}}>
-                                                <div>
-                                                    <span>创建于： { moment(new Date(q.createdAt)).format('YYYY-MM-DD') }  </span>
-                                                    <span>已运行： 21天</span>
-                                                    <span>最近变动： 1天前</span>
+                                                <div style={{color:'#555'}}>
+                                                    <span>创建于：{ moment(new Date(q.createdAt)).format('YYYY-MM-DD') }  </span>
+                                                    <span style={{marginLeft:'20px'}}>已运行：21天</span>
+                                                    <span style={{marginLeft:'20px'}}>最近变动：1天前</span>
                                                 </div>
-                                                <div style={{marginTop:10}}>
+                                                <div style={{marginTop:20}}>
                                                     {
                                                         q.strageties.map((s, i) => 
-                                                            <div key={index + '-' + idx + '-' + i}>
+                                                            <div key={index + '-' + idx + '-' + i} style={{padding:3}}>
                                                                 <div className="left" style={{float:'left',width:'33%'}}>
                                                                     <span>{s.stra_name}</span>
                                                                 </div>
