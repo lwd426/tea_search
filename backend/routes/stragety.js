@@ -87,6 +87,7 @@ router.get('/tag', function *(next) {
             var tag = Math.random().toString(36).slice(2,8);
             // stragety.set("tag",tag.tag_value);
             yield lib.updateStragety({"tag": tag}, {'objectId': stragety.id});
+            stragety.set('tag',tag);
             // stragetys_marked.push(stragety);
         }
     }
