@@ -80,6 +80,7 @@
 .gl-right-layout{
     width: 84% !important;
     background: #ffffff;
+    padding-bottom: 35px;
 }
 .gl-right-layout>div{
     display: block;

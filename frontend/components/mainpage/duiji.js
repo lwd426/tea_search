@@ -10,24 +10,27 @@ const { MonthPicker, RangePicker } = DatePicker;
 import { Cascader } from 'antd';
 
 
-let  tableData = [{
-          key: '1',
-          date: '3-2',
-          appear: 43,
-          click: 22,
-          persent: '20%',
-        }]
+let tableData = [{
+  key: '1',
+  date: '3-2',
+  appear: 43,
+  click: 22,
+  persent: '20%',
+}];
 
 export default class EChart extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            tableData: tableData
+        }
     }
     rangeOnChange(dates, dateStrings) {
         this.props.contentActions.mainpageActions.changeDatePicker(dateStrings);
     }
     onChange(arr){
         console.log(arr)
-        //this.props.contentActions.mainpageActions.changeCascader();
+        this.props.contentActions.mainpageActions.changeCascader(arr);
     }
     disabledDate(current) {
         return current && current.valueOf() > Date.now();
@@ -78,15 +81,32 @@ export default class EChart extends React.Component {
             pvObj[link] = [];
             showObj[link] = [];
             clickObj[link] = [];
-
+            tableData = [];
             responseData[stragetyVal][link].map((val,index) => {
+                //echart
                 percentObj[link].push((val.click_count*100/val.show_count).toFixed(2));
                 uvObj[link].push(val.uv);
                 pvObj[link].push(val.pv);
                 showObj[link].push(val.show_count);
                 clickObj[link].push(val.click_count);
+                //table
+                tableData.push({
+                    key: index,
+                    date: '3-2',
+                    appear: val.show_count,
+                    click: val.click_count,
+                    persent: (val.click_count*100/val.show_count).toFixed(2),
+                })
             })
         }
+
+        tableData.forEach(function(v, index){
+            v.date = xData[index]
+        })
+        this.setState({
+            tableData: tableData
+        })
+        console.log(tableData)
 
 
 
@@ -209,31 +229,11 @@ export default class EChart extends React.Component {
           key: 'persent',
         }];
 
-
-        const data = [{
-          key: '1',
-          date: '3-2',
-          appear: 43,
-          click: 22,
-          persent: '20%',
-        }, {
-          key: '2',
-          date: '3-3',
-          appear: 46,
-          click: 28,
-          persent: '20%',
-        }, {
-          key: '3',
-          date: '3-4',
-          appear: 83,
-          click: 62,
-          persent: '20%',
-        }];
         return (
             <div>
                 <div className="rangepickerBox">
                     <RangePicker
-                        defaultValue={[moment().subtract(7, 'days'), moment()]}
+                        defaultValue={[moment().subtract(4, 'days'), moment()]}
                         format={'YYYY/MM/DD'}
                         onChange={this.rangeOnChange.bind(this)}
                         disabledDate={this.disabledDate.bind(this)}
@@ -241,12 +241,12 @@ export default class EChart extends React.Component {
                 </div>
                 <div className="CascaderBox">
                     <span>优化指标 ：</span>
-                    <Cascader options={this.props.content.mainpage.options_two} defaultValue={[this.props.content.mainpage.options_two[0].value]} onChange={this.onChange} />
+                    <Cascader options={this.props.content.mainpage.options_two} defaultValue={[this.props.content.mainpage.options_two[0].value]} onChange={this.onChange.bind(this)} />
                 </div>
                 <div className="clear"></div>
 
                 <div id="duiji" style={{width:'100%',height:400}} ></div>
-                <Table bordered={true} columns={columns} dataSource={data} title={() => '按日期'}/>  
+                <Table bordered={true} columns={columns} dataSource={this.state.tableData} title={() => '按日期'}/>  
             </div>      
         )
     }

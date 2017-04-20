@@ -176,7 +176,14 @@ export default class EChart extends React.Component {
             },
             legend: {
                 data: legendDate,
-                top: 0
+                top: 0,
+                formatter: function (name) {
+                    return echarts.format.truncateText(name, 150, '14px Microsoft Yahei', '…');
+                },
+                tooltip: {
+                    show: true
+                },
+                height: 50
             },
             xAxis: [
                 {
@@ -196,7 +203,9 @@ export default class EChart extends React.Component {
                     interval: 100000000,
                     axisLabel: {
                         formatter: '{value}'
-                    }
+                    },
+                    nameLocation: 'start',
+                    /*nameRotate: 15*/
                 },
                 {
                     type: 'value',
@@ -206,7 +215,8 @@ export default class EChart extends React.Component {
                     interval: 10,
                     axisLabel: {
                         formatter: '{value} %'
-                    }
+                    },
+                    nameLocation: 'start'
                 }
             ],
             toolbox: {
