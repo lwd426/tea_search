@@ -142,12 +142,12 @@ class GLMainpage extends React.Component {
 
         const _this = this;
         let colkey = 0;
-        const currentCasVal = this.props.content.mainpage.currentCasVal || ["Please "];
+        const currentCasVal = this.props.content.mainpage.currentCasVal;
         console.log(currentCasVal)
         return (
             <div className="mainpage">
                 <br />
-                <Cascader options={options} onChange={this.onChange.bind(this)} value={currentCasVal} expandTrigger='hover' />
+                <Cascader placeholder="请选择" options={options} onChange={this.onChange.bind(this)} value={currentCasVal} expandTrigger='hover' />
 
                 <div className="main-container" style={{display: this.props.content.mainpage.main_container_display}}>
 
