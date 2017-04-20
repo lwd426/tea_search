@@ -10,8 +10,6 @@ function hasErrors(fieldsError) {
 
 class HorizontalLoginForm extends React.Component {
     componentDidMount() {
-        // To disabled submit button at the beginning.
-        // this.props.form.validateFields();
     }
     componentWillReceiveProps(nextProps){
         if(!this.props.cont.showSlbModal){
@@ -41,9 +39,6 @@ class HorizontalLoginForm extends React.Component {
 
             }
         });
-    }
-    closeModal =()=> {
-        this.props.contentActions.testgroupActions.publishModal(false)
     }
     render() {
         const { getFieldDecorator, getFieldsError,getFieldValue, getFieldError, isFieldTouched } = this.props.form;

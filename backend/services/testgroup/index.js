@@ -19,7 +19,7 @@ module.exports = {
      */
     saveTestgroup: function*(name, code, slbid) {
         var data = {
-            name: '',
+            name: name,
             code: code,
             slbid: slbid,
             status: 'new',
@@ -28,10 +28,15 @@ module.exports = {
             version: '-'
 
         }
-        // { key:1, id: 1, name: '按照按钮测试', status: 'running', flowaccounting: '未配置',  time:'2017-03-29 10:00:00',version: 'v1.0.0'}
-
         var result = yield db.save('testgroup', data)
-        return result;
+        if (result.code) return {
+            status: 'failure',
+            data: result.message
+        }
+        return {
+            status:'success',
+            data: result
+        }
     },
     /**
      * 获取slb列表

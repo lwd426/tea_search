@@ -13,11 +13,24 @@ export function setAddSLBModalStatus(status) {
     }
 }
 
+export function setAddServerModalStatus(status) {
+    return {
+        type: TYPES.SHOW_ADD_SERVER_MODAL,
+        status
+    }
+}
+
+export function setAddTgModalStatus(status) {
+    return {
+        type: TYPES.SHOW_ADD_TG_MODAL,
+        status
+    }
+}
+
 export function vertifyDomainId(domainName) {
     return (dispatch, getState) => {
         if(!domainName) return dispatch(validateDomainResult('error','domain', '请填写分流策略名称'));
         return dispatch(fetch.getData(slb_list_url + '/vertifyDomianId?domainName='+domainName, function(err, result){
-            console.log('dd')
             if(err || result.status ==='failure') {
                 return dispatch(validateDomainResult('error','domain', result.data, {}));
             }else{

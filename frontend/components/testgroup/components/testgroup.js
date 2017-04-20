@@ -73,19 +73,20 @@ class GLTestgroup extends React.Component {
             utilscomps.showNotification('warning', '提示', '您有为添加完成的策略组，请先添加完毕！' );
             return false;
         }
-        const slbid = this.props.menu.slbid || '';
-        let count = uuid();
-        let newData =  {
-            key: count ,
-            slbid: slbid,
-            code:  count,
-            name: '',
-            status: '-',
-            flowaccounting: '',
-            time:'',
-            version: ''}
-
-        this.props.contentActions.testgroupActions.addTestGroup(newData)
+        this.props.contActions.setAddTgModalStatus(true)
+        // const slbid = this.props.menu.slbid || '';
+        // let count = uuid();
+        // let newData =  {
+        //     key: count ,
+        //     slbid: slbid,
+        //     code:  count,
+        //     name: '',
+        //     status: '-',
+        //     flowaccounting: '',
+        //     time:'',
+        //     version: ''}
+        //
+        // this.props.contentActions.testgroupActions.addTestGroup(newData)
     }
     componentWillReceiveProps =(nextProps)=> {
         if(this.props.menu.slbid === nextProps.menu.slbid) return false;
