@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import './style.css';
 import 'antd.min.css';
-import { Form, Input,Icon,Button } from 'antd';
+import { Form, Input,Icon,Button,Row, Col } from 'antd';
 const FormItem = Form.Item;
 
 function hasErrors(fieldsError) {
@@ -13,12 +13,31 @@ class HorizontalLoginForm extends React.Component {
         // To disabled submit button at the beginning.
         // this.props.form.validateFields();
     }
+    componentWillReceiveProps(nextProps){
+        if(!this.props.cont.showSlbModal){
+            this.props.form.setFieldsValue({
+                'name': '',
+                'domain': ''
+            })
+            this.props.cont.validateDomain = {
+                name: {
+                    status: '',
+                    info: '请输入名称'
+                },
+                domain: {
+                    status: '',
+                    info: '我们需要验证您填写的域名ID是否正确'
+                }
+            }
+        }
+
+    }
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                // const {slbid, tgid} = this.props.content.testgroup;
-                this.props.contActions.addSlb(values.name, values.domain)
+                const {domainId} = this.props.cont;
+                this.props.contActions.addSlb(values.name, values.domain, domainId)
 
             }
         });
@@ -27,15 +46,22 @@ class HorizontalLoginForm extends React.Component {
         this.props.contentActions.testgroupActions.publishModal(false)
     }
     render() {
-        const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        const userNameError = isFieldTouched('name') && getFieldError('name');
-        const passwordError = isFieldTouched('domain') && getFieldError('domain');
+        const { getFieldDecorator, getFieldsError,getFieldValue, getFieldError, isFieldTouched } = this.props.form;
+        const formItemLayout = {
+            labelCol: {
+                xs: { span: 24 },
+                sm: { span: 6 },
+            },
+            wrapperCol: {
+                xs: { span: 24 },
+                sm: { span: 14 },
+            },
+        };
         return (
             <Form className="gl-version-form" layout="inline" onSubmit={this.handleSubmit}>
                 <FormItem
                     label="名称"
-                    validateStatus={userNameError ? 'error' : ''}
-                    help={userNameError || ''}
+                    validateStatus={this.props.cont.validateDomain.name.status}
                 >
                     {getFieldDecorator('name', {
                         rules: [{ required: true, message: '请输入测试项名称' }],
@@ -44,15 +70,26 @@ class HorizontalLoginForm extends React.Component {
                     )}
                 </FormItem>
                 <FormItem
+                    {...formItemLayout}
                     label="域名"
-                    validateStatus={passwordError ? 'error' : ''}
-                    help={passwordError || ''}
+                    validateStatus={this.props.cont.validateDomain.domain.status}
+                    extra={this.props.cont.validateDomain.domain.info}
                 >
-                    {getFieldDecorator('domain', {
-                        rules: [{ required: true, message: '请输入版本域名' }],
-                    })(
-                        <Input prefix={<Icon type="global" style={{ fontSize: 13 }} />}  placeholder="如不知道域名，请向相关人员询问" />
-                    )}
+                    <Row gutter={12}>
+                        <Col span={18}>
+                            {getFieldDecorator('domain', {
+                                rules: [{ required: true, message: '请输入域名!' }],
+                            })(
+                                <Input prefix={<Icon type="global" style={{ fontSize: 13 }} />}  placeholder="如不知道域名，请向相关人员询问" />
+                            )}
+                        </Col>
+                        <Col span={6}>
+                            <Button size="large" onClick={()=>{
+                                var domianName = getFieldValue('domain')
+                                this.props.contActions.vertifyDomainId(domianName)
+                            }}>验证</Button>
+                        </Col>
+                    </Row>
                 </FormItem>
                 <FormItem className="gl-version-btn">
                     <Button onClick={()=>{

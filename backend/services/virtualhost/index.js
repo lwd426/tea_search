@@ -17,8 +17,18 @@ module.exports = {
           }
      */
     getByName: function*(domianName) {
-        var data = yield db.get('/getbyname/' + domianName);
-        return data;
+        var result = yield db.get('getbyname/' + domianName);
+        if(result.result === 200){
+            return {
+                status: 'success',
+                data:result.data[0]
+            }
+        }else{
+            return {
+                status: 'failure',
+                data: '不合法，请咨询相关人员'
+            }
+        }
     },
     // /**
     //  * 新增slb
@@ -34,7 +44,7 @@ module.exports = {
      * @returns {*}
      */
     getSlbConfig: function *(domainId) {
-        return yield db.post('/content/', domainId)
+        return yield db.post('content/', domainId)
     },
     /**
      * 更新指定域名的slb配置文件

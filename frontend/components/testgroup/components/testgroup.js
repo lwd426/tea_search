@@ -18,13 +18,7 @@ class GLTestgroup extends React.Component {
         }, {
             title: '项目名称',
             dataIndex: 'name',
-            render: (text, record, index) => (
-                <EditableCell
-                    item="name"
-                    value={text}
-                    onChange={this.onCellChange(index, 'name')}
-                />
-            ),
+            width: '15%'
         }, {
             title: '运行状态',
             dataIndex: 'status',

@@ -5,13 +5,14 @@ module.exports = {
      * 保存数据（如果表不存在，就自动新建）
      * @param tableName 表名称
      * @param data 数据
-     * @returns {*}
+     * @returns {*} 保存的数据或false
      */
     save: function *(tableName, data){
         var result;
         try{
             var Quwey = ParseUtils.initObject(tableName);
             result = yield ParseUtils.save(Quwey, data);
+            result = result.data;
         }catch(e){
             result = false;
         }
