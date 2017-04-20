@@ -507,6 +507,7 @@ export function publish(domainId,slbid, tgid, versionnum, versiondesc) {
                 dispatch(publishSuccess(false, result.data))
             }else{
                 dispatch(publishSuccess(true, result.data))
+                return dispatch(edit_stragetylist(tgid, slbid))
             }
 
 

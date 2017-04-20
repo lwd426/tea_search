@@ -69,7 +69,10 @@ router.get('/publish', function *(next) {
                     status = 'running'
                 }
             })
+        //更新策略组的发布时间
         result = yield libTg.updateTest({time: moment().format('YYYY-MM-DD HH:mm'), version: result.stra_info, status: status}, {objectId: tgid})
+        //更新策略组下的所有策略的发布时间
+        result = yield libStragety.updateStragety({time: moment().format('YYYY-MM-DD HH:mm')}, {tgid: tgid})
         if(result){
             this.body = {
                 status: 'success',
@@ -101,7 +104,8 @@ router.get('/publish/back', function *(next) {
         };
     }else if(result.status === 'success') {
         result = yield libTg.updateTest({time: moment().format('YYYY-MM-DD HH:mm'), version: result.stra_info}, {objectId: tgid});
-
+        //更新策略组下的所有策略的发布时间
+        result = yield libStragety.updateStragety({time: moment().format('YYYY-MM-DD HH:mm')}, {tgid: tgid})
         if(result){
             this.body = {
                 status: 'success',

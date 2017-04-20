@@ -55,7 +55,7 @@ class GLContent extends React.Component {
                 >
                     <GLAddTg {...this.props} />
                 </Modal>
-                <Modal title="新建策略组"  footer={null} visible={this.props.cont.showServerModal}
+                <Modal title="新建服务器"  footer={null} visible={this.props.cont.showServerModal}
                 >
                     <GLAddServer {...this.props} />
                 </Modal>

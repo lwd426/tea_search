@@ -13,13 +13,6 @@ class HorizontalLoginForm extends React.Component {
     componentDidMount() {
     }
     componentWillReceiveProps(nextProps){
-        if(!this.props.cont.showSlbModal) {
-            this.props.form.setFieldsValue({
-                'ip': '',
-                'datacenter': '',
-                'backup':''
-            })
-        }
     }
     handleSubmit = (e) => {
         e.preventDefault();
@@ -36,6 +29,11 @@ class HorizontalLoginForm extends React.Component {
                     refer: false
                 };
                 this.props.contentActions.deviceinfoActions.addWebServer(newData);
+                this.props.form.setFieldsValue({
+                    'ip': '',
+                    'datacenter': '',
+                    'backup':''
+                })
             }
         });
     }
@@ -56,7 +54,7 @@ class HorizontalLoginForm extends React.Component {
                 <FormItem
                     label="所属机房"
                 >
-                    {getFieldDecorator('datecenter', {
+                    {getFieldDecorator('datacenter', {
                         rules: [{ required: false, message: '' }],
                     })(
                         <Input prefix={<Icon type="database" style={{ fontSize: 13 }} />} placeholder="" />
@@ -73,6 +71,11 @@ class HorizontalLoginForm extends React.Component {
                 </FormItem>
                 <FormItem className="gl-version-btn">
                     <Button onClick={()=>{
+                        this.props.form.setFieldsValue({
+                            'ip': '',
+                            'datacenter': '',
+                            'backup':''
+                        })
                         this.props.contActions.setAddServerModalStatus(false)
                     }}>不了</Button>
                     <Button htmlType="submit" disabled={hasErrors(getFieldsError())}>确定</Button>
