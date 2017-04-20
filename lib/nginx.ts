@@ -97,9 +97,9 @@ function array2one(arr) {
     return arr2;
 }
 
-function nginx(arr: any[]) {
+function nginx(arr: any[], domain = 'test.m.le.com', port = '80') {
     needDefault = true;
-    let domain = 'test.m.le.com';//todo
+    //let domain = 'test.m.le.com';//todo
     //先加上开始
     arr.forEach(item => {
         for (let i = 0; i < item.serverArray.length; i++) {
@@ -153,7 +153,7 @@ function nginx(arr: any[]) {
     content += groups;
     content += `
     server {
-        listen  80;
+        listen  ${port};
         server_name ${domain};
         ${location}
     }
