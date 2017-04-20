@@ -9,7 +9,10 @@ var db = require('../../datasource/parse')
 const uuid = require('uuid/v1');
 var moment = require('moment');
 var server_service = require('../webserver')
-
+var libServer = require('../webserver')
+function getPercentage(number1, number2){
+    return (Math.round(number1 / number2 * 10000) / 100.00) || 0;// 小数点后两位百分比
+}
 module.exports = {
     /**
      * 保存策略信息
@@ -17,6 +20,12 @@ module.exports = {
      * @returns {*}
      */
     saveStragety: function*(uuid, slbid,tgid,name,desc,cities,servers,serverskey,urls,uids,type) {
+        var allservers = yield libServer.getServersInfo({slbid: slbid})
+        var serverNum = serverskey.length || 0;
+        var flowaccounting = '-'
+        if(serverNum !== 0){
+            flowaccounting = getPercentage(serverNum, allservers.length) + '%';
+        }
         //保存策略
         var data = {
             stra_id : uuid,
@@ -31,7 +40,7 @@ module.exports = {
             tgid: tgid,
             slbid: slbid,
             type: type,
-            flowaccounting: '未配置',
+            flowaccounting: flowaccounting,
             time: moment().format('YYYY-MM-DD HH:mm:ss')
         }
         var result = yield db.save('stragety', data);
@@ -63,6 +72,16 @@ module.exports = {
         }
 
 
+        return stragetylist;
+    },
+    /**
+     * 获取单纯的策略信息列表
+     * @param opts
+     * @returns {*}
+     */
+    getStragetyInfos: function*(where, opts) {
+        if(!opts) opts = []
+        var stragetylist =  yield db.get('stragety',where, opts);
         return stragetylist;
     },
     /**

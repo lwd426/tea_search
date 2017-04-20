@@ -111,6 +111,7 @@ module.exports = {
      * @param otherwhere
      */
     getServersInfo: function* (where,otherwhere) {
+        if(!otherwhere) otherwhere = []
         return yield db.get('webServer', where, otherwhere);
     }
 }

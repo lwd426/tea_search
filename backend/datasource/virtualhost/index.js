@@ -75,13 +75,17 @@ module.exports = {
             var result = {};
             var opt = {
                 method: 'PUT',
-                uri: url,
+                uri: URL + url,
                 headers: HEADERS,
-                body: JSON.stringify(params)
+                body: JSON.stringify({
+                    "Config": params
+                })
             }
-            console.log(URL + '/v2/virtualhost/getbyname/' + args[0])
+            console.log(URL + url)
             request(opt, function (error, response, body) {
+                console.log(body)
                 var body = parseJson(body);
+
                 if(!body || body.error) {
                     console.log('Error now! Request Error'+body.error+ ', Please do with it...')
                     resolve({

@@ -51,8 +51,6 @@ class GLMenu extends React.Component {
     }
     editConfirm = (slbid)=>{
         var slbname = this.refs.edit.refs.input.value;
-
-        console.log(slbname)
         this.props.menuActions.editSlb(slbid, slbname);
     }
     changeMenu =(item)=>{

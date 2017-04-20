@@ -52,7 +52,6 @@ export default class EChart extends React.Component {
         let res = await request.getTrafficDataByStragety(stragety_arr, startTime, endTime);
 
         let responseData = res.result.data.reverse();
-        console.log(responseData);
 
         let dataArr = [];
         let percentArr = [];
@@ -113,17 +112,8 @@ export default class EChart extends React.Component {
         let xData = function() {
             var start = new Date(date_picker[0]).getTime();
             var end = new Date(date_picker[1]).getTime();
-            //var str = end.from(start, true); 
             var length = (end - start)/(24*60*60*1000) + 1;
 
-            //暂时切割长度，后期接口参数功能正常后，去掉
-            // dataAll = dataAll.slice(0, length)
-            // dataArr.map((v,i) => {
-            //     a[i] = v.slice(0, length);
-            // });
-            // percentArr.map((v,i) => {
-            //     b[i] = v.slice(0, length);
-            // })
             //遍历生成 echart 配置
             seriesArr = [{
                     name:'总量',
@@ -172,8 +162,6 @@ export default class EChart extends React.Component {
 
             return data_arr;
         }(date_picker);
-
-        //console.log(xData);
 
         myChart.setOption({
             title: { text: '' },

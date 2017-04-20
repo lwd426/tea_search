@@ -54,4 +54,5 @@
     display: inline-block;
     text-align: left;
 }
-
+.slbInformation{font-size: 14px;float: left;margin-left: 20px;margin-top:5px;}
+.slbInformation .labelspan{margin-right: 20px;}

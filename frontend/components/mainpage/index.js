@@ -6,6 +6,7 @@ import Traffic from './Traffic.js';
 import Conversion from './Conversion.js';
 import Duiji from './duiji.js';
 import request from '../../request';
+import { setMainPageOptions } from './lib';
 
 
 import { Menu, Dropdown, message } from 'antd';
@@ -37,11 +38,22 @@ class GLMainpage extends React.Component {
         //console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
         this.props.contentActions.mainpageActions.changeDatePicker(dateStrings);
     }
-    onChange(arr) {
-        console.log(arr);
-        this.props.contentActions.mainpageActions.changeProjectValue(arr);
-        let projectValue = arr[1];
-        this.props.contentActions.mainpageActions.switchContentShow('none','block')
+    onChange(value_arr, selectedOptions) {
+        //this.props.contentActions.mainpageActions.changeProjectValue(value_arr);
+        let stragety_arr = selectedOptions[1].strageties;
+        let length = stragety_arr.length;
+        let str = '[';
+        stragety_arr.map((val,index) => {
+            str += '"'
+            str += val;
+            str += '"';
+            if(index < (length - 1)){
+                str += ','
+            }
+        })
+        str += ']';
+
+        this.props.contentActions.mainpageActions.switchContentShow('none','block',str,value_arr)
     }
     disabledDate(current) {
         return current && current.valueOf() > Date.now();
@@ -49,7 +61,7 @@ class GLMainpage extends React.Component {
     collapseCallback(key) {
         console.log(key);
     }
-    switchContentShow(none, block, arr){
+    switchContentShow(none, block, arr, currentCasVal){
         let strageties = [];
         arr.map((val, index) => {
             if(val.tag){
@@ -69,7 +81,7 @@ class GLMainpage extends React.Component {
                 } 
             })
             str += ']';
-            this.props.contentActions.mainpageActions.switchContentShow(none,block,str)
+            this.props.contentActions.mainpageActions.switchContentShow(none,block,str,currentCasVal)
         }else{
             alert('此项目无数据！')
         }
@@ -81,7 +93,6 @@ class GLMainpage extends React.Component {
     async componentWillMount(){
         let res = await request.getAllStrategies();
         console.log(res.result.data);
-
         this.setState({
             mainpage_data: res.result.data
         })
@@ -100,23 +111,22 @@ class GLMainpage extends React.Component {
         let options = [];
         let slblist = this.state.mainpage_data;
 
-        if(slblist.length > 0 ){
-            slblist.forEach(function(v,index){
-                let obj = {}
-                obj['value'] = v.objectId;
-                obj['label'] = v.name;
+        let option_idx = 0;
 
-                if(v.testGroups.length > 0){
+        if(slblist.length > 0 ){
+            slblist.forEach(function(slb,index){
+                let obj = {}
+                obj['value'] = slb.objectId;
+                obj['label'] = slb.name;
+
+                if(slb.testGroups.length > 0){
                     let arr = [];
-                    v.testGroups.forEach(function(test_v,index){
-                        let inObj ={};
-                        inObj['value'] = test_v.objectId;
-                        inObj['label'] = test_v.name;
-                        arr.push(inObj)
-                    })
+                    arr = setMainPageOptions(slb.testGroups, arr, 'running');
+                    arr = setMainPageOptions(slb.testGroups, arr, 'new');
+                    arr = setMainPageOptions(slb.testGroups, arr, 'stopped');
                     obj['children'] = arr;
+                    options.push(obj);
                 }
-                options[index] = obj;
             })
         }
         //let defaultValue = (options.length > 0) ? [ options[0]['value'],options[0]['children'][0]['value'] ] : [];
@@ -131,24 +141,27 @@ class GLMainpage extends React.Component {
         }];
 
         const _this = this;
-
+        let colkey = 0;
+        const currentCasVal = this.props.content.mainpage.currentCasVal || ["Please "];
+        console.log(currentCasVal)
         return (
             <div className="mainpage">
                 <br />
-                <Cascader options={options} onChange={this.onChange.bind(this)} />
-                {/*<Button style={{float:'right'}}>
-                    <Icon type="plus-circle-o" />新建测试组 
-                </Button>*/}
+                <Cascader options={options} onChange={this.onChange.bind(this)} value={currentCasVal} expandTrigger='hover' />
 
                 <div className="main-container" style={{display: this.props.content.mainpage.main_container_display}}>
 
-                    <Collapse defaultActiveKey={['0-0','0-1']} onChange={this.collapseCallback}>
+                    <Collapse defaultActiveKey={['1','2','3']} onChange={this.collapseCallback}>
                         {this.state.mainpage_data.map(function(v, index){
                             if(v.testGroups.length > 0){
                                 return v.testGroups.map(function(q, idx){
+                                    colkey ++;
                                     return(
-                                        <Panel header={v.name + '/' + q.name} key={index + '-' +idx}>
-                                            <Button type="primary" className="collbutton" onClick={() =>{_this.switchContentShow('none','block',q.strageties)}}>
+                                        <Panel header={v.name + '/' + q.name} key={colkey}>
+                                            <Button type="primary" className="collbutton" onClick={() =>{
+                                                let currentCasVal = [v.objectId, q.objectId];
+                                                _this.switchContentShow('none','block', q.strageties, currentCasVal)
+                                            }}>
                                                 查看详情
                                             </Button>
                                             <div style={{padding:20}}>
@@ -168,7 +181,7 @@ class GLMainpage extends React.Component {
                                                                     <span>流量占比： 20%</span>
                                                                 </div>
                                                                 <div className="right" style={{float:'left',width:'34%'}}>
-                                                                    <span>运行中</span><br/>
+                                                                    <span>{s.tag ? '运行中' : '没有运行'}</span><br/>
                                                                 </div>
                                                                 <div className="clear"></div>
                                                             </div>
@@ -187,6 +200,14 @@ class GLMainpage extends React.Component {
                 </div>
 
                 <div className="card-container" style={{display: this.props.content.mainpage.card_container_display}}>
+                
+                <Button className="device_button" type="primary">
+                    设备信息 
+                </Button>
+                <Button className="stragety_button" type="primary">
+                    策略维护 
+                </Button>
+
                   <Tabs type="card" onChange={this.tabChange.bind(this)}>
                     <TabPane tab="流量" key="1">
                         <div className="spanBox">
@@ -213,7 +234,7 @@ class GLMainpage extends React.Component {
                         <Traffic {...this.props}/>
                     </TabPane>
 
-                    <TabPane tab="转化率(多版本)" key="2">
+                    <TabPane tab="转化率" key="2">
 
                         {/*<div className="rangepickerBox">
                             <RangePicker

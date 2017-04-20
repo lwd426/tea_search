@@ -107,7 +107,9 @@ class GLVersionlog extends React.Component {
                                     <Button icon="book">版本详情</Button>
                                 </Popover>,
                         operation: <Popconfirm title="确认回滚策略组到该版本?" onConfirm={() => {
-                            _this.props.contentActions.testgroupActions.publishback(version.slbid,version.tgid, version.versionkey)
+                            var domainId = _this.props.menu.domainId;
+
+                            _this.props.contentActions.testgroupActions.publishback(domainId, version.slbid,version.tgid, version.versionkey)
                         }}>
                             <Button>回滚</Button>
                         </Popconfirm>

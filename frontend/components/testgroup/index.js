@@ -14,6 +14,9 @@ class GLTestinfo extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        // if(nextProps.menu.slbid !== this.props.menu.slbid ||  (nextProps.menu.slbid === this.props.menu.slbid && this.props.menu.wintype === 'deviceinfo')) {
+        //     this.props.content.testgroup.showtype = 'testgroup';
+        // }
         return true;
     }
     render() {

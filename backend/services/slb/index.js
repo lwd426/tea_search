@@ -10,6 +10,7 @@ const uuid = require('uuid/v1');
 // var parseJson = require('json-superparser');
 var libStragety = require('../stragety')
 var libVersion = require('../versionlog')
+var libServer = require('../webserver')
 var libVirtualHost = require('../virtualhost')
 var moment = require('moment')
 
@@ -34,7 +35,7 @@ module.exports = {
      *
      * @param slbid
      */
-    publish: function* (slbid, tgid, versionnum, versiondesc) {
+    publish: function* (domainId, slbid, tgid, versionnum, versiondesc) {
         //获取slb所有的信息
         var stragetylist = yield libStragety.getStragetyList({slbid: slbid})
         //循环策略列表，生成指定数据结构
@@ -50,6 +51,7 @@ module.exports = {
          ]
          */
         var data = [],data4log = [];
+        var referServers = yield libServer.getServersInfo({slbid: slbid}, [{opt: 'noExist', key: 'stragetiesinfo'}])
         stragetylist.map((stragety)=>{
             if(stragety.get('stra_status') === 'running') {
 
@@ -89,7 +91,22 @@ module.exports = {
                 temp4log.status = stragety.get('stra_status') || '';
                 data4log.push(temp4log)
             }
+        });
+        var serverdata = {
+            urlArray: ['/'],
+            uidArray:[],
+            regionArray: [],
+            serverArray: [],
+            default: true
+        };
+
+
+        referServers.map((server)=>{
+            serverdata.serverArray.push(server.get('ip'))
         })
+
+        data.push(serverdata)
+        console.log(data)
         //调用禚永然的配置文件生成接口
         // var conf = libNginx(data);
         //调用slb推送服务
@@ -101,7 +118,7 @@ module.exports = {
         var result = '';
         if(confResult.code === 0) {
             //调用slb推送服务
-            result = yield libVirtualHost.updateSlbConfig(confResult.content);
+            result = yield libVirtualHost.updateSlbConfig(domainId, confResult.content);
             //错误判断
             if(result.status === 'failure') {
                 return result;
@@ -134,9 +151,12 @@ module.exports = {
 
         //发送
     },
-    publishBack: function* (slbid, tgid, versionkey) {
+    publishBack: function* (domainId,slbid, tgid, versionkey) {
         //获取slb所有的策略信息（除了回滚的策略组）
         var stragetylist = yield libStragety.getStragetyList({slbid: slbid}, [{opt: 'noEqual', key: 'tgid', data: tgid}]);
+        var referServers = yield libServer.getServersInfo({slbid: slbid}, [{opt: 'noExist', key: 'stragetiesinfo'}])
+        console.log(referServers.length)
+
         //获取回滚策略组的版本信息
         var version = yield libVersion.getVersionlog(tgid , versionkey);
         version = version[0];
@@ -164,12 +184,26 @@ module.exports = {
         //拼接获得该slb下所有的策略组信息
         var data = data.concat(backtgDetails);
 
+        var serverdata = {
+            urlArray: ['/'],
+            uidArray:[],
+            regionArray: [],
+            serverArray: [],
+            default: true
+        };
+
+
+        referServers.map((server)=>{
+            serverdata.serverArray.push(server.ip)
+        })
+
+        data.push(serverdata)
         //调用禚永然的接口生成新的配置文件
         var confResult = libNginx(data);
         var result = '';
         if(confResult.code === 0) {
             //调用slb推送服务
-            result = yield libVirtualHost.updateSlbConfig(confResult.content);
+            result = yield libVirtualHost.updateSlbConfig(domainId,confResult.content);
             //错误判断
             if(result.status === 'failure') {
                 return result;

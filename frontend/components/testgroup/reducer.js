@@ -36,7 +36,7 @@ const initialState = {
         },
         url: {
             status: false,
-            info: ''
+            info: '规则：请填写相对路径（不能包含域名）；支持正则表达式；如：/ 或 /index.html 或 ^~ /index.html 或 ~* /index.html'
         },
         uid: {
             status: false,
@@ -85,7 +85,29 @@ let reducer = (state = initialState, action)=> {
             })
             break
         case TYPES.ADD_STRAGETY:
-            return Object.assign({}, state, {showtype: 'addstragety', editting_stragety: undefined, editting_status: false, serverselectedkeys:[],addurls: [], adduids: []})
+            var initStatus = {
+                name: {
+                    status: false,
+                    info: '请输入分流策略名称'
+                },
+                server: {
+                    status: false,
+                    info: '请选择分流服务器'
+                },
+                url: {
+                    status: false,
+                    info: ''
+                },
+                uid: {
+                    status: false,
+                    info: ''
+                },
+                region: {
+                    status: false,
+                    info: ''
+                }
+            }
+            return Object.assign({}, state, {showtype: 'addstragety', validateStra: initStatus,  editting_stragety: undefined, editting_status: false, serverselectedkeys:[],addurls: [], adduids: []})
             break
         case TYPES.ADD_URL_TYPE:
             return Object.assign({}, state, {addurltype: action.addurltype})
@@ -149,7 +171,7 @@ let reducer = (state = initialState, action)=> {
                 if(stra.stra_id === action.stra_id) stra.stra_status = action.status;
             })
             var status = action.status  === 'running' ? '运行' : '停止';
-            utilscomps.showNotification('success', '操作成功', '策略已经' + status );
+            utilscomps.showNotification('warning', '操作成功', '策略已经' + status + ', 必须点击"发布到服务器"按钮，此次操作才能生效' );
             return Object.assign({}, state, {stragetylist: state.stragetylist})
             break
         case TYPES.EDIT_STRAGETY:
@@ -193,8 +215,14 @@ let reducer = (state = initialState, action)=> {
             return Object.assign({}, state, {validateStra: validateStra})
             break
         case TYPES.PUBLISH_SUCCESS:
-            utilscomps.showNotification('success', '发布成功', '发布成功！发版日志请版本日志页');
-            return Object.assign({}, state, {versionModalShow: false})
+            if(action.status) {
+                utilscomps.showNotification('success', '发布成功', '发布成功！发版日志请版本日志页');
+                return Object.assign({}, state, {versionModalShow: false})
+            }else{
+                utilscomps.showNotification('error', '发布失败', '失败原因：' + action.data );
+                return state;
+            }
+
             break
         case TYPES.PUBLISH_MODAL:
             return Object.assign({}, state, {versionModalShow: action.status})
