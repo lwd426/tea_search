@@ -22,14 +22,24 @@ module.exports = {
      * @param name
      * @returns {*}
      */
-    saveSlb: function*(name) {
+    saveSlb: function*(name, domain, domainId) {
         var data = {
             name: name,
+            slbDomain: domain,
+            domainId: domainId,
             uuid: uuid(),
             type: 'menu'
         }
         var result = yield db.save('slb', data)
-        return result;
+        if (result.code) return {
+            status: 'failure',
+            data: result.message
+            }
+        return {
+            status:'success',
+            data: data
+        }
+
     },
     /**
      *

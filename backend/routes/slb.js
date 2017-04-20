@@ -18,18 +18,9 @@ router.get('/', function *(next) {
 router.post('/', function *(next) {
   var name = this.request.body.name;
   var domain = this.request.body.domain;
-  var domainId = yield libVir.getByName(domain);
-  if(!domainId){
-      this.body = {
-          status: 'failure',
-          data: domainId
-      };
-  }
+  var domainId = this.request.body.domainId;
   var result = yield lib.saveSlb(name,domain, domainId);
-    this.body = {
-        status: 'success',
-        data: result
-    };
+    this.body = result;
 });
 
 router.del('/', function *(next) {
@@ -49,6 +40,12 @@ router.put('/', function *(next) {
         data: result
     };
 });
+
+router.get('/vertifyDomianId', function* (next) {
+    var domainName = this.query.domainName;
+    var result = yield libVir.getByName(domainName);
+    this.body = result;
+})
 
 router.get('/publish', function *(next) {
     var slbid = this.query.slbid;

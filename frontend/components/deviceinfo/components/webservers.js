@@ -35,14 +35,7 @@ class GLWebserver extends React.Component {
         this.columns = [{
             title: 'IP地址',
             dataIndex: 'ip',
-            width: '20%',
-            render: (text, record, index) => (
-                <EditableCell
-                    value={text}
-                    item="ip"
-                    onChange={this.onCellChange(index, 'ip')}
-                />
-            )
+            width: '20%'
         },{
             title: '参照服务器',
             dataIndex: 'refer',
