@@ -79,6 +79,8 @@ class GLTestgroup extends React.Component {
             utilscomps.showNotification('warning', '提示', '您有为添加完成的策略组，请先添加完毕！' );
             return false;
         }
+        this.props.contActions.setAddTgModalStatus(true)
+
     }
     componentWillReceiveProps =(nextProps)=> {
         if(this.props.menu.slbid === nextProps.menu.slbid) return false;

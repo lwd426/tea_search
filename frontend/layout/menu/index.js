@@ -67,7 +67,7 @@ class GLMenu extends React.Component {
                     key={e.objectId}
                     title={<Tooltip placement="right" title={
                         <span>
-                            <Icon className="edit-menu"type="edit" onClick={this.editMenu.bind(this, e.objectId, e.name)} />
+                            {/*<Icon className="edit-menu"type="edit" onClick={this.editMenu.bind(this, e.objectId, e.name)} />*/}
                             <Popconfirm title="确认删除?" onConfirm={this.confirmDelete.bind(this, e.objectId)}  okText="Yes" cancelText="No">
                                 <Icon className="delete-menu" type="delete" />
                             </Popconfirm>

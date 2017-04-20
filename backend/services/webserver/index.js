@@ -19,7 +19,6 @@ module.exports = {
             refer: refer,
             time: moment().format('YYYY-MM-DD HH:mm'),
         }
-        // { key:1, id: 1, name: '按照按钮测试', status: 'running', flowaccounting: '未配置',  time:'2017-03-29 10:00:00',version: 'v1.0.0'}
 
         var result = yield db.save('webServer', data)
         if (result.code) return {

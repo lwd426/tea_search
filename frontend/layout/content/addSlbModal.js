@@ -12,18 +12,6 @@ class HorizontalLoginForm extends React.Component {
     componentDidMount() {
     }
     componentWillReceiveProps(nextProps){
-        if(!this.props.cont.showSlbModal){
-            this.props.cont.validateDomain = {
-                name: {
-                    status: '',
-                    info: '请输入名称'
-                },
-                domain: {
-                    status: '',
-                    info: '我们需要验证您填写的域名ID是否正确'
-                }
-            }
-        }
 
     }
     handleSubmit = (e) => {
@@ -33,8 +21,19 @@ class HorizontalLoginForm extends React.Component {
                 const {domainId} = this.props.cont;
                 this.props.contActions.addSlb(values.name, values.domain, domainId)
                 this.props.form.setFieldsValue({
-                    'name': ''
+                    'name': '',
+                    'domain':''
                 })
+                this.props.cont.validateDomain = {
+                    name: {
+                        status: '',
+                        info: '请输入名称'
+                    },
+                    domain: {
+                        status: '',
+                        info: '我们需要验证您填写的域名ID是否正确'
+                    }
+                }
             }
         });
     }
@@ -71,7 +70,7 @@ class HorizontalLoginForm extends React.Component {
                     <Row gutter={12}>
                         <Col span={18}>
                             {getFieldDecorator('domain', {
-                                rules: [{ required: true, message: '请输入域名!' }],
+                                rules: [{ required: true, message: ' ' }],
                             })(
                                 <Input prefix={<Icon type="global" style={{ fontSize: 13 }} />}  placeholder="如不知道域名，请向相关人员询问" />
                             )}
@@ -88,7 +87,18 @@ class HorizontalLoginForm extends React.Component {
                     <Button onClick={()=>{
                         this.props.form.setFieldsValue({
                             'name': '',
+                            'domain':''
                         })
+                        this.props.cont.validateDomain = {
+                            name: {
+                                status: '',
+                                info: '请输入名称'
+                            },
+                            domain: {
+                                status: '',
+                                info: '我们需要验证您填写的域名ID是否正确'
+                            }
+                        }
                         this.props.contActions.setAddSLBModalStatus(false)
                     }}>不了</Button>
                     <Button htmlType="submit" disabled={hasErrors(getFieldsError())}>确定</Button>

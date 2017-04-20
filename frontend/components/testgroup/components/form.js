@@ -40,6 +40,8 @@ class RegistrationForm extends React.Component {
     }
     componentWillMount =()=> {
         this.props.contentActions.testgroupActions.getCities();
+        const slbid = this.props.menu.slbid || '';
+        this.props.contentActions.testgroupActions.getServers(slbid);
 
     }
     componentDidMount =() => {

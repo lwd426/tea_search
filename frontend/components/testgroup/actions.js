@@ -18,7 +18,7 @@ const slb_publish_url = HOST + '/slb/publish'
  */
 export function edit_stragetylist(tgid, slbid) {
     return (dispatch, getState) => {
-        return dispatch(fetch.getData(stragety_url + '?tgid='+tgid,function(err, result){
+        return dispatch(fetch.getData(stragety_url + '?slbid='+slbid+'&tgid='+tgid,function(err, result){
             if(err)  return dispatch(getStragetyListSuccess([], tgid, slbid))
             return dispatch(getStragetyListSuccess(result.data, tgid, slbid))
         }))
@@ -277,7 +277,8 @@ function dataHandler(dispatch, ha,stra_id, slbid,tgid,name,desc,cities,servers,s
             stra_serverskey: serverskey.join(';'),
             stra_urls: urls.join(';'),
             stra_uids: uids.join(';'),
-            type: type
+            type: type,
+            slbid: slbid
         }
         return dispatch(fetch.updateData(stragety_url,where, data, function(err, result){
             if(err || result.status === 'failure')  return dispatch(saveStragetyResult(false))
