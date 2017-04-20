@@ -18,18 +18,9 @@ router.get('/', function *(next) {
 router.post('/', function *(next) {
   var name = this.request.body.name;
   var domain = this.request.body.domain;
-  var domainId = yield libVir.getByName(domain);
-  if(!domainId){
-      this.body = {
-          status: 'failure',
-          data: domainId
-      };
-  }
+  var domainId = this.request.body.domainId;
   var result = yield lib.saveSlb(name,domain, domainId);
-    this.body = {
-        status: 'success',
-        data: result
-    };
+    this.body = result;
 });
 
 router.del('/', function *(next) {
@@ -49,6 +40,12 @@ router.put('/', function *(next) {
         data: result
     };
 });
+
+router.get('/vertifyDomianId', function* (next) {
+    var domainName = this.query.domainName;
+    var result = yield libVir.getByName(domainName);
+    this.body = result;
+})
 
 router.get('/publish', function *(next) {
     var slbid = this.query.slbid;
@@ -72,7 +69,10 @@ router.get('/publish', function *(next) {
                     status = 'running'
                 }
             })
+        //更新策略组的发布时间
         result = yield libTg.updateTest({time: moment().format('YYYY-MM-DD HH:mm'), version: result.stra_info, status: status}, {objectId: tgid})
+        //更新策略组下的所有策略的发布时间
+        result = yield libStragety.updateStragety({time: moment().format('YYYY-MM-DD HH:mm')}, {tgid: tgid})
         if(result){
             this.body = {
                 status: 'success',
@@ -104,7 +104,8 @@ router.get('/publish/back', function *(next) {
         };
     }else if(result.status === 'success') {
         result = yield libTg.updateTest({time: moment().format('YYYY-MM-DD HH:mm'), version: result.stra_info}, {objectId: tgid});
-
+        //更新策略组下的所有策略的发布时间
+        result = yield libStragety.updateStragety({time: moment().format('YYYY-MM-DD HH:mm')}, {tgid: tgid})
         if(result){
             this.body = {
                 status: 'success',

@@ -75,8 +75,7 @@ class GLStragety extends React.Component {
         return true;
     }
     componentWillMount=()=>{
-        const slbid = this.props.menu.slbid || '';
-        this.props.contentActions.testgroupActions.getServers(slbid);
+
     }
     onDelete = (index) => {
         const dataSource = [...this.state.dataSource];

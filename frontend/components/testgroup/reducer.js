@@ -137,6 +137,7 @@ let reducer = (state = initialState, action)=> {
                 var stragetiesinfo = server.strageties;
                 var status = false;//status为该机器的状态，是否有策略正在运行
                 var statusinfo = '';
+                console.log('dd')
                 stragetiesinfo.map((stragety) => {
                     if (stragety.stra_status === 'running') {
                         status = true;

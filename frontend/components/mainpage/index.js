@@ -26,6 +26,7 @@ const dateFormat = 'YYYY/MM/DD';
 const Panel = Collapse.Panel;
 
 
+
 class GLMainpage extends React.Component {
     constructor(props) {
         super(props);
@@ -142,12 +143,12 @@ class GLMainpage extends React.Component {
 
         const _this = this;
         let colkey = 0;
-        const currentCasVal = this.props.content.mainpage.currentCasVal || ["Please "];
+        const currentCasVal = this.props.content.mainpage.currentCasVal;
         console.log(currentCasVal)
         return (
             <div className="mainpage">
                 <br />
-                <Cascader options={options} onChange={this.onChange.bind(this)} value={currentCasVal} expandTrigger='hover' />
+                <Cascader placeholder="请选择" options={options} onChange={this.onChange.bind(this)} value={currentCasVal} expandTrigger='hover' />
 
                 <div className="main-container" style={{display: this.props.content.mainpage.main_container_display}}>
 
@@ -157,23 +158,33 @@ class GLMainpage extends React.Component {
                                 return v.testGroups.map(function(q, idx){
                                     colkey ++;
                                     return(
-                                        <Panel header={v.name + '/' + q.name} key={colkey}>
-                                            <Button type="primary" className="collbutton" onClick={() =>{
-                                                let currentCasVal = [v.objectId, q.objectId];
-                                                _this.switchContentShow('none','block', q.strageties, currentCasVal)
-                                            }}>
-                                                查看详情
-                                            </Button>
-                                            <div style={{padding:20}}>
+                                        //<Panel header={v.name + '/' + q.name} key={colkey}>
+                                        <Panel 
+                                            header={
                                                 <div>
-                                                    <span>创建于： { moment(new Date(q.createdAt)).format('YYYY-MM-DD') }  </span>
-                                                    <span>已运行： 21天</span>
-                                                    <span>最近变动： 1天前</span>
+                                                    <span>{v.name + '/' + q.name}</span>
+                                                    <Button type="primary" className="collbutton" onClick={(e) =>{
+                                                        e.stopPropagation();
+                                                        let currentCasVal = [v.objectId, q.objectId];
+                                                        _this.switchContentShow('none','block', q.strageties, currentCasVal)
+                                                    }}>
+                                                        查看详情
+                                                    </Button>
                                                 </div>
-                                                <div style={{marginTop:10}}>
+                                            } 
+                                            key={colkey}
+                                        >
+                                            
+                                            <div style={{padding:20}}>
+                                                <div style={{color:'#555'}}>
+                                                    <span>创建于：{ moment(new Date(q.createdAt)).format('YYYY-MM-DD') }  </span>
+                                                    <span style={{marginLeft:'20px'}}>已运行：21天</span>
+                                                    <span style={{marginLeft:'20px'}}>最近变动：1天前</span>
+                                                </div>
+                                                <div style={{marginTop:20}}>
                                                     {
                                                         q.strageties.map((s, i) => 
-                                                            <div key={index + '-' + idx + '-' + i}>
+                                                            <div key={index + '-' + idx + '-' + i} style={{padding:3}}>
                                                                 <div className="left" style={{float:'left',width:'33%'}}>
                                                                     <span>{s.stra_name}</span>
                                                                 </div>
@@ -225,7 +236,7 @@ class GLMainpage extends React.Component {
                         
                         <div className="rangepickerBox">
                             <RangePicker
-                              defaultValue={[moment().subtract(7, 'days'), moment()]}
+                              defaultValue={[moment().subtract(4, 'days'), moment()]}
                               format={dateFormat}
                               onChange={this.rangeOnChange.bind(this)}
                               disabledDate={this.disabledDate.bind(this)}

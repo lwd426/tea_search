@@ -8,7 +8,9 @@ import { Button, Modal ,Layout, Breadcrumb} from 'antd';
 import '../app/app.css';
 import './style.css';
 import 'antd.min.css';
-import GLAddSlb from './addModal'
+import GLAddSlb from './addSlbModal'
+import GLAddTg from './addTgModal'
+import GLAddServer from './addServerModal'
 import * as actions from '../app/actions'
 import * as menuactions from '../menu/actions'
 import * as contActions from './actions'
@@ -48,6 +50,14 @@ class GLContent extends React.Component {
                 <Modal title="新建测试项"  footer={null} visible={this.props.cont.showSlbModal}
                 >
                     <GLAddSlb {...this.props} />
+                </Modal>
+                <Modal title="新建策略组"  footer={null} visible={this.props.cont.showTgModal}
+                >
+                    <GLAddTg {...this.props} />
+                </Modal>
+                <Modal title="新建服务器"  footer={null} visible={this.props.cont.showServerModal}
+                >
+                    <GLAddServer {...this.props} />
                 </Modal>
                 {/*<Button className="gl-addslb-btn" icon="add" onClick={()=>{*/}
                     {/*this.props.contActions.setAddSLBModalStatus(true)*/}

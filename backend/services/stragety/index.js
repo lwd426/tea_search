@@ -20,12 +20,12 @@ module.exports = {
      * @returns {*}
      */
     saveStragety: function*(uuid, slbid,tgid,name,desc,cities,servers,serverskey,urls,uids,type) {
-        var allservers = yield libServer.getServersInfo({slbid: slbid})
-        var serverNum = serverskey.length || 0;
-        var flowaccounting = '-'
-        if(serverNum !== 0){
-            flowaccounting = getPercentage(serverNum, allservers.length) + '%';
-        }
+        // var allservers = yield libServer.getServersInfo({slbid: slbid})
+        // var serverNum = serverskey.length || 0;
+        // var flowaccounting = '-'
+        // if(serverNum !== 0){
+        //     flowaccounting = getPercentage(serverNum, allservers.length) + '%';
+        // }
         //保存策略
         var data = {
             stra_id : uuid,
@@ -40,7 +40,7 @@ module.exports = {
             tgid: tgid,
             slbid: slbid,
             type: type,
-            flowaccounting: flowaccounting,
+            flowaccounting: '',
             time: moment().format('YYYY-MM-DD HH:mm:ss')
         }
         var result = yield db.save('stragety', data);
@@ -57,6 +57,7 @@ module.exports = {
      * @returns {*}
      */
     getStragetyList: function*(opts) {
+        var allservers = yield libServer.getServersInfo({slbid: opts.slbid})
         var stragetylist =  yield db.get('stragety',opts);
         //为了与web服务器的增删改查一致，所以策略的基准以服务器的key为准
         var i=0; len=stragetylist.length;
@@ -68,6 +69,12 @@ module.exports = {
             servers.map((server)=>{
                 if(server.get('ip') && server.get('ip')!== '')  serversinfo.push(server.get('ip'));
             })
+            var serverNum = serverskey.length || 0;
+            var flowaccounting = '-'
+            if(serverNum !== 0){
+                flowaccounting = getPercentage(serverNum, allservers.length) + '%';
+            }
+            stragety.set("flowaccounting",flowaccounting);
             stragety.set("stra_servers",serversinfo.join(';'));
         }
 

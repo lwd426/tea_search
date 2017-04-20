@@ -55,7 +55,7 @@
     /*display: table;*/
     height: 100%;
     width: 100%;
-    font-family: fantasy;
+    /*font-family: fantasy;*/
 }
 
 .ant-menu-root{
@@ -80,6 +80,7 @@
 .gl-right-layout{
     width: 84% !important;
     background: #ffffff;
+    padding-bottom: 35px;
 }
 .gl-right-layout>div{
     display: block;
@@ -112,6 +113,8 @@
 .button-div-header{
     float: right;
     margin: 6px 0px;
+    color: #ffffff;
+    background: #3b3b3b;
 }
 .add-test-group-btn {
     padding: 0px;

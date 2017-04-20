@@ -1,11 +1,12 @@
 
 export function setMainPageOptions(testGroups, arr, type) {
-    testGroups.forEach(function(project,index){
+    let index = 0;
+    testGroups.forEach(function(project){
         let inObj ={};
 
         let strageties = [] //各个策略的tag 数组
         if(project.strageties.length > 0){
-            project.strageties.forEach(function(stragety,index){
+            project.strageties.forEach(function(stragety){
                 if(stragety.tag){
                     strageties.push(stragety.tag)
                 }
@@ -14,6 +15,14 @@ export function setMainPageOptions(testGroups, arr, type) {
 
         if(type == 'running'){
             if(project.status == 'running'){
+                index ++;
+                if(index == 1){
+                    inObj['value'] = 'running';
+                    inObj['label'] = '运行中'
+                    inObj['disabled'] = true;
+                    arr.push(inObj)
+                    inObj = {}
+                }
                 inObj['value'] = project.objectId;
                 inObj['label'] = project.name;
                 inObj['strageties'] = strageties;
@@ -22,6 +31,14 @@ export function setMainPageOptions(testGroups, arr, type) {
         }
         if(type == 'new'){
             if(project.status == 'new'){
+                index ++;
+                if(index == 1){
+                    inObj['value'] = 'new';
+                    inObj['label'] = '新生成'
+                    inObj['disabled'] = true;
+                    arr.push(inObj)
+                    inObj = {}
+                }
                 inObj['value'] = project.objectId;
                 inObj['label'] = project.name + '（new）';
                 inObj['disabled'] = true;
@@ -30,12 +47,20 @@ export function setMainPageOptions(testGroups, arr, type) {
         }
         if(type == 'stopped'){
             if(project.status == 'stopped'){
+                index ++;
+                if(index == 1){
+                    inObj['value'] = 'stopped';
+                    inObj['label'] = '已停止'
+                    inObj['disabled'] = true;
+                    arr.push(inObj)
+                    inObj = {}
+                }
                 inObj['value'] = project.objectId;
                 inObj['label'] = project.name + '(stopped)';
                 inObj['strageties'] = strageties;
-                /*if(strageties.length == 0){
+                if(strageties.length == 0){
                     inObj['disabled'] = true;
-                }*/
+                }
                 arr.push(inObj)
             }
         }
@@ -88,6 +113,9 @@ if(slblist.length > 0 ){
             obj['children'] = arr;
             options.push(obj);
         }
+
+        *****************************************************************************
+
         if(slb.testGroups.length > 0){
             let arr = [];
             slb.testGroups.forEach(function(project,index){

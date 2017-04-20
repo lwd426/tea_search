@@ -18,13 +18,13 @@ class GLTestgroup extends React.Component {
         }, {
             title: '项目名称',
             dataIndex: 'name',
+            width: '15%',
             render: (text, record, index) => (
                 <EditableCell
-                    item="name"
                     value={text}
                     onChange={this.onCellChange(index, 'name')}
                 />
-            ),
+            )
         }, {
             title: '运行状态',
             dataIndex: 'status',
@@ -79,19 +79,8 @@ class GLTestgroup extends React.Component {
             utilscomps.showNotification('warning', '提示', '您有为添加完成的策略组，请先添加完毕！' );
             return false;
         }
-        const slbid = this.props.menu.slbid || '';
-        let count = uuid();
-        let newData =  {
-            key: count ,
-            slbid: slbid,
-            code:  count,
-            name: '',
-            status: '-',
-            flowaccounting: '',
-            time:'',
-            version: ''}
+        this.props.contActions.setAddTgModalStatus(true)
 
-        this.props.contentActions.testgroupActions.addTestGroup(newData)
     }
     componentWillReceiveProps =(nextProps)=> {
         if(this.props.menu.slbid === nextProps.menu.slbid) return false;

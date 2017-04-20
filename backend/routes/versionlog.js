@@ -17,10 +17,8 @@ router.get('/', function *(next) {
 router.post('/', function *(next) {
     var name = this.request.body.name;
     var result = yield lib.saveSlb(name)
-    this.body = {
-        status: 'success',
-        data: result
-    };
+    this.body = result;
+
 });
 
 module.exports = router;

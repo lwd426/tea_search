@@ -35,14 +35,7 @@ class GLWebserver extends React.Component {
         this.columns = [{
             title: 'IP地址',
             dataIndex: 'ip',
-            width: '20%',
-            render: (text, record, index) => (
-                <EditableCell
-                    value={text}
-                    item="ip"
-                    onChange={this.onCellChange(index, 'ip')}
-                />
-            )
+            width: '20%'
         },{
             title: '参照服务器',
             dataIndex: 'refer',
@@ -114,18 +107,20 @@ class GLWebserver extends React.Component {
             utilscomps.showNotification('warning', '提示', '您有为添加完成的服务器，请先添加完毕！' );
             return false;
         }
-        const slbid = this.props.menu.slbid || '';
-        let key = uuid();
-        const newData = {
-            key: key,
-            slbid: slbid,
-            ip: '',
-            stragetiesinfo: '-',
-            address: '',
-            backup: '',
-            refer: '否'
-        };
-        this.props.contentActions.deviceinfoActions.addWebServer(newData);
+        this.props.contActions.setAddServerModalStatus(true)
+
+        // const slbid = this.props.menu.slbid || '';
+        // let key = uuid();
+        // const newData = {
+        //     key: key,
+        //     slbid: slbid,
+        //     ip: '',
+        //     stragetiesinfo: '-',
+        //     address: '',
+        //     backup: '',
+        //     refer: '否'
+        // };
+        // this.props.contentActions.deviceinfoActions.addWebServer(newData);
     }
     componentWillReceiveProps(nextProps) {
         return true;

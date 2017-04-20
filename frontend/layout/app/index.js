@@ -42,11 +42,8 @@ class App extends React.Component {
                 <div className="app-container" >
                     <Header>
                         <Button className="button-div-header" onClick={()=>{
-                            Modal.success({
-                                title: VERSIONINFO.title,
-                                content: VERSIONINFO.content
-                            });
-                        }}><Icon type="notification" /> 发版说明</Button>
+                            this.props.menu.wintype = 'mainpage'
+                        }}>back to <Icon type="home" /> </Button>
                         乐视视频灰度发布系统
                     </Header>
                     <Content>

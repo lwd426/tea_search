@@ -3,7 +3,7 @@ import fetch from '../../utils/fetch'
 import checkUrl from '../../utils/checkUrl'
 const HOST = require('../../../config').HOST;
 import utilscomps from '../utilscomps'
-
+import * as contActions from '../../layout/content/actions'
 const testgroup_url = HOST + '/testgroup'
 const versionlog_url = HOST + '/versionlog'
 const stragety_url = HOST + '/stragety'
@@ -18,7 +18,7 @@ const slb_publish_url = HOST + '/slb/publish'
  */
 export function edit_stragetylist(tgid, slbid) {
     return (dispatch, getState) => {
-        return dispatch(fetch.getData(stragety_url + '?tgid='+tgid,function(err, result){
+        return dispatch(fetch.getData(stragety_url + '?slbid='+slbid+'&tgid='+tgid,function(err, result){
             if(err)  return dispatch(getStragetyListSuccess([], tgid, slbid))
             return dispatch(getStragetyListSuccess(result.data, tgid, slbid))
         }))
@@ -167,11 +167,16 @@ export function goback2stragelist() {
 export function addTestGroup(group){
     return (dispatch, getState) => {
         return dispatch(fetch.postData(testgroup_url,{name: group.name, code: group.code, slbid: group.slbid}, function(err, result){
-            if(err)  return dispatch(postData([]))
-            return dispatch(fetch.getData(testgroup_url+ '?slbid='+group.slbid,function(err, result){
-                if(err)  return dispatch(getTestGroupListSuccess([]))
-                return dispatch(getTestGroupListSuccess(result.data))
-            }))
+            if(err || result.status ==='failure') {
+                utilscomps.showNotification('error', '失败', '添加失败，失败原因：'+result.data );
+            }else{
+                return dispatch(fetch.getData(testgroup_url+ '?slbid='+group.slbid,function(err, result){
+                    if(err)  return dispatch(getTestGroupListSuccess([]))
+                    dispatch(contActions.setAddTgModalStatus(false))
+                    utilscomps.showNotification('success', '新建成功', '策略组已经新建成功！');
+                    return dispatch(getTestGroupListSuccess(result.data))
+                }))
+            }
         }))
     }
 }
@@ -240,13 +245,7 @@ export function updateTest(where, data) {
         }))
     }
 }
-export function validateFailure(keyval, infoval) {
-    return {
-        type: TYPES.VALIDATE_FAILURE,
-        key: keyval,
-        info: infoval
-    }
-}
+
 // export function validateSuccesss() {
 //     return {
 //         type: VALIDATE_SUCCESS
@@ -278,7 +277,8 @@ function dataHandler(dispatch, ha,stra_id, slbid,tgid,name,desc,cities,servers,s
             stra_serverskey: serverskey.join(';'),
             stra_urls: urls.join(';'),
             stra_uids: uids.join(';'),
-            type: type
+            type: type,
+            slbid: slbid
         }
         return dispatch(fetch.updateData(stragety_url,where, data, function(err, result){
             if(err || result.status === 'failure')  return dispatch(saveStragetyResult(false))
@@ -508,6 +508,7 @@ export function publish(domainId,slbid, tgid, versionnum, versiondesc) {
                 dispatch(publishSuccess(false, result.data))
             }else{
                 dispatch(publishSuccess(true, result.data))
+                return dispatch(edit_stragetylist(tgid, slbid))
             }
 
 
