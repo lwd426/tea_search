@@ -26,6 +26,7 @@ const dateFormat = 'YYYY/MM/DD';
 const Panel = Collapse.Panel;
 
 
+
 class GLMainpage extends React.Component {
     constructor(props) {
         super(props);
@@ -157,13 +158,23 @@ class GLMainpage extends React.Component {
                                 return v.testGroups.map(function(q, idx){
                                     colkey ++;
                                     return(
-                                        <Panel header={v.name + '/' + q.name} key={colkey}>
-                                            <Button type="primary" className="collbutton" onClick={() =>{
-                                                let currentCasVal = [v.objectId, q.objectId];
-                                                _this.switchContentShow('none','block', q.strageties, currentCasVal)
-                                            }}>
-                                                查看详情
-                                            </Button>
+                                        //<Panel header={v.name + '/' + q.name} key={colkey}>
+                                        <Panel 
+                                            header={
+                                                <div>
+                                                    <span>{v.name + '/' + q.name}</span>
+                                                    <Button type="primary" className="collbutton" onClick={(e) =>{
+                                                        e.stopPropagation();
+                                                        let currentCasVal = [v.objectId, q.objectId];
+                                                        _this.switchContentShow('none','block', q.strageties, currentCasVal)
+                                                    }}>
+                                                        查看详情
+                                                    </Button>
+                                                </div>
+                                            } 
+                                            key={colkey}
+                                        >
+                                            
                                             <div style={{padding:20}}>
                                                 <div style={{color:'#555'}}>
                                                     <span>创建于：{ moment(new Date(q.createdAt)).format('YYYY-MM-DD') }  </span>
@@ -225,7 +236,7 @@ class GLMainpage extends React.Component {
                         
                         <div className="rangepickerBox">
                             <RangePicker
-                              defaultValue={[moment().subtract(7, 'days'), moment()]}
+                              defaultValue={[moment().subtract(4, 'days'), moment()]}
                               format={dateFormat}
                               onChange={this.rangeOnChange.bind(this)}
                               disabledDate={this.disabledDate.bind(this)}
