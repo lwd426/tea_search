@@ -1,6 +1,6 @@
 import {level,MataS} from './if';
 import {Methods} from './check'
-
+var uidname='ssouid';
 export class four {
     meta: MataS;
     upstreamName: string;
@@ -31,8 +31,7 @@ export class four {
             s += `
             location ${v} {
                 ${u}
-                #default
-                proxy_pass http://$${n}_default;
+                proxy_pass http://${n}_default;
             }  
             `;
         }
@@ -45,15 +44,15 @@ export class four {
             if(v.uids){
                 let n=this.getOneUpstreamName(v);
                 r+=`
-                if($COOKIE_uid ~* "${v.uids.join("|")}"){
-                    proxy_pass http://$${n};
+                if ($COOKIE_${uidname} ~* "${v.uids.join("|")}"){
+                    proxy_pass http://${n};
                 }`;
             }
             if(v.regions){
                 let n=this.getOneUpstreamName(v);
                 r+=`
-                if($geoip2_data_${level}_name ~* "${v.regions.join("|")}"){
-                    proxy_pass http://$${n};
+                if ($geoip2_data_${level}_name ~* "${v.regions.join("|")}"){
+                    proxy_pass http://${n};
                 }`;
             }
         }
@@ -61,7 +60,7 @@ export class four {
     }
     getOneUpstreamName(v){
         if(v.uids){
-            return this.type+"_"+v.uids[0]+"_"+v.servers[0];
+            return this.type+"_"+v.uids[0]+"_"+v.servers[0].replace(/\./g,'_').replace(/\:/g,'_');
         }
         if(v.regions){
             return this.type+"_"+v.regions[0].replace(/\s/g,"")+"_"+v.servers[0];
