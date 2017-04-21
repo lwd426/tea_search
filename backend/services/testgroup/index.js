@@ -8,9 +8,14 @@
 var db = require('../../datasource/parse')
 const uuid = require('uuid/v1');
 var libStra = require('../stragety');
+var libServer = require('../webserver')
+
 
 var moment = require('moment');
 
+function getPercentage(number1, number2){
+    return (Math.round(number1 / number2 * 10000) / 100.00)+'%' || 0+'%';// 小数点后两位百分比
+}
 module.exports = {
     /**
      * 保存slb信息
@@ -44,19 +49,19 @@ module.exports = {
      */
     getTestgroupList: function*(slbid) {
         var list = yield db.get('testgroup', {slbid: slbid},[{opt: 'desc', key: 'createdAt'}]);
+        var allservers = yield libServer.getServersInfo({slbid: slbid})
+
         var i = 0, len = list.length;
         //遍历每个测试项目下的所有策略，累加流量配置
         for(;i<len;i++){
             var tg = list[i];
             var flowaccount = 0.0;
             var straList = yield libStra.getStragetyInfos({tgid: tg.id, stra_status: 'running'})
-            straList.map((stra)=>{
-                var flow = stra.get('flowaccounting') || 0;
-                if(flow){
-                    flowaccount += parseFloat(flow.replace('%',''))
-                }
-            })
-            tg.set('flowaccounting', flowaccount + '%')
+            var serverNum = straList.length || 0;
+            if(serverNum !== 0){
+                flowaccount = getPercentage(serverNum, allservers.length) ;
+            }
+            tg.set('flowaccounting', flowaccount)
         }
 
         // 决定测试项目状态的逻辑：
@@ -83,21 +88,39 @@ module.exports = {
         return list;
     },
     /**
-     * 删除slb信息
+     * 删除测试组信息
      * @param id
      * @returns {*}
      */
-    deleteTest: function*(data) {
-        var result = yield db.delete('testgroup', data);
-        return result;
+    deleteTest: function*(tgid) {
+        //判断该测试组下的是否有正在运行的策略，如果有测不能删除
+        var straList = yield libStra.getStragetyInfos({tgid: tgid, stra_status: 'running'})
+        if(straList.length !== 0){
+            return {
+                status: 'failure',
+                data: '不能删除，该测试组下有正在运行的策略，请先停止或删除！'
+            }
+        }
+        var result = yield db.delete('testgroup', {objectId: tgid});
+        return {
+            status: 'success',
+            data: result
+        };
     },
     /**
-     * 删除slb信息
+     * 更新测试组
      * @param id
      * @returns {*}
      */
     updateTest: function*(data, where) {
         var result = yield db.update('testgroup', where, data);
         return result;
+    },
+     /** 获取测试组的基本信息
+     * @param slbid
+     * @returns {*}
+     */
+    getTgInfo: function*(tgid) {
+        return yield db.get('testgroup', {objectId: tgid}, []);
     }
 }

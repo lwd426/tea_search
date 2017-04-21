@@ -46,7 +46,7 @@ class GLStragety extends React.Component {
             render: (text, record) => (
                 <span>
                   <a href="#" onClick={()=>{
-                      this.props.contentActions.testgroupActions.handleStragety(record.slbid, record.code, record.status === "running" ? "stopped" : "running")
+                      this.props.contentActions.testgroupActions.handleStragety(record.slbid,record.tgid, record.code, record.status === "running" ? "stopped" : "running")
                   }}> {record.status === 'running' ? '停止' : '启动'}</a>
                   <span className="ant-divider" />
                   <a href="#" onClick={()=>{
@@ -132,6 +132,7 @@ class GLStragety extends React.Component {
             return {
                 key: cell.stra_id,
                 slbid:cell.slbid,
+                tgid:cell.tgid,
                 testgroupcode: cell.tgid,
                 stragetycode: cell.stra_id,
                 code: cell.stra_id,

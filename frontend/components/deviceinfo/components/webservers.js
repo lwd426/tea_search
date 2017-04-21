@@ -104,7 +104,7 @@ class GLWebserver extends React.Component {
     handleAdd = () => {
         let {webServerList} = this.props.content.deviceinfo;
         if(webServerList && webServerList[0] && webServerList[0].ip === ''){
-            utilscomps.showNotification('warning', '提示', '您有为添加完成的服务器，请先添加完毕！' );
+            utilscomps.showNotification('warning', '提示', '您有为添加完成的服务器，请先添加完毕！');
             return false;
         }
         this.props.contActions.setAddServerModalStatus(true)

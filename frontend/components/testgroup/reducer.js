@@ -191,7 +191,7 @@ let reducer = (state = initialState, action)=> {
 
             break
         case TYPES.FRESH_STRAGETYLIST:
-            utilscomps.showNotification('success', '生成标签成功', '请通知相关开发人员，进行标签修改或添加！');
+            utilscomps.showNotification('success', '生成标签成功', '请通知相关开发人员，进行标签修改或添加！', 2);
             return Object.assign({}, state, {stragetylist: action.stragetylist})
             break
         case TYPES.VALIDATE_FAILURE:
@@ -216,7 +216,7 @@ let reducer = (state = initialState, action)=> {
             break
         case TYPES.PUBLISH_SUCCESS:
             if(action.status) {
-                utilscomps.showNotification('success', '发布成功', '发布成功！发版日志请版本日志页');
+                utilscomps.showNotification('success', '发布成功', '发布成功！发版日志请版本日志页', 2);
                 return Object.assign({}, state, {versionModalShow: false})
             }else{
                 utilscomps.showNotification('error', '发布失败', '失败原因：' + action.data );

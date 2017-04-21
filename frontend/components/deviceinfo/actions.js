@@ -62,7 +62,7 @@ export function addWebServer(data){
                 return dispatch(fetch.getData(web_list_url + '?slbid=' + data.slbid,function(err, result){
                     if(err) return dispatch(updateWebServerList([]));
                     dispatch(contActions.setAddServerModalStatus(false))
-                    utilscomps.showNotification('success', '新建成功', '服务器已经新建成功');
+                    utilscomps.showNotification('success', '新建成功', '服务器已经新建成功', 1);
                     return dispatch(updateWebServerList(result.data));
                 }))
             }

@@ -92,10 +92,10 @@ module.exports = {
                 temp.serverArray = servers;
                 temp.default = isdefault;
                 data.push(temp)
-                temp4log.urlArray = urls;
-                temp4log.uidArray = uids;
-                temp4log.regionArray = cities;
-                temp4log.serverArray = servers;
+                temp4log.urlArray = temp4log.serverArray.concat(urls);
+                temp4log.uidArray = temp4log.serverArray.concat(uids);
+                temp4log.regionArray = temp4log.serverArray.concat(cities);
+                temp4log.serverArray = temp4log.serverArray.concat(servers);
                 temp4log.default = isdefault;
                 temp4log.name = stragety.get('stra_name') || '';
                 temp4log.status = stragety.get('stra_status') || '';
@@ -115,7 +115,7 @@ module.exports = {
             serverdata.serverArray.push(server.get('ip'))
         })
 
-        data.push(serverdata)
+        data = data.concat(serverdata)
         console.log(data)
         //调用禚永然的配置文件生成接口
         // var conf = libNginx(data);

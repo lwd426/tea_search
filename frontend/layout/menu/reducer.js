@@ -26,7 +26,7 @@ let reducer = (state={wintype: 'mainpage',slbid: '', editting_slb:undefined, add
             return Object.assign({}, state, { menulist: action.menulist, add: false, editting_slb: undefined})
             break
         case TYPES.DELETE_MENU_SUCCESS:
-            utilscomps.showNotification('success', '成功', '删除slb信息成功！');
+            utilscomps.showNotification('success', '成功', '删除slb信息成功！', 1);
             return Object.assign({}, state, { menulist: action.menulist, add: false, editting_slb: undefined})
             break
         case TYPES.EDIT_SLB_CLICK:
@@ -36,7 +36,7 @@ let reducer = (state={wintype: 'mainpage',slbid: '', editting_slb:undefined, add
             }})
             break
         case TYPES.EDIT_MENUDATA_SUCCESS:
-            utilscomps.showNotification('success', '成功', '修改slb信息成功！');
+            utilscomps.showNotification('success', '成功', '修改slb信息成功！', 1);
             return Object.assign({}, state, { menulist: action.menulist, add: false, editting_slb: undefined})
             break
         default:
