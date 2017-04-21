@@ -31,6 +31,13 @@ class GLTree extends React.Component {
                     })
                     }
                 </div>
+                <div>
+                    <div>区域</div>
+                    { this.props.cities.map((cell)=>{
+                        return (<span>{cell}</span>)
+                    })
+                    }
+                </div>
 
             </div>
         );

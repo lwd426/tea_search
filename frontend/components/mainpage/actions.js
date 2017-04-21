@@ -6,7 +6,7 @@ import request from '../../request';
 const slb_list_url = HOST + '/slb'
 const testgroup_url = HOST + '/testgroup';
 const stragety_url = HOST + '/stragety';
-
+const menuActions = require('../../layout/menu/actions')
 
 /**
  * 获取slb列表
@@ -76,7 +76,14 @@ export function changeDatePicker(dateStrings){
     }
 }
 
-export function switchContentShow(main_display, card_display, strageties, currentCasVal){
+export function switchContentShow(main_display, card_display, strageties, currentCasVal) {
+    return (dispatch, getState) => {
+        if(!currentCasVal || currentCasVal.length ===0) dispatch(menuActions.changeShowWinType( currentCasVal[0] || 0, ''))
+        return dispatch(switchContentShowSuccess(main_display, card_display, strageties,currentCasVal))
+    }
+}
+
+export function switchContentShowSuccess(main_display, card_display, strageties, currentCasVal){
     return{
         type:TYPES.MAIN_CONTAINER_DISPLAY,
         main_container_display: main_display,

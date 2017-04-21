@@ -13,11 +13,6 @@ class HorizontalLoginForm extends React.Component {
     componentDidMount() {
     }
     componentWillReceiveProps(nextProps){
-        if(!this.props.cont.showSlbModal) {
-            this.props.form.setFieldsValue({
-                'name': '',
-            })
-        }
     }
     handleSubmit = (e) => {
         e.preventDefault();
@@ -35,6 +30,11 @@ class HorizontalLoginForm extends React.Component {
                     time:'',
                     version: ''}
                 this.props.contentActions.testgroupActions.addTestGroup(newData)
+                if(!this.props.cont.showSlbModal) {
+                    this.props.form.setFieldsValue({
+                        'name': '',
+                    })
+                }
             }
         });
     }
@@ -53,6 +53,9 @@ class HorizontalLoginForm extends React.Component {
                 </FormItem>
                 <FormItem className="gl-version-btn">
                     <Button onClick={()=>{
+                        this.props.form.setFieldsValue({
+                            'name': '',
+                        })
                         this.props.contActions.setAddTgModalStatus(false)
                     }}>不了</Button>
                     <Button htmlType="submit" disabled={hasErrors(getFieldsError())}>确定</Button>

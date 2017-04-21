@@ -62,15 +62,20 @@ router.get('/publish', function *(next) {
             data: result.info
         };
     }else if(result.status === 'success') {
-            var strageties = yield libStragety.getStragetyInfos({tgid: tgid})
-            var status = 'stopped'
-            strageties.map((stra)=>{
-                if(stra.get('stra_status') === 'running'){
-                    status = 'running'
-                }
-            })
+            // var strageties = yield libStragety.getStragetyInfos({tgid: tgid})
+            // var status = 'stopped'
+            // strageties.map((stra)=>{
+            //     if(stra.get('stra_status') === 'running'){
+            //         status = 'running'
+            //     }
+            // })
         //更新策略组的发布时间
-        result = yield libTg.updateTest({time: moment().format('YYYY-MM-DD HH:mm'), version: result.stra_info, status: status}, {objectId: tgid})
+        var tg = yield libTg.getTgInfo(tgid);
+        var data = {time: moment().format('YYYY-MM-DD HH:mm'), version: result.stra_info, status: 'running'}
+        //如果是第一次发布，则更新first_publish_time字段
+        console.log(tg[0].get('time'))
+        if(tg[0].get('time') === '-') data.first_publish_time = moment().format('YYYY-MM-DD HH:mm');
+        result = yield libTg.updateTest(data, {objectId: tgid})
         //更新策略组下的所有策略的发布时间
         result = yield libStragety.updateStragety({time: moment().format('YYYY-MM-DD HH:mm')}, {tgid: tgid})
         if(result){

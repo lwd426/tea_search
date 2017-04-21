@@ -10,7 +10,7 @@ const checkUrl = module.exports = function checkUrl(url, urls) {
 
     if (!!match) {
         let p = url.split(/\s+/);
-        let pathReg = /^(?:\/[\+~%\/.\w-]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*)$/g;
+        let pathReg = /\w+/g;
         if (p.length == 1) {
             if (!!url.match(pathReg)) {
                 result = true;

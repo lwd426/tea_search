@@ -46,7 +46,7 @@ class GLStragety extends React.Component {
             render: (text, record) => (
                 <span>
                   <a href="#" onClick={()=>{
-                      this.props.contentActions.testgroupActions.handleStragety(record.slbid, record.code, record.status === "running" ? "stopped" : "running")
+                      this.props.contentActions.testgroupActions.handleStragety(record.slbid,record.tgid, record.code, record.status === "running" ? "stopped" : "running")
                   }}> {record.status === 'running' ? '停止' : '启动'}</a>
                   <span className="ant-divider" />
                   <a href="#" onClick={()=>{
@@ -75,8 +75,7 @@ class GLStragety extends React.Component {
         return true;
     }
     componentWillMount=()=>{
-        const slbid = this.props.menu.slbid || '';
-        this.props.contentActions.testgroupActions.getServers(slbid);
+
     }
     onDelete = (index) => {
         const dataSource = [...this.state.dataSource];
@@ -103,8 +102,8 @@ class GLStragety extends React.Component {
         if(refer_stragety) { //如果基准版本存在，则更新它
             var stra_id = refer_stragety.stra_id,
                 tag = refer_stragety.tag,
-                stra_servers = serversinfo.join(';'),
-                stra_serverskey = serverkeys.join(';');
+                stra_servers = serversinfo,
+                stra_serverskey = serverkeys;
             this.props.contentActions.testgroupActions.updateStragety(stra_id, tgid, slbid, {tag,stra_servers,stra_serverskey } )
 
         }else{
@@ -133,6 +132,7 @@ class GLStragety extends React.Component {
             return {
                 key: cell.stra_id,
                 slbid:cell.slbid,
+                tgid:cell.tgid,
                 testgroupcode: cell.tgid,
                 stragetycode: cell.stra_id,
                 code: cell.stra_id,
@@ -149,7 +149,7 @@ class GLStragety extends React.Component {
                 flowaccounting: cell.flowaccounting,
                 tag: cell.tag,
                 worktime: cell.time,
-                description: <GLInfo urls={cell.stra_urls.split(';')} servers={cell.stra_servers.split(';')} uids={cell.stra_uids.split(';')}/>
+                description: <GLInfo urls={cell.stra_urls} cities={cell.stra_cities} servers={cell.stra_servers} uids={cell.stra_uids}/>
             }
         });
         var _this = this;

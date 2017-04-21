@@ -144,7 +144,6 @@ class GLMainpage extends React.Component {
         const _this = this;
         let colkey = 0;
         const currentCasVal = this.props.content.mainpage.currentCasVal;
-        console.log(currentCasVal)
         return (
             <div className="mainpage">
                 <br />
@@ -163,7 +162,7 @@ class GLMainpage extends React.Component {
                                             header={
                                                 <div>
                                                     <span>{v.name + '/' + q.name}</span>
-                                                    <Button type="primary" className="collbutton" onClick={(e) =>{
+                                                    <Button className="collbutton" onClick={(e) =>{
                                                         e.stopPropagation();
                                                         let currentCasVal = [v.objectId, q.objectId];
                                                         _this.switchContentShow('none','block', q.strageties, currentCasVal)
@@ -212,10 +211,14 @@ class GLMainpage extends React.Component {
 
                 <div className="card-container" style={{display: this.props.content.mainpage.card_container_display}}>
                 
-                <Button className="device_button" type="primary">
+                <Button className="device_button" onClick={()=>{
+                    this.props.menuActions.changeShowWinType(this.props.menu.slbid, 'deviceinfo');
+                }}>
                     设备信息 
                 </Button>
-                <Button className="stragety_button" type="primary">
+                <Button className="stragety_button"  onClick={()=>{
+                    this.props.menuActions.changeShowWinType(this.props.menu.slbid, 'testinfo');
+                }}>
                     策略维护 
                 </Button>
 

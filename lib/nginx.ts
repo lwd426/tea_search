@@ -1,7 +1,6 @@
 import { CONTENT, Meta, level, MataS } from './if';
 import { Methods, Verify } from './check';
-import { UpstreamGroup } from './UpstreamGroup';
-import { three } from './three';
+
 import { four } from './four';
 const defaultUpstream = "defaultUpstream";
 const geoip_city = `/etc/maxmind-city.mmdb`;
@@ -39,13 +38,13 @@ class Upstream {//default
         let upStreamName = this.upStreamName;
         return `
         location ${url} { 
-                    proxy_pass http://$${upStreamName}; 
+                    proxy_pass http://${upStreamName}; 
         }
         `;
     }
 
     getUpstreamName() {
-        return this.metaData.url == "/" ? defaultUpstream : this.type + "_" + this.metaData.serverArray[this.index];
+        return this.metaData.url == "/" ? defaultUpstream : this.type + "_" + this.metaData.serverArray[this.index].replace(/\./g,'_').replace(/\:/g,'_');
     }
 
     getUpstream(): string {
@@ -161,7 +160,7 @@ function nginx(arr: any[], domain = 'test.m.le.com', port = '80') {
     // content += location;
 
     console.log(content);
-    re.content = content;
+    re.content = content.replace(/\n/g,' ');
     return re;
 }
 function geoIp(arr) {

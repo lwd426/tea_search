@@ -58,7 +58,7 @@ export function addSlb(name, domain, domainId){
             }else{
                 dispatch(setAddSLBModalStatus(false))
                 var slb = result.data;
-                utilscomps.showNotification('success', '新建成功', '测试项' + name + '已经新建成功！域名ID为 '+ slb.domainId );
+                utilscomps.showNotification('success', '新建成功', '测试项' + name + '已经新建成功！域名ID为 '+ slb.domainId , 2);
                 return dispatch(menuActions.getMenulist())
             }
         }))

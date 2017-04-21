@@ -92,6 +92,7 @@ export function editSlbClick(slbid, slbname) {
 export function changeShowWinType(slbid, wintype) {
     //读取slb信息
     return (dispatch, getState) => {
+        if(!slbid) return dispatch(changeSlbSuccess(wintype, undefined, undefined, undefined));
         return dispatch(fetch.getData(slb_list_url + '?objectId=' + slbid,function(err, result){
             if(err) return dispatch(changeSlbSuccess(''));
             var arr = result.data;

@@ -31,6 +31,7 @@ const webServerReducer = (state = initState,action) => {
         case TYPES.SET_REFER_SERVER_SUCCESS : {
             var servers = action.servers,
                 status = action.status;
+
             state.webServerList.map((server)=>{
                 if(servers.indexOf(server.key) !== -1){
                     server.refer = status;

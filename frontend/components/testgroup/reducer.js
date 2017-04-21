@@ -176,8 +176,8 @@ let reducer = (state = initialState, action)=> {
             break
         case TYPES.EDIT_STRAGETY:
             var stra = action.stragety;
-            var urls= stra.urlsvalues.split(';');
-            var uids = stra.uidsvalues.split(';');
+            var urls= stra.urlsvalues;
+            var uids = stra.uidsvalues;
             if(urls[0] === '') urls = [];
             if(uids[0] === '') uids = [];
             return Object.assign({}, state, {
@@ -186,12 +186,12 @@ let reducer = (state = initialState, action)=> {
                 editting_status: stra.code,
                 addurls: urls,
                 adduids: uids,
-                serverselectedkeys: stra.serverskey.split(';')
+                serverselectedkeys: stra.serverskey
                 });
 
             break
         case TYPES.FRESH_STRAGETYLIST:
-            utilscomps.showNotification('success', '生成标签成功', '请通知相关开发人员，进行标签修改或添加！');
+            utilscomps.showNotification('success', '生成标签成功', '请通知相关开发人员，进行标签修改或添加！', 2);
             return Object.assign({}, state, {stragetylist: action.stragetylist})
             break
         case TYPES.VALIDATE_FAILURE:
@@ -216,7 +216,7 @@ let reducer = (state = initialState, action)=> {
             break
         case TYPES.PUBLISH_SUCCESS:
             if(action.status) {
-                utilscomps.showNotification('success', '发布成功', '发布成功！发版日志请版本日志页');
+                utilscomps.showNotification('success', '发布成功', '发布成功！发版日志请版本日志页', 2);
                 return Object.assign({}, state, {versionModalShow: false})
             }else{
                 utilscomps.showNotification('error', '发布失败', '失败原因：' + action.data );
