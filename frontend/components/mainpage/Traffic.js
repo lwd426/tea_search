@@ -2,10 +2,11 @@ import React from 'react';
 
 import echarts from 'echarts';
 import MyTable from './table.js';
-import { Table, Icon } from 'antd';
+import { Table, Icon, Button,} from 'antd';
 //var echarts = require('echarts');
 import moment from 'moment';
 import request from '../../request';
+import * as lib from './lib';
 
 
 let tableColumns = [], tableData = [];
@@ -50,7 +51,7 @@ export default class EChart extends React.Component {
         let startTime = moment(new Date(date_picker[0])).format('YYYY-MM-DD');
         let endTime = moment(new Date(date_picker[1])).format('YYYY-MM-DD');
         let res = await request.getTrafficDataByStragety(stragety_arr, startTime, endTime);
-
+ 
         let responseData = res.result.data.reverse();
 
         let dataArr = [];
@@ -97,11 +98,11 @@ export default class EChart extends React.Component {
             })
             let arr_uv = Object.entries(val.uv);
             arr_uv.map((v,i) => {
-                dataArr[i].push(v[1].count)
-                percentArr[i].push((v[1].count*100/val.uv_all).toFixed(2));
+                dataArr[i].push(v[1].pvuv)
+                percentArr[i].push((v[1].pvuv*100/val.uv_all).toFixed(2));
 
-                tableData[index]['visitor' + (i+1)] = v[1].count;
-                tableData[index]['persent' + (i+1)] = (v[1].count*100/val.uv_all).toFixed(2);
+                tableData[index]['visitor' + (i+1)] = v[1].pvuv;
+                tableData[index]['persent' + (i+1)] = (v[1].pvuv*100/val.uv_all).toFixed(2);
             })
         })
         
@@ -234,7 +235,21 @@ export default class EChart extends React.Component {
             series: seriesArr
         });
     }
+    async exportTable(){
+        let date_picker = this.props.content.mainpage.date_picker;
+        let stragety_arr = this.props.content.mainpage.strageties;
+        let startTime = moment(new Date(date_picker[0])).format('YYYY-MM-DD');
+        let endTime = moment(new Date(date_picker[1])).format('YYYY-MM-DD');
+        console.log(stragety_arr + startTime + endTime)
+        //let res = await request.getTrafficDataByStragety(stragety_arr, startTime, endTime);
 
+        let data = {};
+        data.stragety_arr = stragety_arr;
+        data.startTime = startTime;
+        data.endTime = endTime;
+        let res = await lib.postTableData(data);
+        console.log(res);
+    }
     componentDidMount() {
         // let date_picker = this.props.content.mainpage.date_picker
         // console.log(date_picker);
@@ -260,6 +275,7 @@ export default class EChart extends React.Component {
             <div>
                 <div id="line" style={{width:'100%',height:400}} className="chart-box"></div>
                 <div className="tableBox">
+                    <Button className="export" onClick={this.exportTable.bind(this)}><Icon type="download" />导出表格</Button>
                     <Table bordered={true} columns={this.state.tableColumns} dataSource={this.state.tableData} /> 
                 </div>
             </div>          

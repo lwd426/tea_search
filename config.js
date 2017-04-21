@@ -16,6 +16,14 @@ module.exports = {
             "Content-Type": "application/json",
             "SlbAccount": "le-test"
         }
+    },
+    CHARTS: {
+        url: 'http://10.100.54.188:8006/db/functions/',
+        headers: {
+            "X-Parse-Application-Id": "gatedLaunch",
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
     }
     , HOST: `${process.env.API_HOST}`
 	,PORT: 3000
