@@ -31,7 +31,6 @@ export class four {
             s += `
             location ${v} {
                 ${u}
-                #default
                 proxy_pass http://${n}_default;
             }  
             `;
