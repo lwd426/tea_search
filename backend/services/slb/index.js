@@ -80,10 +80,10 @@ module.exports = {
                     serverArray: [],
                     default: false
                 };
-                var urls = stragety.get("stra_urls") ? stragety.get("stra_urls").split(";") : [],
-                    uids = stragety.get("stra_uids") ? stragety.get("stra_uids").split(";") : [],
-                    cities = stragety.get("stra_cities") ? stragety.get("stra_cities").split(";") : [],
-                    servers = stragety.get("stra_servers") ? stragety.get("stra_servers").split(";") : [],
+                var urls = stragety.get("stra_urls") ? stragety.get("stra_urls") : [],
+                    uids = stragety.get("stra_uids") ? stragety.get("stra_uids") : [],
+                    cities = stragety.get("stra_cities") ? stragety.get("stra_cities") : [],
+                    servers = stragety.get("stra_servers") ? stragety.get("stra_servers") : [],
                     isdefault = stragety.get("is_default") || false;
 
                 temp.urlArray = urls;
@@ -181,10 +181,10 @@ module.exports = {
                     serverArray: [],
                     default: false
                 };
-                temp.urlArray = stragety.get("stra_urls") ? stragety.get("stra_urls").split(";") : [],
-                    temp.uidArray = stragety.get("stra_uids") ? stragety.get("stra_uids").split(";") : [],
-                    temp.regionArray = stragety.get("stra_cities") ? stragety.get("stra_cities").split(";") : [],
-                    temp.serverArray = stragety.get("stra_servers") ? stragety.get("stra_servers").split(";") : [],
+                temp.urlArray = stragety.get("stra_urls") ? stragety.get("stra_urls") : [],
+                    temp.uidArray = stragety.get("stra_uids") ? stragety.get("stra_uids") : [],
+                    temp.regionArray = stragety.get("stra_cities") ? stragety.get("stra_cities") : [],
+                    temp.serverArray = stragety.get("stra_servers") ? stragety.get("stra_servers") : [],
                     temp.default = stragety.get("is_default") || false;
                 data.push(temp)
             }

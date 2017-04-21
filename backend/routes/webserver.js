@@ -24,7 +24,8 @@ router.post('/', function *(next) {
 
 router.del('/', function *(next) {
     var key = this.request.body.key;
-    var result = yield lib.deleteWebServer({key:key})
+    var slbid = this.request.body.slbid;
+    var result = yield lib.deleteWebServer(slbid, {key:key})
     this.body = {
         status: result.status,
         data: result

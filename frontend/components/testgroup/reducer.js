@@ -137,7 +137,6 @@ let reducer = (state = initialState, action)=> {
                 var stragetiesinfo = server.strageties;
                 var status = false;//status为该机器的状态，是否有策略正在运行
                 var statusinfo = '';
-                console.log('dd')
                 stragetiesinfo.map((stragety) => {
                     if (stragety.stra_status === 'running') {
                         status = true;
@@ -177,8 +176,8 @@ let reducer = (state = initialState, action)=> {
             break
         case TYPES.EDIT_STRAGETY:
             var stra = action.stragety;
-            var urls= stra.urlsvalues.split(';');
-            var uids = stra.uidsvalues.split(';');
+            var urls= stra.urlsvalues;
+            var uids = stra.uidsvalues;
             if(urls[0] === '') urls = [];
             if(uids[0] === '') uids = [];
             return Object.assign({}, state, {
@@ -187,7 +186,7 @@ let reducer = (state = initialState, action)=> {
                 editting_status: stra.code,
                 addurls: urls,
                 adduids: uids,
-                serverselectedkeys: stra.serverskey.split(';')
+                serverselectedkeys: stra.serverskey
                 });
 
             break

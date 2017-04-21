@@ -44,6 +44,21 @@ module.exports = {
      */
     getTestgroupList: function*(slbid) {
         var list = yield db.get('testgroup', {slbid: slbid},[{opt: 'desc', key: 'createdAt'}]);
+        var i = 0, len = list.length;
+        //遍历每个测试项目下的所有策略，累加流量配置
+        for(;i<len;i++){
+            var tg = list[i];
+            var flowaccount = 0.0;
+            var straList = yield libStra.getStragetyInfos({tgid: tg.id, stra_status: 'running'})
+            straList.map((stra)=>{
+                var flow = stra.get('flowaccounting') || 0;
+                if(flow){
+                    flowaccount += parseFloat(flow.replace('%',''))
+                }
+            })
+            tg.set('flowaccounting', flowaccount + '%')
+        }
+
         // 决定测试项目状态的逻辑：
         // 1. 发布时间为空则为new
         // 2. 策略如果有running,则为运行中

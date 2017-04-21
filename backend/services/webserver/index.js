@@ -39,16 +39,12 @@ module.exports = {
         var len = list.length, i=0;
         for(;i<len;i++){
             var server = list[i];
-            var listofstragety = '';
-            var stras = [];
-            var stragetiesinfo = server.get('stragetiesinfo') ;
-            if(!stragetiesinfo || stragetiesinfo.split(';').length === 0) {
-                listofstragety = [];
-            }else{
-                listofstragety = yield db.get('stragety', {slbid: slbid}, [{key: 'stra_id', opt: 'in', data: stragetiesinfo.split(';')}]);
-                var k=0,len2 = listofstragety.length, stras = [];
-                for(;k<len2;k++){
-                    var stragety = listofstragety[k];
+            var serverkey = server.get('key');
+            var listofstragety = yield db.get('stragety', {slbid: slbid});
+            var k=0,len2 = listofstragety.length, stras = [];
+            for(;k<len2;k++){
+                var stragety = listofstragety[k];
+                if(stragety.get('stra_serverskey').indexOf(serverkey)!==-1){
                     var tg = yield db.get('testgroup', {objectId: stragety.get('tgid')});
                     stras.push({
                         stra_name: stragety.get("stra_name"),
@@ -59,6 +55,7 @@ module.exports = {
                         tg_id: tg[0].id
                     })
                 }
+
             }
             server.set('strageties', stras)
 
@@ -70,25 +67,26 @@ module.exports = {
      * @param id
      * @returns {*}
      */
-    deleteWebServer: function*(data) {
+    deleteWebServer: function*(slbid, data) {
         //先查询要删除的server，如果server下有策略，则不能删除，返回信息：提示用策略正在运行，请先删除
         var result = {
             status: 'failure',
             info: ''
         }
         var server = yield db.get('webServer', data);
-        if(server[0].get('stragetiesinfo')){
-            var stragetiesid = server[0].get('stragetiesinfo').split(';');
-            var strageties = yield db.get('stragety', undefined, {key: 'in', key: 'stra_id', data: stragetiesid});
-            var i = 0,len = strageties.length;
-            var stra_info = [];
-            for(;i<len;i++){
-                var stragety = strageties[i];
-                if(stragety !== ''){
-                    stra_info.push(stragety.get('stra_name'));
-                }
+        var serverkey = server[0].get('key');
+        var listofstragety = yield db.get('stragety', {slbid: slbid});
+        var k=0,len2 = listofstragety.length, stras = '';
+        for(;k<len2;k++){
+            var stragety = listofstragety[k];
+            if(stragety.get('stra_serverskey').indexOf(serverkey)!==-1){
+                var tg = yield db.get('testgroup', {objectId: stragety.get('tgid')});
+                stras += stragety.get("stra_name") + ' ' ;
             }
-            result.info = "不能删除该服务器（该服务器部署了以下几个策略：" + stra_info.join(' ')
+
+        }
+        if(server[0].get('stragetiesinfo')){
+            result.info = "不能删除该服务器（该服务器部署了以下几个策略：" + stras
         }else{
             var re = yield db.delete('webServer', data);
             result.status = 'success';

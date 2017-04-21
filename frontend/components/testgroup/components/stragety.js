@@ -102,8 +102,8 @@ class GLStragety extends React.Component {
         if(refer_stragety) { //如果基准版本存在，则更新它
             var stra_id = refer_stragety.stra_id,
                 tag = refer_stragety.tag,
-                stra_servers = serversinfo.join(';'),
-                stra_serverskey = serverkeys.join(';');
+                stra_servers = serversinfo,
+                stra_serverskey = serverkeys;
             this.props.contentActions.testgroupActions.updateStragety(stra_id, tgid, slbid, {tag,stra_servers,stra_serverskey } )
 
         }else{
@@ -148,7 +148,7 @@ class GLStragety extends React.Component {
                 flowaccounting: cell.flowaccounting,
                 tag: cell.tag,
                 worktime: cell.time,
-                description: <GLInfo urls={cell.stra_urls.split(';')} servers={cell.stra_servers.split(';')} uids={cell.stra_uids.split(';')}/>
+                description: <GLInfo urls={cell.stra_urls} cities={cell.stra_cities} servers={cell.stra_servers} uids={cell.stra_uids}/>
             }
         });
         var _this = this;

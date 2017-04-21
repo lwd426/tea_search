@@ -259,6 +259,14 @@ export function saveStragetyResult(result) {
     }
 }
 
+export function validateFailure(keyval, infoval) {
+    return {
+        type: TYPES.VALIDATE_FAILURE,
+        key: keyval,
+        info: infoval
+    }
+}
+
 function dataHandler(dispatch, ha,stra_id, slbid,tgid,name,desc,cities,servers,serverskey,urls,uids,type){
     if(ha === 'save'){
         return dispatch(fetch.postData(stragety_url,{slbid,tgid,name,desc,cities,servers,serverskey,urls,uids,type}, function(err, result){
@@ -272,11 +280,11 @@ function dataHandler(dispatch, ha,stra_id, slbid,tgid,name,desc,cities,servers,s
         data = {
             stra_name: name,
             stra_desc: desc,
-            stra_cities: cities.join(';'),
-            stra_servers: servers.join(';'),
-            stra_serverskey: serverskey.join(';'),
-            stra_urls: urls.join(';'),
-            stra_uids: uids.join(';'),
+            stra_cities: cities,
+            stra_servers: servers,
+            stra_serverskey: serverskey,
+            stra_urls: urls,
+            stra_uids: uids,
             type: type,
             slbid: slbid
         }
@@ -333,9 +341,9 @@ export function validate(editting_status, slbid,tgid,name,desc,cities,servers,se
                         ,region_exsit = false;
                     //遍历获得slb下所有的不重复urls、uid或区域数组
                     stragetylist.map((stragety)=>{
-                        var urllist = stragety.stra_urls.split(';');
-                        var uidlist = stragety.stra_uids.split(';');
-                        var regionlist = stragety.stra_cities.split(';');
+                        var urllist = stragety.stra_urls;
+                        var uidlist = stragety.stra_uids;
+                        var regionlist = stragety.stra_cities;
                         urllist.map((url)=>{
                             if(url && urls_of_slb.indexOf(url) !==-1){
                                 urls_of_slb.push(url)
@@ -388,9 +396,9 @@ export function validate(editting_status, slbid,tgid,name,desc,cities,servers,se
                             //server是否与重复urls策略服务器们重复
                             url_exsit_info.map((url)=>{
                                 stragetylist.map((stragety)=>{
-                                    if(stragety.stra_urls.split(';').indexOf(url) !==-1){
+                                    if(stragety.stra_urls.indexOf(url) !==-1){
                                         servers.map((server)=>{
-                                            if(stragety.stra_servers.split(';').indexOf(server) !==-1){
+                                            if(stragety.stra_servers.indexOf(server) !==-1){
                                                 server_exsit = true
                                             }
                                         })
@@ -569,7 +577,7 @@ export function updateStragety(stra_id, tgid , slbid,  data) {
         //更新策略信息
         return dispatch(fetch.updateData(stragety_url,{stra_id},data,function(err, result){
             //更新机器信息 - 添加策略名到新机器上
-            return dispatch(fetch.updateData(server_url, {other:{opt: 'in', key: 'key', data:data.stra_serverskey.split(';')}, type:'add'},{'stragetiesinfo':stra_id},function(err, result){
+            return dispatch(fetch.updateData(server_url, {other:{opt: 'in', key: 'key', data:data.stra_serverskey}, type:'add'},{'stragetiesinfo':stra_id},function(err, result){
                 if(err)  dispatch(getTestGroupListSuccess([]))
                 return dispatch(fetch.getData(stragety_url + '?tgid='+tgid,function(err, result){
                     if(err)  dispatch(getStragetyListSuccess([], tgid, slbid))

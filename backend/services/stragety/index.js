@@ -27,15 +27,24 @@ module.exports = {
         //     flowaccounting = getPercentage(serverNum, allservers.length) + '%';
         // }
         //保存策略
+        //如果是生成基准版本，则获取slb下所有的基准服务器
+        var referServers = [], referServersKey = [];
+        if(type === 'refer'){
+            var list = yield libServer.getServersInfo({slbid: slbid, refer: true})
+            list.map((server)=>{
+                referServers.push(server.get('ip'))
+                referServersKey.push(server.get('key'))
+            })
+        }
         var data = {
             stra_id : uuid,
             stra_name: name,
             stra_desc: desc,
-            stra_cities: cities.join(';'),
-            stra_servers: servers.join(';'),
-            stra_serverskey: serverskey.join(';'),
-            stra_urls: urls.join(';'),
-            stra_uids: uids.join(';'),
+            stra_cities: cities,
+            stra_servers: type !== 'refer' ? servers : referServers,
+            stra_serverskey: type !== 'refer' ? serverskey : referServersKey,
+            stra_urls: urls,
+            stra_uids: uids,
             stra_status: 'new',
             tgid: tgid,
             slbid: slbid,
@@ -43,14 +52,14 @@ module.exports = {
             flowaccounting: '',
             time: moment().format('YYYY-MM-DD HH:mm:ss')
         }
-        var result = yield db.save('stragety', data);
+        return yield db.save('stragety', data);
         //更新server信息，把uids、urls和策略id更新到server记录里
-        if(result){
-            var otherwhere = {key: 'ip', opt: 'in', data: servers}
-            var data = {urls: urls.join(';'), uids: uids.join(';'), stragetiesinfo: uuid}
-            var result2 =  yield server_service.updateWebServer(data, undefined, [otherwhere], 'add')
-        }
-        return result && result2;
+        // if(result){
+        //     var otherwhere = {key: 'ip', opt: 'in', data: servers}
+        //     var data = {urls: urls.join(';'), uids: uids.join(';'), stragetiesinfo: uuid}
+        //     var result2 =  yield server_service.updateWebServer(data, undefined, [otherwhere], 'add')
+        // }
+        // return result && result2;
     },
     /**
      * 获取策略列表
@@ -63,7 +72,7 @@ module.exports = {
         var i=0; len=stragetylist.length;
         for(;i<len;i++){
             var stragety = stragetylist[i]
-            var serverskey = stragety.get("stra_serverskey").split(";");
+            var serverskey = stragety.get("stra_serverskey");
             var servers = yield server_service.getServersInfo(undefined, [{opt: 'in', key:'key', data: serverskey}])
             var serversinfo = [];
             servers.map((server)=>{
@@ -75,7 +84,7 @@ module.exports = {
                 flowaccounting = getPercentage(serverNum, allservers.length) + '%';
             }
             stragety.set("flowaccounting",flowaccounting);
-            stragety.set("stra_servers",serversinfo.join(';'));
+            stragety.set("stra_servers",serversinfo);
         }
 
 
@@ -106,8 +115,17 @@ module.exports = {
      * @returns {*}
      */
     updateStragety: function*(data, where) {
-        return yield db.update('stragety', where, data);
-        // return result;
+        var result =  yield db.update('stragety', where, data);
+        //更新server信息，把uids、urls和策略id更新到server记录里
+        // if(result){
+        //     var servers = data.stra_servers.split(';')
+        //     var urls = data.stra_urls.split(';')
+        //     var uids = data.stra_uids.split(';')
+        //     var otherwhere = {key: 'ip', opt: 'in', data: servers}
+        //     var data = {urls: urls.join(';'), uids: uids.join(';')}
+        //     result =  yield server_service.updateWebServer(data, undefined, [otherwhere], 'add')
+        // }
+        return result;
     },
     /**
      * 取出num个tag

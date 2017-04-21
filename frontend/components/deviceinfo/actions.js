@@ -83,7 +83,7 @@ export function addWebServer(data){
 }
 export function deleteWebServer(server) {
     return (dispatch, getState) => {
-        return dispatch(fetch.deleteData(web_list_url,{key: server.key}, function(err, result){
+        return dispatch(fetch.deleteData(web_list_url,{slbid: server.slbid, key: server.key}, function(err, result){
             if(err) return dispatch(deleteWebServerList([]))
             if(result.status === 'success'){
                 return dispatch(fetch.getData(web_list_url+ '?slbid=' + server.slbid,function(err, result){

@@ -42,7 +42,7 @@ class App extends React.Component {
                 <div className="app-container" >
                     <Header>
                         <Button className="button-div-header" onClick={()=>{
-                            this.props.menu.wintype = 'mainpage'
+                            this.props.menuActions.changeShowWinType(0, 'mainpage');
                         }}>back to <Icon type="home" /> </Button>
                         乐视视频灰度发布系统
                     </Header>

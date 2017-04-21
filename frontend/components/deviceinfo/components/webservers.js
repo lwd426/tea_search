@@ -143,7 +143,7 @@ class GLWebserver extends React.Component {
                 ip: cell.ip,
                 stragetyname: <Popover
                     content={<div>
-                        <GLPop data={stragetyinfo}/></div>}
+                        <GLPop key={cell.key} data={stragetyinfo}/></div>}
                     title='已有策略'
                 ><Icon type="exclamation-circle-o" />
                 </Popover>,
