@@ -160,7 +160,7 @@ function nginx(arr: any[], domain = 'test.m.le.com', port = '80') {
     // content += location;
 
     console.log(content);
-    re.content = content;
+    re.content = content.replace(/\n/g,' ');
     return re;
 }
 function geoIp(arr) {

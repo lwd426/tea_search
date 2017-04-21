@@ -1,6 +1,6 @@
 import {level,MataS} from './if';
 import {Methods} from './check'
-
+var uidname='ssouid';
 export class four {
     meta: MataS;
     upstreamName: string;
@@ -45,7 +45,7 @@ export class four {
             if(v.uids){
                 let n=this.getOneUpstreamName(v);
                 r+=`
-                if ($COOKIE_uid ~* "${v.uids.join("|")}"){
+                if ($COOKIE_${uidname} ~* "${v.uids.join("|")}"){
                     proxy_pass http://${n};
                 }`;
             }
