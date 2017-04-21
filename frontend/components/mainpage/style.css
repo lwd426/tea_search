@@ -67,7 +67,7 @@
     margin-bottom: 40px;
 }
 .tableBox{
-    padding: 50px 100px;
+    padding: 80px 50px;
 }
 .dropdownBox{
     text-align: left;
@@ -86,7 +86,7 @@
 #content_two{position: relative;}
 #content_two .back{position: absolute;top:0px;}
 .tableBox{position: relative;}
-.tableBox .export{position: absolute;top:55px;right: 60px;}
+.tableBox .export{position: absolute;top:40px;right: 50px;}
 #content_one .ant-table-wrapper,#content_two .ant-table-wrapper{padding: 0 80px;}
 .ant-table.ant-table-bordered .ant-table-title{
     font-size: 13px;
@@ -108,11 +108,6 @@
 .tableBox{font-family: arial;}
 .ant-cascader-picker-label{padding:2px 12px 0 8px;}
 .ant-cascader-picker-clear{display: none;}
-.ant-cascader-menu .ant-cascader-menu-item-disabled[title ='运行中']{color:#555;font-weight:bold;padding-left:9px;}
-.ant-cascader-menu .ant-cascader-menu-item-disabled[title ='新生成']{color:#555;font-weight:bold;padding-left:9px;}
-.ant-cascader-menu .ant-cascader-menu-item-disabled[title ='已停止']{color:#555;font-weight:bold;padding-left:9px;}
-
-
-
+.ant-cascader-menu .ant-cascader-menu-item-disabled[title ='运行中'],.ant-cascader-menu .ant-cascader-menu-item-disabled[title ='新生成'],.ant-cascader-menu .ant-cascader-menu-item-disabled[title ='已停止']{color:#555;font-weight:bold;padding-left:9px;cursor: auto;}
 
 

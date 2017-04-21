@@ -2,8 +2,8 @@ import 'whatwg-fetch';
 const HOST = require('../../config').HOST;
 
 const virtualhost_url = HOST + '/virtualhost/getbyname/';
-const data_traffic_url = 'http://10.100.54.188:8006/db/functions/get_statistic_uv';
-const data_conversion_url = 'http://10.100.54.188:8006/db/functions/get_statistic_action';
+const data_traffic_url = 'http://10.87.25.20:8006/db/functions/get_statistic_uv';
+const data_conversion_url = 'http://10.87.25.20:8006/db/functions/get_statistic_action';
 
 const mainpage_all_strategies_url = 'http://10.100.54.188:8006/db/functions/get_all_strategies';
 
@@ -45,7 +45,8 @@ module.exports = {
             let data = await response.json();
             return data;
         }catch(e){
-            console.log('error', e)
+            console.log('error', e);
+            return ("error")
         }
     },
     getConversionDataByStragety : async (stragetys, start, end) => {
@@ -67,6 +68,7 @@ module.exports = {
             return data;
         } catch(e) {
             console.log("error", e);
+            return ("error")
         }
     },
     getAllStrategies : async (slbid) => {
