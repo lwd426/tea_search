@@ -12,15 +12,22 @@ nginx([
         {
             urlArray: ['/yyyy/uid'],
             serverArray: ["1"],
-           // uidArray: ['123'],
-           regionArray: ['123'],
+           uidArray: ['123'],
+           regionArray: ['beijing'],
             default: false
         },
 
         {
-            urlArray: ["/yyyy/a.html"],
+            urlArray: ["/"],
             serverArray: ['2'],//传给我所有的没使用灰度服务器
-            uidArray:[],
+            uidArray:["zhuoyongran",'zyr'],
+            // uidArray:['3456875456'],
+            // serverArray: [],//传给我所有的没使用灰度服务器
+            default: false
+        },{
+            urlArray: ["/"],
+            serverArray: ['2.8'],//传给我所有的没使用灰度服务器
+            uidArray:["zhuoyongran1"],
             // uidArray:['3456875456'],
             // serverArray: [],//传给我所有的没使用灰度服务器
             default: false
