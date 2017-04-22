@@ -23,9 +23,7 @@ class HorizontalLoginForm extends React.Component {
                 this.props.contActions.addSlb(values.name, values.domain,  domainId)
                 this.props.form.setFieldsValue({
                     'name': '',
-                    'domain':'',
-                    'p1': '',
-                    'p2': ''
+                    'domain':''
                 })
                 this.props.cont.validateDomain = {
                     name: {
