@@ -1,17 +1,19 @@
 import nginx = require("./nginx");
 nginx([
 
-        {
+       /* {
             urlArray: ['/yyyy/uid'],
-            serverArray: ["117.121.54.110"],
+            // serverArray: ["117.121.54.110"],
+            serverArray: [],
             regionArray:['bj'],
             // uidArray:['34','999'],
             default: false
-        },
+        },*/
         {
             urlArray: ['/yyyy/uid'],
-            serverArray: ["1.1.1.1"],
-           uidArray: ['123'],
+            serverArray: ["1.2.3.4"],
+           // uidArray: ['123'],
+           regionArray: ['123'],
             default: false
         },
 

@@ -5,7 +5,8 @@ const CODE = {
     "MUCH_DEFAULT": 3,
     "JIAOJI": 4,
     "URL_UID": 5,
-    "NO_UID_REGION": 6
+    "NO_UID_REGION": 6,
+    "NO_SERVER_ARRAY": 7
 };
 class Methods {
     static contain(first, sec): boolean {//url是否包含,包含返回true
@@ -79,6 +80,7 @@ class Verify {
         try {
             // this.serverSingle();
             // this.url();
+            this.hasServer();
             this.lack();
             this.checkUrl();//包含,并且不能相等
             this.hasDefault();//有没有default是true的
@@ -167,15 +169,15 @@ class Verify {
                     }
                     //包含的时候还要看看uid和地域信息，如果uid无交集并且服务器无交集，就行
                     //同样，如果地域无交集并且服务器
-                    if(Array.isArray(this.arr[i].uidArray)&&Array.isArray(this.arr[j].uidArray)
-                        &&!Methods.intersection(this.arr[i].uidArray,this.arr[j].uidArray)
-                        &&!Methods.intersection(this.arr[i].serverArray,this.arr[j].serverArray)){
+                    if (Array.isArray(this.arr[i].uidArray) && Array.isArray(this.arr[j].uidArray)
+                        && !Methods.intersection(this.arr[i].uidArray, this.arr[j].uidArray)
+                        && !Methods.intersection(this.arr[i].serverArray, this.arr[j].serverArray)) {
                         continue;
                     }
-                    if(
-                        Array.isArray(this.arr[i].regionArray)&&Array.isArray(this.arr[j].regionArray)
-                        &&!Methods.intersection(this.arr[i].regionArray,this.arr[j].regionArray)
-                        &&!Methods.intersection(this.arr[i].serverArray,this.arr[j].serverArray)){
+                    if (
+                        Array.isArray(this.arr[i].regionArray) && Array.isArray(this.arr[j].regionArray)
+                        && !Methods.intersection(this.arr[i].regionArray, this.arr[j].regionArray)
+                        && !Methods.intersection(this.arr[i].serverArray, this.arr[j].serverArray)) {
                         continue;
                     }
                     throw {
@@ -228,13 +230,13 @@ class Verify {
     }
 
     private lack() {
-        for (let i=0;i<this.arr.length;i++) {
-            const v=this.arr[i];
+        for (let i = 0; i < this.arr.length; i++) {
+            const v = this.arr[i];
             const noUid = !v.uidArray || Array.isArray(v.uidArray) && !v.uidArray.length;
             const noReg = !v.regionArray || Array.isArray(v.regionArray) && !v.regionArray.length;
             if (noReg && noUid && !v.default) {
                 // console.log("因为没有uid或者地域信息，删除",v);
-                this.arr.splice(i,1);
+                this.arr.splice(i, 1);
                 i--;
                 /*throw {
                  code: CODE.NO_UID_REGION,
@@ -243,6 +245,23 @@ class Verify {
             }
         }
     }
+
+    hasServer() {
+        for (let v of this.arr) {
+            if (!Array.isArray(v.serverArray)) {
+                throw {
+                    code: CODE.NO_SERVER_ARRAY,
+                    data: `某个 serverArray 有问题`
+                };
+            }
+            if (Array.isArray(v.serverArray)&&!v.serverArray.length) {
+                throw {
+                    code: CODE.NO_SERVER_ARRAY,
+                    data: `某个 serverArray 有问题`
+                };
+            }
+        }
+    }
 }
 
-export {Methods, Verify};
+export { Methods, Verify };
