@@ -241,7 +241,7 @@ class GLMainpage extends React.Component {
                         
                         <div className="rangepickerBox">
                             <RangePicker
-                              defaultValue={[moment().subtract(4, 'days'), moment()]}
+                              defaultValue={[moment().subtract(5, 'days'), moment().subtract(1, 'days')]}
                               format={dateFormat}
                               onChange={this.rangeOnChange.bind(this)}
                               disabledDate={this.disabledDate.bind(this)}

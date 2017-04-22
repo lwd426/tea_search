@@ -102,10 +102,10 @@ export default class Chart extends React.Component {
         
         let casVal = this.props.content.mainpage.casVal || this.props.content.mainpage.options_two[0].value
         strageties.map((v,i) => {
-            legendDate.push('版本 '+v[1].name);
+            legendDate.push(v[1].name);
 
             seriesArr.push({
-                name:'版本 '+v[1].name,
+                name:v[1].name,
                 type:'line',
                 barMaxWidth : 20,
                 data:percentObj[v[0]][casVal],
@@ -178,7 +178,7 @@ export default class Chart extends React.Component {
         strageties.map((v,i) => {
             tableData.push({
                 key: v[0],
-                date: '版本 '+v[1].name,
+                date: v[1].name,
                 uv: getAverageNumArr(uvObj[v[0]][casVal]),
                 pv: getAverageNumArr(pvObj[v[0]][casVal]),
                 show: getAverageNumArr(showObj[v[0]][casVal]),
@@ -256,7 +256,7 @@ export default class Chart extends React.Component {
                 <br />
                 <div className="rangepickerBox">
                     <RangePicker
-                        defaultValue={[moment().subtract(4, 'days'), moment()]}
+                        defaultValue={[moment().subtract(5, 'days'), moment().subtract(1, 'days')]}
                         format={'YYYY/MM/DD'}
                         onChange={this.rangeOnChange.bind(this)}
                         disabledDate={this.disabledDate.bind(this)}
@@ -270,7 +270,7 @@ export default class Chart extends React.Component {
 
                 <div id="container" style={{width:'100%',height:400}} className="chart-box"></div>
                 <div className="tableBox">
-                    <Button className="export">导出</Button>
+                    {/*<Button className="export">导出</Button>*/}
                     <Table bordered={true} columns={tableColumns} dataSource={this.state.tableData} title={() => '日均'}/> 
                 </div>
             </div>      
