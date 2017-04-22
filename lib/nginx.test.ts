@@ -2,13 +2,13 @@ import nginx = require("./nginx");
 nginx([
 
         {
-            urlArray: ['/yyyy/'],
-            serverArray: ["117.121.54.110", "2.2.2.8"],
-            uidArray:['34'],
+            urlArray: ['/yyyy/uid'],
+            serverArray: ["117.121.54.110"],
+            uidArray:['34','999'],
             default: false
         },
         {
-            urlArray: ['/yyyy/.*'],
+            urlArray: ['/yyyy/uid'],
             serverArray: ["1.1.1.1"],
            uidArray: ['123'],
             default: false
