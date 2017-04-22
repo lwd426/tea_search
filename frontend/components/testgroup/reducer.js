@@ -216,7 +216,7 @@ let reducer = (state = initialState, action)=> {
             break
         case TYPES.PUBLISH_SUCCESS:
             if(action.status) {
-                utilscomps.showNotification('success', '发布成功', '发布成功！发版日志请版本日志页', 2);
+                utilscomps.showNotification('success', '发布成功', '发布成功！发版日志请见版本日志页', 2);
                 return Object.assign({}, state, {versionModalShow: false})
             }else{
                 utilscomps.showNotification('error', '发布失败', '失败原因：' + action.data );

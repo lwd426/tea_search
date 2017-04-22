@@ -14,9 +14,9 @@ module.exports = {
     getTrafficDataByStragety: function *(data){
         console.log(data)
         var res = yield db.post('get_statistic_uv/', data);
-        let responseData = res.result.data.reverse();
+        var responseData = res.result.data.reverse();
 
-        let tableData = [];
+        var tableData = [];
         var fields = ['date','useramount'];
         var fieldNames = ['日期', '访客总数'];
         responseData.map((val,index) => {
@@ -26,7 +26,7 @@ module.exports = {
                 visit: {},
                 percent: {}
             })
-            let arr_uv = Object.entries(val.uv);
+            var arr_uv = Object.entries(val.uv);
             arr_uv.map((v,i) => {
                 tableData[index]['visit'][v[0]] = v[1].count;
                 tableData[index]['percent'][v[0]] = (v[1].count*100/val.uv_all).toFixed(2);
@@ -50,7 +50,7 @@ module.exports = {
     },
     getConversionDataByStragety: function *(data){
         console.log(data)
-        let result = yield db.post('get_statistic_action/', data);
+        var result = yield db.post('get_statistic_action/', data);
         return result
     }
 }
