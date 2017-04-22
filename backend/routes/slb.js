@@ -21,7 +21,9 @@ router.post('/', function *(next) {
   var name = this.request.body.name;
   var domain = this.request.body.domain;
   var domainId = this.request.body.domainId;
-  var result = yield lib.saveSlb(name,domain, domainId);
+  var p1 = this.request.body.p1;
+  var p2 = this.request.body.p2;
+  var result = yield lib.saveSlb(name,domain, domainId,p1, p2 );
     this.body = result;
 });
 

@@ -31,14 +31,16 @@
     margin-right: 10%;
 }
 .ant-form-item-label{
-    width: 27% !important;
+    width: 18% !important;
 }
 
 .ant-form-inline .ant-form-item{
     width: 100%;
 }
 .gl-version-form{
-    width: 80%;
+    width: 100%;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
     margin: 0 auto;
 }
 

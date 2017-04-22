@@ -69,11 +69,13 @@ module.exports = {
      * @param name
      * @returns {*}
      */
-    saveSlb: function*(name, domain, domainId) {
+    saveSlb: function*(name, domain, domainId, p1, p2) {
         var data = {
             name: name,
             slbDomain: domain,
             domainId: domainId,
+            p2: p2,
+            p1: p1,
             uuid: uuid(),
             type: 'menu'
         }
