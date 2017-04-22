@@ -6,7 +6,7 @@ import Traffic from './Traffic.js';
 import Conversion from './Conversion.js';
 import Duiji from './duiji.js';
 import request from '../../request';
-import { setMainPageOptions } from './lib';
+import { setMainPageOptions, setMainPageData } from './lib';
 
 
 import { Menu, Dropdown, message } from 'antd';
@@ -32,6 +32,7 @@ class GLMainpage extends React.Component {
         super(props);
         this.state = {
             mainpage_data: [],
+            testGroupsArr: [],
         }
     }
     rangeOnChange(dates, dateStrings) {
@@ -98,9 +99,14 @@ class GLMainpage extends React.Component {
     }
     async componentWillMount(){
         let res = await request.getAllStrategies();
-        console.log(res.result.data);
+        //console.log(res.result.data);
+
+        let testGroupsArr = setMainPageData(res.result.data);
+        //console.log(testGroupsArr);
+
         this.setState({
-            mainpage_data: res.result.data
+            mainpage_data: res.result.data,
+            testGroupsArr: testGroupsArr
         })
     }
     componentDidMount(){
@@ -156,87 +162,79 @@ class GLMainpage extends React.Component {
                 <div className="main-container" style={{display: this.props.content.mainpage.main_container_display}}>
 
                     <Collapse defaultActiveKey={['1','2','3']} onChange={this.collapseCallback}>
-                        {this.state.mainpage_data.map(function(v, index){
-                            if(v.testGroups.length > 0){
-                                return v.testGroups.map(function(q, idx){
-                                    colkey ++;
-                                    return(
-                                        //<Panel header={v.name + '/' + q.name} key={colkey}>
-                                        <Panel 
-                                            header={
-                                                <div>
-                                                    <span>{v.name + '/' + q.name}</span>
-                                                    <Button className="collbutton" onClick={(e) =>{
-                                                        e.stopPropagation();
-                                                        let currentCasVal = [v.objectId, q.objectId];
-                                                        _this.switchContentShow('none','block', q.strageties, currentCasVal)
-                                                    }}>
-                                                        查看详情
-                                                    </Button>
-                                                </div>
-                                            } 
-                                            key={colkey}
-                                        >
-                                            
-                                            <div style={{padding:20}}>
-                                                <div style={{color:'#555'}}>
-                                                    <span>创建于：{ moment(new Date(q.createdAt)).format('YYYY-MM-DD') }  </span>
-                                                    <span style={{marginLeft:'20px'}}>
-                                                        已运行：{q.first_publish_time? ((new Date().getTime() - new Date(q.first_publish_time).getTime())/(24*60*60*1000)).toFixed(1) : 0} 天
-                                                    </span>
+                        {this.state.testGroupsArr.map((q, index) =>
+                            <Panel 
+                                header={
+                                    <div>
+                                        <span>{q.slb_name + '/' + q.name}</span>
+                                        <Button className="collbutton" onClick={(e) =>{
+                                            e.stopPropagation();
+                                            let currentCasVal = [q.slb_objectId, q.objectId];
+                                            _this.switchContentShow('none','block', q.strageties, currentCasVal)
+                                        }}>
+                                            查看详情
+                                        </Button>
+                                    </div>
+                                } 
+                                key={index+1}
+                            >
                                 
-                                                    <span style={{marginLeft:'20px'}}>
-                                                        {(() => {
-                                                            if(q.time != '-'){
-                                                                let num = ((new Date().getTime() - new Date(q.time).getTime())/(24*60*60*1000)).toFixed(1);
-                                                                if(num < 1) return '最近修改 ：' + '今天';
-                                                                if(num >= 1)return '最近修改 ：' + num + '天前';
-                                                            }else{
-                                                                return '最近修改 ：无';
-                                                            }
-                                                        })()}
-                                                    </span>
-                                                
+                                <div style={{padding:20}}>
+                                    <div style={{color:'#555'}}>
+                                        <span>创建于：{ moment(new Date(q.createdAt)).format('YYYY-MM-DD') }  </span>
+                                        <span style={{marginLeft:'20px'}}>
+                                            已运行：{q.first_publish_time? ((new Date().getTime() - new Date(q.first_publish_time).getTime())/(24*60*60*1000)).toFixed(1) : 0} 天
+                                        </span>
+                    
+                                        <span style={{marginLeft:'20px'}}>
+                                            {(() => {
+                                                if(q.time != '-'){
+                                                    let num = ((new Date().getTime() - new Date(q.time).getTime())/(24*60*60*1000)).toFixed(1);
+                                                    if(num < 1) return '最近修改 ：' + '今天';
+                                                    if(num >= 1)return '最近修改 ：' + num + '天前';
+                                                }else{
+                                                    return '最近修改 ：无';
+                                                }
+                                            })()}
+                                        </span>
+                                    
+                                    </div>
+                                    <div style={{marginTop:20}}>
+                                        {
+                                            q.strageties.map((s, i) => 
+                                                <div key={index + '-' + i} style={{padding:3}}>
+                                                    <div className="left" style={{float:'left',width:'33%'}}>
+                                                        <span>{s.stra_name}</span>
+                                                    </div>
+                                                    <div className="right" style={{float:'left',width:'33%'}}>
+                                                        <span>
+                                                            {(()=> {
+                                                                if(s.stra_uids.length > 0 && s.stra_cities.length > 0){
+                                                                    return '特殊用户和特殊地域';
+                                                                }else if(s.stra_uids.length > 0){
+                                                                    return '特殊用户';
+                                                                }else if(s.stra_cities.length > 0){
+                                                                    return '特殊地域';
+                                                                }else if(s.stra_servers.length==0||q.slb_servers.length==0){
+                                                                    return '流量占比：' + '0';
+                                                                }else{
+                                                                    return '流量占比：' + ((s.stra_servers.length)*100/(q.slb_servers.length)).toFixed(2) + '%'
+                                                                }
+                                                            })()}
+                                                        </span>
+                                                    </div>
+                                                    <div className="right" style={{float:'left',width:'34%'}}>
+                                                        <span>{q.status}</span><br/>
+                                                    </div>
+                                                    <div className="clear"></div>
                                                 </div>
-                                                <div style={{marginTop:20}}>
-                                                    {
-                                                        q.strageties.map((s, i) => 
-                                                            <div key={index + '-' + idx + '-' + i} style={{padding:3}}>
-                                                                <div className="left" style={{float:'left',width:'33%'}}>
-                                                                    <span>{s.stra_name}</span>
-                                                                </div>
-                                                                <div className="right" style={{float:'left',width:'33%'}}>
-                                                                    <span>
-                                                                        {(()=> {
-                                                                            if(s.stra_uids.length > 0 && s.stra_cities.length > 0){
-                                                                                return '特殊用户和特殊地域';
-                                                                            }else if(s.stra_uids.length > 0){
-                                                                                return '特殊用户';
-                                                                            }else if(s.stra_cities.length > 0){
-                                                                                return '特殊地域';
-                                                                            }else if(s.stra_servers.length==0||v.servers.length==0){
-                                                                                return '流量占比：' + '0';
-                                                                            }else{
-                                                                                return '流量占比：' + ((s.stra_servers.length)*100/(v.servers.length)).toFixed(2) + '%'
-                                                                            }
-                                                                        })()}
-                                                                    </span>
-                                                                </div>
-                                                                <div className="right" style={{float:'left',width:'34%'}}>
-                                                                    <span>{q.status}</span><br/>
-                                                                </div>
-                                                                <div className="clear"></div>
-                                                            </div>
-                                                        )
-                                                    }
-                                                </div>
-                                                
-                                            </div>
-                                        </Panel>
-                                    )
-                                })
-                            }
-                        })}
+                                            )
+                                        }
+                                    </div>
+                                    
+                                </div>
+                            </Panel>
+                        )}
 
                     </Collapse>
                 </div>
