@@ -23,10 +23,28 @@ export async function postTableData (data){
     return await postData(chart_url, data)
 }
 
+//首页 testgroupt 重新按照最近修改时间排序，slb信息加入到 testgroupt 里
+function sortTime (a,b){
+    let a_since = a.time == '-' ? 0 : new Date(a.time).getTime();
+    let b_since = b.time == '-' ? 0 : new Date(b.time).getTime();
+    console.log(a_since - b_since);
+    return (b_since - a_since)
+}
+export function setMainPageData(res){
+    let testGroupsArr = [];
+    res.map((lib,index) => {
+        if(lib.testGroups.length > 0){
+            lib.testGroups.map((project,idx,) => {
+                project['slb_name'] = lib.name;
+                project['slb_objectId'] = lib.objectId;
+                project['slb_servers'] = lib.servers;
 
-
-
-
+                testGroupsArr.push(project);
+            })
+        }
+    })
+    return testGroupsArr.sort(sortTime);
+}
 
 
 export function setMainPageOptions(testGroups, arr, type) {
