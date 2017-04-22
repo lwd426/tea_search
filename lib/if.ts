@@ -22,12 +22,16 @@ export interface MataS {
     url: string,
     servers: mm[]
 }
-export const level = 'subdivisions';
+export const level = 'city';
 
-const defaultUpstream = "defaultUpstream";
-const geoip_city = `/etc/maxmind-city.mmdb`;
-const geoip_subdivisions = `/etc/maxmind-subdivisions.mmdb`;
+export const country_name_country_code_city_code = `add_header X-Location $geoip2_data_country_name-$geoip2_data_country_code-$geoip2_data_city_name;`;
 
-export const conf = {
-    level, defaultUpstream, geoip_city, geoip_subdivisions
-};
+export const geo1p2DB = `
+            geoip2 /etc/GeoLite2-Country.mmdb {
+                $geoip2_data_country_code default=CN source=$remote_addr country iso_code;
+                $geoip2_data_country_name default=China country names en;
+            }
+            geoip2 /etc/GeoLite2-City.mmdb {
+                $geoip2_data_city_name default=Beijing names en;
+            }
+           `;
