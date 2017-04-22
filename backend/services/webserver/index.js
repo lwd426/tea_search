@@ -81,14 +81,14 @@ module.exports = {
             var stragety = listofstragety[k];
             if(stragety.get('stra_serverskey').indexOf(serverkey)!==-1){
                 var tg = yield db.get('testgroup', {objectId: stragety.get('tgid')});
-                stras += stragety.get("stra_name") + ' ' ;
+                stras += tg[0].get('name') + '-'+ stragety.get("stra_name") + ' ' ;
             }
 
         }
         if(server[0].get('stragetiesinfo')){
             result.info = "不能删除该服务器（该服务器部署了以下几个策略：" + stras
         }else{
-            var re = yield db.delete('webServer', data);
+            var result = yield db.delete('webServer', data);
             result.status = 'success';
             result.info = '删除成功'
         }
