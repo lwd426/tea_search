@@ -164,12 +164,11 @@ class Verify {
                                 }
                             }
                         }
-                        // console.log(this.arr[i].url, "相同");
                         continue;
                     }
                     //包含的时候还要看看uid和地域信息，如果uid无交集并且服务器无交集，就行
                     //同样，如果地域无交集并且服务器
-                    if (Array.isArray(this.arr[i].uidArray) && Array.isArray(this.arr[j].uidArray)
+                    /*if (Array.isArray(this.arr[i].uidArray) && Array.isArray(this.arr[j].uidArray)
                         && !Methods.intersection(this.arr[i].uidArray, this.arr[j].uidArray)
                         && !Methods.intersection(this.arr[i].serverArray, this.arr[j].serverArray)) {
                         continue;
@@ -179,10 +178,14 @@ class Verify {
                         && !Methods.intersection(this.arr[i].regionArray, this.arr[j].regionArray)
                         && !Methods.intersection(this.arr[i].serverArray, this.arr[j].serverArray)) {
                         continue;
+                    }*/
+                    //如果包含，但是服务器没有交集，也可以通过
+                    if(!Methods.intersection(this.arr[i].serverArray, this.arr[j].serverArray)){
+                        continue;
                     }
                     throw {
                         code: CODE.CONTAIN,
-                        data: `${this.arr[i].url}和${this.arr[j].url}有问题,包含？`
+                        data: `${this.arr[i].url}和${this.arr[j].url}有问题,包含？你看看服务器是否有交集`
                     }
                 }
             }
