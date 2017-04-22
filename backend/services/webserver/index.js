@@ -75,7 +75,7 @@ module.exports = {
         }
         var server = yield db.get('webServer', data);
         var serverkey = server[0].get('key');
-        var listofstragety = yield db.get('stragety', {slbid: slbid});
+        var listofstragety = yield db.get('stragety', {slbid: slbid, is_abolished: false});
         var k=0,len2 = listofstragety.length, stras = '';
         for(;k<len2;k++){
             var stragety = listofstragety[k];
