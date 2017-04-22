@@ -104,20 +104,31 @@ export default class EChart extends React.Component {
             //遍历生成 echart 配置
             strageties.map((v,i) => {
                 legendDate.push(v[1].name+' UV');
+                legendDate.push(v[1].name+' PV');
                 seriesArr.push({
                     name:v[1].name+' UV',
                     type:'bar',
                     barMaxWidth : 20,
-                    data:uvArr[i]
-                })
-            });
-            strageties.map((v,i) => {
-                legendDate.push(v[1].name+' PV');
+                    data:uvArr[i],
+                    itemStyle : {
+                        normal: {
+                            color: '#c23531',
+                        }
+                    },
+                    barGap: '20%'
+                });
                 seriesArr.push({
                     name:v[1].name+' PV',
                     type:'bar',
                     barMaxWidth : 20,
-                    data:pvArr[i]
+                    data:pvArr[i],
+                    itemStyle : {
+                        normal: {
+                            color: '#61a0a8',
+                        }
+                    },
+                    barGap: '40%',
+                    //barCategoryGap:'35%',
                 })
             });
 

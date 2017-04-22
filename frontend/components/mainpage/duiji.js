@@ -99,7 +99,7 @@ export default class EChart extends React.Component {
                     date: val.date,
                     appear: val.show_count,
                     click: val.click_count,
-                    persent: (val.click_count*100/val.show_count).toFixed(2),
+                    persent: (val.click_count*100/val.show_count).toFixed(2) + '%',
                 })
             })
         //}
