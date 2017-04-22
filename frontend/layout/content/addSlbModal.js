@@ -19,10 +19,12 @@ class HorizontalLoginForm extends React.Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 const {domainId} = this.props.cont;
-                this.props.contActions.addSlb(values.name, values.domain, domainId)
+                this.props.contActions.addSlb(values.name, values.domain, values.p1 || '', values.p2 || '', domainId)
                 this.props.form.setFieldsValue({
                     'name': '',
-                    'domain':''
+                    'domain':'',
+                    'p1': '',
+                    'p2': ''
                 })
                 this.props.cont.validateDomain = {
                     name: {
@@ -82,6 +84,26 @@ class HorizontalLoginForm extends React.Component {
                             }}>验证</Button>
                         </Col>
                     </Row>
+                </FormItem>
+                <FormItem
+                    label="p1"
+                    validateStatus={this.props.cont.validateDomain.name.status}
+                >
+                    {getFieldDecorator('p1', {
+                        rules: [{ required: false, message: '' }],
+                    })(
+                        <Input prefix={<Icon type="bulb" style={{ fontSize: 13 }} />} placeholder="请联系大数据部获取值" />
+                    )}
+                </FormItem>
+                <FormItem
+                    label="p2"
+                    validateStatus={this.props.cont.validateDomain.name.status}
+                >
+                    {getFieldDecorator('p2', {
+                        rules: [{ required: false, message: '' }],
+                    })(
+                        <Input prefix={<Icon type="bulb" style={{ fontSize: 13 }} />} placeholder="请联系大数据部获取值" />
+                    )}
                 </FormItem>
                 <FormItem className="gl-version-btn">
                     <Button onClick={()=>{

@@ -75,7 +75,7 @@ module.exports = {
         }
         var server = yield db.get('webServer', data);
         var serverkey = server[0].get('key');
-        var listofstragety = yield db.get('stragety', {slbid: slbid});
+        var listofstragety = yield db.get('stragety', {slbid: slbid, is_abolished: false});
         var k=0,len2 = listofstragety.length, stras = '';
         for(;k<len2;k++){
             var stragety = listofstragety[k];
@@ -89,8 +89,12 @@ module.exports = {
             result.info = "不能删除该服务器（该服务器部署了以下几个策略：" + stras
         }else{
             var result = yield db.delete('webServer', data);
-            result.status = 'success';
-            result.info = '删除成功'
+            result = {
+                status : 'success',
+                data: result,
+                info : '删除成功'
+            }
+
         }
 
 

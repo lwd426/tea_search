@@ -47,15 +47,15 @@ class GLContent extends React.Component {
                         }
                     })()}
                 </div>
-                <Modal title="新建测试组"  footer={null} visible={this.props.cont.showSlbModal}
+                <Modal title="新建测试组" closable={false} footer={null} visible={this.props.cont.showSlbModal}
                 >
                     <GLAddSlb {...this.props} />
                 </Modal>
-                <Modal title="新建测试项目"  footer={null} visible={this.props.cont.showTgModal}
+                <Modal title="新建测试项目"  closable={false} footer={null} visible={this.props.cont.showTgModal}
                 >
                     <GLAddTg {...this.props} />
                 </Modal>
-                <Modal title="新建服务器"  footer={null} visible={this.props.cont.showServerModal}
+                <Modal title="新建服务器"  footer={null} closable={false} visible={this.props.cont.showServerModal}
                 >
                     <GLAddServer {...this.props} />
                 </Modal>

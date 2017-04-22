@@ -69,11 +69,13 @@ module.exports = {
      * @param name
      * @returns {*}
      */
-    saveSlb: function*(name, domain, domainId) {
+    saveSlb: function*(name, domain, domainId, p1, p2) {
         var data = {
             name: name,
             slbDomain: domain,
             domainId: domainId,
+            p2: p2,
+            p1: p1,
             uuid: uuid(),
             type: 'menu'
         }
@@ -107,7 +109,9 @@ module.exports = {
          }
          ]
          */
-        var referServers = yield libServer.getServersInfo({slbid: slbid}, [{opt: 'noExist', key: 'stragetiesinfo'}])
+        var allServers = yield libServer.getServersInfo({slbid: slbid})
+        // var referServers = yield libServer.getServersInfo({slbid: slbid}, [{opt: 'in', key: 'stragetiesinfo'}])
+        // var referServers = yield libServer.getServersInfo({slbid: slbid, refer: true})
         var data = generateDataOfConfig(stragetylist);
         var serverdata = {
             urlArray: ['/'],
@@ -116,7 +120,7 @@ module.exports = {
             serverArray: [],
             default: true
         };
-        referServers.map((server)=>{
+        allServers.map((server)=>{
             serverdata.serverArray.push(server.get('ip'))
         })
 
@@ -163,7 +167,8 @@ module.exports = {
     publishBack: function* (snapcode, domain, port, domainId,slbid, tgid, versionkey, versiondesc) {
         //获取slb所有的生效的策略信息（除了回滚的策略组）
         var stragetylist = yield libStragety.getStragetyList({slbid: slbid, is_abolished: false}, [{opt: 'noEqual', key: 'tgid', data: tgid}]);
-        var referServers = yield libServer.getServersInfo({slbid: slbid}, [{opt: 'noExist', key: 'stragetiesinfo'}])
+        var allServers = yield libServer.getServersInfo({slbid: slbid})
+        // var referServers = yield libServer.getServersInfo({slbid: slbid, refer: true})
         // 获取回滚策略中的snapcode为指定回滚版本snapcode的策略
         var backStragetylist = yield libStragety.getStragetyList({tgid: tgid, snapcode: snapcode});
         //生成配置文件必要数据
@@ -181,7 +186,7 @@ module.exports = {
             default: true
         };
 
-        referServers.map((server)=>{
+        allServers.map((server)=>{
             serverdata.serverArray.push(server.get('ip'))
         })
 

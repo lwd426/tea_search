@@ -92,7 +92,8 @@
 .ant-layout-content{
     display: -webkit-box;
     width: 100%;
-    margin: 40px 0 0 !important;
+    height: 94%;
+    margin-top: 3% !important;
     min-height: 604px;
     z-index: 0;
     background: #ffffff;
@@ -107,7 +108,7 @@
     color: #fff!important;
     border-radius: 0!important;
     font-family: inherit!important;
-    height: 40px !important;
+    height: 6% !important;
     line-height: 40px !important;
 }
 .button-div-header{

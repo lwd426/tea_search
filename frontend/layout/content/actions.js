@@ -50,9 +50,9 @@ export function validateDomainResult(status, keyval, infoval,data) {
     }
 }
 
-export function addSlb(name, domain, domainId){
+export function addSlb(name, domain, p1, p2, domainId){
     return (dispatch, getState) => {
-        return dispatch(fetch.postData(slb_list_url,{name, domain, domainId}, function(err, result){
+        return dispatch(fetch.postData(slb_list_url,{name, domain, domainId, p1, p2}, function(err, result){
             if(err || result.status ==='failure') {
                 utilscomps.showNotification('error', '失败', '添加失败，失败原因：'+result.data );
             }else{
