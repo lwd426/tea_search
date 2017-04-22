@@ -66,14 +66,14 @@ export default class EChart extends React.Component {
             //遍历生成 table 设置
             strageties.map((v,i) => {
                 tableColumns[1].children.push({
-                    title: '版本 ' + v[1].name,
+                    title: v[1].name,
                     dataIndex: 'visitor' + (i+1),
                     key: 'visitor' + (i+1),
                 });
                 tableColumns[2].children.push({
-                    title: '版本 ' + v[1].name,
-                    dataIndex: 'persent' + (i+1),
-                    key: 'persent' + (i+1),
+                    title: v[1].name,
+                    dataIndex: 'pv' + (i+1),
+                    key: 'pv' + (i+1),
                 });
             });
 
@@ -95,129 +95,124 @@ export default class EChart extends React.Component {
                     pvArr[i].push(v[1].pv);
 
                     tableData[index]['visitor' + (i+1)] = v[1].pvuv;
-                    tableData[index]['persent' + (i+1)] = v[1].pv;
+                    tableData[index]['pv' + (i+1)] = v[1].pv;
                 })
             });
 
             //遍历生成 echart 配置
             strageties.map((v,i) => {
-                legendDate.push('版本 '+v[1].name+'UV');
+                legendDate.push(v[1].name+' UV');
                 seriesArr.push({
-                    name:'版本 '+v[1].name+'UV',
+                    name:v[1].name+' UV',
                     type:'bar',
                     barMaxWidth : 20,
                     data:uvArr[i]
                 })
             });
             strageties.map((v,i) => {
-                legendDate.push('版本 '+v[1].name+'PV');
+                legendDate.push(v[1].name+' PV');
                 seriesArr.push({
-                    name:'版本 '+v[1].name+'PV',
+                    name:v[1].name+' PV',
                     type:'bar',
                     barMaxWidth : 20,
                     data:pvArr[i]
                 })
-            })
+            });
+
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('line'));
+            // 绘制图表
+            let xData = function() {
+                var start = new Date(date_picker[0]).getTime();
+                var end = new Date(date_picker[1]).getTime();
+                var length = (end - start)/(24*60*60*1000) + 1;
+
+                var data_arr = [];
+                var date = moment(new Date(date_picker[0]));
+                for (var i = 0; i < length; i++) {
+                    var month = date.month() + 1;
+                    var day = date.date();
+                    data_arr.push(month + "-" + day);
+
+                    date = date.add(1, 'days');
+                }
+
+                //表格数据
+                tableData.forEach(function(v, index, arr_self){
+                    v.date = data_arr[index]
+                })
+                console.log(tableData)
+                _this.setState({
+                    tableData: tableData,
+                    tableColumns: tableColumns
+                })
+
+                return data_arr;
+            }(date_picker);
+
+            myChart.setOption({
+                title: { text: '' },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'cross',
+                        crossStyle: {
+                            color: '#999'
+                        }
+                    }
+                },
+                legend: {
+                    data: legendDate,
+                    top: 0,
+                    formatter: function (name) {
+                        return echarts.format.truncateText(name, 150, '14px Microsoft Yahei', '…');
+                    },
+                    tooltip: {
+                        show: true
+                    },
+                    height: 50
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        data: xData,
+                        axisPointer: {
+                            type: 'shadow'
+                        }
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value',
+                        name: '访问用户',
+                        min: 0,
+                        max: 2000,
+                        interval: 200,
+                        axisLabel: {
+                            formatter: '{value}'
+                        },
+                        nameLocation: 'start',
+                        /*nameRotate: 15*/
+                    }
+                ],
+                toolbox: {
+                    show: true, //是否显示工具箱
+                    feature: {
+                        mark: { show: true },
+                        dataView: { show: true, readOnly: false },
+                        magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
+                        restore: { show: true },
+                        saveAsImage: { show: true },
+                    },
+                    bottom: 0,
+                    right: 50
+                },
+                series: seriesArr
+            });
 
         }else{
-            alert('所选日期五数据！')
+            alert('所选日期无数据！')
         }
-
-
-        
-
-        
-        
-        // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('line'));
-        // 绘制图表
-        let xData = function() {
-            var start = new Date(date_picker[0]).getTime();
-            var end = new Date(date_picker[1]).getTime();
-            var length = (end - start)/(24*60*60*1000) + 1;
-
-            var data_arr = [];
-            var date = moment(new Date(date_picker[0]));
-            for (var i = 0; i < length; i++) {
-                var month = date.month() + 1;
-                var day = date.date();
-                data_arr.push(month + "-" + day);
-
-                date = date.add(1, 'days');
-            }
-
-            //表格数据
-            tableData.forEach(function(v, index, arr_self){
-                v.date = data_arr[index]
-            })
-            console.log(tableData)
-            _this.setState({
-                tableData: tableData,
-                tableColumns: tableColumns
-            })
-
-            return data_arr;
-        }(date_picker);
-
-        myChart.setOption({
-            title: { text: '' },
-            tooltip: {
-                trigger: 'axis',
-                axisPointer: {
-                    type: 'cross',
-                    crossStyle: {
-                        color: '#999'
-                    }
-                }
-            },
-            legend: {
-                data: legendDate,
-                top: 0,
-                formatter: function (name) {
-                    return echarts.format.truncateText(name, 150, '14px Microsoft Yahei', '…');
-                },
-                tooltip: {
-                    show: true
-                },
-                height: 50
-            },
-            xAxis: [
-                {
-                    type: 'category',
-                    data: xData,
-                    axisPointer: {
-                        type: 'shadow'
-                    }
-                }
-            ],
-            yAxis: [
-                {
-                    type: 'value',
-                    name: '访问用户',
-                    min: 0,
-                    max: 2000,
-                    interval: 200,
-                    axisLabel: {
-                        formatter: '{value}'
-                    },
-                    nameLocation: 'start',
-                    /*nameRotate: 15*/
-                }
-            ],
-            toolbox: {
-                show: true, //是否显示工具箱
-                feature: {
-                    mark: { show: true },
-                    dataView: { show: true, readOnly: false },
-                    magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
-                    restore: { show: true },
-                    saveAsImage: { show: true },
-                },
-                bottom: 0,
-                right: 50
-            },
-            series: seriesArr
-        });
     }
     async exportTable(){
         let date_picker = this.props.content.mainpage.date_picker;
@@ -259,7 +254,7 @@ export default class EChart extends React.Component {
             <div>
                 <div id="line" style={{width:'100%',height:400}} className="chart-box"></div>
                 <div className="tableBox">
-                    <Button className="export" onClick={this.exportTable.bind(this)}><Icon type="download" />导出表格</Button>
+                    {/*<Button className="export" onClick={this.exportTable.bind(this)}><Icon type="download" />导出表格</Button>*/}
                     <Table bordered={true} columns={this.state.tableColumns} dataSource={this.state.tableData} /> 
                 </div>
             </div>          
