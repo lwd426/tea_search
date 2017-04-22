@@ -56,7 +56,7 @@ module.exports = {
         for(;i<len;i++){
             var tg = list[i];
             var flowaccount = 0.0;
-            var straList = yield libStra.getStragetyInfos({tgid: tg.id, stra_status: 'running'})
+            var straList = yield libStra.getStragetyInfos({tgid: tg.id, stra_status: 'running'},[{opt: 'equal', key: 'is_abolished', data: false}])
             var serverNum = straList.length || 0;
             if(serverNum !== 0){
                 flowaccount = getPercentage(serverNum, allservers.length) ;
@@ -66,7 +66,7 @@ module.exports = {
             if(publistime === '-'){
                 tg.set('status', 'new')
             }else{
-                var strageties = yield libStra.getStragetyInfos({tgid: tg.id})
+                var strageties = yield libStra.getStragetyInfos({tgid: tg.id},[{opt: 'equal', key: 'is_abolished', data: false}])
                 var status = 'stopped'
                 strageties.map((stra)=>{
                     if(stra.get('stra_status') === 'running'){
@@ -108,7 +108,7 @@ module.exports = {
      */
     deleteTest: function*(tgid) {
         //判断该测试组下的是否有正在运行的策略，如果有测不能删除
-        var straList = yield libStra.getStragetyInfos({tgid: tgid, stra_status: 'running'})
+        var straList = yield libStra.getStragetyInfos({tgid: tgid, stra_status: 'running'},[{opt: 'equal', key: 'is_abolished', data: false}])
         if(straList.length !== 0){
             return {
                 status: 'failure',

@@ -57,7 +57,7 @@ module.exports = {
         //更新server信息，把uids、urls和策略id更新到server记录里
         if(result){
             var otherwhere = {key: 'ip', opt: 'in', data: servers}
-            var data = {urls: urls.join(';'), uids: uids.join(';'), stragetiesinfo: uuid}
+            var data = {urls: urls, uids: uids, stragetiesinfo: uuid}
             var result2 =  yield server_service.updateWebServer(data, undefined, [otherwhere], 'add')
         }
         return result;
@@ -98,7 +98,6 @@ module.exports = {
      */
     getStragetyInfos: function*(where, opts) {
         if(!opts) opts = [];
-        opts.push({opt: 'equal', key: 'is_abolished', data: false})
         var stragetylist =  yield db.get('stragety',where, opts);
         return stragetylist;
     },
@@ -116,15 +115,15 @@ module.exports = {
      * @param id
      * @returns {*}
      */
-    updateStragety: function*(data, where) {
-        var result =  yield db.update('stragety', where, data);
-        //更新server信息，把uids、urls和策略id更新到server记录里
+    updateStragety: function*(data, where, opts) {
+        var result =  yield db.update('stragety', where, data, opts);
+        // 更新server信息，把uids、urls和策略id更新到server记录里
         // if(result){
-        //     var servers = data.stra_servers.split(';')
-        //     var urls = data.stra_urls.split(';')
-        //     var uids = data.stra_uids.split(';')
+        //     var servers = data.stra_servers;
+        //     var urls = data.stra_urls;
+        //     var uids = data.stra_uids;
         //     var otherwhere = {key: 'ip', opt: 'in', data: servers}
-        //     var data = {urls: urls.join(';'), uids: uids.join(';')}
+        //     var data = {urls: urls, uids: uids}
         //     result =  yield server_service.updateWebServer(data, undefined, [otherwhere], 'add')
         // }
         return result;
@@ -159,7 +158,7 @@ module.exports = {
         //获取测试项目下所有的策略
         var result = '';
 
-        var stragetylist =  yield db.get('stragety',{tgid: tgid},  [{opt: 'equal', key: 'is_abolished', data: false}]);
+        var stragetylist =  yield db.get('stragety',{tgid: tgid},  [{opt: 'equal', key: 'is_abolished', data: false}, {opt: 'noEqual', key: 'type', data:'refer'}]);
         var i = 0, len = stragetylist.length;
         for(;i<len;i++){
             var stragegty = stragetylist[i];

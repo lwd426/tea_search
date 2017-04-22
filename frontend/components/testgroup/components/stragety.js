@@ -43,11 +43,21 @@ class GLStragety extends React.Component {
         },{
             title: '操作',
             dataIndex: 'operation',
-            render: (text, record) => (
+            render: (text, record) => {
+                var btntxt = '',
+                    status = '';
+                switch(record.status){
+                    case 'running': btntxt = '停止';status = 'stopped';break;
+                    case 'stopped': btntxt = '激活'; status = 'ready';break;
+                    case 'ready': btntxt = '停止'; status = 'stopped';break;
+                    case 'new': btntxt = '激活'; status = 'ready';break;
+                }
+                return (
                 <span>
                   <a href="#" onClick={()=>{
-                      this.props.contentActions.testgroupActions.handleStragety(record.slbid,record.tgid, record.code, record.status === "running" ? "stopped" : "running")
-                  }}> {record.status === 'running' ? '停止' : '启动'}</a>
+                      console.log(record)
+                      this.props.contentActions.testgroupActions.handleStragety(record.code, status)
+                  }}> {btntxt}</a>
                   <span className="ant-divider" />
                   <a href="#" onClick={()=>{
                       if(record.status === 'running') {
@@ -67,7 +77,7 @@ class GLStragety extends React.Component {
                     <a href="#">删除</a>
                   </Popconfirm>
                 </span>
-            )
+            )}
         }];
 
     }
@@ -109,6 +119,7 @@ class GLStragety extends React.Component {
         }else{
             const referVersions = {
                 desc: '基准版本',
+                key: uuid(),
                 servers: serversinfo,
                 slbid: slbid,
                 tgid: tgid,
@@ -130,12 +141,12 @@ class GLStragety extends React.Component {
         const {stragetylist, versionModalShow} = this.props.content.testgroup;
         const  dataSource = stragetylist.map((cell, index)=>{
             return {
-                key: cell.stra_id,
+                key: cell.objectId,
                 slbid:cell.slbid,
                 tgid:cell.tgid,
                 testgroupcode: cell.tgid,
-                stragetycode: cell.stra_id,
-                code: cell.stra_id,
+                stragetycode: cell.objectId,
+                code: cell.objectId,
                 name: cell.stra_name,
                 desc: cell.stra_desc,
                 status: cell.stra_status,

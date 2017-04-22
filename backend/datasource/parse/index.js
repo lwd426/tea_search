@@ -32,7 +32,7 @@ module.exports = {
             var Quwey = ParseUtils.initQuery(tableName);
             if(equalToOpts) {
                 for(var key in equalToOpts){
-                    equalToOpts[key] ? Quwey.equalTo(key, equalToOpts[key]) : '';
+                    Quwey.equalTo(key, equalToOpts[key]);
                 }
             }
             if(otherOpts && Array.isArray(otherOpts)){
