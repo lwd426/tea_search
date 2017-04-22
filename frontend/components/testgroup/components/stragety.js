@@ -172,7 +172,7 @@ class GLStragety extends React.Component {
                     <Button className="gl-left-btn" icon="upload" onClick={()=>{
                         this.props.contentActions.testgroupActions.publishModal(true);
                     }}>发布到服务器</Button>
-                    <Modal title="请输入发布版本的必要信息" visible={versionModalShow} footer={null}
+                    <Modal title="请输入发布版本的必要信息" closable={false} visible={versionModalShow} footer={null}
                     >
                         <GLVersionForm {..._this.props} />
                     </Modal>
