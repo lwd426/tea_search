@@ -138,10 +138,10 @@ let reducer = (state = initialState, action)=> {
                 var status = false;//status为该机器的状态，是否有策略正在运行
                 var statusinfo = '';
                 stragetiesinfo.map((stragety) => {
-                    if (stragety.stra_status === 'running') {
+                    // if (stragety.stra_status === 'running') {
                         status = true;
                         statusinfo += stragety.stra_name + ' ';
-                    }
+                    // }
                 })
                 return {
                     ip: server.ip,

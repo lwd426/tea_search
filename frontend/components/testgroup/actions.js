@@ -281,7 +281,7 @@ function dataHandler(dispatch, ha,stra_id, slbid,tgid,name,desc,cities,servers,s
         }))
     }else{
         var where = {
-            stra_id
+            objectId: stra_id
         },
         data = {
             stra_name: name,
@@ -626,7 +626,7 @@ export function getVersionListSuccess(list, tgid,slbid) {
  */
 export function publishback(nowSnapcode, snapcode, domain, port, domainId, slbid, tgid, versionkey, versiondesc) {
     return (dispatch, getState) => {
-        return dispatch(fetch.getData(slb_publish_url + '/back?nowsnapcode='+nowSnapcode+'&snapcode='+snapcode+'&domain='+domain+'&port='+port+'&domainId='+domainId+ '&slbid='+slbid + '&tgid='+ tgid +'&versionkey='+versionkey  + '&',function(err, result){
+        return dispatch(fetch.getData(slb_publish_url + '/back?nowsnapcode='+nowSnapcode+'&snapcode='+snapcode+'&domain='+domain+'&port='+port+'&domainId='+domainId+ '&slbid='+slbid + '&tgid='+ tgid +'&versionkey='+versionkey  + '&versiondesc='+versiondesc,function(err, result){
             if(err || result.status === 'failure')  return dispatch(publishSuccess(false, result.data))
             dispatch(publishSuccess(true, result.data));
             return dispatch(versionlog_list(tgid, slbid))

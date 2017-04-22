@@ -141,11 +141,11 @@ class GLStragety extends React.Component {
         const {stragetylist, versionModalShow} = this.props.content.testgroup;
         const  dataSource = stragetylist.map((cell, index)=>{
             return {
-                key: cell.stra_id,
+                key: cell.objectId,
                 slbid:cell.slbid,
                 tgid:cell.tgid,
                 testgroupcode: cell.tgid,
-                stragetycode: cell.stra_id,
+                stragetycode: cell.objectId,
                 code: cell.objectId,
                 name: cell.stra_name,
                 desc: cell.stra_desc,

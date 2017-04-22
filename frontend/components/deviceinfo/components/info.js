@@ -3,10 +3,6 @@ import { Tree } from 'antd';
 const TreeNode = Tree.TreeNode;
 
 class GLTree extends React.Component {
-    onSelect = (selectedKeys, info) => {
-    }
-    onCheck = (checkedKeys, info) => {
-    }
     render() {
         return (
             <div className="stragety-div">
