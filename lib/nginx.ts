@@ -212,10 +212,11 @@ function wanjianguizong(arr) {
             continue;
         }
         let o = {url: v.url, servers: []};
-
+        let flag=false;
         //还得处理相同的url归一的问题
         array.forEach(item => {
             if (item.url == v.url) {
+                flag=true;
                 o.servers = item.servers;
             }
         });
@@ -235,7 +236,7 @@ function wanjianguizong(arr) {
         o.servers.sort((a, b) => {
             return a.uids ? -1 : 1;
         });
-        array.push(o);
+        !flag&&array.push(o);//因为多个合并成一个，所以不用再次push了
     }
     return array;
 }
