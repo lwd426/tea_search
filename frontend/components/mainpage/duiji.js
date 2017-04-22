@@ -50,12 +50,13 @@ export default class EChart extends React.Component {
         let length;
         let legendDate = [];
         let seriesArr = [];
-        let percentObj = {};
+        let percentObj = [];
 
-        let uvObj = {};
-        let pvObj = {};
-        let showObj = {};
-        let clickObj = {};
+        let uvObj = [];
+        let pvObj = [];
+        let showObj = [];
+        let clickObj = [];
+        let dateObj = [];
 
         let strageties = Object.entries(responseData);
         let xData = function() {
@@ -75,34 +76,34 @@ export default class EChart extends React.Component {
         }(date_picker);
 
         //循环赋值
-        for(let link in responseData[stragetyVal]){
-            percentObj[link] = [];
-            uvObj[link] = [];
-            pvObj[link] = [];
-            showObj[link] = [];
-            clickObj[link] = [];
+        // for(let link in responseData[stragetyVal]){
+        //     percentObj[link] = [];
+        //     uvObj[link] = [];
+        //     pvObj[link] = [];
+        //     showObj[link] = [];
+        //     clickObj[link] = [];
+        //     dateObj[link] = [];
+
             tableData = [];
-            responseData[stragetyVal][link].map((val,index) => {
+            responseData[stragetyVal][linkVal].map((val,index) => {
                 //echart
-                percentObj[link].push((val.click_count*100/val.show_count).toFixed(2));
-                uvObj[link].push(val.uv);
-                pvObj[link].push(val.pv);
-                showObj[link].push(val.show_count);
-                clickObj[link].push(val.click_count);
+                percentObj.push((val.click_count*100/val.show_count).toFixed(2));
+                uvObj.push(val.uv);
+                pvObj.push(val.pv);
+                showObj.push(val.show_count);
+                clickObj.push(val.click_count);
+                dateObj.push(val.date)
                 //table
                 tableData.push({
                     key: index,
-                    date: '3-2',
+                    date: val.date,
                     appear: val.show_count,
                     click: val.click_count,
                     persent: (val.click_count*100/val.show_count).toFixed(2),
                 })
             })
-        }
+        //}
 
-        tableData.forEach(function(v, index){
-            v.date = xData[index]
-        })
         this.setState({
             tableData: tableData
         })
@@ -146,8 +147,8 @@ export default class EChart extends React.Component {
                     type: 'value',
                     name: '访问用户',
                     min: 0,
-                    max: 2000000000,
-                    interval: 200000000,
+                    max: 2000,
+                    interval: 200,
                     axisLabel: {
                         formatter: '{value}'
                     }
@@ -179,20 +180,20 @@ export default class EChart extends React.Component {
                     type: "bar",
                     barWidth : 20,
                     stack: "总量",
-                    data:showObj[linkVal]//[200, 130, 330]
+                    data:showObj//[200, 130, 330]
                 },
                 {
                     name:'点击',
                     type: "bar",
                     barWidth : 20,
                     stack: "总量",
-                    data:clickObj[linkVal]//[240, 150, 380]
+                    data:clickObj//[240, 150, 380]
                 },
                 {
                     name:'点击率',
                     type:'line',
                     yAxisIndex: 1,
-                    data:percentObj[linkVal]//[34, 25, 48]
+                    data:percentObj//[34, 25, 48]
                 }
             ]
         });
@@ -209,7 +210,7 @@ export default class EChart extends React.Component {
         let tabsKey = nextProps.content.mainpage.main_card_key;
 
         if(nextProps.content.mainpage.content_two_display == 'block' && tabsKey == "2"){
-            this.randerChart(date_picker, stragety_arr);
+            this.randerChart(date_picker, stragety_str);
         }
         //this.randerChart(date_picker, stragety_str);
         return true;

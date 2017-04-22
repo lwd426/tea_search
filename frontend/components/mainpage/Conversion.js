@@ -48,6 +48,7 @@ export default class Chart extends React.Component {
         let legendDate = [];
         let seriesArr = [];
         let percentObj = {};
+        let percentNumObj = {}
 
         let uvObj = {};
         let pvObj = {};
@@ -77,6 +78,7 @@ export default class Chart extends React.Component {
         //循环赋值
         for(let key in responseData){
             percentObj[key] = [];
+            percentNumObj[key] = [];
             uvObj[key] = [];
             pvObj[key] = [];
             showObj[key] = [];
@@ -85,6 +87,7 @@ export default class Chart extends React.Component {
 
             for(let k in responseData[key]){
                 percentObj[key][k] = [];
+                percentNumObj[key][k] = [];
                 uvObj[key][k] = [];
                 pvObj[key][k] = [];
                 showObj[key][k] = [];
@@ -92,6 +95,7 @@ export default class Chart extends React.Component {
 
                 responseData[key][k].map((val,index) => {
                     percentObj[key][k].push((val.click_count*100/val.show_count).toFixed(2));
+                    percentNumObj[key][k].push(val.click_count*100/val.show_count);
                     uvObj[key][k].push(val.uv);
                     pvObj[key][k].push(val.pv);
                     showObj[key][k].push(val.show_count);
@@ -105,10 +109,10 @@ export default class Chart extends React.Component {
         
         let casVal = this.props.content.mainpage.casVal || this.props.content.mainpage.options_two[0].value
         strageties.map((v,i) => {
-            legendDate.push(v[1].name);
+            legendDate.push(trtagetyNameObj[v[0]]);
 
             seriesArr.push({
-                name:v[1].name,
+                name:trtagetyNameObj[v[0]],
                 type:'line',
                 barMaxWidth : 20,
                 data:percentObj[v[0]][casVal],
@@ -166,7 +170,8 @@ export default class Chart extends React.Component {
             },
             series: seriesArr,
         });
-
+console.log(legendDate);
+console.log(seriesArr)
         //table
         function getAverageNumArr(arr){
             let sum = 0;
@@ -179,7 +184,6 @@ export default class Chart extends React.Component {
         }
         tableData = []
         strageties.map((v,i) => {
-            debugger
             tableData.push({
                 key: v[0],
                 trtagetyName: trtagetyNameObj[v[0]],
@@ -187,9 +191,10 @@ export default class Chart extends React.Component {
                 pv: getAverageNumArr(pvObj[v[0]][casVal]),
                 show: getAverageNumArr(showObj[v[0]][casVal]),
                 click: getAverageNumArr(clickObj[v[0]][casVal]),
-                persent: getAverageNumArr(percentObj[v[0]][casVal]),
+                persent: (getAverageNumArr(percentNumObj[v[0]][casVal])).toFixed(2) + '%',
             })
         })
+        console.log(tableData)
         this.setState({
             tableData: tableData
         })
@@ -221,8 +226,8 @@ export default class Chart extends React.Component {
         // })()
         let tableColumns = [{
           title: '版本',
-          dataIndex: 'date',
-          key: 'date',
+          dataIndex: 'trtagetyName',
+          key: 'trtagetyName',
           width: '20%',
           render: (text, record, index) => (
             <a href="#" onClick={() => {
