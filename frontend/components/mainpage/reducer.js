@@ -13,6 +13,10 @@ let initState = {
     menulist: [],
     testgrouplist: [],
     main_card_key: "1",
+    options_two: [{
+                    value: '',
+                    label: ''
+                }],
 }
 
 let reducer = (state = initState,action)=>{
