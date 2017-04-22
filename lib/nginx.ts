@@ -177,7 +177,6 @@ function geoIp(arr) {
 
 
     let geo1p2 = `
-           #使用geoip2 通过ip获取位置信息
            geoip2 ${geoip_} {
             $geoip2_data_${geoLevel}_name default=Beijing ${geoLevel} names en;
            }`;
