@@ -95,6 +95,8 @@ function array2one(arr) {
 }
 
 function nginx(arr: any[], domain = 'test.m.le.com', port = '80') {
+    console.log("nginx:来的");
+    console.log(arr);
     needDefault = true;
     //let domain = 'test.m.le.com';//todo
     //先加上开始
