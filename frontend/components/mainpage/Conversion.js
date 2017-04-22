@@ -201,7 +201,10 @@ export default class Chart extends React.Component {
         let date_picker = nextProps.content.mainpage.date_picker;
         let stragety_arr = nextProps.content.mainpage.strageties;
 
-        if(nextProps.content.mainpage.content_one_display == 'block'){
+        let tabsKey = nextProps.content.mainpage.main_card_key
+
+
+        if(nextProps.content.mainpage.content_one_display == 'block' && tabsKey == "2"){
             this.randerChart(date_picker, stragety_arr);
         }
 
