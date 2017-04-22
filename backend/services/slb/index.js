@@ -107,7 +107,8 @@ module.exports = {
          }
          ]
          */
-        var referServers = yield libServer.getServersInfo({slbid: slbid}, [{opt: 'noExist', key: 'stragetiesinfo'}])
+        // var referServers = yield libServer.getServersInfo({slbid: slbid}, [{opt: 'noExist', key: 'stragetiesinfo'}])
+        var referServers = yield libServer.getServersInfo({slbid: slbid, refer: true})
         var data = generateDataOfConfig(stragetylist);
         var serverdata = {
             urlArray: ['/'],
@@ -163,7 +164,8 @@ module.exports = {
     publishBack: function* (snapcode, domain, port, domainId,slbid, tgid, versionkey, versiondesc) {
         //获取slb所有的生效的策略信息（除了回滚的策略组）
         var stragetylist = yield libStragety.getStragetyList({slbid: slbid, is_abolished: false}, [{opt: 'noEqual', key: 'tgid', data: tgid}]);
-        var referServers = yield libServer.getServersInfo({slbid: slbid}, [{opt: 'noExist', key: 'stragetiesinfo'}])
+        // var referServers = yield libServer.getServersInfo({slbid: slbid}, [{opt: 'noExist', key: 'stragetiesinfo'}])
+        var referServers = yield libServer.getServersInfo({slbid: slbid, refer: true})
         // 获取回滚策略中的snapcode为指定回滚版本snapcode的策略
         var backStragetylist = yield libStragety.getStragetyList({tgid: tgid, snapcode: snapcode});
         //生成配置文件必要数据
