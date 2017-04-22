@@ -27,7 +27,7 @@ nginx([
         },{
             urlArray: ["/"],
             serverArray: ['2.8'],//传给我所有的没使用灰度服务器
-            uidArray:["zhuoyongran1"],
+            uidArray:[""],
             // uidArray:['3456875456'],
             // serverArray: [],//传给我所有的没使用灰度服务器
             default: false

@@ -6,7 +6,8 @@ const CODE = {
     "JIAOJI": 4,
     "URL_UID": 5,
     "NO_UID_REGION": 6,
-    "NO_SERVER_ARRAY": 7
+    "NO_SERVER_ARRAY": 7,
+    "UID":8,
 };
 class Methods {
     static contain(first, sec): boolean {//url是否包含,包含返回true
@@ -81,6 +82,7 @@ class Verify {
             // this.serverSingle();
             // this.url();
             this.hasServer();
+            this.uidCheck();
             this.lack();
             this.checkUrl();//包含,并且不能相等
             this.hasDefault();//有没有default是true的
@@ -93,7 +95,20 @@ class Verify {
             return e;
         }
     }
-
+    uidCheck(){
+        for(let v of this.arr){
+            if(Array.isArray(v.uidArray)){
+                for(let vv of v.uidArray){
+                    if(!vv){
+                        throw {
+                            code:CODE.UID,
+                            data:'某个uid有问题，可能传了个空字符串'
+                        };
+                    }
+                }
+            }
+        }
+    }
     private hasDefault() {
         let flag = false;
         let arr: boolean[] = [];
