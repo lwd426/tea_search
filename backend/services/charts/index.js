@@ -42,7 +42,6 @@ module.exports = {
         var csv = json2csv({ data: tableData, fields: fields, fieldNames: fieldNames });
         var newCsv = iconv.encode(csv, 'GBK'); // 转编码
         fs.writeFileSync('file.csv', newCsv, function(err) {
-            console.log('ddddd')
           if (err) throw err;
           console.log('file saved');
         });

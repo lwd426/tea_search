@@ -110,7 +110,7 @@ export function changeCascader(arr){
 export function setCascaderOptionstow(){
     return async (dispatch) => {
         console.log('riri')
-        let res = await request.getConversionDataByStragety('','2017-04-15','2017-04-18');
+        let res = await request.getConversionDataByStragety('["1000001"]','2017-04-15','2017-04-18');
         let responseData = res.result.data;
         console.log(responseData);
         if(responseData == {}){
