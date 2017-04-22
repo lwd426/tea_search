@@ -41,6 +41,7 @@ module.exports = {
                         case "in": Quwey.containedIn(opt.key, opt.data);break;
                         case "limit": Quwey.limit(opt.data);break;
                         case "noEqual": Quwey.notEqualTo(opt.key, opt.data);break;
+                        case "equal": Quwey.equalTo(opt.key, opt.data);break;
                         case "desc": Quwey.descending(opt.key);break;
                         case "asc": Quwey.ascending(opt.key);break;
                         case "noExsit": Quwey.doesNotExist(opt.key);break;

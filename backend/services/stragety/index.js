@@ -49,6 +49,7 @@ module.exports = {
             tgid: tgid,
             slbid: slbid,
             type: type,
+            is_abolished: false,
             flowaccounting: '',
             time: moment().format('YYYY-MM-DD HH:mm:ss')
         }
@@ -67,7 +68,7 @@ module.exports = {
      */
     getStragetyList: function*(opts) {
         var allservers = yield libServer.getServersInfo({slbid: opts.slbid})
-        var stragetylist =  yield db.get('stragety',opts);
+        var stragetylist =  yield db.get('stragety',opts,  [{opt: 'equal', key: 'is_abolished', data: false}]);
         //为了与web服务器的增删改查一致，所以策略的基准以服务器的key为准
         var i=0; len=stragetylist.length;
         for(;i<len;i++){
@@ -96,7 +97,8 @@ module.exports = {
      * @returns {*}
      */
     getStragetyInfos: function*(where, opts) {
-        if(!opts) opts = []
+        if(!opts) opts = [];
+        opts.push({opt: 'equal', key: 'is_abolished', data: false})
         var stragetylist =  yield db.get('stragety',where, opts);
         return stragetylist;
     },
@@ -106,7 +108,7 @@ module.exports = {
      * @returns {*}
      */
     deleteStragety: function*(data) {
-       return yield db.delete('stragety', data);
+       return yield db.update('stragety', data, {is_abolished: true});
         // return result;
     },
     /**
@@ -146,5 +148,55 @@ module.exports = {
      */
     updateTags: function* (tags_used) {
         return yield db.update('tag', undefined, [{opt: 'in', key: 'objectId', data: tags_used}], {'tag_status': 'used'});
+    },
+    /**
+     *  生成新版本（策略快照）
+     * @param snapcode
+     * @param tgid
+     * @returns {string}
+     */
+    generateSnap: function* (snapcode, tgid) {
+        //获取测试项目下所有的策略
+        var result = '';
+
+        var stragetylist =  yield db.get('stragety',{tgid: tgid},  [{opt: 'equal', key: 'is_abolished', data: false}]);
+        var i = 0, len = stragetylist.length;
+        for(;i<len;i++){
+            var stragegty = stragetylist[i];
+            //复制并更新snapcode字段，把is_abolished字段设置为false
+            var data = {
+                stra_name: stragegty.get('stra_name'),
+                stra_desc: stragegty.get('stra_desc'),
+                stra_cities: stragegty.get('stra_cities'),
+                stra_servers: stragegty.get('stra_servers'),
+                stra_serverskey: stragegty.get('stra_serverskey'),
+                stra_urls: stragegty.get('stra_urls'),
+                stra_uids: stragegty.get('stra_uids'),
+                stra_status: stragegty.get('stra_status'),
+                tgid: stragegty.get('tgid'),
+                slbid: stragegty.get('slbid'),
+                type: stragegty.get('type'),
+                is_abolished: false,
+                flowaccounting: stragegty.get('flowaccounting'),
+                time: stragegty.get('time'),
+                snapcode : snapcode
+            }
+            //把之前的is_abolished字段设置为true
+            result = yield db.update('stragety', {objectId:stragegty.id }, {is_abolished: true});
+            result = yield db.save('stragety', data);
+
+        }
+        return result;
+    },
+    /**
+     * 切换回滚目标版本下的策略的is_abolished=false, 当前版本为true
+     * @param snapcode
+     * @param tgid
+     * @returns {string}
+     */
+    changeStragetySnap: function* (oldSnapcode, newSnapcode, tgid) {
+        var result = yield db.update('stragety', {tgid: tgid, snapcode: oldSnapcode }, {is_abolished: true});
+        result =  yield db.update('stragety', {tgid: tgid, snapcode: newSnapcode }, {is_abolished: false});
+        return result;
     }
 }

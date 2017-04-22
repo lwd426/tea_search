@@ -317,6 +317,7 @@ function dataHandler(dispatch, ha,stra_id, slbid,tgid,name,desc,cities,servers,s
  */
 export function validate(editting_status, slbid,tgid,name,desc,cities,servers,serverskey,urls,uids) {
     return (dispatch, getState) => {
+        console.log('dd')
         var optType = 'save', stra_id = '';
         if(editting_status) {
             optType = 'update';
@@ -520,9 +521,9 @@ export function freshStragetylist(stragetylist) {
 /**
  * 发布到服务器
  */
-export function publish(domainId,slbid, tgid, versionnum, versiondesc) {
+export function publish(domain, port, domainId,slbid, tgid, versionnum, versiondesc) {
     return (dispatch, getState) => {
-        return dispatch(fetch.getData(slb_publish_url + '?domainId='+domainId+ '&slbid='+slbid + '&tgid='+ tgid +'&versionnum='+versionnum + '&versiondesc='+versiondesc,function(err, result){
+        return dispatch(fetch.getData(slb_publish_url + '?domain='+domain+'&port='+port+'&domainId='+domainId+ '&slbid='+slbid + '&tgid='+ tgid +'&versionnum='+versionnum + '&versiondesc='+versiondesc,function(err, result){
             if(err || result.status === 'failure')  {
                 dispatch(publishSuccess(false, result.data))
             }else{
@@ -624,9 +625,9 @@ export function getVersionListSuccess(list, tgid,slbid) {
  * @param tgid
  * @param versionkey
  */
-export function publishback(domainId, slbid, tgid, versionkey) {
+export function publishback(nowSnapcode, snapcode, domain, port, domainId, slbid, tgid, versionkey, versiondesc) {
     return (dispatch, getState) => {
-        return dispatch(fetch.getData(slb_publish_url + '/back?domainId='+domainId+ '&slbid='+slbid + '&tgid='+ tgid +'&versionkey='+versionkey ,function(err, result){
+        return dispatch(fetch.getData(slb_publish_url + '/back?nowsnapcode='+nowSnapcode+'&snapcode='+snapcode+'&domain='+domain+'&port='+port+'&domainId='+domainId+ '&slbid='+slbid + '&tgid='+ tgid +'&versionkey='+versionkey  + '&versiondesc='+versiondesc,function(err, result){
             if(err || result.status === 'failure')  return dispatch(publishSuccess(false, result.data))
             dispatch(publishSuccess(true, result.data));
             return dispatch(versionlog_list(tgid, slbid))

@@ -255,7 +255,7 @@ class RegistrationForm extends React.Component {
                     {/*})(*/}
                         <Select mode="multiple" ref="cities" defaultValue={cities} onChange={this.selectRegion} placeholder="请选择策略生效区域（可不选）">
                             {this.props.content.testgroup.cities.map((city, index)=> {
-                                return <Option key={city.admincode} value={city.name}>{city.name}</Option>
+                                return <Option key={city.admincode} value={city.name4en + ';' +city.name}>{city.name}</Option>
                             })}
                         </Select>
                     {/*)}*/}

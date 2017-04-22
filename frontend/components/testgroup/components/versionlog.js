@@ -76,40 +76,43 @@ class GLVersionlog extends React.Component {
     render() {
         var _this = this;
         const {versionloglist} = this.props.content.testgroup;
-        const data = versionloglist.map((version, index)=>{
-            return {
-                versionkey: version.objectId,
-                versioncode: version.versionnum,
-                versiondesc: version.versiondesc,
-                versiondate: version.publishtime,
-                slbid: version.slbid,
-                tgid: version.tgid,
-                info: JSON.parse(version.details)
-            }
-        })
+        const nowSnapcode = versionloglist[0].snapcode;
+        // const data = versionloglist.map((version, index)=>{
+        //     return {
+        //         versionkey: version.objectId,
+        //         versioncode: version.versionnum,
+        //         versiondesc: version.versiondesc,
+        //         versiondate: version.publishtime,
+        //         snapcode: version.snapcode || '',
+        //         slbid: version.slbid,
+        //         tgid: version.tgid,
+        //         info: version.details
+        //     }
+        // })
         return (
             <div>
                 <div className="gl-testinfo-btndiv">
                     <Button className="gl-left-btn" icon="double-left" onClick={this.goBack}>返回</Button>
                 </div>
-                <Table columns={columns} dataSource={data.map((version, index)=>{
+                <Table columns={columns} dataSource={versionloglist.map((version, index)=>{
                     return {
                         key: index + 1,
-                        versionkey: version.versionkey,
-                        versioncode: version.versioncode,
+                        versionkey: version.objectId,
+                        versioncode: version.versionnum,
                         versiondesc: version.versiondesc,
-                        versiondate: version.versiondate,
+                        versiondate: version.publishtime,
+                        snapcode: version.snapcode || '',
                         details: <Popover
                             content={<div>
-                                <GLPop data={version.info}/></div>}
+                                <GLPop data={version.details}/></div>}
                                     title={version.versiondesc}
                                      >
                                     <Button icon="book">版本详情</Button>
                                 </Popover>,
                         operation: <Popconfirm title="确认回滚策略组到该版本?" onConfirm={() => {
-                            var domainId = _this.props.menu.domainId;
+                            let {domainId,domain, port} = _this.props.menu;
 
-                            _this.props.contentActions.testgroupActions.publishback(domainId, version.slbid,version.tgid, version.versionkey)
+                            _this.props.contentActions.testgroupActions.publishback(nowSnapcode, version.snapcode,domain,port, domainId, version.slbid,version.tgid, version.versionnum,version.versiondesc)
                         }}>
                             <Button>回滚</Button>
                         </Popconfirm>

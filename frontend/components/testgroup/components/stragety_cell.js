@@ -17,7 +17,7 @@ class GLAddStragety extends React.Component {
         this.props.contentActions.testgroupActions.goback2stragelist()
     }
     render() {
-        console.log(this.props)
+
         return (
             <div className="add-stragety">
                 <div className="gl-testinfo-btndiv">
