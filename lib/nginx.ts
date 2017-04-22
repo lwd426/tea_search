@@ -166,12 +166,13 @@ function geoIp(arr) {
 }
 
 function allServerHandler(arr) {
+
     for (let v of arr) {
         if (v.default) {
             allServers = [].concat(v.serverArray);
         }
     }
-    for (let v of arr) {
+    /*for (let v of arr) {
         if (v.default) {
             continue;
         }
@@ -180,7 +181,7 @@ function allServerHandler(arr) {
                 allServers.push(k);
             }
         }
-    }
+    }*/
 }
 export = nginx;
 
