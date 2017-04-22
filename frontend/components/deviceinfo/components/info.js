@@ -34,7 +34,7 @@ class GLTree extends React.Component {
                 <div>
                     <div>区域</div>
                     { this.props.cities.map((cell)=>{
-                        return (<span>{cell}</span>)
+                        return (<span>{cell.split(';')[1]}</span>)
                     })
                     }
                 </div>

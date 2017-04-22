@@ -30,6 +30,7 @@ module.exports = {
             status: 'new',
             flowaccounting: '-',
             time: '-',
+            is_abolished: false,
             version: '-'
 
         }
@@ -48,9 +49,8 @@ module.exports = {
      * @returns {*}
      */
     getTestgroupList: function*(slbid) {
-        var list = yield db.get('testgroup', {slbid: slbid},[{opt: 'desc', key: 'createdAt'}]);
+        var list = yield db.get('testgroup', {slbid: slbid},[{opt: 'desc', key: 'createdAt'},{opt: 'equal', key: 'is_abolished', data: false}]);
         var allservers = yield libServer.getServersInfo({slbid: slbid})
-
         var i = 0, len = list.length;
         //遍历每个测试项目下的所有策略，累加流量配置
         for(;i<len;i++){
@@ -60,6 +60,20 @@ module.exports = {
             var serverNum = straList.length || 0;
             if(serverNum !== 0){
                 flowaccount = getPercentage(serverNum, allservers.length) ;
+            }
+
+            var publistime = tg.get('time');
+            if(publistime === '-'){
+                tg.set('status', 'new')
+            }else{
+                var strageties = yield libStra.getStragetyInfos({tgid: tg.id})
+                var status = 'stopped'
+                strageties.map((stra)=>{
+                    if(stra.get('stra_status') === 'running'){
+                        status = 'running'
+                    }
+                })
+                tg.set('status', status)
             }
             tg.set('flowaccounting', flowaccount)
         }
@@ -101,7 +115,7 @@ module.exports = {
                 data: '不能删除，该测试组下有正在运行的策略，请先停止或删除！'
             }
         }
-        var result = yield db.delete('testgroup', {objectId: tgid});
+        var result = yield db.update('testgroup', {objectId: tgid}, {is_abolished: true});
         return {
             status: 'success',
             data: result
@@ -121,6 +135,6 @@ module.exports = {
      * @returns {*}
      */
     getTgInfo: function*(tgid) {
-        return yield db.get('testgroup', {objectId: tgid}, []);
+        return yield db.get('testgroup', {objectId: tgid}, [{opt: 'equal', key: 'is_abolished', data: false}]);
     }
 }

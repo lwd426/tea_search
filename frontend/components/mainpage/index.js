@@ -177,8 +177,10 @@ class GLMainpage extends React.Component {
                                             <div style={{padding:20}}>
                                                 <div style={{color:'#555'}}>
                                                     <span>创建于：{ moment(new Date(q.createdAt)).format('YYYY-MM-DD') }  </span>
-                                                    <span style={{marginLeft:'20px'}}>已运行：21天</span>
-                                                    <span style={{marginLeft:'20px'}}>最近变动：1天前</span>
+                                                    <span style={{marginLeft:'20px'}}>
+                                                        已运行：{q.first_publish_time? ((new Date().getTime() - new Date(q.first_publish_time).getTime())/(24*60*60*1000)).toFixed(1) : 0} 天
+                                                    </span>
+                                                    <span style={{marginLeft:'20px'}}>{q.time != '-'? '最近修改 ：' + ((new Date().getTime() - new Date(q.time).getTime())/(24*60*60*1000)).toFixed(1) + '天前' : '最近修改 ：无'} </span>
                                                 </div>
                                                 <div style={{marginTop:20}}>
                                                     {
@@ -191,7 +193,7 @@ class GLMainpage extends React.Component {
                                                                     <span>流量占比： 20%</span>
                                                                 </div>
                                                                 <div className="right" style={{float:'left',width:'34%'}}>
-                                                                    <span>{s.tag ? '运行中' : '没有运行'}</span><br/>
+                                                                    <span>{q.status}</span><br/>
                                                                 </div>
                                                                 <div className="clear"></div>
                                                             </div>

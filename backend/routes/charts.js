@@ -7,7 +7,7 @@ router.post('/trafficData/', function *(next) {
     var stragety_arr = this.request.body.stragety_arr || '';
     var startTime = this.request.body.startTime || '';
     var endTime = this.request.body.endTime || '';
-    let data = {};
+    var data = {};
     
     data['start'] = startTime;
     data['end'] = endTime;
@@ -24,7 +24,7 @@ router.post('/conversionData/', function *(next) {
     var stragety_arr = this.request.body.stragety_arr || '';
     var startTime = this.request.body.startTime || '';
     var endTime = this.request.body.endTime || '';
-    let data = {};
+    var data = {};
     
     data['start'] = startTime;
     data['end'] = endTime;

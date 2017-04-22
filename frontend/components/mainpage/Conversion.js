@@ -102,10 +102,10 @@ export default class Chart extends React.Component {
         
         let casVal = this.props.content.mainpage.casVal || this.props.content.mainpage.options_two[0].value
         strageties.map((v,i) => {
-            legendDate.push('版本'+v[0]);
+            legendDate.push('版本 '+v[1].name);
 
             seriesArr.push({
-                name:'版本'+v[0],
+                name:'版本 '+v[1].name,
                 type:'line',
                 barMaxWidth : 20,
                 data:percentObj[v[0]][casVal],
@@ -178,7 +178,7 @@ export default class Chart extends React.Component {
         strageties.map((v,i) => {
             tableData.push({
                 key: v[0],
-                date: '版本'+v[0],
+                date: '版本 '+v[1].name,
                 uv: getAverageNumArr(uvObj[v[0]][casVal]),
                 pv: getAverageNumArr(pvObj[v[0]][casVal]),
                 show: getAverageNumArr(showObj[v[0]][casVal]),

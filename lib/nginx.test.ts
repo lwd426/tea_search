@@ -4,7 +4,8 @@ nginx([
         {
             urlArray: ['/yyyy/uid'],
             serverArray: ["117.121.54.110"],
-            uidArray:['34','999'],
+            regionArray:['bj'],
+            // uidArray:['34','999'],
             default: false
         },
         {

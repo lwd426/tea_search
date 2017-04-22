@@ -2,7 +2,7 @@
 import * as TYPES from './constants'
 import utilscomps from '../../components/utilscomps'
 
-let reducer = (state={wintype: 'mainpage',slbid: '', editting_slb:undefined, add: false, domain: '', domainId: '', menulist: []},action)=>{
+let reducer = (state={wintype: 'mainpage',slbid: '', editting_slb:undefined, add: false, domain: '', port: '80',domainId: '', menulist: []},action)=>{
     switch(action.type){
         case TYPES.CHANGE_SLB_SUCCESS:
             if(!action.slbid){
