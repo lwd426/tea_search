@@ -185,7 +185,19 @@ class GLMainpage extends React.Component {
                                                     <span style={{marginLeft:'20px'}}>
                                                         已运行：{q.first_publish_time? ((new Date().getTime() - new Date(q.first_publish_time).getTime())/(24*60*60*1000)).toFixed(1) : 0} 天
                                                     </span>
-                                                    <span style={{marginLeft:'20px'}}>{q.time != '-'? '最近修改 ：' + ((new Date().getTime() - new Date(q.time).getTime())/(24*60*60*1000)).toFixed(1) + '天前' : '最近修改 ：无'} </span>
+                                
+                                                    <span style={{marginLeft:'20px'}}>
+                                                        {(() => {
+                                                            if(q.time != '-'){
+                                                                let num = ((new Date().getTime() - new Date(q.time).getTime())/(24*60*60*1000)).toFixed(1);
+                                                                if(num < 1) return '最近修改 ：' + '今天';
+                                                                if(num >= 1)return '最近修改 ：' + num + '天前';
+                                                            }else{
+                                                                return '最近修改 ：无';
+                                                            }
+                                                        })()}
+                                                    </span>
+                                                
                                                 </div>
                                                 <div style={{marginTop:20}}>
                                                     {
@@ -195,7 +207,21 @@ class GLMainpage extends React.Component {
                                                                     <span>{s.stra_name}</span>
                                                                 </div>
                                                                 <div className="right" style={{float:'left',width:'33%'}}>
-                                                                    <span>流量占比： 20%</span>
+                                                                    <span>
+                                                                        {(()=> {
+                                                                            if(s.stra_uids.length > 0 && s.stra_cities.length > 0){
+                                                                                return '特殊用户和特殊地域';
+                                                                            }else if(s.stra_uids.length > 0){
+                                                                                return '特殊用户';
+                                                                            }else if(s.stra_cities.length > 0){
+                                                                                return '特殊地域';
+                                                                            }else if(s.stra_servers.length==0||v.servers.length==0){
+                                                                                return '流量占比：' + '0';
+                                                                            }else{
+                                                                                return '流量占比：' + ((s.stra_servers.length)*100/(v.servers.length)).toFixed(2) + '%'
+                                                                            }
+                                                                        })()}
+                                                                    </span>
                                                                 </div>
                                                                 <div className="right" style={{float:'left',width:'34%'}}>
                                                                     <span>{q.status}</span><br/>
