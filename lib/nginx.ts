@@ -110,13 +110,14 @@ function nginx(arr: any[], domain = 'test.m.le.com', port = '80') {
 
 
     arr = array2one(arr);
-    allServerHandler(arr);
     let verf = new Verify(arr);
     let re = verf.check();
     if (re.code != 0) {
         console.log(re);
         return re;
     }
+    allServerHandler(arr);
+
     // arr = array2one(arr);
     arr.forEach(item => {
         if (item.url == '/' && !item.default) {
