@@ -41,20 +41,25 @@ class GLMainpage extends React.Component {
     }
     onChange(value_arr, selectedOptions) {
         //this.props.contentActions.mainpageActions.changeProjectValue(value_arr);
+        //console.log(selectedOptions)
         let stragety_arr = selectedOptions[1].strageties;
         let length = stragety_arr.length;
-        let str = '[';
-        stragety_arr.map((val,index) => {
-            str += '"'
-            str += val;
-            str += '"';
-            if(index < (length - 1)){
-                str += ','
-            }
-        })
-        str += ']';
-
-        this.props.contentActions.mainpageActions.switchContentShow('none','block',str,value_arr)
+        if(length > 0){
+            let str = '[';
+            stragety_arr.map((val,index) => {
+                str += '"'
+                str += val;
+                str += '"';
+                if(index < (length - 1)){
+                    str += ','
+                }
+            })
+            str += ']';
+            this.props.contentActions.mainpageActions.switchContentShow('none','block',str,value_arr)
+        }else{
+            alert('此项目无数据！')
+        }
+        
     }
     disabledDate(current) {
         return current && current.valueOf() > Date.now();
