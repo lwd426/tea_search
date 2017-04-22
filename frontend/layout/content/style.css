@@ -16,6 +16,7 @@
 
 .ant-breadcrumb {
     border-bottom: 1px solid #e9e9e9;
-    margin: 12px 32px 12px 13px !important;
+    margin: 12px 0px !important;
     padding-bottom: 10px;
+    padding-left: 18px;
 }

@@ -70,7 +70,7 @@
     border-left: 1px solid #949090 !important;
 }
 .ant-layout-sider{
-    width: 16% !important;
+    /*width: 16% !important;*/
     float: left;
 }
 

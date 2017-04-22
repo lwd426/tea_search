@@ -29,7 +29,7 @@ class GLContent extends React.Component {
         return true;
     }
     render() {
-        let {domain,wintype } = this.props.menu;
+        let {domain,domainId, wintype } = this.props.menu;
         // let
         // switch(wintype){
         //     case 'deviceinfo':
@@ -37,8 +37,8 @@ class GLContent extends React.Component {
         return (
             <div className="gl-content">
                 { wintype !== 'mainpage' ? (
-                    <Breadcrumb style={{ margin: '12px 0' }}>
-                    <Breadcrumb.Item>{domain}</Breadcrumb.Item>
+                    <Breadcrumb style={{ margin: '12px 0' }} separator=">">
+                    <Breadcrumb.Item>{domain+'('+domainId + ')'}</Breadcrumb.Item>
                     <Breadcrumb.Item>{wintype === 'deviceinfo' ? '设备管理' : '测试项目'}</Breadcrumb.Item>
                     </Breadcrumb>)
                      : ''
