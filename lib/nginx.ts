@@ -236,7 +236,7 @@ function wanjianguizong(arr) {
         o.servers.sort((a, b) => {
             return a.uids ? -1 : 1;
         });
-        !flag&&array.push(o);
+        !flag&&array.push(o);//因为多个合并成一个，所以不用再次push了
     }
     return array;
 }
