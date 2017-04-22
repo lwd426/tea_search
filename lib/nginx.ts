@@ -1,10 +1,8 @@
-import { CONTENT, Meta, level, MataS } from './if';
-import { Methods, Verify } from './check';
+import { CONTENT, Meta, geo1p2DB } from './if';
+import { Verify } from './check';
 
 import { four } from './four';
 const defaultUpstream = "defaultUpstream";
-const geoip_city = `/etc/maxmind-city.mmdb`;
-const geoip_subdivisions = `/etc/maxmind-subdivisions.mmdb`;
 let allServers = [];
 
 let needDefault = false;
@@ -44,7 +42,7 @@ class Upstream {//default
     }
 
     getUpstreamName() {
-        return this.metaData.url == "/" ? defaultUpstream : this.type + "_" + this.metaData.serverArray[this.index].replace(/\./g,'_').replace(/\:/g,'_');
+        return this.metaData.url == "/" ? defaultUpstream : this.type + "_" + this.metaData.serverArray[this.index].replace(/\./g, '_').replace(/\:/g, '_');
     }
 
     getUpstream(): string {
@@ -127,14 +125,6 @@ function nginx(arr: any[], domain = 'test.m.le.com', port = '80') {
     });
     let geo = geoIp(arr);
     let wjgz = wanjianguizong(arr);
-    /*const res = arr.map(item => {
-     delete item.urlArray;
-     if (item.uidArray && item.regionArray) {
-
-     return new three(item, allServers).doit();
-     }
-     return item.uidArray || item.regionArray ? new UpstreamGroup(item, allServers).doit() : new Upstream(item).doit();
-     }); */
     const res = wjgz.map(item => {
         return item.servers ? new four(item, allServers).doit() : new Upstream(item).doit();
     });
@@ -160,28 +150,16 @@ function nginx(arr: any[], domain = 'test.m.le.com', port = '80') {
     // content += location;
 
     console.log(content);
-    re.content = content.replace(/\n/g,' ');
+    re.content = content.replace(/\n/g, ' ');
     return re;
 }
 function geoIp(arr) {
-
-    let flag = false;
     for (let v of arr) {
-        flag = flag || !!v.regionArray;
+        if (v.regionArray) {
+            return geo1p2DB;
+        }
     }
-    if (!flag) {
-        return '';
-    }
-    let geoLevel = level;
-    let geoip_ = eval('geoip_' + geoLevel);
-
-
-    let geo1p2 = `
-           geoip2 ${geoip_} {
-            $geoip2_data_${geoLevel}_name default=Beijing ${geoLevel} names en;
-           }`;
-    return geo1p2;
-
+    return '';
 }
 
 function allServerHandler(arr) {
@@ -211,11 +189,11 @@ function wanjianguizong(arr) {
             continue;
         }
         let o = {url: v.url, servers: []};
-        let flag=false;
+        let flag = false;
         //还得处理相同的url归一的问题
         array.forEach(item => {
             if (item.url == v.url) {
-                flag=true;
+                flag = true;
                 o.servers = item.servers;
             }
         });
@@ -235,7 +213,7 @@ function wanjianguizong(arr) {
         o.servers.sort((a, b) => {
             return a.uids ? -1 : 1;
         });
-        !flag&&array.push(o);//因为多个合并成一个，所以不用再次push了
+        !flag && array.push(o);//因为多个合并成一个，所以不用再次push了
     }
     return array;
 }
