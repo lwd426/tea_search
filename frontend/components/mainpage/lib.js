@@ -27,7 +27,6 @@ export async function postTableData (data){
 function sortTime (a,b){
     let a_since = a.time == '-' ? 0 : new Date(a.time).getTime();
     let b_since = b.time == '-' ? 0 : new Date(b.time).getTime();
-    console.log(a_since - b_since);
     return (b_since - a_since)
 }
 export function setMainPageData(res){
