@@ -115,7 +115,7 @@ module.exports = {
                         case "in": Quwey.containedIn(otherOpts.key, otherOpts.data);
                     }
                     if(type === 'add' && results[i].get(key) && results[i].get(key).indexOf(updateData[key]) === -1){
-                        results[i].set(key,results[i].get(key)+';' + updateData[key]);
+                        results[i].set(key,results[i].get(key).concat(updateData[key]));
                     }else{
                         results[i].set(key, updateData[key]);
                     }
