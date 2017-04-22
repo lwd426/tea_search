@@ -89,8 +89,12 @@ module.exports = {
             result.info = "不能删除该服务器（该服务器部署了以下几个策略：" + stras
         }else{
             var result = yield db.delete('webServer', data);
-            result.status = 'success';
-            result.info = '删除成功'
+            result = {
+                status : 'success',
+                data: result,
+                info : '删除成功'
+            }
+
         }
 
 

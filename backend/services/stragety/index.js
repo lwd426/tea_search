@@ -54,10 +54,10 @@ module.exports = {
             time: moment().format('YYYY-MM-DD HH:mm:ss')
         }
         var result =  yield db.save('stragety', data);
-        //更新server信息，把uids、urls和策略id更新到server记录里
+        //更新server信息，把策略id更新到server记录里
         if(result){
             var otherwhere = {key: 'ip', opt: 'in', data: servers}
-            var data = {urls: urls, uids: uids, stragetiesinfo: uuid}
+            var data = {stragetiesinfo: [uuid]}
             var result2 =  yield server_service.updateWebServer(data, undefined, [otherwhere], 'add')
         }
         return result;

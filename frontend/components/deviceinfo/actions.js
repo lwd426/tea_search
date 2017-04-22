@@ -86,6 +86,7 @@ export function deleteWebServer(server) {
         return dispatch(fetch.deleteData(web_list_url,{slbid: server.slbid, key: server.key}, function(err, result){
             if(err) return dispatch(deleteWebServerList([]))
             if(result.status === 'success'){
+                utilscomps.showNotification('success', '删除成功！' );
                 return dispatch(fetch.getData(web_list_url+ '?slbid=' + server.slbid,function(err, result){
                     if(err)  dispatch(deleteWebServerList([]))
                     dispatch(deleteWebServerList(result.data))
