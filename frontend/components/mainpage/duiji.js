@@ -206,7 +206,12 @@ export default class EChart extends React.Component {
         console.log('duiji componentWillReceiveProps');
         let date_picker = nextProps.content.mainpage.date_picker;
         let stragety_str = nextProps.content.mainpage.content_two_key;
-        this.randerChart(date_picker, stragety_str);
+        let tabsKey = nextProps.content.mainpage.main_card_key;
+
+        if(nextProps.content.mainpage.content_two_display == 'block' && tabsKey == "2"){
+            this.randerChart(date_picker, stragety_arr);
+        }
+        //this.randerChart(date_picker, stragety_str);
         return true;
     }
     render() {
