@@ -9,7 +9,7 @@ let initState = {
     content_two_display: 'none',
     content_two_key: 1,
     stragety: [],
-    date_picker:[moment().subtract(4, 'days').format('YYYY/MM/DD'),moment().format('YYYY/MM/DD')],
+    date_picker:[moment().subtract(5, 'days').format('YYYY/MM/DD'),moment().subtract(1, 'days').format('YYYY/MM/DD')],
     menulist: [],
     testgrouplist: [],
     main_card_key: "1",
@@ -26,7 +26,7 @@ let reducer = (state = initState,action)=>{
             break
         case TYPES.CONTENT_DISPLAY:
             return Object.assign({}, state, {
-                content_one_display: action.content_one_display, 
+                content_one_display: action.content_one_display,
                 content_two_display: action.content_two_display,
                 content_two_key: action.content_two_key ? action.content_two_key : state.content_two_key,
             })
