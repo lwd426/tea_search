@@ -7,7 +7,7 @@ const CODE = {
     "URL_UID": 5,
     "NO_UID_REGION": 6,
     "NO_SERVER_ARRAY": 7,
-    "UID":8,
+    "UID": 8,
 };
 class Methods {
     static contain(first, sec): boolean {//url是否包含,包含返回true
@@ -95,20 +95,20 @@ class Verify {
             return e;
         }
     }
-    uidCheck(){
-        for(let v of this.arr){
-            if(Array.isArray(v.uidArray)){
-                for(let vv of v.uidArray){
-                    if(!vv){
-                        throw {
-                            code:CODE.UID,
-                            data:'某个uid有问题，可能传了个空字符串'
-                        };
-                    }
+
+    uidCheck() {
+        for (let v of this.arr) {
+            Array.isArray(v.uidArray) && v.uidArray.forEach(item => {
+                if (!item) {
+                    throw {
+                        code: CODE.UID,
+                        data: '某个uid有问题，可能传了个空字符串'
+                    };
                 }
-            }
+            });
         }
     }
+
     private hasDefault() {
         let flag = false;
         let arr: boolean[] = [];
@@ -184,18 +184,18 @@ class Verify {
                     //包含的时候还要看看uid和地域信息，如果uid无交集并且服务器无交集，就行
                     //同样，如果地域无交集并且服务器
                     /*if (Array.isArray(this.arr[i].uidArray) && Array.isArray(this.arr[j].uidArray)
-                        && !Methods.intersection(this.arr[i].uidArray, this.arr[j].uidArray)
-                        && !Methods.intersection(this.arr[i].serverArray, this.arr[j].serverArray)) {
-                        continue;
-                    }
-                    if (
-                        Array.isArray(this.arr[i].regionArray) && Array.isArray(this.arr[j].regionArray)
-                        && !Methods.intersection(this.arr[i].regionArray, this.arr[j].regionArray)
-                        && !Methods.intersection(this.arr[i].serverArray, this.arr[j].serverArray)) {
-                        continue;
-                    }*/
+                     && !Methods.intersection(this.arr[i].uidArray, this.arr[j].uidArray)
+                     && !Methods.intersection(this.arr[i].serverArray, this.arr[j].serverArray)) {
+                     continue;
+                     }
+                     if (
+                     Array.isArray(this.arr[i].regionArray) && Array.isArray(this.arr[j].regionArray)
+                     && !Methods.intersection(this.arr[i].regionArray, this.arr[j].regionArray)
+                     && !Methods.intersection(this.arr[i].serverArray, this.arr[j].serverArray)) {
+                     continue;
+                     }*/
                     //如果包含，但是服务器没有交集，也可以通过
-                    if(!Methods.intersection(this.arr[i].serverArray, this.arr[j].serverArray)){
+                    if (!Methods.intersection(this.arr[i].serverArray, this.arr[j].serverArray)) {
                         continue;
                     }
                     throw {
@@ -272,7 +272,7 @@ class Verify {
                     data: `某个 serverArray 有问题`
                 };
             }
-            if (Array.isArray(v.serverArray)&&!v.serverArray.length) {
+            if (Array.isArray(v.serverArray) && !v.serverArray.length) {
                 throw {
                     code: CODE.NO_SERVER_ARRAY,
                     data: `某个 serverArray 有问题`
