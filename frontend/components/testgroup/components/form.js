@@ -25,7 +25,7 @@ class RegistrationForm extends React.Component {
             if (!err) {
                 var name = this.refs.name.refs.input.value || '';
                 var desc = this.refs.desc.refs.input.value || '';
-                var cities = values.stra_cities || [];
+                var cities = _this.props.content.testgroup.citiesselected || [];
                 var servers = _this.props.content.testgroup.serverselected;
                 var serverskey = _this.props.content.testgroup.serverselectedkeys;
                 var urls = _this.props.content.testgroup.addurls;
@@ -67,7 +67,7 @@ class RegistrationForm extends React.Component {
         }
         var value = this.refs[refname].refs.input.value;
         if(value.indexOf(';') !== -1){
-            values = value.split(';');
+            values = value;
         }else{
             values.push(value)
 
@@ -89,7 +89,7 @@ class RegistrationForm extends React.Component {
         }
         var value = this.refs[refname].refs.input.value;
         if(value.indexOf(';') !== -1){
-            values = value.split(';');
+            values = value;
         }else{
             values.push(value)
 
@@ -135,11 +135,11 @@ class RegistrationForm extends React.Component {
         if(stragety){
             stra_name = stragety.name;
             stra_desc = stragety.desc;
-            cities = stragety.cities.split(';')
+            cities = stragety.cities
             if(cities[0] === '') cities =[];
-            this.props.content.testgroup.serverselectedkeys = stragety.serverskey.split(';');
-            this.props.content.testgroup.addurls = stragety.urlsvalues.split(';');
-            this.props.content.testgroup.adduids = stragety.uidsvalues.split(';');
+            this.props.content.testgroup.serverselectedkeys = stragety.serverskey;
+            this.props.content.testgroup.addurls = stragety.urlsvalues;
+            this.props.content.testgroup.adduids = stragety.uidsvalues;
             this.props.content.testgroup.editting_stragety = undefined;
         }
         return (
@@ -255,7 +255,7 @@ class RegistrationForm extends React.Component {
                     {/*})(*/}
                         <Select mode="multiple" ref="cities" defaultValue={cities} onChange={this.selectRegion} placeholder="请选择策略生效区域（可不选）">
                             {this.props.content.testgroup.cities.map((city, index)=> {
-                                return <Option key={city.admincode} value={city.name4en}>{city.name}</Option>
+                                return <Option key={city.admincode} value={city.name}>{city.name}</Option>
                             })}
                         </Select>
                     {/*)}*/}

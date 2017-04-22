@@ -104,7 +104,7 @@ class GLWebserver extends React.Component {
     handleAdd = () => {
         let {webServerList} = this.props.content.deviceinfo;
         if(webServerList && webServerList[0] && webServerList[0].ip === ''){
-            utilscomps.showNotification('warning', '提示', '您有为添加完成的服务器，请先添加完毕！' );
+            utilscomps.showNotification('warning', '提示', '您有为添加完成的服务器，请先添加完毕！');
             return false;
         }
         this.props.contActions.setAddServerModalStatus(true)
@@ -143,7 +143,7 @@ class GLWebserver extends React.Component {
                 ip: cell.ip,
                 stragetyname: <Popover
                     content={<div>
-                        <GLPop data={stragetyinfo}/></div>}
+                        <GLPop key={cell.key} data={stragetyinfo}/></div>}
                     title='已有策略'
                 ><Icon type="exclamation-circle-o" />
                 </Popover>,

@@ -6,7 +6,7 @@ import request from '../../request';
 const slb_list_url = HOST + '/slb'
 const testgroup_url = HOST + '/testgroup';
 const stragety_url = HOST + '/stragety';
-
+const menuActions = require('../../layout/menu/actions')
 
 /**
  * 获取slb列表
@@ -76,7 +76,14 @@ export function changeDatePicker(dateStrings){
     }
 }
 
-export function switchContentShow(main_display, card_display, strageties, currentCasVal){
+export function switchContentShow(main_display, card_display, strageties, currentCasVal) {
+    return (dispatch, getState) => {
+        if(!currentCasVal || currentCasVal.length ===0) dispatch(menuActions.changeShowWinType( currentCasVal[0] || 0, ''))
+        return dispatch(switchContentShowSuccess(main_display, card_display, strageties,currentCasVal))
+    }
+}
+
+export function switchContentShowSuccess(main_display, card_display, strageties, currentCasVal){
     return{
         type:TYPES.MAIN_CONTAINER_DISPLAY,
         main_container_display: main_display,
@@ -103,25 +110,28 @@ export function changeCascader(arr){
 export function setCascaderOptionstow(){
     return async (dispatch) => {
         console.log('riri')
-        let res = await request.getConversionDataByStragety('','2017-03-05','2017-03-08');
+        let res = await request.getConversionDataByStragety('["1000001"]','2017-04-15','2017-04-18');
         let responseData = res.result.data;
         console.log(responseData);
-
-        let strageties = Object.entries(responseData);
-
-        //设置 option_two
-        let options_two = [];
-        for(let key in strageties[0][1]){
-            options_two.push({
-                value: key,
-                label: key
-            })
-            console.log(key)
+        if(responseData == {}){
+            return
         }
-        return dispatch({
-            type:TYPES.OPTIONS,
-            options_two: options_two
-        })
-
+        let strageties = Object.entries(responseData);
+        if(strageties.length > 0){
+            //设置 option_two
+            let options_two = [];
+            for(let key in strageties[0][1]){
+                options_two.push({
+                    value: key,
+                    label: key
+                })
+                console.log(key)
+            }
+            return dispatch({
+                type:TYPES.OPTIONS,
+                options_two: options_two
+            })
+        }
+        
     }
 }

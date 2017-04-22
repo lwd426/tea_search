@@ -1,3 +1,33 @@
+import 'whatwg-fetch';
+const HOST = require('../../../config').HOST;
+const chart_url = HOST + '/charts/trafficData';
+
+
+async function postData (url, data) {
+    try{
+        let response = await fetch(chart_url,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        let res = await response.json();
+        return res;
+    }catch(e){
+        console.log('error', e);
+    }
+}
+
+export async function postTableData (data){
+    return await postData(chart_url, data)
+}
+
+
+
+
+
+
 
 export function setMainPageOptions(testGroups, arr, type) {
     let index = 0;

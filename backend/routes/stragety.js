@@ -1,5 +1,8 @@
 var router = require('koa-router')();
 var lib = require('../services/stragety')
+var libTg = require('../services/testgroup')
+var moment = require('moment');
+
 const uuidV4 = require('uuid/v1');
 
 router.get('/', function *(next) {
@@ -12,6 +15,24 @@ router.get('/', function *(next) {
     };
 });
 
+router.get('/handler', function *(next) {
+    var tgid = this.query.tgid;
+    var status = this.query.status;
+    //更新策略组下的所有策略的发布时间
+    result = yield lib.updateStragety({time: moment().format('YYYY-MM-DD HH:mm'), stra_status: status}, {tgid: tgid})
+    if(result){
+        this.body = {
+            status: 'success',
+            data: result
+        };
+    }else{
+        this.body = {
+            status: 'failure',
+            data: '失败'
+        };
+    }
+
+});
 router.post('/', function *(next) {
     var slbid = this.request.body.slbid;
     var tgid = this.request.body.tgid;

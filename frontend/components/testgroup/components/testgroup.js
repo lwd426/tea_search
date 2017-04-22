@@ -68,11 +68,6 @@ class GLTestgroup extends React.Component {
             this.props.contentActions.testgroupActions.updateTest({code:cell.code, slbid: cell.slbid}, {name: value})
         };
     }
-    onDelete = (index) => {
-        const dataSource = [...this.props.content.testgroup.testgrouplist];
-        dataSource.splice(index, 1);
-        // this.setState({ dataSource });
-    }
     handleAdd = () => {
         let {testgrouplist} = this.props.content.testgroup;
         if(testgrouplist && testgrouplist[0] && testgrouplist[0].name === ''){
@@ -111,7 +106,7 @@ class GLTestgroup extends React.Component {
                             status: cell.status,
                             flowaccounting: cell.flowaccounting,
                             time: cell.time,
-                            version: cell.version
+                            version: cell.version || ''
                         }
                     })}
                 />

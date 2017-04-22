@@ -11,6 +11,7 @@ const city_url = HOST + '/city'
 const server_url = HOST + '/webserver'
 const tag_url = HOST + '/stragety/tag'
 const slb_publish_url = HOST + '/slb/publish'
+const stragety_start_url = HOST + '/stragety/handler'
 
 /**
  * 进入编辑策略页面
@@ -173,7 +174,7 @@ export function addTestGroup(group){
                 return dispatch(fetch.getData(testgroup_url+ '?slbid='+group.slbid,function(err, result){
                     if(err)  return dispatch(getTestGroupListSuccess([]))
                     dispatch(contActions.setAddTgModalStatus(false))
-                    utilscomps.showNotification('success', '新建成功', '策略组已经新建成功！');
+                    utilscomps.showNotification('success', '新建成功', '策略组已经新建成功！', 1);
                     return dispatch(getTestGroupListSuccess(result.data))
                 }))
             }
@@ -207,11 +208,16 @@ export const deleteTestSuccess = (list) => {
 export function deleteTest(slbid, code) {
     return (dispatch, getState) => {
         return dispatch(fetch.deleteData(testgroup_url,{code: code}, function(err, result){
-            if(err)  return dispatch(deleteTestSuccess([]))
-            return dispatch(fetch.getData(testgroup_url + '?slbid='+slbid,function(err, result){
-                if(err)  return dispatch(deleteTestSuccess([]))
-                return dispatch(deleteTestSuccess(result.data))
-            }))
+            if(err || result.status ==='failure') {
+                return utilscomps.showNotification('error', '失败', '添加失败，失败原因：'+result.data );
+            }else{
+                utilscomps.showNotification('success', '成功', '删除成功！', 1 );
+                return dispatch(fetch.getData(testgroup_url + '?slbid='+slbid,function(err, result){
+                    if(err)  return dispatch(deleteTestSuccess([]))
+                    return dispatch(deleteTestSuccess(result.data))
+                }))
+            }
+
         }))
     }
 
@@ -259,6 +265,14 @@ export function saveStragetyResult(result) {
     }
 }
 
+export function validateFailure(keyval, infoval) {
+    return {
+        type: TYPES.VALIDATE_FAILURE,
+        key: keyval,
+        info: infoval
+    }
+}
+
 function dataHandler(dispatch, ha,stra_id, slbid,tgid,name,desc,cities,servers,serverskey,urls,uids,type){
     if(ha === 'save'){
         return dispatch(fetch.postData(stragety_url,{slbid,tgid,name,desc,cities,servers,serverskey,urls,uids,type}, function(err, result){
@@ -272,11 +286,11 @@ function dataHandler(dispatch, ha,stra_id, slbid,tgid,name,desc,cities,servers,s
         data = {
             stra_name: name,
             stra_desc: desc,
-            stra_cities: cities.join(';'),
-            stra_servers: servers.join(';'),
-            stra_serverskey: serverskey.join(';'),
-            stra_urls: urls.join(';'),
-            stra_uids: uids.join(';'),
+            stra_cities: cities,
+            stra_servers: servers,
+            stra_serverskey: serverskey,
+            stra_urls: urls,
+            stra_uids: uids,
             type: type,
             slbid: slbid
         }
@@ -333,9 +347,9 @@ export function validate(editting_status, slbid,tgid,name,desc,cities,servers,se
                         ,region_exsit = false;
                     //遍历获得slb下所有的不重复urls、uid或区域数组
                     stragetylist.map((stragety)=>{
-                        var urllist = stragety.stra_urls.split(';');
-                        var uidlist = stragety.stra_uids.split(';');
-                        var regionlist = stragety.stra_cities.split(';');
+                        var urllist = stragety.stra_urls;
+                        var uidlist = stragety.stra_uids;
+                        var regionlist = stragety.stra_cities;
                         urllist.map((url)=>{
                             if(url && urls_of_slb.indexOf(url) !==-1){
                                 urls_of_slb.push(url)
@@ -388,9 +402,9 @@ export function validate(editting_status, slbid,tgid,name,desc,cities,servers,se
                             //server是否与重复urls策略服务器们重复
                             url_exsit_info.map((url)=>{
                                 stragetylist.map((stragety)=>{
-                                    if(stragety.stra_urls.split(';').indexOf(url) !==-1){
+                                    if(stragety.stra_urls.indexOf(url) !==-1){
                                         servers.map((server)=>{
-                                            if(stragety.stra_servers.split(';').indexOf(server) !==-1){
+                                            if(stragety.stra_servers.indexOf(server) !==-1){
                                                 server_exsit = true
                                             }
                                         })
@@ -428,10 +442,10 @@ export function validate(editting_status, slbid,tgid,name,desc,cities,servers,se
 }
 
 
-export function handleStragety(slbid, stra_id, status) {
+export function handleStragety(slbid, tgid, stra_id, status) {
     return (dispatch, getState) => {
         //先更新重新发布
-        return dispatch(fetch.getData(slb_publish_url + '?slbid='+slbid,function(err, result){
+        return dispatch(fetch.getData(stragety_start_url + '?tgid='+tgid+'&slbid='+slbid + '&status='+status,function(err, result){
             //发布失败，告知用户
             if(err)  return dispatch(publishresult(false))
             //如果发布成功，则更新策略状态
@@ -453,7 +467,12 @@ export function handleStragety(slbid, stra_id, status) {
 export function deleteStragety(stra_id, slbid, tgid) {
     return (dispatch, getState) => {
         return dispatch(fetch.deleteData(stragety_url,{code: stra_id}, function(err, result){
-            dispatch(edit_stragetylist(tgid, slbid))
+            if(err || result.status ==='failure') {
+                return utilscomps.showNotification('error', '失败', '添加失败，失败原因：'+result.data );
+            }else{
+                utilscomps.showNotification('success', '成功', '删除成功！', 1 );
+                return dispatch(edit_stragetylist(tgid, slbid))
+            }
         }))
     }
 }
@@ -558,8 +577,12 @@ export function generateReferVersion(version) {
             uids,
             type
         }, function (err, result) {
-            if (err || result.status === 'failure') dispatch(saveStragetyResult(false))
-            dispatch(edit_stragetylist(tgid, slbid))
+            if (err || result.status === 'failure') {
+                return utilscomps.showNotification('error', '失败', '添加失败，失败原因：'+result.data,3 );
+            }else{
+                utilscomps.showNotification('success', '成功', '基准版本生成成功！' );
+                return dispatch(edit_stragetylist(tgid, slbid))
+            }
         }))
     }
 }
@@ -569,7 +592,7 @@ export function updateStragety(stra_id, tgid , slbid,  data) {
         //更新策略信息
         return dispatch(fetch.updateData(stragety_url,{stra_id},data,function(err, result){
             //更新机器信息 - 添加策略名到新机器上
-            return dispatch(fetch.updateData(server_url, {other:{opt: 'in', key: 'key', data:data.stra_serverskey.split(';')}, type:'add'},{'stragetiesinfo':stra_id},function(err, result){
+            return dispatch(fetch.updateData(server_url, {other:{opt: 'in', key: 'key', data:data.stra_serverskey}, type:'add'},{'stragetiesinfo':stra_id},function(err, result){
                 if(err)  dispatch(getTestGroupListSuccess([]))
                 return dispatch(fetch.getData(stragety_url + '?tgid='+tgid,function(err, result){
                     if(err)  dispatch(getStragetyListSuccess([], tgid, slbid))

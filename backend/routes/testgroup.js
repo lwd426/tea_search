@@ -25,13 +25,15 @@ router.post('/', function *(next) {
 router.del('/', function *(next) {
     var code = this.request.body.code;
 
-    var result = yield lib.deleteTest({objectId:code})
-    //删除测试组下的所有策略
-    result = yield libStragety.deleteStragety({tgid: code})
-    this.body = {
-        status: 'success',
-        data: result
-    };
+    var result = yield lib.deleteTest(code);
+    if(result.status === 'failure') {
+        this.body = result;
+    }else{
+        //删除测试组下的所有策略
+        yield libStragety.deleteStragety({tgid: code})
+        this.body = result;
+    }
+
 });
 router.put('/', function *(next) {
     var where = this.request.body.where;

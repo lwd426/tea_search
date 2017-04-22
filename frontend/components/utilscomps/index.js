@@ -4,10 +4,12 @@
 import {  notification } from 'antd';
 
 module.exports = {
-    showNotification: function (type, title, content) {
+    showNotification: function (type, title, content, duration) {
+        console.log(duration)
         notification[type]({
             message: title,
-            description: content
+            description: content,
+            duration: duration || 3
         });
     }
 }
