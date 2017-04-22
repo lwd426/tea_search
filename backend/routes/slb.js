@@ -74,7 +74,7 @@ router.get('/publish', function *(next) {
         if(tg[0].get('time') === '-') data.first_publish_time = moment().format('YYYY-MM-DD HH:mm');
         result = yield libTg.updateTest(data, {objectId: tgid})
         //更新策略组下的所有策略的发布时间
-        result = yield libStragety.updateStragety({time: moment().format('YYYY-MM-DD HH:mm')}, {tgid: tgid})
+        result = yield libStragety.updateStragety({time: moment().format('YYYY-MM-DD HH:mm'), stra_status: 'running'}, {tgid: tgid}, [{opt: 'in', key: 'stra_status', data: ['ready', 'running']}])
         //生成测试项目的快照
         yield libStragety.generateSnap(snapcode,tgid)
         if(result){
@@ -113,7 +113,7 @@ router.get('/publish/back', function *(next) {
     }else if(result.status === 'success') {
         result = yield libTg.updateTest({time: moment().format('YYYY-MM-DD HH:mm'), version: result.stra_info}, {objectId: tgid});
         //更新策略组下的所有策略的发布时间
-        result = yield libStragety.updateStragety({time: moment().format('YYYY-MM-DD HH:mm')}, {tgid: tgid})
+        result = yield libStragety.updateStragety({time: moment().format('YYYY-MM-DD HH:mm'), stra_status: 'running'}, {tgid: tgid}, [{opt: 'in', key: 'stra_status', data: ['ready', 'running']}])
         yield libStragety.changeStragetySnap(nowSnapcode, newSnapcode,tgid)
 
         if(result){

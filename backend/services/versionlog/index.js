@@ -30,7 +30,9 @@ module.exports = {
                         status: stragety.get('stra_status') || '',
                         urlArray: stragety.get('stra_urls') || [],
                         uidArray: stragety.get('stra_uids') || [],
-                        regionArray: stragety.get('stra_cities') || [],
+                        regionArray: stragety.get('stra_cities').map((city)=>{
+                            return city.split(';')[1]
+                        }) || [],
                         serverArray: stragety.get('stra_servers') || [],
                         default: stragety.get('refer') || false
                     })

@@ -16,10 +16,11 @@ router.get('/', function *(next) {
 });
 
 router.get('/handler', function *(next) {
+    var stra_id = this.query.stra_id;
     var tgid = this.query.tgid;
     var status = this.query.status;
     //更新策略组下的所有策略的发布时间
-    result = yield lib.updateStragety({time: moment().format('YYYY-MM-DD HH:mm'), stra_status: status}, {tgid: tgid})
+    result = yield lib.updateStragety({stra_status: status}, {key: stra_id})
     if(result){
         this.body = {
             status: 'success',
@@ -62,7 +63,7 @@ router.post('/', function *(next) {
 
 router.del('/', function *(next) {
     var stra_id = this.request.body.code;
-    var result = yield lib.deleteStragety({stra_id:stra_id})
+    var result = yield lib.deleteStragety({objectId:stra_id})
     this.body = {
         status: 'success',
         data: result
@@ -71,7 +72,7 @@ router.del('/', function *(next) {
 router.put('/', function *(next) {
     var where = this.request.body.where;
     var data = this.request.body.data;
-    var result = yield lib.updateStragety(data, where)
+    var result = yield lib.updateStragety(data, where, [])
     this.body = {
         status: 'success',
         data: result
