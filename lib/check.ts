@@ -1,6 +1,3 @@
-/*RegExp.escape = function(text) {
- return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
- };*/
 const CODE = {
     "OK": 0,
     "CONTAIN": 1,
@@ -165,7 +162,7 @@ class Verify {
                                 }
                             }
                         }
-                        console.log(this.arr[i].url, "相同");
+                        // console.log(this.arr[i].url, "相同");
                         continue;
                     }
                     //包含的时候还要看看uid和地域信息，如果uid无交集并且服务器无交集，就行

@@ -11,7 +11,7 @@ import { Cascader } from 'antd';
 
 let tableData = [{
           key: '1',
-          date: '原始版本',
+          trtagetyName: '原始版本',
           uv: 3000,
           pv: 500,
           show: 43,
@@ -53,6 +53,7 @@ export default class Chart extends React.Component {
         let pvObj = {};
         let showObj = {};
         let clickObj = {};
+        let trtagetyNameObj = {}
 
         let strageties = Object.entries(responseData);
         let xData = function() {
@@ -80,6 +81,7 @@ export default class Chart extends React.Component {
             pvObj[key] = [];
             showObj[key] = [];
             clickObj[key] = [];
+            trtagetyNameObj[key] = []
 
             for(let k in responseData[key]){
                 percentObj[key][k] = [];
@@ -94,6 +96,7 @@ export default class Chart extends React.Component {
                     pvObj[key][k].push(val.pv);
                     showObj[key][k].push(val.show_count);
                     clickObj[key][k].push(val.click_count);
+                    trtagetyNameObj[key] = val.name;
                 })
             }
         }
@@ -176,9 +179,10 @@ export default class Chart extends React.Component {
         }
         tableData = []
         strageties.map((v,i) => {
+            debugger
             tableData.push({
                 key: v[0],
-                date: v[1].name,
+                trtagetyName: trtagetyNameObj[v[0]],
                 uv: getAverageNumArr(uvObj[v[0]][casVal]),
                 pv: getAverageNumArr(pvObj[v[0]][casVal]),
                 show: getAverageNumArr(showObj[v[0]][casVal]),

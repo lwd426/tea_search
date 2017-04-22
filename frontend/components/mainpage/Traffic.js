@@ -64,6 +64,8 @@ export default class EChart extends React.Component {
             });
 
             //遍历生成 table 设置
+            tableColumns[1].children = [];
+            tableColumns[2].children = [];
             strageties.map((v,i) => {
                 tableColumns[1].children.push({
                     title: v[1].name,
@@ -82,7 +84,7 @@ export default class EChart extends React.Component {
             responseData.map((val,index) => {
                 tableData.push({
                     key: index + 1,
-                    date: '3-4',
+                    date: val.date,
                     //useramount: val.uv_all,
                     // visitor1: 500,
                     // visitor2: 500,
@@ -138,9 +140,9 @@ export default class EChart extends React.Component {
                 }
 
                 //表格数据
-                tableData.forEach(function(v, index, arr_self){
-                    v.date = data_arr[index]
-                })
+                // tableData.forEach(function(v, index, arr_self){
+                //     v.date = data_arr[index]
+                // })
                 console.log(tableData)
                 _this.setState({
                     tableData: tableData,
@@ -233,7 +235,6 @@ export default class EChart extends React.Component {
         // let date_picker = this.props.content.mainpage.date_picker
         // console.log(date_picker);
         // this.randerChart(date_picker);
-        this.props.contentActions.mainpageActions.setCascaderOptionstow();
     }
     componentWillReceiveProps(nextProps) {
         console.log('echart componentWillReceiveProps');
@@ -246,7 +247,19 @@ export default class EChart extends React.Component {
         if(nextProps.content.mainpage.card_container_display == 'block' && tabsKey == "1"){
             this.randerChart(date_picker, stragety_arr);
         }
+        //
+        // if(stragety_arr){
+        //     let stragety_arr = this.props.content.mainpage.strageties
+        //     debugger
+        //     this.props.contentActions.mainpageActions.setCascaderOptionstwo(stragety_arr);
+        // }
         return true;
+    }
+    componentDidUpdate(prevProps, prevState){
+        let stragety_arr = this.props.content.mainpage.strageties;
+        if(prevProps.content.mainpage.strageties != stragety_arr && stragety_arr){
+            this.props.contentActions.mainpageActions.setCascaderOptionstwo(stragety_arr);
+        }
     }
 
     render() {
