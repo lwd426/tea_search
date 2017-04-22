@@ -53,14 +53,14 @@ module.exports = {
             flowaccounting: '',
             time: moment().format('YYYY-MM-DD HH:mm:ss')
         }
-        return yield db.save('stragety', data);
+        var result =  yield db.save('stragety', data);
         //更新server信息，把uids、urls和策略id更新到server记录里
-        // if(result){
-        //     var otherwhere = {key: 'ip', opt: 'in', data: servers}
-        //     var data = {urls: urls.join(';'), uids: uids.join(';'), stragetiesinfo: uuid}
-        //     var result2 =  yield server_service.updateWebServer(data, undefined, [otherwhere], 'add')
-        // }
-        // return result && result2;
+        if(result){
+            var otherwhere = {key: 'ip', opt: 'in', data: servers}
+            var data = {urls: urls.join(';'), uids: uids.join(';'), stragetiesinfo: uuid}
+            var result2 =  yield server_service.updateWebServer(data, undefined, [otherwhere], 'add')
+        }
+        return result;
     },
     /**
      * 获取策略列表
