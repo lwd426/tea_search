@@ -66,12 +66,12 @@ export default class EChart extends React.Component {
             //遍历生成 table 设置
             strageties.map((v,i) => {
                 tableColumns[1].children.push({
-                    title: '版本' + v[0],
+                    title: '版本 ' + v[1].name,
                     dataIndex: 'visitor' + (i+1),
                     key: 'visitor' + (i+1),
                 });
                 tableColumns[2].children.push({
-                    title: '版本' + v[0],
+                    title: '版本 ' + v[1].name,
                     dataIndex: 'persent' + (i+1),
                     key: 'persent' + (i+1),
                 });
@@ -101,18 +101,18 @@ export default class EChart extends React.Component {
 
             //遍历生成 echart 配置
             strageties.map((v,i) => {
-                legendDate.push('版本'+v[0]+'UV');
+                legendDate.push('版本 '+v[1].name+'UV');
                 seriesArr.push({
-                    name:'版本'+v[0]+'UV',
+                    name:'版本 '+v[1].name+'UV',
                     type:'bar',
                     barMaxWidth : 20,
                     data:uvArr[i]
                 })
             });
             strageties.map((v,i) => {
-                legendDate.push('版本'+v[0]+'PV');
+                legendDate.push('版本 '+v[1].name+'PV');
                 seriesArr.push({
-                    name:'版本'+v[0]+'PV',
+                    name:'版本 '+v[1].name+'PV',
                     type:'bar',
                     barMaxWidth : 20,
                     data:pvArr[i]
@@ -231,8 +231,8 @@ export default class EChart extends React.Component {
         data.stragety_arr = stragety_arr;
         data.startTime = startTime;
         data.endTime = endTime;
-        let res = await lib.postTableData(data);
-        console.log(res);
+        // let res = await lib.postTableData(data);
+        // console.log(res);
     }
     componentDidMount() {
         // let date_picker = this.props.content.mainpage.date_picker
