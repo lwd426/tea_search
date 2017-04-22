@@ -116,6 +116,7 @@ module.exports = {
      * @returns {*}
      */
     updateStragety: function*(data, where, opts) {
+        if(!opts) opts = [];
         var result =  yield db.update('stragety', where, data, opts);
         // 更新server信息，把uids、urls和策略id更新到server记录里
         // if(result){

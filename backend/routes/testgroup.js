@@ -1,6 +1,7 @@
 var router = require('koa-router')();
 var lib = require('../services/testgroup')
 var libStragety = require('../services/stragety')
+var libServer = require('../services/webserver')
 
 router.get('/', function *(next) {
     var slbid = this.query.slbid;
@@ -15,11 +16,20 @@ router.post('/', function *(next) {
     var name = this.request.body.name;
     var code = this.request.body.code;
     var slbid = this.request.body.slbid;
-    var result = yield lib.saveTestgroup(name, code, slbid)
-    this.body = {
-        status: 'success',
-        data: result
-    };
+    var servers = yield libServer.getServersInfo({slbid: slbid}, []);
+    if(servers.length ===0){
+        this.body =  {
+            status: 'failure',
+            data: '没有服务器，请先添加服务器！'
+        };
+    }else{
+        var result = yield lib.saveTestgroup(name, code, slbid)
+        this.body = {
+            status: 'success',
+            data: result
+        };
+    }
+
 });
 
 router.del('/', function *(next) {

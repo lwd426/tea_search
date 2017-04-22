@@ -29,19 +29,26 @@ class GLContent extends React.Component {
         return true;
     }
     render() {
-        let wintype = this.props.menu.wintype;
+        let {domain,domainId, wintype } = this.props.menu;
+        // let
+        // switch(wintype){
+        //     case 'deviceinfo':
+        // }
         return (
             <div className="gl-content">
-                {/*<Breadcrumb style={{ margin: '12px 0' }}>*/}
-                    {/*<Breadcrumb.Item>SLB域名1</Breadcrumb.Item>*/}
-                    {/*<Breadcrumb.Item>Web服务器管理</Breadcrumb.Item>*/}
-                {/*</Breadcrumb>*/}
+                { wintype !== 'mainpage' ? (
+                    <Breadcrumb style={{ margin: '12px 0' }} separator=">">
+                    <Breadcrumb.Item>{domain+'('+domainId + ')'}</Breadcrumb.Item>
+                    <Breadcrumb.Item>{wintype === 'deviceinfo' ? '设备管理' : '测试项目'}</Breadcrumb.Item>
+                    </Breadcrumb>)
+                     : ''
+                }
+
                 <div className="content-panel">
                     {(()=> {
                         switch(wintype){
                             case 'deviceinfo': return <GLDeviceInfo {...this.props}/>; break;
                             case 'testinfo': return <GLTestInfo {...this.props}/>; break;
-                            case 'datachart': return <GLDataChart {...this.props}/>; break;
                             case 'stragetyinfo': return <GLStragetyInfo {...this.props}/>; break;
                             case 'mainpage': return <GLMainPage {...this.props}/>; break;
                         }

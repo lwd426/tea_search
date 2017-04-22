@@ -1,4 +1,4 @@
-.main-container{padding:0 100px 22px 0;}
+.main-container{padding:0 0px 22px 0;}
 .editable-cell {
     position: relative;
 }
@@ -50,7 +50,7 @@
 }
 .mainpage .ant-cascader-picker{
     width:250px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 .dropdownBox,.spanBox{
     width:33%;text-align: center;display: inline-block;
