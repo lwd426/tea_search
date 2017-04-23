@@ -6,7 +6,7 @@ import Traffic from './Traffic.js';
 import Conversion from './Conversion.js';
 import Duiji from './duiji.js';
 import request from '../../request';
-import { setMainPageOptions } from './lib';
+import { setMainPageOptions, setMainPageData } from './lib';
 
 
 import { Menu, Dropdown, message } from 'antd';
@@ -32,6 +32,7 @@ class GLMainpage extends React.Component {
         super(props);
         this.state = {
             mainpage_data: [],
+            testGroupsArr: [],
         }
     }
     rangeOnChange(dates, dateStrings) {
@@ -98,9 +99,14 @@ class GLMainpage extends React.Component {
     }
     async componentWillMount(){
         let res = await request.getAllStrategies();
-        console.log(res.result.data);
+        //console.log(res.result.data);
+
+        let testGroupsArr = setMainPageData(res.result.data);
+        //console.log(testGroupsArr);
+
         this.setState({
-            mainpage_data: res.result.data
+            mainpage_data: res.result.data,
+            testGroupsArr: testGroupsArr
         })
     }
     componentDidMount(){
@@ -203,14 +209,15 @@ class GLMainpage extends React.Component {
                                                             </div>
                                                         )
                                                     }
+
                                                 </div>
-                                                
-                                            </div>
-                                        </Panel>
-                                    )
-                                })
-                            }
-                        })}
+                                            )
+                                        }
+                                    </div>
+                                    
+                                </div>
+                            </Panel>
+                        )}
 
                     </Collapse>
                 </div>
