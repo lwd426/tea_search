@@ -138,10 +138,10 @@ let reducer = (state = initialState, action)=> {
                 var status = false;//status为该机器的状态，是否有策略正在运行
                 var statusinfo = '';
                 stragetiesinfo.map((stragety) => {
-                    // if (stragety.stra_status === 'running') {
+                    if (stragety.stra_status === 'running') {
                         status = true;
                         statusinfo += stragety.stra_name + ' ';
-                    // }
+                    }
                 })
                 return {
                     ip: server.ip,
@@ -168,6 +168,7 @@ let reducer = (state = initialState, action)=> {
             break
         case TYPES.CHANGE_STRAGETY_STATUS:
             state.stragetylist.map((stra)=>{
+                console.log('dd')
                 if(stra.objectId === action.stra_id) stra.stra_status = action.status;
             })
             utilscomps.showNotification('warning', '操作成功', '必须点击"发布到服务器"按钮，此次操作才能生效' );

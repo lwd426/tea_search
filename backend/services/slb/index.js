@@ -145,7 +145,7 @@ module.exports = {
         }
         //保存发版信息
         var version = {
-            publishtime: moment().format('YYYY-MM-DD hh:mm:ss'),
+            publishtime: moment().format('YYYY-MM-DD HH:mm:ss'),
             versiondesc: versiondesc,
             versionnum: versionnum,
             details:  [],
@@ -210,7 +210,7 @@ module.exports = {
         }
 
         //更新该被回滚的策略组的发布时间为当前时间，其他信息不变
-        result = yield libVersion.updateVersionlog({'publishtime': moment().format('YYYY-MM-DD hh:mm:ss')},{'snapcode': snapcode})
+        result = yield libVersion.updateVersionlog({'publishtime': moment().format('YYYY-MM-DD HH:mm:ss')},{'snapcode': snapcode})
         if(result){
             result = {
                 status: 'success',

@@ -47,7 +47,7 @@ class App extends React.Component {
                             this.props.content.mainpage.content_one_display = 'block'
                             this.props.content.mainpage.main_container_display = 'block'
                             this.props.content.mainpage.content_two_display = 'none'
-                        }}>back to <Icon type="home" /> </Button>
+                        }}>back to<Icon type="home" /> </Button>
                         乐视视频灰度发布系统
                     </Header>
                     <Content>

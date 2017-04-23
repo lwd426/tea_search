@@ -426,7 +426,7 @@ export function validate(editting_status, slbid,tgid,name,desc,cities,servers,se
                         }
 
                     }else{//url没重复、没包含关系
-                        dataHandler(dispatch, optType, slbid,tgid,name,desc,cities,servers,serverskey,urls,uids,type)
+                        dataHandler(dispatch, optType, stra_id, slbid,tgid,name,desc,cities,servers,serverskey,urls,uids,type)
 
                         // return dispatch(fetch.postData(stragety_url,{slbid,tgid,name,desc,cities,servers,serverskey,urls,uids,type}, function(err, result){
                         //         if(err || result.status === 'failure')  return dispatch(saveStragetyResult(false))

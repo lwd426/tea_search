@@ -38,7 +38,7 @@ class GLContent extends React.Component {
             <div className="gl-content">
                 { wintype !== 'mainpage' ? (
                     <Breadcrumb style={{ margin: '12px 0' }} separator=">">
-                    <Breadcrumb.Item>{domain+'('+domainId + ')'}</Breadcrumb.Item>
+                    <Breadcrumb.Item>{domain + (domainId ? '('+domainId + ')' : '')}</Breadcrumb.Item>
                     <Breadcrumb.Item>{wintype === 'deviceinfo' ? '设备管理' : '测试项目'}</Breadcrumb.Item>
                     </Breadcrumb>)
                      : ''

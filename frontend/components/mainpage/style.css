@@ -48,6 +48,14 @@
     padding:12px;
     position: relative;
 }
+
+.ant-collapse-content > .ant-collapse-content-box {
+    /*padding-top: 16px;*/
+     /*padding-bottom: 0px !important;*/
+}
+.ant-collapse-content-box>div{
+    padding:0px !important;
+}
 .mainpage .ant-cascader-picker{
     width:250px;
     margin-bottom: 10px;

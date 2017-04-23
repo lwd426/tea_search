@@ -17,7 +17,7 @@ module.exports = {
             address: address,
             backup: backup,
             refer: refer,
-            time: moment().format('YYYY-MM-DD HH:mm'),
+            time: moment().format('YYYY-MM-DD HH:mm:ss'),
         }
 
         var result = yield db.save('webServer', data)
