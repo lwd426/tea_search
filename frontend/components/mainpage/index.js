@@ -60,7 +60,7 @@ class GLMainpage extends React.Component {
         }else{
             alert('此项目无数据！')
         }
-        
+
     }
     disabledDate(current) {
         return current && current.valueOf() > Date.now();
@@ -73,7 +73,7 @@ class GLMainpage extends React.Component {
         arr.map((val, index) => {
             if(val.tag){
                 strageties.push(val.tag)
-            }  
+            }
         })
 
         let length = strageties.length;
@@ -85,7 +85,7 @@ class GLMainpage extends React.Component {
                 str += '"';
                 if(index < (length - 1)){
                     str += ','
-                } 
+                }
             })
             str += ']';
             this.props.contentActions.mainpageActions.switchContentShow(none,block,str,currentCasVal)
@@ -118,7 +118,7 @@ class GLMainpage extends React.Component {
         //console.log(nextProps.content.mainpage.stragety);
         return true;
     }
-    
+
     render() {
         let options = [];
         let slblist = this.state.mainpage_data;
@@ -142,7 +142,7 @@ class GLMainpage extends React.Component {
             })
         }
         //let defaultValue = (options.length > 0) ? [ options[0]['value'],options[0]['children'][0]['value'] ] : [];
-        
+
 
         const options_two = [{
             value: 'BtnClick',
@@ -162,59 +162,76 @@ class GLMainpage extends React.Component {
                 <div className="main-container" style={{display: this.props.content.mainpage.main_container_display}}>
 
                     <Collapse defaultActiveKey={['1','2','3']} onChange={this.collapseCallback}>
-                        {this.state.mainpage_data.map(function(v, index){
-                            if(v.testGroups.length > 0){
-                                return v.testGroups.map(function(q, idx){
-                                    colkey ++;
-                                    return(
-                                        //<Panel header={v.name + '/' + q.name} key={colkey}>
-                                        <Panel 
-                                            header={
-                                                <div>
-                                                    <span>{v.name + '/' + q.name}</span>
-                                                    <Button className="collbutton" onClick={(e) =>{
-                                                        e.stopPropagation();
-                                                        let currentCasVal = [v.objectId, q.objectId];
-                                                        _this.switchContentShow('none','block', q.strageties, currentCasVal)
-                                                    }}>
-                                                        查看详情
-                                                    </Button>
-                                                </div>
-                                            } 
-                                            key={colkey}
-                                        >
-                                            
-                                            <div style={{padding:20}}>
-                                                <div style={{color:'#555'}}>
-                                                    <span>创建于：{ moment(new Date(q.createdAt)).format('YYYY-MM-DD') }  </span>
-                                                    <span style={{marginLeft:'20px'}}>
-                                                        已运行：{q.first_publish_time? ((new Date().getTime() - new Date(q.first_publish_time).getTime())/(24*60*60*1000)).toFixed(1) : 0} 天
-                                                    </span>
-                                                    <span style={{marginLeft:'20px'}}>{q.time != '-'? '最近修改 ：' + ((new Date().getTime() - new Date(q.time).getTime())/(24*60*60*1000)).toFixed(1) + '天前' : '最近修改 ：无'} </span>
-                                                </div>
-                                                <div>
-                                                    {
-                                                        q.strageties.map((s, i) => 
-                                                            <div key={index + '-' + idx + '-' + i} style={{padding:3}}>
-                                                                <div className="left" style={{float:'left',width:'33%'}}>
-                                                                    <span>{s.stra_name}</span>
-                                                                </div>
-                                                                <div className="right" style={{float:'left',width:'33%'}}>
-                                                                    <span>流量占比： 20%</span>
-                                                                </div>
-                                                                <div className="right" style={{float:'left',width:'34%'}}>
-                                                                    <span>{q.status}</span><br/>
-                                                                </div>
-                                                                <div className="clear"></div>
-                                                            </div>
-                                                        )
-                                                    }
+                        {this.state.testGroupsArr.map((q, index) =>
+                            <Panel
+                                header={
+                                    <div>
+                                        <span>{q.slb_name + '/' + q.name}</span>
+                                        <Button className="collbutton" onClick={(e) =>{
+                                            e.stopPropagation();
+                                            let currentCasVal = [q.slb_objectId, q.objectId];
+                                            _this.switchContentShow('none','block', q.strageties, currentCasVal)
+                                        }}>
+                                            查看详情
+                                        </Button>
+                                    </div>
+                                }
+                                key={index+1}
+                            >
 
+                                <div style={{padding:20}}>
+                                    <div style={{color:'#555'}}>
+                                        <span>创建于：{ moment(new Date(q.createdAt)).format('YYYY-MM-DD') }  </span>
+                                        <span style={{marginLeft:'20px'}}>
+                                            已运行：{q.first_publish_time? ((new Date().getTime() - new Date(q.first_publish_time).getTime())/(24*60*60*1000)).toFixed(1) : 0} 天
+                                        </span>
+
+                                        <span style={{marginLeft:'20px'}}>
+                                            {(() => {
+                                                if(q.time != '-'){
+                                                    let num = ((new Date().getTime() - new Date(q.time).getTime())/(24*60*60*1000)).toFixed(1);
+                                                    if(num < 1) return '最近修改 ：' + '今天';
+                                                    if(num >= 1)return '最近修改 ：' + num + '天前';
+                                                }else{
+                                                    return '最近修改 ：无';
+                                                }
+                                            })()}
+                                        </span>
+
+                                    </div>
+                                    <div style={{marginTop:20}}>
+                                        {
+                                            q.strageties.map((s, i) =>
+                                                <div key={index + '-' + i} style={{padding:3}}>
+                                                    <div className="left" style={{float:'left',width:'33%'}}>
+                                                        <span>{s.stra_name}</span>
+                                                    </div>
+                                                    <div className="right" style={{float:'left',width:'33%'}}>
+                                                        <span>
+                                                            {(()=> {
+                                                                if(s.stra_uids.length > 0 && s.stra_cities.length > 0){
+                                                                    return '特殊用户和特殊地域';
+                                                                }else if(s.stra_uids.length > 0){
+                                                                    return '特殊用户';
+                                                                }else if(s.stra_cities.length > 0){
+                                                                    return '特殊地域';
+                                                                }else if(s.stra_servers.length==0||q.slb_servers.length==0){
+                                                                    return '流量占比：' + '0';
+                                                                }else{
+                                                                    return '流量占比：' + ((s.stra_servers.length)*100/(q.slb_servers.length)).toFixed(2) + '%'
+                                                                }
+                                                            })()}
+                                                        </span>
+                                                    </div>
+                                                    <div className="right" style={{float:'left',width:'34%'}}>
+                                                        <span>{q.status}</span><br/>
+                                                    </div>
+                                                    <div className="clear"></div>
                                                 </div>
                                             )
                                         }
                                     </div>
-                                    
+
                                 </div>
                             </Panel>
                         )}
@@ -223,76 +240,76 @@ class GLMainpage extends React.Component {
                 </div>
 
                 <div className="card-container" style={{display: this.props.content.mainpage.card_container_display}}>
-                
-                <Button className="device_button" onClick={()=>{
-                    this.props.menuActions.changeShowWinType(this.props.menu.slbid, 'deviceinfo');
-                }}>
-                    设备信息 
-                </Button>
-                <Button className="stragety_button"  onClick={()=>{
-                    this.props.menuActions.changeShowWinType(this.props.menu.slbid, 'testinfo');
-                }}>
-                    策略维护 
-                </Button>
 
-                  <Tabs type="card" onChange={this.tabChange.bind(this)}>
-                    <TabPane tab="流量" key="1">
-                        <div className="spanBox">
-                            <span>流量占比 ：</span> <span> 20% </span>
-                        </div>
-                        
-                        {/*<div className="dropdownBox">
-                            <span>策略名称 ：</span>
-                            <Dropdown overlay={menu}>
-                              <Button>
-                                切换版本 <Icon type="down" />
-                              </Button>
-                            </Dropdown>
-                        </div>*/}
-                        
-                        <div className="rangepickerBox">
-                            <RangePicker
-                              defaultValue={[moment().subtract(5, 'days'), moment().subtract(1, 'days')]}
-                              format={dateFormat}
-                              onChange={this.rangeOnChange.bind(this)}
-                              disabledDate={this.disabledDate.bind(this)}
-                            />
-                        </div>
-                        <Traffic {...this.props}/>
-                    </TabPane>
+                    <Button className="device_button" onClick={()=>{
+                        this.props.menuActions.changeShowWinType(this.props.menu.slbid, 'deviceinfo');
+                    }}>
+                        设备信息
+                    </Button>
+                    <Button className="stragety_button"  onClick={()=>{
+                        this.props.menuActions.changeShowWinType(this.props.menu.slbid, 'testinfo');
+                    }}>
+                        策略维护
+                    </Button>
 
-                    <TabPane tab="转化率" key="2">
+                    <Tabs type="card" onChange={this.tabChange.bind(this)}>
+                        <TabPane tab="流量" key="1">
+                            <div className="spanBox">
+                                <span>流量占比 ：</span> <span> 20% </span>
+                            </div>
 
-                        {/*<div className="rangepickerBox">
-                            <RangePicker
-                                defaultValue={[moment().subtract(7, 'days'), moment()]}
-                                format={dateFormat}
-                                onChange={this.rangeOnChange.bind(this)}
-                                disabledDate={this.disabledDate.bind(this)}
-                            />
-                        </div>
-                        <div className="CascaderBox">
-                            <span>优化指标 ：</span>
-                            <Cascader options={options_two} defaultValue={['BtnClick']} onChange={this.onChange} />
-                        </div>
-                        <div className="clear"></div>*/}
+                            {/*<div className="dropdownBox">
+                             <span>策略名称 ：</span>
+                             <Dropdown overlay={menu}>
+                             <Button>
+                             切换版本 <Icon type="down" />
+                             </Button>
+                             </Dropdown>
+                             </div>*/}
 
-                        <div id = "content_one" style={{display:this.props.content.mainpage.content_one_display}}>
-                            <Conversion {...this.props}/>
-                        </div>
+                            <div className="rangepickerBox">
+                                <RangePicker
+                                    defaultValue={[moment().subtract(5, 'days'), moment().subtract(1, 'days')]}
+                                    format={dateFormat}
+                                    onChange={this.rangeOnChange.bind(this)}
+                                    disabledDate={this.disabledDate.bind(this)}
+                                />
+                            </div>
+                            <Traffic {...this.props}/>
+                        </TabPane>
 
-                        <div id = "content_two" style={{display: this.props.content.mainpage.content_two_display}}>
-                            <Button type="primary" className="back" onClick={() => {
-                                this.props.contentActions.mainpageActions.changeContentDisplay('block','none');
-                            }}><Icon type="left" />返回</Button>
-                            <Duiji {...this.props}/>
-                        </div>
+                        <TabPane tab="转化率" key="2">
 
-                    </TabPane>
+                            {/*<div className="rangepickerBox">
+                             <RangePicker
+                             defaultValue={[moment().subtract(7, 'days'), moment()]}
+                             format={dateFormat}
+                             onChange={this.rangeOnChange.bind(this)}
+                             disabledDate={this.disabledDate.bind(this)}
+                             />
+                             </div>
+                             <div className="CascaderBox">
+                             <span>优化指标 ：</span>
+                             <Cascader options={options_two} defaultValue={['BtnClick']} onChange={this.onChange} />
+                             </div>
+                             <div className="clear"></div>*/}
 
-                  </Tabs>
+                            <div id = "content_one" style={{display:this.props.content.mainpage.content_one_display}}>
+                                <Conversion {...this.props}/>
+                            </div>
+
+                            <div id = "content_two" style={{display: this.props.content.mainpage.content_two_display}}>
+                                <Button type="primary" className="back" onClick={() => {
+                                    this.props.contentActions.mainpageActions.changeContentDisplay('block','none');
+                                }}><Icon type="left" />返回</Button>
+                                <Duiji {...this.props}/>
+                            </div>
+
+                        </TabPane>
+
+                    </Tabs>
                 </div>
-                
+
             </div>
         );
     }
