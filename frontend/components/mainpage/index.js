@@ -186,7 +186,7 @@ class GLMainpage extends React.Component {
                                                     </span>
                                                     <span style={{marginLeft:'20px'}}>{q.time != '-'? '最近修改 ：' + ((new Date().getTime() - new Date(q.time).getTime())/(24*60*60*1000)).toFixed(1) + '天前' : '最近修改 ：无'} </span>
                                                 </div>
-                                                <div style={{marginTop:20}}>
+                                                <div>
                                                     {
                                                         q.strageties.map((s, i) => 
                                                             <div key={index + '-' + idx + '-' + i} style={{padding:3}}>

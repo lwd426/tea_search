@@ -67,7 +67,7 @@ class RegistrationForm extends React.Component {
         }
         var value = this.refs[refname].refs.input.value;
         if(value.indexOf(';') !== -1){
-            values = value;
+            values = values.concat(value.split(';'));
         }else{
             values.push(value)
 
@@ -89,7 +89,7 @@ class RegistrationForm extends React.Component {
         }
         var value = this.refs[refname].refs.input.value;
         if(value.indexOf(';') !== -1){
-            values = value;
+            values = values.concat(value.split(';'));
         }else{
             values.push(value)
 
@@ -203,8 +203,8 @@ class RegistrationForm extends React.Component {
 
                     <div className="gl-url-add-div">{
                         this.props.content.testgroup.addurls.map((url, index) => {
-                            console.log(url)
-                            if(url !== '')  return (<div key={index}><span className="gl-choice-remove"><Icon type="close" onClick={_this.removeSeletedUrl.bind(_this,index)}/></span><span className="gl-url-add-seleted">{url}</span></div>);
+                            url = '<span>'+ url.replace(/ /g, '&nbsp;') + '</span>';
+                            if(url !== '')  return (<div key={index}><span className="gl-choice-remove"><Icon type="close" onClick={_this.removeSeletedUrl.bind(_this,index)}/></span><span className="gl-url-add-seleted" dangerouslySetInnerHTML={{__html: url}}></span></div>);
                         })
                     }</div>
                     <RadioGroup className="gl-add-type" defaultValue="multiple" size="default" onChange={this.changeAddUrlType}>
