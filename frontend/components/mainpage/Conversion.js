@@ -289,7 +289,7 @@ export default class Chart extends React.Component {
 
                 <div id="container" style={{width:'100%',height:400}} className="chart-box"></div>
                 <div className="tableBox">
-                    {/*<Button className="export">导出</Button>*/}
+                    <Button className="export" onClick={this.exportTable.bind(this)}><Icon type="download" />导出表格</Button>
                     <Table bordered={true} columns={tableColumns} dataSource={this.state.tableData} title={() => '日均'}/> 
                 </div>
             </div>      
