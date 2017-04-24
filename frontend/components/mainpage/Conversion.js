@@ -94,7 +94,7 @@ export default class Chart extends React.Component {
                 clickObj[key][k] = [];
 
                 responseData[key][k].map((val,index) => {
-                    percentObj[key][k].push((val.click_count*100/val.show_count).toFixed(2));
+                    //percentObj[key][k].push((val.click_count*100/val.show_count).toFixed(2));
                     percentNumObj[key][k].push(val.click_count*100/val.show_count);
                     uvObj[key][k].push(val.uv);
                     pvObj[key][k].push(val.pv);
@@ -102,23 +102,34 @@ export default class Chart extends React.Component {
                     clickObj[key][k].push(val.click_count);
                     trtagetyNameObj[key] = val.name;
                 })
+
+                //echart选择范围大而没数据时则补0 (只对图表的 percent 做补0，图表还是按有数据的日期来求平均值)
+                xData.forEach(function(xdate, index){
+                    percentObj[key][k][index] = 0;
+                    responseData[key][k].map((val) => {
+                        //3-4 between 2017-3-4
+                        let valDateStr = (new Date(val.date).getMonth() + 1) + '-' + new Date(val.date).getDate();
+                        if(xdate == valDateStr){
+                           percentObj[key][k][index] = (val.click_count*100/val.show_count).toFixed(2);
+
+                        }
+                    })
+                })
             }
         }
 
 
-        
-        let casVal = this.props.content.mainpage.casVal || this.props.content.mainpage.options_two[0].value
+
+        let casVal = this.props.content.mainpage.casVal || this.props.content.mainpage.options_two[0].value;
+
         strageties.map((v,i) => {
             legendDate.push(trtagetyNameObj[v[0]]);
-
             seriesArr.push({
                 name:trtagetyNameObj[v[0]],
                 type:'line',
                 barMaxWidth : 20,
                 data:percentObj[v[0]][casVal],
             });
-
-            console.log(percentObj[v[0]][casVal]);
         });
 
         var myChart = echarts.init(document.getElementById('container'));
@@ -170,8 +181,7 @@ export default class Chart extends React.Component {
             },
             series: seriesArr,
         });
-console.log(legendDate);
-console.log(seriesArr)
+
         //table
         function getAverageNumArr(arr){
             let sum = 0;

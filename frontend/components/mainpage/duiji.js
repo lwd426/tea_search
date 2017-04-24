@@ -76,33 +76,40 @@ export default class EChart extends React.Component {
         }(date_picker);
 
         //循环赋值
-        // for(let link in responseData[stragetyVal]){
-        //     percentObj[link] = [];
-        //     uvObj[link] = [];
-        //     pvObj[link] = [];
-        //     showObj[link] = [];
-        //     clickObj[link] = [];
-        //     dateObj[link] = [];
 
-            tableData = [];
-            responseData[stragetyVal][linkVal].map((val,index) => {
-                //echart
-                percentObj.push((val.click_count*100/val.show_count).toFixed(2));
-                uvObj.push(val.uv);
-                pvObj.push(val.pv);
-                showObj.push(val.show_count);
-                clickObj.push(val.click_count);
-                dateObj.push(val.date)
-                //table
-                tableData.push({
-                    key: index,
-                    date: val.date,
-                    appear: val.show_count,
-                    click: val.click_count,
-                    persent: (val.click_count*100/val.show_count).toFixed(2) + '%',
-                })
+        //循环赋值echart
+        xData.forEach(function(xdate, index){
+            percentObj[index] = 0;
+            uvObj[index] = 0;
+            pvObj[index] = 0;
+            showObj[index] = 0;
+            clickObj[index] = 0;
+            dateObj[index] = 0;
+
+            responseData[stragetyVal][linkVal].map((val) => {
+                //3-4 between 2017-3-4
+                let valDateStr = (new Date(val.date).getMonth() + 1) + '-' + new Date(val.date).getDate();
+                if(xdate == valDateStr){
+                   percentObj[index] = (val.click_count*100/val.show_count).toFixed(2);
+                   uvObj[index] = val.uv;
+                   pvObj[index] = val.pv;
+                   showObj[index] = val.show_count;
+                   clickObj[index] = val.click_count;
+                   dateObj[index] = val.date;
+                }
             })
-        //}
+        })
+        //循环赋值 tableData
+        tableData = [];
+        responseData[stragetyVal][linkVal].map((val,index) => {
+            tableData.push({
+                key: index,
+                date: val.date,
+                appear: val.show_count,
+                click: val.click_count,
+                persent: (val.click_count*100/val.show_count).toFixed(2) + '%',
+            })
+        })
 
         this.setState({
             tableData: tableData
