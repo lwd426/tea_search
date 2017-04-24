@@ -162,6 +162,7 @@ class GLMainpage extends React.Component {
                 <div className="main-container" style={{display: this.props.content.mainpage.main_container_display}}>
 
                     <Collapse defaultActiveKey={['1','2','3']} onChange={this.collapseCallback}>
+
                         {this.state.testGroupsArr.map((q, index) =>
                             <Panel
                                 header={
@@ -241,73 +242,73 @@ class GLMainpage extends React.Component {
 
                 <div className="card-container" style={{display: this.props.content.mainpage.card_container_display}}>
 
-                    <Button className="device_button" onClick={()=>{
-                        this.props.menuActions.changeShowWinType(this.props.menu.slbid, 'deviceinfo');
-                    }}>
-                        设备信息
-                    </Button>
-                    <Button className="stragety_button"  onClick={()=>{
-                        this.props.menuActions.changeShowWinType(this.props.menu.slbid, 'testinfo');
-                    }}>
-                        策略维护
-                    </Button>
+                <Button className="device_button" onClick={()=>{
+                    this.props.menuActions.changeShowWinType(this.props.menu.slbid, 'deviceinfo');
+                }}>
+                    设备信息
+                </Button>
+                <Button className="stragety_button"  onClick={()=>{
+                    this.props.menuActions.changeShowWinType(this.props.menu.slbid, 'testinfo');
+                }}>
+                    策略维护
+                </Button>
 
-                    <Tabs type="card" onChange={this.tabChange.bind(this)}>
-                        <TabPane tab="流量" key="1">
-                            <div className="spanBox">
-                                <span>流量占比 ：</span> <span> 20% </span>
-                            </div>
+                  <Tabs type="card" onChange={this.tabChange.bind(this)}>
+                    <TabPane tab="流量" key="1">
+                        <div className="spanBox">
+                            <span>流量占比 ：</span> <span> 20% </span>
+                        </div>
 
-                            {/*<div className="dropdownBox">
-                             <span>策略名称 ：</span>
-                             <Dropdown overlay={menu}>
-                             <Button>
-                             切换版本 <Icon type="down" />
-                             </Button>
-                             </Dropdown>
-                             </div>*/}
+                        {/*<div className="dropdownBox">
+                            <span>策略名称 ：</span>
+                            <Dropdown overlay={menu}>
+                              <Button>
+                                切换版本 <Icon type="down" />
+                              </Button>
+                            </Dropdown>
+                        </div>*/}
 
-                            <div className="rangepickerBox">
-                                <RangePicker
-                                    defaultValue={[moment().subtract(5, 'days'), moment().subtract(1, 'days')]}
-                                    format={dateFormat}
-                                    onChange={this.rangeOnChange.bind(this)}
-                                    disabledDate={this.disabledDate.bind(this)}
-                                />
-                            </div>
-                            <Traffic {...this.props}/>
-                        </TabPane>
+                        <div className="rangepickerBox">
+                            <RangePicker
+                              defaultValue={[moment().subtract(5, 'days'), moment().subtract(1, 'days')]}
+                              format={dateFormat}
+                              onChange={this.rangeOnChange.bind(this)}
+                              disabledDate={this.disabledDate.bind(this)}
+                            />
+                        </div>
+                        <Traffic {...this.props}/>
+                    </TabPane>
 
-                        <TabPane tab="转化率" key="2">
+                    <TabPane tab="转化率" key="2">
 
-                            {/*<div className="rangepickerBox">
-                             <RangePicker
-                             defaultValue={[moment().subtract(7, 'days'), moment()]}
-                             format={dateFormat}
-                             onChange={this.rangeOnChange.bind(this)}
-                             disabledDate={this.disabledDate.bind(this)}
-                             />
-                             </div>
-                             <div className="CascaderBox">
-                             <span>优化指标 ：</span>
-                             <Cascader options={options_two} defaultValue={['BtnClick']} onChange={this.onChange} />
-                             </div>
-                             <div className="clear"></div>*/}
+                        {/*<div className="rangepickerBox">
+                            <RangePicker
+                                defaultValue={[moment().subtract(7, 'days'), moment()]}
+                                format={dateFormat}
+                                onChange={this.rangeOnChange.bind(this)}
+                                disabledDate={this.disabledDate.bind(this)}
+                            />
+                        </div>
+                        <div className="CascaderBox">
+                            <span>优化指标 ：</span>
+                            <Cascader options={options_two} defaultValue={['BtnClick']} onChange={this.onChange} />
+                        </div>
+                        <div className="clear"></div>*/}
 
-                            <div id = "content_one" style={{display:this.props.content.mainpage.content_one_display}}>
-                                <Conversion {...this.props}/>
-                            </div>
+                        <div id = "content_one" style={{display:this.props.content.mainpage.content_one_display}}>
+                            <Conversion {...this.props}/>
+                        </div>
 
-                            <div id = "content_two" style={{display: this.props.content.mainpage.content_two_display}}>
-                                <Button type="primary" className="back" onClick={() => {
-                                    this.props.contentActions.mainpageActions.changeContentDisplay('block','none');
-                                }}><Icon type="left" />返回</Button>
-                                <Duiji {...this.props}/>
-                            </div>
+                        <div id = "content_two" style={{display: this.props.content.mainpage.content_two_display}}>
+                            <Button type="primary" className="back" onClick={() => {
+                                this.props.contentActions.mainpageActions.changeContentDisplay('block','none');
+                            }}><Icon type="left" />返回</Button>
+                            <Duiji {...this.props}/>
+                        </div>
 
-                        </TabPane>
+                    </TabPane>
 
-                    </Tabs>
+                  </Tabs>
                 </div>
 
             </div>
