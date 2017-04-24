@@ -46,6 +46,9 @@ export default class EChart extends React.Component {
         let startTime = moment(new Date(date_picker[0])).format('YYYY-MM-DD');
         let endTime = moment(new Date(date_picker[1])).format('YYYY-MM-DD');
         let res = await request.getTrafficDataByStragety(stragety_arr, startTime, endTime);
+        if(res.result.status == 'error'){
+            return
+        }
         let responseData = res.result.data.reverse();
 
         let uvArr = [];
@@ -79,7 +82,28 @@ export default class EChart extends React.Component {
                 });
             });
 
-            //循环赋值
+            let xData = function() {
+                var start = new Date(date_picker[0]).getTime();
+                var end = new Date(date_picker[1]).getTime();
+                var length = (end - start)/(24*60*60*1000) + 1;
+
+                var data_arr = [];
+                var date = moment(new Date(date_picker[0]));
+                for (var i = 0; i < length; i++) {
+                    var month = date.month() + 1;
+                    var day = date.date();
+                    data_arr.push(month + "-" + day);
+
+                    date = date.add(1, 'days');
+                }
+                //表格数据
+                // tableData.forEach(function(v, index, arr_self){
+                //     v.date = data_arr[index]
+                // })
+                return data_arr;
+            }(date_picker);
+
+            //循环赋值tableData
             tableData = [];
             responseData.map((val,index) => {
                 tableData.push({
@@ -93,13 +117,30 @@ export default class EChart extends React.Component {
                 })
                 let arr_uv = Object.entries(val.uv);
                 arr_uv.map((v,i) => {
-                    uvArr[i].push(v[1].pvuv)
-                    pvArr[i].push(v[1].pv);
-
+                    // uvArr[i].push(v[1].pvuv)
+                    // pvArr[i].push(v[1].pv);
                     tableData[index]['visitor' + (i+1)] = v[1].pvuv;
                     tableData[index]['pv' + (i+1)] = v[1].pv;
                 })
             });
+            //循环赋值echart
+            xData.forEach(function(xdate, index){
+                strageties.map((v,i) => {
+                    uvArr[i][index] = 0;
+                    pvArr[i][index] = 0;
+                });
+                responseData.forEach(function(val){
+                    //3-4 between 2017-3-4
+                    let valDateStr = (new Date(val.date).getMonth() + 1) + '-' + new Date(val.date).getDate();
+                    if(xdate == valDateStr){
+                        let arr_uv = Object.entries(val.uv);
+                        arr_uv.forEach(function(v,i){
+                            uvArr[i][index] = v[1].pvuv;
+                            pvArr[i][index] = v[1].pv;
+                        })
+                    }
+                })
+            })
 
             //遍历生成 echart 配置
             strageties.map((v,i) => {
@@ -135,33 +176,10 @@ export default class EChart extends React.Component {
             // 基于准备好的dom，初始化echarts实例
             var myChart = echarts.init(document.getElementById('line'));
             // 绘制图表
-            let xData = function() {
-                var start = new Date(date_picker[0]).getTime();
-                var end = new Date(date_picker[1]).getTime();
-                var length = (end - start)/(24*60*60*1000) + 1;
-
-                var data_arr = [];
-                var date = moment(new Date(date_picker[0]));
-                for (var i = 0; i < length; i++) {
-                    var month = date.month() + 1;
-                    var day = date.date();
-                    data_arr.push(month + "-" + day);
-
-                    date = date.add(1, 'days');
-                }
-
-                //表格数据
-                // tableData.forEach(function(v, index, arr_self){
-                //     v.date = data_arr[index]
-                // })
-                console.log(tableData)
-                _this.setState({
-                    tableData: tableData,
-                    tableColumns: tableColumns
-                })
-
-                return data_arr;
-            }(date_picker);
+            _this.setState({
+                tableData: tableData,
+                tableColumns: tableColumns
+            })
 
             myChart.setOption({
                 title: { text: '' },

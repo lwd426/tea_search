@@ -167,7 +167,7 @@ class GLMainpage extends React.Component {
                                 <div className="gl-m-lefttitle">
                                     <span>创建于：{ moment(new Date(q.createdAt)).format('YYYY-MM-DD') }  </span>
                                     <span style={{marginLeft:'20px'}}>
-                                            已运行：{q.first_publish_time? ((new Date().getTime() - new Date(q.first_publish_time).getTime())/(24*60*60*1000)).toFixed(1) : 0} 天
+                                            已运行：{q.first_publish_time? Math.ceil((new Date().getTime() - new Date(q.first_publish_time).getTime())/(24*60*60*1000)) : 0} 天
                                         </span>
 
                                     <span style={{marginLeft:'20px'}}>
@@ -175,7 +175,7 @@ class GLMainpage extends React.Component {
                                                 if(q.time != '-'){
                                                     let num = ((new Date().getTime() - new Date(q.time).getTime())/(24*60*60*1000)).toFixed(1);
                                                     if(num < 1) return '最近修改 ：' + '今天';
-                                                    if(num >= 1)return '最近修改 ：' + num + '天前';
+                                                    if(num >= 1)return '最近修改 ：' + Math.ceil(num) + '天前';
                                                 }else{
                                                     return '最近修改 ：无';
                                                 }
@@ -247,7 +247,7 @@ class GLMainpage extends React.Component {
                   <Tabs type="card" onChange={this.tabChange.bind(this)}>
                     <TabPane tab="流量" key="1">
                         <div className="spanBox">
-                            <span>流量占比 ：</span> <span> 20% </span>
+                            
                         </div>
 
                         {/*<div className="dropdownBox">

@@ -187,10 +187,10 @@ console.log(seriesArr)
             tableData.push({
                 key: v[0],
                 trtagetyName: trtagetyNameObj[v[0]],
-                uv: getAverageNumArr(uvObj[v[0]][casVal]),
-                pv: getAverageNumArr(pvObj[v[0]][casVal]),
-                show: getAverageNumArr(showObj[v[0]][casVal]),
-                click: getAverageNumArr(clickObj[v[0]][casVal]),
+                uv: Math.round(getAverageNumArr(uvObj[v[0]][casVal])),
+                pv: Math.round(getAverageNumArr(pvObj[v[0]][casVal])),
+                show: Math.round(getAverageNumArr(showObj[v[0]][casVal])),
+                click: Math.round(getAverageNumArr(clickObj[v[0]][casVal])),
                 persent: (getAverageNumArr(percentNumObj[v[0]][casVal])).toFixed(2) + '%',
             })
         })
