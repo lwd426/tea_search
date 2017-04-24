@@ -112,8 +112,9 @@ class GLVersionlog extends React.Component {
                                 </Popover>,
                         operation: <Popconfirm title="确认回滚策略组到该版本?" onConfirm={() => {
                             let {domainId,domain, port} = _this.props.menu;
-                            if(!version || nowSnapcode) return false;
-                             _this.props.contentActions.testgroupActions.publishback(versionloglist[0].snapcode, version.snapcode,domain,port, domainId, version.slbid,version.tgid, version.versionnum,version.versiondesc)
+                            let nowSnapcode = versionloglist[0].snapcode || '';
+                            if(!version || !nowSnapcode) return false;
+                             _this.props.contentActions.testgroupActions.publishback(nowSnapcode, version.snapcode,domain,port, domainId, version.slbid,version.tgid, version.versionnum,version.versiondesc)
                         }}>
                             <Button>回滚</Button>
                         </Popconfirm>

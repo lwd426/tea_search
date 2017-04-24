@@ -78,6 +78,8 @@ module.exports = {
             tg.set('flowaccounting', flowaccount)
         }
 
+
+
         // 决定测试项目状态的逻辑：
         // 1. 发布时间为空则为new
         // 2. 策略如果有running,则为运行中

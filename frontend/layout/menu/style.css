@@ -35,3 +35,7 @@
 .edit-menu{
     width:20px;
 }
+
+.ant-menu-submenu-vertical .ant-menu-submenu .nav-text{
+    display: none;
+}

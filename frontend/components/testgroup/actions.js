@@ -626,9 +626,12 @@ export function getVersionListSuccess(list, tgid,slbid) {
  */
 export function publishback(nowSnapcode, snapcode, domain, port, domainId, slbid, tgid, versionkey, versiondesc) {
     return (dispatch, getState) => {
+        console.log('ddd')
         return dispatch(fetch.getData(slb_publish_url + '/back?nowsnapcode='+nowSnapcode+'&snapcode='+snapcode+'&domain='+domain+'&port='+port+'&domainId='+domainId+ '&slbid='+slbid + '&tgid='+ tgid +'&versionkey='+versionkey  + '&versiondesc='+versiondesc,function(err, result){
+            console.log(result)
             if(err || result.status === 'failure')  return dispatch(publishSuccess(false, result.data))
             dispatch(publishSuccess(true, result.data));
+            // utilscomps.showNotification('success', '回滚成功', '回滚成功！' );
             return dispatch(versionlog_list(tgid, slbid))
         }))
     }

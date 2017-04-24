@@ -47,7 +47,6 @@ let reducer = (state = initalState,action)=>{
             return Object.assign({}, state, { showTgModal: action.status})
             break
         case TYPES.VALIDATE_DOMAIN_RESULT:
-            console.log('dd')
             var key = action.key,
                 info = action.info,
                 status = action.status,

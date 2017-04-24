@@ -88,7 +88,6 @@ class GLMainpage extends React.Component {
         }
     }
     tabChange(key){
-        console.log(key);
         this.props.contentActions.mainpageActions.switchTable(key);
     }
     async componentWillMount(){
@@ -163,6 +162,7 @@ class GLMainpage extends React.Component {
                         <Card title={q.slb_name + '/' + q.name} extra={<a href="#" onClick={(e) =>{
                             e.stopPropagation();
                             let currentCasVal = [q.slb_objectId, q.objectId];
+                            this.props.menu.slbid = currentCasVal[0] || '';
                             _this.switchContentShow('none','block', q.strageties, currentCasVal)
                         }}>详情</a>} >
                             <div style={{padding:10}}>
