@@ -175,6 +175,7 @@ module.exports = {
                 stra_status: stragegty.get('stra_status'),
                 tgid: stragegty.get('tgid'),
                 slbid: stragegty.get('slbid'),
+                tag: stragegty.get('tag') || '',
                 type: stragegty.get('type'),
                 is_abolished: false,
                 flowaccounting: stragegty.get('flowaccounting'),
