@@ -208,7 +208,7 @@ class GLMainpage extends React.Component {
                                                                 }else if(s.stra_servers.length==0||q.slb_servers.length==0){
                                                                     return '流量占比：' + '0';
                                                                 }else{
-                                                                    return '流量占比：' + ((s.stra_servers.length)*100/(q.slb_servers.length)).toFixed(2) + '%'
+                                                                    return '流量占比：' + ((s.stra_servers.length)*100/(q.slb_servers.length)).toFixed(1) + '%'
                                                                 }
                                                             })()}
                                                         </span>
