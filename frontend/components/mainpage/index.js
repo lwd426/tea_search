@@ -151,7 +151,7 @@ class GLMainpage extends React.Component {
         const currentCasVal = this.props.content.mainpage.currentCasVal;
         return (
             <div className="mainpage">
-                <div><span className="gl-quick">快捷入口</span><Cascader placeholder="请选择" options={options} onChange={this.onChange.bind(this)} value={currentCasVal} expandTrigger='hover' /></div>
+                <div className="quickBox"><span className="gl-quick">快捷入口</span><Cascader placeholder="请选择" options={options} onChange={this.onChange.bind(this)} value={currentCasVal} expandTrigger='hover' /></div>
 
                 <div className="main-container" style={{display: this.props.content.mainpage.main_container_display}}>
 
@@ -208,7 +208,7 @@ class GLMainpage extends React.Component {
                                                                 }else if(s.stra_servers.length==0||q.slb_servers.length==0){
                                                                     return '流量占比：' + '0';
                                                                 }else{
-                                                                    return '流量占比：' + ((s.stra_servers.length)*100/(q.slb_servers.length)).toFixed(2) + '%'
+                                                                    return '流量占比：' + ((s.stra_servers.length)*100/(q.slb_servers.length)).toFixed(1) + '%'
                                                                 }
                                                             })()}
                                                         </span>

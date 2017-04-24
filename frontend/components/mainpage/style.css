@@ -56,7 +56,7 @@
 .ant-collapse-content-box>div{
     padding:0px !important;
 }
-.mainpage .ant-cascader-picker{
+.mainpage .quickBox .ant-cascader-picker{
     width: 250px;
     height: 30px;
     line-height: 30px;
