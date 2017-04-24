@@ -21,7 +21,7 @@ class HorizontalLoginForm extends React.Component {
         forms.validateFields((err, values) => {
             if (!err) {
                 const {domainId} = this.props.cont;
-                if(!values.domainId){
+                if(!domainId){
                     this.props.cont.validateDomain.domain = {
                         status: 'error',
                         info: '请填写域名并点击验证按钮'
