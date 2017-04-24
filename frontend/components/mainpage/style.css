@@ -57,8 +57,91 @@
     padding:0px !important;
 }
 .mainpage .ant-cascader-picker{
-    width:250px;
-    margin-bottom: 10px;
+    width: 250px;
+    height: 30px;
+    line-height: 30px;
+    position: relative;
+    display: block;
+    cursor: pointer;
+    font-size: 12px;
+    background-color: #fff;
+    border-radius: 4px;
+    outline: 0;
+    margin: 0 auto;
+    margin-top: -30px;
+}
+
+.gl-m-leftcontent{
+    text-align: center;
+    height: 162px;
+    overflow-y: auto;
+}
+.ant-collapse{
+    float: left;
+    border: none;
+    background-color: #ffffff;
+}
+
+.ant-collapse .ant-collapse-bordered{
+    width: 48%;
+    margin: 5px 0.5%;
+    background: #ffffff;
+    height: 250px;
+    border: 1px solid #d9d9d9 !important;
+}
+.ant-collapse-head{
+    width: 80%;
+    float: left;
+    height: 40px;
+    line-height: 40px;
+    padding: 0px 14px;
+    border-bottom: 1px solid #d9d9d9;
+}
+
+.ant-collapse-extra{
+    height: 40px;
+    line-height: 40px;
+    width: 20%;
+    float: left;
+    border-bottom: 1px solid #d9d9d9;
+}
+
+.ant-collapse-extra>a{
+    float: right;
+    margin-right: 23%;
+}
+.gl-quick{
+    width: 60px;
+    height: 30px;
+    line-height: 30px;
+    text-align: right;
+    margin: 0 auto;
+    display: block;
+    position: relative;
+    left: -160px;
+}
+.gl-m-lefttitle{
+    color: rgb(85, 85, 85);
+    margin: 0 auto;
+    margin-top: 40px;
+    height: 27px;
+    width: 94%;
+    border-bottom: 1px dashed #d9d9d9;
+}
+
+.gl-icon-main{
+    cursor: default;
+    font-weight: bold;
+    margin: 0px 8px;
+}
+.gl-icon-main-loading{
+    color: green
+}
+.gl-icon-main-hourglass{
+    color: #f04134;
+}
+.gl-icon-main-bulb{
+    color: #37a8ff;
 }
 .dropdownBox,.spanBox{
     width:33%;text-align: center;display: inline-block;

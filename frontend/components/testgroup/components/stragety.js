@@ -55,7 +55,6 @@ class GLStragety extends React.Component {
                 return (
                 <span>
                   <a href="#" onClick={()=>{
-                      console.log(record)
                       this.props.contentActions.testgroupActions.handleStragety(record.code, status)
                   }}> {btntxt}</a>
                   <span className="ant-divider" />

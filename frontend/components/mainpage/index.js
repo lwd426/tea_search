@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './style.css';
 import 'antd.min.css';
-import { Table, Input, Icon, Button, Popconfirm, Collapse } from 'antd';
+import { Table, Input, Icon, Button,Cascader, Card,Tabs , Menu, Dropdown, message,Popconfirm, Collapse } from 'antd';
 import Traffic from './Traffic.js';
 import Conversion from './Conversion.js';
 import Duiji from './duiji.js';
@@ -9,12 +9,6 @@ import request from '../../request';
 import { setMainPageOptions, setMainPageData } from './lib';
 
 
-import { Menu, Dropdown, message } from 'antd';
-//Cascader
-import { Cascader } from 'antd';
-
-//Tabs
-import { Tabs } from 'antd';
 const TabPane = Tabs.TabPane;
 
 
@@ -157,37 +151,26 @@ class GLMainpage extends React.Component {
         const currentCasVal = this.props.content.mainpage.currentCasVal;
         return (
             <div className="mainpage">
-                <Cascader placeholder="请选择" options={options} onChange={this.onChange.bind(this)} value={currentCasVal} expandTrigger='hover' />
+                <div><span className="gl-quick">快捷入口</span><Cascader placeholder="请选择" options={options} onChange={this.onChange.bind(this)} value={currentCasVal} expandTrigger='hover' /></div>
 
                 <div className="main-container" style={{display: this.props.content.mainpage.main_container_display}}>
 
                     <Collapse defaultActiveKey={['1','2','3']} onChange={this.collapseCallback}>
 
                         {this.state.testGroupsArr.map((q, index) =>
-                            <Panel
-                                header={
-                                    <div>
-                                        <span>{q.slb_name + '/' + q.name}</span>
-                                        <Button className="collbutton" onClick={(e) =>{
-                                            e.stopPropagation();
-                                            let currentCasVal = [q.slb_objectId, q.objectId];
-                                            _this.switchContentShow('none','block', q.strageties, currentCasVal)
-                                        }}>
-                                            查看详情
-                                        </Button>
-                                    </div>
-                                }
-                                key={index+1}
-                            >
-
-                                <div style={{padding:20}}>
-                                    <div style={{color:'#555'}}>
-                                        <span>创建于：{ moment(new Date(q.createdAt)).format('YYYY-MM-DD') }  </span>
-                                        <span style={{marginLeft:'20px'}}>
+                        <Card title={q.slb_name + '/' + q.name} extra={<a href="#" onClick={(e) =>{
+                            e.stopPropagation();
+                            let currentCasVal = [q.slb_objectId, q.objectId];
+                            _this.switchContentShow('none','block', q.strageties, currentCasVal)
+                        }}>详情</a>} >
+                            <div style={{padding:10}}>
+                                <div className="gl-m-lefttitle">
+                                    <span>创建于：{ moment(new Date(q.createdAt)).format('YYYY-MM-DD') }  </span>
+                                    <span style={{marginLeft:'20px'}}>
                                             已运行：{q.first_publish_time? ((new Date().getTime() - new Date(q.first_publish_time).getTime())/(24*60*60*1000)).toFixed(1) : 0} 天
                                         </span>
 
-                                        <span style={{marginLeft:'20px'}}>
+                                    <span style={{marginLeft:'20px'}}>
                                             {(() => {
                                                 if(q.time != '-'){
                                                     let num = ((new Date().getTime() - new Date(q.time).getTime())/(24*60*60*1000)).toFixed(1);
@@ -199,11 +182,17 @@ class GLMainpage extends React.Component {
                                             })()}
                                         </span>
 
-                                    </div>
-                                    <div style={{marginTop:20}}>
-                                        {
-                                            q.strageties.map((s, i) =>
-                                                <div key={index + '-' + i} style={{padding:3}}>
+                                </div>
+                                <div className="gl-m-leftcontent">
+                                    {
+                                        q.strageties.map((s, i) => {
+                                                let icontype = 'loading',text = '运行中';
+                                                switch(s.stra_status){
+                                                    case 'running': icontype = 'loading'; text = '运行中'; break;
+                                                    case 'new': icontype = 'bulb'; text = '新建'; break;
+                                                    case 'stopped':  icontype = 'hourglass'; text = '停止';break;
+                                                }
+                                                return (<div key={index + '-' + i} style={{padding:3}}>
                                                     <div className="left" style={{float:'left',width:'33%'}}>
                                                         <span>{s.stra_name}</span>
                                                     </div>
@@ -225,16 +214,18 @@ class GLMainpage extends React.Component {
                                                         </span>
                                                     </div>
                                                     <div className="right" style={{float:'left',width:'34%'}}>
-                                                        <span>{s.stra_status}</span><br/>
+                                                        <span><Icon className={'gl-icon-main gl-icon-main-'+icontype} type={icontype}/>{text}</span><br/>
                                                     </div>
                                                     <div className="clear"></div>
-                                                </div>
-                                            )
-                                        }
-                                    </div>
+                                                </div>)
+                                            }
 
+                                        )
+                                    }
                                 </div>
-                            </Panel>
+
+                            </div>
+                        </Card>
                         )}
 
                     </Collapse>

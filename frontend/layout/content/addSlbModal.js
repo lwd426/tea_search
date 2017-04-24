@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import './style.css';
 import 'antd.min.css';
+
 import { Form, Input,Icon,Button,Row, Col } from 'antd';
 const FormItem = Form.Item;
 
@@ -16,12 +17,19 @@ class HorizontalLoginForm extends React.Component {
     }
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.form.validateFields((err, values) => {
+        var forms = this.props.form;
+        forms.validateFields((err, values) => {
             if (!err) {
                 const {domainId} = this.props.cont;
-                // this.props.contActions.addSlb(values.name, values.domain, values.p1 || '', values.p2 || '', domainId)
+                if(!values.domainId){
+                    this.props.cont.validateDomain.domain = {
+                        status: 'error',
+                        info: '请填写域名并点击验证按钮'
+                    }
+                    return false;
+                }
                 this.props.contActions.addSlb(values.name, values.domain,  domainId)
-                this.props.form.setFieldsValue({
+                forms.setFieldsValue({
                     'name': '',
                     'domain':''
                 })
