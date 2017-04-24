@@ -130,8 +130,10 @@ class GLMainpage extends React.Component {
                     arr = setMainPageOptions(slb.testGroups, arr, 'running');
                     arr = setMainPageOptions(slb.testGroups, arr, 'new');
                     arr = setMainPageOptions(slb.testGroups, arr, 'stopped');
-                    obj['children'] = arr;
-                    options.push(obj);
+                    if(arr.length > 0){
+                        obj['children'] = arr;
+                        options.push(obj);
+                    } 
                 }
             })
         }
