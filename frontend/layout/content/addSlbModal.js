@@ -58,19 +58,10 @@ class HorizontalLoginForm extends React.Component {
                     validateStatus={this.props.cont.validateDomain.domain.status}
                     extra={this.props.cont.validateDomain.domain.info}
                 >
-                    <Row gutter={12}>
-                        <Col span={18}>
-                            {getFieldDecorator('domain', { initialValue: this.props.cont.validateDomain.domain.data },{
-                            })(
-                                <Input prefix={<Icon type="global" style={{ fontSize: 13 }} />}  placeholder="如不知道域名，请向相关人员询问" />
-                            )}
-                        </Col>
-                        <Col span={6}>
-                            <Button size="large" onClick={()=>{
-
-                            }}>验证</Button>
-                        </Col>
-                    </Row>
+                        {getFieldDecorator('name', { initialValue: this.props.cont.validateDomain.domain.data },{
+                    })(
+                        <Input prefix={<Icon type="global" style={{ fontSize: 13 }} />}  placeholder="如不知道域名，请向相关人员询问" />
+                        )}                    )}
                 </FormItem>
                 {/*<FormItem*/}
                     {/*label="p1"*/}

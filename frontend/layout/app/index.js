@@ -45,7 +45,8 @@ class App extends React.Component {
                             this.props.content.mainpage.card_container_display = 'none';
                             this.props.content.mainpage.content_one_display = 'block'
                             this.props.content.mainpage.main_container_display = 'block'
-                            this.props.content.mainpage.content_two_display = 'none'
+                            this.props.content.mainpage.content_two_display = 'none';
+                            this.props.content.mainpage.currentCasVal = undefined;
                         }}>back to<Icon type="home" /> </Button>
                         乐视视频灰度发布系统
                     </Header>

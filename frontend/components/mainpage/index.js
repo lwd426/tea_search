@@ -50,6 +50,7 @@ class GLMainpage extends React.Component {
                 }
             })
             str += ']';
+            this.props.menu.slbid = value_arr[0] || '';
             this.props.contentActions.mainpageActions.switchContentShow('none','block',str,value_arr)
         }else{
             alert('此项目无数据！')
@@ -88,7 +89,6 @@ class GLMainpage extends React.Component {
         }
     }
     tabChange(key){
-        console.log(key);
         this.props.contentActions.mainpageActions.switchTable(key);
     }
     async componentWillMount(){
