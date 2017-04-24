@@ -255,9 +255,7 @@ class GLMainpage extends React.Component {
 
                   <Tabs type="card" onChange={this.tabChange.bind(this)}>
                     <TabPane tab="流量" key="1">
-                        <div className="spanBox">
-                            <span>流量占比 ：</span> <span> 20% </span>
-                        </div>
+                        
 
                         {/*<div className="dropdownBox">
                             <span>策略名称 ：</span>

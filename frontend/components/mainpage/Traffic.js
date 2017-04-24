@@ -141,8 +141,6 @@ export default class EChart extends React.Component {
                     }
                 })
             })
-            console.log(uvArr);
-            console.log(pvArr);
 
             //遍历生成 echart 配置
             strageties.map((v,i) => {
