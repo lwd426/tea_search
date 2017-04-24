@@ -50,7 +50,6 @@ class GLMainpage extends React.Component {
                 }
             })
             str += ']';
-            this.props.menu.slbid = value_arr[0] || '';
             this.props.contentActions.mainpageActions.switchContentShow('none','block',str,value_arr)
         }else{
             alert('此项目无数据！')
@@ -161,6 +160,7 @@ class GLMainpage extends React.Component {
                         <Card title={q.slb_name + '/' + q.name} extra={<a href="#" onClick={(e) =>{
                             e.stopPropagation();
                             let currentCasVal = [q.slb_objectId, q.objectId];
+                            this.props.menu.slbid = currentCasVal[0] || '';
                             _this.switchContentShow('none','block', q.strageties, currentCasVal)
                         }}>详情</a>} >
                             <div style={{padding:10}}>
