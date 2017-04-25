@@ -153,7 +153,7 @@ function nginx(arr: any[], domain = 'test.m.le.com', port = '80') {
     // content += location;
 
     console.log(content);
-    re.content = content.replace(/\n/g, ' ').replace(/\s+/g, ' ');
+    re.content = content.replace(/\n/g, ' ').replace(/\s+/g, ' ');//去掉换行和多余的空格
     return re;
 }
 function geoIp(arr) {
