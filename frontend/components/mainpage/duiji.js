@@ -26,14 +26,14 @@ export default class EChart extends React.Component {
         }
     }
     rangeOnChange(dates, dateStrings) {
-        this.props.contentActions.mainpageActions.changeDatePicker(dateStrings);
+        this.props.contentActions.mainpageActions.changeConversionDatePicker(dateStrings);
     }
     onChange(arr){
         console.log(arr)
         this.props.contentActions.mainpageActions.changeCascader(arr);
     }
     disabledDate(current) {
-        return current && current.valueOf() > Date.now();
+        return current && current.valueOf() > (Date.now() - 24*3600*1000);
     }
     randerChart = async (date_picker, stragety_str) => {
         let startTime = moment(new Date(date_picker[0])).format('YYYY-MM-DD');
@@ -212,7 +212,7 @@ export default class EChart extends React.Component {
     }
     componentWillReceiveProps(nextProps) {
         console.log('duiji componentWillReceiveProps');
-        let date_picker = nextProps.content.mainpage.date_picker;
+        let date_picker = nextProps.content.mainpage.conversion_date_picker;
         let stragety_str = nextProps.content.mainpage.content_two_key;
         let tabsKey = nextProps.content.mainpage.main_card_key;
 
@@ -223,6 +223,8 @@ export default class EChart extends React.Component {
         return true;
     }
     render() {
+        let conversion_date_picker = this.props.content.mainpage.conversion_date_picker;
+        let conver_date_moment_val = [moment(new Date(conversion_date_picker[0])), moment(new Date(conversion_date_picker[1]))];
         const columns = [{
             title: '日期',
             dataIndex: 'date',
@@ -246,7 +248,8 @@ export default class EChart extends React.Component {
             <div>
                 <div className="rangepickerBox">
                     <RangePicker
-                        defaultValue={[moment().subtract(5, 'days'), moment().subtract(1, 'days')]}
+                        defaultValue={this.props.content.mainpage.rangeDefaultVal}
+                        value={conver_date_moment_val}
                         format={'YYYY/MM/DD'}
                         onChange={this.rangeOnChange.bind(this)}
                         disabledDate={this.disabledDate.bind(this)}

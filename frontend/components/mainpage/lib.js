@@ -52,16 +52,22 @@ export function setMainPageOptions(testGroups, arr, type) {
         let inObj ={};
 
         let strageties = [] //各个策略的tag 数组
+        let stra_running = [];//running状态的策略 状态
         if(project.strageties.length > 0){
             project.strageties.forEach(function(stragety){
                 if(stragety.tag){
                     strageties.push(stragety.tag)
                 }
+                if(stragety.is_abolished == false && stragety.stra_status == 'running'){
+                    stra_running.push(stragety.stra_status)
+                }
             })
         }
 
+        
+
         if(type == 'running'){
-            if(project.status == 'running'){
+            if(project.time != '-' && stra_running.length > 0){//running 策略的数量大于0，此项目的status就是 running
                 index ++;
                 if(index == 1){
                     inObj['value'] = 'running';
@@ -77,7 +83,7 @@ export function setMainPageOptions(testGroups, arr, type) {
             }
         }
         if(type == 'new'){
-            if(project.status == 'new'){
+            if(project.time == '-' || project.strageties.length == 0){//发布时间为 -  即为 new
                 index ++;
                 if(index == 1){
                     inObj['value'] = 'new';
@@ -87,13 +93,13 @@ export function setMainPageOptions(testGroups, arr, type) {
                     inObj = {}
                 }
                 inObj['value'] = project.objectId;
-                inObj['label'] = project.name + '（new）';
+                inObj['label'] = project.name;
                 inObj['disabled'] = true;
                 arr.push(inObj)
             }
         }
         if(type == 'stopped'){
-            if(project.status == 'stopped'){
+            if(project.time != '-' && stra_running.length == 0 && project.strageties.length > 0){
                 index ++;
                 if(index == 1){
                     inObj['value'] = 'stopped';
@@ -103,11 +109,8 @@ export function setMainPageOptions(testGroups, arr, type) {
                     inObj = {}
                 }
                 inObj['value'] = project.objectId;
-                inObj['label'] = project.name + '(stopped)';
+                inObj['label'] = project.name;
                 inObj['strageties'] = strageties;
-                if(strageties.length == 0){
-                    inObj['disabled'] = true;
-                }
                 arr.push(inObj)
             }
         }

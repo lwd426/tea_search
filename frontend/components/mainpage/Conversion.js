@@ -27,14 +27,14 @@ export default class Chart extends React.Component {
         }
     }
     rangeOnChange(dates, dateStrings) {
-        this.props.contentActions.mainpageActions.changeDatePicker(dateStrings);
+        this.props.contentActions.mainpageActions.changeConversionDatePicker(dateStrings);
     }
     onChange(arr){
         console.log(arr)
         this.props.contentActions.mainpageActions.changeCascader(arr);
     }
     disabledDate(current) {
-        return current && current.valueOf() > Date.now();
+        return current && current.valueOf() > (Date.now() - 24*3600*1000);
     }
     randerChart = async (date_picker, stragety_arr) => {
 
@@ -211,13 +211,13 @@ export default class Chart extends React.Component {
     }
 
     componentDidMount() {
-        let date_picker = this.props.content.mainpage.date_picker;
+        let date_picker = this.props.content.mainpage.conversion_date_picker;
         let stragety_arr = this.props.content.mainpage.strageties;
         this.randerChart(date_picker, stragety_arr);
     }
     componentWillReceiveProps(nextProps) {
         console.log('chart componentWillReceiveProps');
-        let date_picker = nextProps.content.mainpage.date_picker;
+        let date_picker = nextProps.content.mainpage.conversion_date_picker;
         let stragety_arr = nextProps.content.mainpage.strageties;
 
         let tabsKey = nextProps.content.mainpage.main_card_key
@@ -234,6 +234,8 @@ export default class Chart extends React.Component {
         //     res = await request.getConversionDataByStragety("['100001', '100002']",'2017-03-05','2017-03-08');
         //     console.log(res.result.data);
         // })()
+        let conversion_date_picker = this.props.content.mainpage.conversion_date_picker;
+        let conver_date_moment_val = [moment(new Date(conversion_date_picker[0])), moment(new Date(conversion_date_picker[1]))];
         let tableColumns = [{
           title: '版本',
           dataIndex: 'trtagetyName',
@@ -275,7 +277,8 @@ export default class Chart extends React.Component {
                 <br />
                 <div className="rangepickerBox">
                     <RangePicker
-                        defaultValue={[moment().subtract(5, 'days'), moment().subtract(1, 'days')]}
+                        defaultValue={this.props.content.mainpage.rangeDefaultVal}
+                        value={conver_date_moment_val}
                         format={'YYYY/MM/DD'}
                         onChange={this.rangeOnChange.bind(this)}
                         disabledDate={this.disabledDate.bind(this)}
@@ -289,7 +292,7 @@ export default class Chart extends React.Component {
 
                 <div id="container" style={{width:'100%',height:400}} className="chart-box"></div>
                 <div className="tableBox">
-                    <Button className="export" onClick={this.exportTable.bind(this)}><Icon type="download" />导出表格</Button>
+                    <Button className="export"><Icon type="download" />导出表格</Button>
                     <Table bordered={true} columns={tableColumns} dataSource={this.state.tableData} title={() => '日均'}/> 
                 </div>
             </div>      

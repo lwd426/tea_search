@@ -69,7 +69,7 @@ export default class EChart extends React.Component {
             alert('数据返回 ' + res.result.status)
             return
         }
-        let responseData = res.result.data.reverse();
+        let responseData = res.result.data;
 
         let uvArr = [];
         let pvArr = [];
@@ -125,6 +125,7 @@ export default class EChart extends React.Component {
 
             //循环赋值tableData
             tableData = [];
+            console.log(responseData)
             responseData.map((val,index) => {
                 tableData.push({
                     key: index + 1,
@@ -262,7 +263,29 @@ export default class EChart extends React.Component {
             });
 
         }else{
-            alert('所选日期无数据！')
+            alert('所选日期无数据！');
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('line'));
+            myChart.setOption({
+
+                title: { 
+                    text: '无数据',
+                    left: 'center',
+                },
+                yAxis: [
+                    {
+                        type: 'value',
+                        name: '访问用户',
+                        min: 0,
+                        max: 2000,
+                        interval: 200,
+                        axisLabel: {
+                            formatter: '{value}'
+                        },
+                    }
+                ],
+
+            });
         }
     }
     async exportTable(){

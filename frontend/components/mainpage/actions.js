@@ -75,6 +75,12 @@ export function changeDatePicker(dateStrings){
         date_picker: dateStrings
     }
 }
+export function changeConversionDatePicker(dateStrings){
+    return{
+        type: 'CONVERSIONDATEPICKER',
+        conversion_date_picker: dateStrings
+    }
+}
 
 export function switchContentShow(main_display, card_display, strageties, currentCasVal) {
     return (dispatch, getState) => {
