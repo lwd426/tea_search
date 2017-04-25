@@ -52,6 +52,7 @@ module.exports = {
         // var dataBuffer = Buffer.concat([new Buffer('\xEF\xBB\xBF', 'binary'), new Buffer(csv)]);
         // var result = fse.outputFileSync('public/csv/'+filepath, dataBuffer);
         // resolve('csv/' + filepath)
+
         var filepath = yield utils.save_csv(result);
         return filepath;
     },
