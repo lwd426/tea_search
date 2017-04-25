@@ -98,7 +98,6 @@ function nginx(arr: any[], domain = 'test.m.le.com', port = '80') {
     console.log("nginx传过来的参数：");
     console.log(arr);
     needDefault = true;
-    //let domain = 'test.m.le.com';//todo
     //先加上开始
     arr.forEach(item => {
         for (let i = 0; i < item.serverArray.length; i++) {
