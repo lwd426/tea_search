@@ -66,7 +66,6 @@ export default class EChart extends React.Component {
         let res = await request.getTrafficDataByStragety(stragety_arr, startTime, endTime);
 
         if(res.result.status == 'error'){
-            alert('数据返回 ' + res.result.status)
             return
         }
         let responseData = res.result.data;
@@ -125,21 +124,13 @@ export default class EChart extends React.Component {
 
             //循环赋值tableData
             tableData = [];
-            console.log(responseData)
             responseData.map((val,index) => {
                 tableData.push({
                     key: index + 1,
                     date: val.date,
-                    //useramount: val.uv_all,
-                    // visitor1: 500,
-                    // visitor2: 500,
-                    // persent1: '20%',
-                    // persent2: '20%',
                 })
                 let arr_uv = Object.entries(val.uv);
                 arr_uv.map((v,i) => {
-                    // uvArr[i].push(v[1].pvuv)
-                    // pvArr[i].push(v[1].pv);
                     tableData[index]['visitor' + (i+1)] = v[1].pvuv;
                     tableData[index]['pv' + (i+1)] = v[1].pv;
                 })
@@ -190,7 +181,6 @@ export default class EChart extends React.Component {
                         }
                     },
                     barGap: '40%',
-                    //barCategoryGap:'35%',
                 })
             });
 
@@ -203,7 +193,18 @@ export default class EChart extends React.Component {
             })
 
             myChart.setOption({
-                title: { text: '' },
+                title: {
+                    "text": "流量统计表",
+                    "subtext": "反馈总量趋势图和各类型反馈堆叠图",
+                    "x": "center",
+                    "y": "top",
+                    "textStyle": {
+                        "color": "#333",
+                        "fontStyle": "normal",
+                        "fontFamily": "fantasy",
+                        "fontSize": 14
+                    }
+                },
                 tooltip: {
                     trigger: 'axis',
                     axisPointer: {
@@ -215,7 +216,8 @@ export default class EChart extends React.Component {
                 },
                 legend: {
                     data: legendDate,
-                    top: 0,
+                    bottom: 0,
+                    right: 50,
                     formatter: function (name) {
                         return echarts.format.truncateText(name, 150, '14px Microsoft Yahei', '…');
                     },
@@ -250,13 +252,9 @@ export default class EChart extends React.Component {
                 toolbox: {
                     show: true, //是否显示工具箱
                     feature: {
-                        mark: { show: true },
-                        dataView: { show: true, readOnly: false },
-                        magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
-                        restore: { show: true },
                         saveAsImage: { show: true },
                     },
-                    bottom: 0,
+                    top: 0,
                     right: 50
                 },
                 series: seriesArr
@@ -268,9 +266,17 @@ export default class EChart extends React.Component {
             var myChart = echarts.init(document.getElementById('line'));
             myChart.setOption({
 
-                title: { 
-                    text: '无数据',
-                    left: 'center',
+                title: {
+                    "text": "流量统计表",
+                    "subtext": "反馈总量趋势图和各类型反馈堆叠图",
+                    "x": "center",
+                    "y": "top",
+                    "textStyle": {
+                        "color": "#333",
+                        "fontStyle": "normal",
+                        "fontFamily": "fantasy",
+                        "fontSize": 14
+                    }
                 },
                 yAxis: [
                     {
@@ -360,7 +366,7 @@ export default class EChart extends React.Component {
                 <div id="line" style={{width:'100%',height:400}} className="chart-box"></div>
                 <div className="tableBox">
                     <Button className="export" onClick={this.exportTable.bind(this)}><Icon type="download" />导出表格</Button>
-                    <Table bordered={true} columns={this.state.tableColumns} dataSource={this.state.tableData} /> 
+                    <Table bordered={true} size="middle" columns={this.state.tableColumns} dataSource={this.state.tableData} />
                 </div>
             </div>          
         )

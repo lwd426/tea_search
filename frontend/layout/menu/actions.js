@@ -3,6 +3,7 @@ import fetch from '../../utils/fetch'
 const HOST = require('../../../config').HOST;
 const slb_list_url = HOST + '/slb'
 import * as tgActions from '../../components/testgroup/actions'
+import * as appActions from '../../layout/app/actions'
 
 
 /**
@@ -99,6 +100,7 @@ export function changeShowWinType(slbid, wintype) {
             var domain = arr[0].slbDomain;
             var domainId = arr[0].domainId;
             dispatch(tgActions.goback())
+            dispatch(appActions.max_menu())
             return dispatch(changeSlbSuccess(wintype, slbid, domain, domainId));
         }))
     }
