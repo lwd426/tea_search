@@ -1,7 +1,7 @@
 import { level, MataS, country_name_country_code_city_code } from './if';
 import { Methods } from './check'
 var uidname = 'ssouid';
-export class four {
+export class ARROW {
     meta: MataS;
     upstreamName: string;
     type: string = 'url_region_uid';
