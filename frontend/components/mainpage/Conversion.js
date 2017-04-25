@@ -160,7 +160,16 @@ export default class Chart extends React.Component {
         var myChart = echarts.init(document.getElementById('container'));
         // 绘制图表
         myChart.setOption({
-            title: { text: '' },
+            title: {"text": "流量统计表",
+                "subtext": "反馈总量趋势图和各类型反馈堆叠图",
+                "x": "center",
+                "y": "top",
+                "textStyle": {
+                    "color": "#333",
+                    "fontStyle": "normal",
+                    "fontFamily": "fantasy",
+                    "fontSize": 14
+                } },
             tooltip: {
                 trigger: 'axis',
                 axisPointer: {
@@ -197,10 +206,6 @@ export default class Chart extends React.Component {
             toolbox: {
                 show: true, //是否显示工具箱
                 feature: {
-                    mark: { show: true },
-                    dataView: { show: true, readOnly: false },
-                    magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
-                    restore: { show: true },
                     saveAsImage: { show: true }
                 }
             },
@@ -336,8 +341,9 @@ export default class Chart extends React.Component {
         }];
         return (
             <div>
-                <br />
+
                 <div className="rangepickerBox">
+                    <span>请选择时间区间</span>
                     <RangePicker
                         defaultValue={this.props.content.mainpage.rangeDefaultVal}
                         value={conver_date_moment_val}
@@ -355,7 +361,8 @@ export default class Chart extends React.Component {
                 <div id="container" style={{width:'100%',height:400}} className="chart-box"></div>
                 <div className="tableBox">
                     <Button className="export" onClick={this.exportTable.bind(this)}><Icon type="download" />导出表格</Button>
-                    <Table bordered={true} columns={tableColumns} dataSource={this.state.tableData} title={() => '日均'}/> 
+                    <Table bordered={true} size="middle" columns={tableColumns} dataSource={this.state.tableData} title={() => '日均'}/>
+
                 </div>
             </div>      
         )

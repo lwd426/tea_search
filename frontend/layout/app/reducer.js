@@ -4,10 +4,10 @@ import * as TYPES from './constants'
 let reducer = (state={mode:'inline', showSlbModal:false ,collapsed: true},action)=>{
     switch(action.type){
         case TYPES.MINI_MENU:
-            return Object.assign({}, state, { mode:'vertical',collapsed: true})
+            return Object.assign({}, state, { collapsed: true})
             break
         case TYPES.MAX_MENU:
-            return Object.assign({}, state, { mode:'inline',collapsed: false})
+            return Object.assign({}, state, {collapsed: false})
             break
         case TYPES.SHOW_ADD_SLB_MODAL:
             return Object.assign({}, state, { showSlbModal: action.status})

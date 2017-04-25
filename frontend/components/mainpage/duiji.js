@@ -137,20 +137,21 @@ export default class EChart extends React.Component {
         this.setState({
             tableData: tableData
         })
-        console.log(tableData)
-
-
-
-        // 基于准备好的dom，初始化echarts实例
-
-        // var data1 = [200, 130, 330, 450, 400, 250, 240, 500, 100, 600, 500, 250]
-        // var data2 = [240, 150, 380, 400, 500, 260, 280, 550, 150, 500, 530, 250]
-        // var data3 = [34, 25, 48, 50, 60, 36, 38, 65, 35, 60, 63, 35]
 
         var myChart = echarts.init(document.getElementById('duiji'));
         // 绘制图表
         myChart.setOption({
-            title: { text: '' },
+            title: { "text": "流量统计表",
+                "subtext": "反馈总量趋势图和各类型反馈堆叠图",
+                "x": "center",
+                "y": "top",
+                "textStyle": {
+                    "color": "#333",
+                    "fontStyle": "normal",
+                    "fontFamily": "fantasy",
+                    "fontSize": 14
+                }
+            },
             tooltip: {
                 trigger: 'axis',
                 axisPointer: {
@@ -160,9 +161,11 @@ export default class EChart extends React.Component {
                     }
                 }
             },
-            legend: {
-                data:['曝光','点击','点击率']
-            },
+                legend: {
+                    data:['曝光','点击','点击率'],
+                    bottom: 0,
+                    right: 50,
+                },
             xAxis: [
                 {
                     type: 'category',
@@ -197,10 +200,6 @@ export default class EChart extends React.Component {
             toolbox: {
                 show: true, //是否显示工具箱
                 feature: {
-                    mark: { show: true },
-                    dataView: { show: true, readOnly: false },
-                    magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
-                    restore: { show: true },
                     saveAsImage: { show: true }
                 }
             },
@@ -306,6 +305,7 @@ export default class EChart extends React.Component {
         return (
             <div>
                 <div className="rangepickerBox">
+                    <span>请选择时间区间</span>
                     <RangePicker
                         defaultValue={this.props.content.mainpage.rangeDefaultVal}
                         value={conver_date_moment_val}
@@ -319,10 +319,9 @@ export default class EChart extends React.Component {
                     <Cascader options={this.props.content.mainpage.options_two} defaultValue={[this.props.content.mainpage.options_two[0].value]} onChange={this.onChange.bind(this)} />
                 </div>
                 <div className="clear"></div>
-
                 <div id="duiji" style={{width:'100%',height:400}} ></div>
                 <Button className="export" onClick={this.exportTable.bind(this)}><Icon type="download" />导出表格</Button>
-                <Table bordered={true} columns={columns} dataSource={this.state.tableData} title={() => '按日期'}/>  
+                <Table bordered={true} size="middle" columns={columns} dataSource={this.state.tableData} title={() => '按日期'}/>
             </div>      
         )
     }

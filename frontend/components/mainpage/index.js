@@ -129,7 +129,7 @@ class GLMainpage extends React.Component {
                     if(arr.length > 0){
                         obj['children'] = arr;
                         options.push(obj);
-                    } 
+                    }
                 }
             })
         }
@@ -146,18 +146,56 @@ class GLMainpage extends React.Component {
 
         const _this = this;
         let colkey = 0;
-        const currentCasVal = this.props.content.mainpage.currentCasVal;
+        const wintype = this.props.menu.wintype;
+        const {currentCasVal, card_container_display, main_container_display, main_card_key} = this.props.content.mainpage;
         return (
             <div className="mainpage">
                 <div className="quickBox">
-                    {/*<span className="gl-quick"></span>*/}
-                    {/*<Icon className="gl-setting-btn" type="setting" >*/}
-                    <Button icon="setting" className={this.props.app.collapsed ? "gl-main-btn" : "gl-main-btn close"} onClick={this.props.appActions.changeSettingBtn}>{this.props.app.collapsed ? '打开配置面板' : '关闭配置面板'}</Button>
-                    <Popover content={<Cascader placeholder="请选择" options={options} onChange={this.onChange.bind(this)} value={currentCasVal} expandTrigger='hover' />
-                    } title="请选择测试组" trigger="click">
-                        <Button icon="scan">测试组快捷入口</Button>
-                    </Popover>
+                {
+                    (()=>{
+                        var type = 'detailsPage';
+                        if(wintype === 'mainpage' && card_container_display === 'none' && main_container_display === 'block') {
+                            return (<div className="center">
+                                <Button icon="setting" className={this.props.app.collapsed ? "gl-main-l-btn" : "gl-main-l-btn close"} onClick={this.props.appActions.changeSettingBtn}>{this.props.app.collapsed ? '打开配置面板' : '关闭配置面板'}</Button>
+                                <Popover content={<Cascader placeholder="请选择" options={options} onChange={this.onChange.bind(this)} value={currentCasVal} expandTrigger='hover' />
+                                } title="请选择测试组" trigger="click">
+                                    <Button icon="scan" className="gl-main-r-btn">测试组快捷入口</Button>
+                                </Popover>
+                            </div>)
+                        }else if(wintype === 'mainpage' && card_container_display === 'block' && main_container_display === 'none') {
+                            return (<div className="center-details">
+                                <Button icon="home" className="gl-main-ll-btn" onClick={()=>{
+                                    this.props.menuActions.changeShowWinType(0, 'mainpage');
+                                    this.props.content.mainpage.card_container_display = 'none';
+                                    this.props.content.mainpage.content_one_display = 'block'
+                                    this.props.content.mainpage.main_container_display = 'block'
+                                    this.props.content.mainpage.content_two_display = 'none';
+                                    this.props.content.mainpage.currentCasVal = undefined;
+                                    this.props.app.collapsed = true;
+                                }}> 返回 </Button>
+                                <Button icon="setting" className="gl-main-mm-btn"  onClick={()=>{
+                                    {/*this.props.content.mainpage.main_card_key = '1';*/}
+                                    this.props.contentActions.mainpageActions.switchTable('1')
+                                }}>流量</Button>
+                                <Button icon="setting" className="gl-main-mm-btn"   onClick={()=>{
+                                    {/*this.props.content.mainpage.main_card_key = '2';*/}
+                                    this.props.contentActions.mainpageActions.switchTable('2')
+                                }}>转化率</Button>
+                                <Button icon="setting" className="gl-main-mm-btn"  onClick={()=>{
+                                    this.props.menuActions.changeShowWinType(this.props.menu.slbid, 'deviceinfo');
+                                }}>设备信息</Button>
+                                <Button icon="setting" className="gl-main-rr-btn" onClick={()=>{
+                                    this.props.menuActions.changeShowWinType(this.props.menu.slbid, 'testinfo');
+                                }} >策略维护</Button>
+                            </div>)
+
+                        }
+
+                    })()
+                }
                 </div>
+
+
 
                 <div className="main-container" style={{display: this.props.content.mainpage.main_container_display}}>
 
@@ -237,24 +275,21 @@ class GLMainpage extends React.Component {
 
                 <div className="card-container" style={{display: this.props.content.mainpage.card_container_display}}>
 
-                <Button className="device_button" onClick={()=>{
-                    this.props.menuActions.changeShowWinType(this.props.menu.slbid, 'deviceinfo');
-                }}>
-                    设备信息
-                </Button>
-                <Button className="stragety_button"  onClick={()=>{
-                    this.props.menuActions.changeShowWinType(this.props.menu.slbid, 'testinfo');
-                }}>
-                    策略维护
-                </Button>
+                {/*<Button className="device_button" onClick={()=>{*/}
+                    {/*this.props.menuActions.changeShowWinType(this.props.menu.slbid, 'deviceinfo');*/}
+                {/*}}>*/}
+                    {/*设备信息*/}
+                {/*</Button>*/}
+                {/*<Button className="stragety_button"  onClick={()=>{*/}
+                    {/*this.props.menuActions.changeShowWinType(this.props.menu.slbid, 'testinfo');*/}
+                {/*}}>*/}
+                    {/*策略维护*/}
+                {/*</Button>*/}
 
-                  <Tabs type="card" onChange={this.tabChange.bind(this)}>
+                  <Tabs type="card" onChange={this.tabChange.bind(this)} activeKey={ this.props.content.mainpage.main_card_key}>
                     <TabPane tab="流量" key="1">
-                        <div className="spanBox">
-                            
-                        </div>
-
                         <div className="rangepickerBox">
+                            <span>选择时间区间</span>
                             <RangePicker
                               defaultValue={this.props.content.mainpage.rangeDefaultVal}
                               format={dateFormat}

@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { Layout, Button,Icon, Modal} from 'antd';
+import { Layout, Button,Icon, Modal,Popover} from 'antd';
 import GLMenu from '../menu'
 import GLContent from '../content'
 import { bindActionCreators } from 'redux'
@@ -40,17 +40,22 @@ class App extends React.Component {
             <Layout>
                 <div className="app-container" >
                     <Header>
-                        <Button className="button-div-header" onClick={()=>{
-                            this.props.menuActions.changeShowWinType(0, 'mainpage');
-                            this.props.content.mainpage.card_container_display = 'none';
-                            this.props.content.mainpage.content_one_display = 'block'
-                            this.props.content.mainpage.main_container_display = 'block'
-                            this.props.content.mainpage.content_two_display = 'none';
-                            this.props.content.mainpage.currentCasVal = undefined;
-                        }}>back to<Icon type="home" /> </Button>
                         乐视视频灰度发布系统
                     </Header>
                     <Content>
+                        {this.props.menu.wintype !== 'mainpage' ? (<div className="quickBox">
+                                <div className="backcenter">
+                                    <Button className="gl-main-back-btn" onClick={()=>{
+                                        this.props.menuActions.changeShowWinType(0, 'mainpage');
+                                        this.props.content.mainpage.card_container_display = 'none';
+                                        this.props.content.mainpage.content_one_display = 'block'
+                                        this.props.content.mainpage.main_container_display = 'block'
+                                        this.props.content.mainpage.content_two_display = 'none';
+                                        this.props.content.mainpage.currentCasVal = undefined;
+                                        this.props.app.collapsed = true;
+                                    }}>back to<Icon type="home" /></Button>
+                                </div>
+                            </div>) : ''}
                         <Sider
                                 collapsible
                                 collapsed={this.props.app.collapsed}
