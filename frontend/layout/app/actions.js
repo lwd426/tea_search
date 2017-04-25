@@ -19,3 +19,9 @@ export function max_menu() {
         type: TYPES.MAX_MENU
     }
 }
+
+export function changeSettingBtn() {
+    return {
+        type: TYPES.CHANGE_SETTING_BTN
+    }
+}

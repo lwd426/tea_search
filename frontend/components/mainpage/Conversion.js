@@ -27,14 +27,14 @@ export default class Chart extends React.Component {
         }
     }
     rangeOnChange(dates, dateStrings) {
-        this.props.contentActions.mainpageActions.changeDatePicker(dateStrings);
+        this.props.contentActions.mainpageActions.changeConversionDatePicker(dateStrings);
     }
     onChange(arr){
         console.log(arr)
         this.props.contentActions.mainpageActions.changeCascader(arr);
     }
     disabledDate(current) {
-        return current && current.valueOf() > Date.now();
+        return current && current.valueOf() > (Date.now() - 24*3600*1000);
     }
     randerChart = async (date_picker, stragety_arr) => {
 
@@ -94,7 +94,7 @@ export default class Chart extends React.Component {
                 clickObj[key][k] = [];
 
                 responseData[key][k].map((val,index) => {
-                    percentObj[key][k].push((val.click_count*100/val.show_count).toFixed(2));
+                    //percentObj[key][k].push((val.click_count*100/val.show_count).toFixed(2));
                     percentNumObj[key][k].push(val.click_count*100/val.show_count);
                     uvObj[key][k].push(val.uv);
                     pvObj[key][k].push(val.pv);
@@ -102,23 +102,34 @@ export default class Chart extends React.Component {
                     clickObj[key][k].push(val.click_count);
                     trtagetyNameObj[key] = val.name;
                 })
+
+                //echart选择范围大而没数据时则补0 (只对图表的 percent 做补0，图表还是按有数据的日期来求平均值)
+                xData.forEach(function(xdate, index){
+                    percentObj[key][k][index] = 0;
+                    responseData[key][k].map((val) => {
+                        //3-4 between 2017-3-4
+                        let valDateStr = (new Date(val.date).getMonth() + 1) + '-' + new Date(val.date).getDate();
+                        if(xdate == valDateStr){
+                           percentObj[key][k][index] = (val.click_count*100/val.show_count).toFixed(2);
+
+                        }
+                    })
+                })
             }
         }
 
 
-        
-        let casVal = this.props.content.mainpage.casVal || this.props.content.mainpage.options_two[0].value
+
+        let casVal = this.props.content.mainpage.casVal || this.props.content.mainpage.options_two[0].value;
+
         strageties.map((v,i) => {
             legendDate.push(trtagetyNameObj[v[0]]);
-
             seriesArr.push({
                 name:trtagetyNameObj[v[0]],
                 type:'line',
                 barMaxWidth : 20,
                 data:percentObj[v[0]][casVal],
             });
-
-            console.log(percentObj[v[0]][casVal]);
         });
 
         var myChart = echarts.init(document.getElementById('container'));
@@ -170,8 +181,7 @@ export default class Chart extends React.Component {
             },
             series: seriesArr,
         });
-console.log(legendDate);
-console.log(seriesArr)
+
         //table
         function getAverageNumArr(arr){
             let sum = 0;
@@ -187,10 +197,10 @@ console.log(seriesArr)
             tableData.push({
                 key: v[0],
                 trtagetyName: trtagetyNameObj[v[0]],
-                uv: getAverageNumArr(uvObj[v[0]][casVal]),
-                pv: getAverageNumArr(pvObj[v[0]][casVal]),
-                show: getAverageNumArr(showObj[v[0]][casVal]),
-                click: getAverageNumArr(clickObj[v[0]][casVal]),
+                uv: Math.round(getAverageNumArr(uvObj[v[0]][casVal])),
+                pv: Math.round(getAverageNumArr(pvObj[v[0]][casVal])),
+                show: Math.round(getAverageNumArr(showObj[v[0]][casVal])),
+                click: Math.round(getAverageNumArr(clickObj[v[0]][casVal])),
                 persent: (getAverageNumArr(percentNumObj[v[0]][casVal])).toFixed(2) + '%',
             })
         })
@@ -201,13 +211,13 @@ console.log(seriesArr)
     }
 
     componentDidMount() {
-        let date_picker = this.props.content.mainpage.date_picker;
+        let date_picker = this.props.content.mainpage.conversion_date_picker;
         let stragety_arr = this.props.content.mainpage.strageties;
         this.randerChart(date_picker, stragety_arr);
     }
     componentWillReceiveProps(nextProps) {
         console.log('chart componentWillReceiveProps');
-        let date_picker = nextProps.content.mainpage.date_picker;
+        let date_picker = nextProps.content.mainpage.conversion_date_picker;
         let stragety_arr = nextProps.content.mainpage.strageties;
 
         let tabsKey = nextProps.content.mainpage.main_card_key
@@ -224,6 +234,8 @@ console.log(seriesArr)
         //     res = await request.getConversionDataByStragety("['100001', '100002']",'2017-03-05','2017-03-08');
         //     console.log(res.result.data);
         // })()
+        let conversion_date_picker = this.props.content.mainpage.conversion_date_picker;
+        let conver_date_moment_val = [moment(new Date(conversion_date_picker[0])), moment(new Date(conversion_date_picker[1]))];
         let tableColumns = [{
           title: '版本',
           dataIndex: 'trtagetyName',
@@ -265,7 +277,8 @@ console.log(seriesArr)
                 <br />
                 <div className="rangepickerBox">
                     <RangePicker
-                        defaultValue={[moment().subtract(5, 'days'), moment().subtract(1, 'days')]}
+                        defaultValue={this.props.content.mainpage.rangeDefaultVal}
+                        value={conver_date_moment_val}
                         format={'YYYY/MM/DD'}
                         onChange={this.rangeOnChange.bind(this)}
                         disabledDate={this.disabledDate.bind(this)}
@@ -279,7 +292,7 @@ console.log(seriesArr)
 
                 <div id="container" style={{width:'100%',height:400}} className="chart-box"></div>
                 <div className="tableBox">
-                    {/*<Button className="export">导出</Button>*/}
+                    <Button className="export"><Icon type="download" />导出表格</Button>
                     <Table bordered={true} columns={tableColumns} dataSource={this.state.tableData} title={() => '日均'}/> 
                 </div>
             </div>      

@@ -21,9 +21,9 @@ router.post('/', function *(next) {
   var name = this.request.body.name;
   var domain = this.request.body.domain;
   var domainId = this.request.body.domainId;
-  var p1 = this.request.body.p1;
-  var p2 = this.request.body.p2;
-  var result = yield lib.saveSlb(name,domain, domainId,p1, p2 );
+  // var p1 = this.request.body.p1;
+  // var p2 = this.request.body.p2;
+  var result = yield lib.saveSlb(name,domain, domainId);
     this.body = result;
 });
 
@@ -61,7 +61,9 @@ router.get('/publish', function *(next) {
     var versionnum = this.query.versionnum;
     //调用发布接口
     var snapcode = uuid();
-    var result = yield lib.publish(domain, port, domainId,slbid, tgid, versionnum, versiondesc, snapcode);
+    //更新策略组下的所有策略的发布时间
+    var result = yield libStragety.updateStragety({time: moment().format('YYYY-MM-DD HH:mm:ss'), stra_status: 'running'}, {tgid: tgid}, [{opt: 'in', key: 'stra_status', data: ['ready', 'running']}])
+     result = yield lib.publish(domain, port, domainId,slbid, tgid, versionnum, versiondesc, snapcode);
     //更新测试组的发布时间信息
     if(result.status && result.status === 'failure'){
         this.body = {
@@ -71,12 +73,11 @@ router.get('/publish', function *(next) {
     }else if(result.status === 'success') {
         //更新策略组的发布时间
         var tg = yield libTg.getTgInfo(tgid);
-        var data = {time: moment().format('YYYY-MM-DD HH:mm'), version: result.stra_info, status: 'running'}
+        var data = {time: moment().format('YYYY-MM-DD HH:mm:ss'), version: result.stra_info, status: 'running'}
         //如果是第一次发布，则更新first_publish_time字段
-        if(tg[0].get('time') === '-') data.first_publish_time = moment().format('YYYY-MM-DD HH:mm');
+        if(tg[0].get('time') === '-') data.first_publish_time = moment().format('YYYY-MM-DD HH:mm:ss');
         result = yield libTg.updateTest(data, {objectId: tgid})
-        //更新策略组下的所有策略的发布时间
-        result = yield libStragety.updateStragety({time: moment().format('YYYY-MM-DD HH:mm'), stra_status: 'running'}, {tgid: tgid}, [{opt: 'in', key: 'stra_status', data: ['ready', 'running']}])
+
         //生成测试项目的快照
         yield libStragety.generateSnap(snapcode,tgid)
         if(result){
@@ -113,9 +114,9 @@ router.get('/publish/back', function *(next) {
             data: result.info
         };
     }else if(result.status === 'success') {
-        result = yield libTg.updateTest({time: moment().format('YYYY-MM-DD HH:mm'), version: result.stra_info}, {objectId: tgid});
+        result = yield libTg.updateTest({time: moment().format('YYYY-MM-DD HH:mm:ss'), version: result.stra_info}, {objectId: tgid});
         //更新策略组下的所有策略的发布时间
-        result = yield libStragety.updateStragety({time: moment().format('YYYY-MM-DD HH:mm'), stra_status: 'running'}, {tgid: tgid}, [{opt: 'in', key: 'stra_status', data: ['ready', 'running']}])
+        result = yield libStragety.updateStragety({time: moment().format('YYYY-MM-DD HH:mm:ss'), stra_status: 'running'}, {tgid: tgid}, [{opt: 'in', key: 'stra_status', data: ['ready', 'running']}])
         yield libStragety.changeStragetySnap(nowSnapcode, newSnapcode,tgid)
 
         if(result){

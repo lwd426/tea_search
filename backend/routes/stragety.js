@@ -98,6 +98,7 @@ router.get('/tag', function *(next) {
 
     for(;i<len;i++){
         var stragety = stragetylist[i];
+        console.log(stragety.get("tag"))
         if(!stragety.get("tag")) {
             // if(tags.length === 0){//如果没有tag了，则告知用户
             //     this.body = {

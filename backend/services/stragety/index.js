@@ -116,6 +116,7 @@ module.exports = {
      * @returns {*}
      */
     updateStragety: function*(data, where, opts) {
+        if(!opts) opts = [];
         var result =  yield db.update('stragety', where, data, opts);
         // 更新server信息，把uids、urls和策略id更新到server记录里
         // if(result){
@@ -174,6 +175,7 @@ module.exports = {
                 stra_status: stragegty.get('stra_status'),
                 tgid: stragegty.get('tgid'),
                 slbid: stragegty.get('slbid'),
+                tag: stragegty.get('tag') || '',
                 type: stragegty.get('type'),
                 is_abolished: false,
                 flowaccounting: stragegty.get('flowaccounting'),

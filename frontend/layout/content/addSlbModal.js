@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import './style.css';
 import 'antd.min.css';
+
 import { Form, Input,Icon,Button,Row, Col } from 'antd';
 const FormItem = Form.Item;
 
@@ -16,26 +17,15 @@ class HorizontalLoginForm extends React.Component {
     }
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.form.validateFields((err, values) => {
+        var forms = this.props.form;
+        forms.validateFields((err, values) => {
             if (!err) {
-                const {domainId} = this.props.cont;
-                this.props.contActions.addSlb(values.name, values.domain, values.p1 || '', values.p2 || '', domainId)
-                this.props.form.setFieldsValue({
-                    'name': '',
-                    'domain':'',
-                    'p1': '',
-                    'p2': ''
+                this.props.contActions.addSlb(values.name, values.domain, function(){
+                    forms.setFieldsValue({
+                            'name': '',
+                            'domain':''
+                        })
                 })
-                this.props.cont.validateDomain = {
-                    name: {
-                        status: '',
-                        info: '请输入名称'
-                    },
-                    domain: {
-                        status: '',
-                        info: '我们需要验证您填写的域名ID是否正确'
-                    }
-                }
             }
         });
     }
@@ -57,8 +47,7 @@ class HorizontalLoginForm extends React.Component {
                     label="名称"
                     validateStatus={this.props.cont.validateDomain.name.status}
                 >
-                    {getFieldDecorator('name', {
-                        rules: [{ required: true, message: '请输入测试项名称' }],
+                    {getFieldDecorator('name' , { initialValue: this.props.cont.validateDomain.name.data }, {
                     })(
                         <Input prefix={<Icon type="bulb" style={{ fontSize: 13 }} />} placeholder="10个字以内" />
                     )}
@@ -69,42 +58,31 @@ class HorizontalLoginForm extends React.Component {
                     validateStatus={this.props.cont.validateDomain.domain.status}
                     extra={this.props.cont.validateDomain.domain.info}
                 >
-                    <Row gutter={12}>
-                        <Col span={18}>
-                            {getFieldDecorator('domain', {
-                                rules: [{ required: true, message: ' ' }],
-                            })(
-                                <Input prefix={<Icon type="global" style={{ fontSize: 13 }} />}  placeholder="如不知道域名，请向相关人员询问" />
-                            )}
-                        </Col>
-                        <Col span={6}>
-                            <Button size="large" onClick={()=>{
-                                var domianName = getFieldValue('domain')
-                                this.props.contActions.vertifyDomainId(domianName)
-                            }}>验证</Button>
-                        </Col>
-                    </Row>
-                </FormItem>
-                <FormItem
-                    label="p1"
-                    validateStatus={this.props.cont.validateDomain.name.status}
-                >
-                    {getFieldDecorator('p1', {
-                        rules: [{ required: false, message: '' }],
+                        {getFieldDecorator('domain', { initialValue: this.props.cont.validateDomain.domain.data },{
                     })(
-                        <Input prefix={<Icon type="bulb" style={{ fontSize: 13 }} />} placeholder="请联系大数据部获取值" />
-                    )}
+                        <Input prefix={<Icon type="global" style={{ fontSize: 13 }} />}  placeholder="如不知道域名，请向相关人员询问" />
+                        )}
                 </FormItem>
-                <FormItem
-                    label="p2"
-                    validateStatus={this.props.cont.validateDomain.name.status}
-                >
-                    {getFieldDecorator('p2', {
-                        rules: [{ required: false, message: '' }],
-                    })(
-                        <Input prefix={<Icon type="bulb" style={{ fontSize: 13 }} />} placeholder="请联系大数据部获取值" />
-                    )}
-                </FormItem>
+                {/*<FormItem*/}
+                    {/*label="p1"*/}
+                    {/*validateStatus={this.props.cont.validateDomain.name.status}*/}
+                {/*>*/}
+                    {/*{getFieldDecorator('p1', {*/}
+                        {/*rules: [{ required: false, message: '' }],*/}
+                    {/*})(*/}
+                        {/*<Input prefix={<Icon type="bulb" style={{ fontSize: 13 }} />} placeholder="请联系大数据部获取值" />*/}
+                    {/*)}*/}
+                {/*</FormItem>*/}
+                {/*<FormItem*/}
+                    {/*label="p2"*/}
+                    {/*validateStatus={this.props.cont.validateDomain.name.status}*/}
+                {/*>*/}
+                    {/*{getFieldDecorator('p2', {*/}
+                        {/*rules: [{ required: false, message: '' }],*/}
+                    {/*})(*/}
+                        {/*<Input prefix={<Icon type="bulb" style={{ fontSize: 13 }} />} placeholder="请联系大数据部获取值" />*/}
+                    {/*)}*/}
+                {/*</FormItem>*/}
                 <FormItem className="gl-version-btn">
                     <Button onClick={()=>{
                         this.props.form.setFieldsValue({

@@ -6,12 +6,11 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as actions from './actions'
 import * as menuactions from '../menu/actions'
+import * as contActions from './actions'
 import contentactions from '../../components/actions'
 
 import './app.css';
 import 'antd.min.css';
-
-
 
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -46,8 +45,9 @@ class App extends React.Component {
                             this.props.content.mainpage.card_container_display = 'none';
                             this.props.content.mainpage.content_one_display = 'block'
                             this.props.content.mainpage.main_container_display = 'block'
-                            this.props.content.mainpage.content_two_display = 'none'
-                        }}>back to <Icon type="home" /> </Button>
+                            this.props.content.mainpage.content_two_display = 'none';
+                            this.props.content.mainpage.currentCasVal = undefined;
+                        }}>back to<Icon type="home" /> </Button>
                         乐视视频灰度发布系统
                     </Header>
                     <Content>
@@ -59,6 +59,8 @@ class App extends React.Component {
                             <div className="logo" ></div>
                             <GLMenu mode={this.props.app.mode}/>
                             <Button icon="plus" className="add-test-group-btn" onClick={()=>{
+                                console.log(this.props)
+                                this.props.cont.domainId = ''
                                 this.props.appActions.setAddSLBModalStatus(true)
                             }}>添加</Button>
                         </Sider>
@@ -81,7 +83,8 @@ function mapStateToProps(state) {
     return{
             app: state.app,
             menu: state.menu,
-            content: state.content
+            content: state.content,
+            cont: state.cont
     }
 }
 //将action的所有方法绑定到props上
@@ -89,7 +92,9 @@ function mapDispatchToProps(dispatch) {
     return  {
         appActions:bindActionCreators(actions,dispatch),
         menuActions:bindActionCreators(menuactions,dispatch),
-        contentActions: contentactions(dispatch)
+        contentActions: contentactions(dispatch),
+        contActions: bindActionCreators(contActions,dispatch)
+
     }
 }
 

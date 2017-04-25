@@ -50,17 +50,29 @@ export function validateDomainResult(status, keyval, infoval,data) {
     }
 }
 
-export function addSlb(name, domain, p1, p2, domainId){
+export function addSlb(name, domain, callbackfunc){
     return (dispatch, getState) => {
-        return dispatch(fetch.postData(slb_list_url,{name, domain, domainId, p1, p2}, function(err, result){
+        if(!name) return dispatch(validateDomainResult('error','name', '请填写测试项目名称',{name, domain}));
+        if(!domain) return dispatch(validateDomainResult('error','domain', '请填写域名',{name, domain}));
+        return dispatch(fetch.getData(slb_list_url + '/vertifyDomianId?domainName='+domain, function(err, result){
             if(err || result.status ==='failure') {
-                utilscomps.showNotification('error', '失败', '添加失败，失败原因：'+result.data );
+                return dispatch(validateDomainResult('error','domain', result.data, {}));
             }else{
-                dispatch(setAddSLBModalStatus(false))
-                var slb = result.data;
-                utilscomps.showNotification('success', '新建成功', '测试项' + name + '已经新建成功！域名ID为 '+ slb.domainId , 2);
-                return dispatch(menuActions.getMenulist())
+                var domainId = result.data;
+                return dispatch(fetch.postData(slb_list_url,{name, domain, domainId}, function(err, result){
+                    if(err || result.status ==='failure') {
+                        utilscomps.showNotification('error', '失败', '添加失败，失败原因：'+result.data );
+                    }else{
+                        dispatch(validateDomainResult('success','domain', '验证通过！域名ID为：' + result.data + '请点击确定按钮保存', {'domainId':domainId}));
+                        dispatch(setAddSLBModalStatus(false))
+                        var slb = result.data;
+                        utilscomps.showNotification('success', '新建成功', '测试项' + name + '已经新建成功！域名ID为 '+ slb.domainId , 2);
+                        if(callbackfunc) callbackfunc();
+                        return dispatch(menuActions.getMenulist())
+                    }
+                }))
             }
         }))
+
     }
 }

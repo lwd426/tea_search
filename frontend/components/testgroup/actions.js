@@ -329,7 +329,7 @@ export function validate(editting_status, slbid,tgid,name,desc,cities,servers,se
             return dispatch(validateFailure('url', '请填写至少一个url'));
         }else{
             var type = 'normal'
-            return dispatch(fetch.getData(stragety_url+ '?slbid='+slbid,function(err, result){
+            return dispatch(fetch.getData(stragety_url+ '?tgid='+tgid+ '&slbid='+slbid,function(err, result){
                 var stragetylist = result.data;
                 if(stragetylist.length === 0){//如果当前slb下没有策略，则直接保存
                     dataHandler(dispatch, optType, stra_id, slbid,tgid,name,desc,cities,servers,serverskey,urls,uids,type)
@@ -426,7 +426,7 @@ export function validate(editting_status, slbid,tgid,name,desc,cities,servers,se
                         }
 
                     }else{//url没重复、没包含关系
-                        dataHandler(dispatch, optType, slbid,tgid,name,desc,cities,servers,serverskey,urls,uids,type)
+                        dataHandler(dispatch, optType, stra_id, slbid,tgid,name,desc,cities,servers,serverskey,urls,uids,type)
 
                         // return dispatch(fetch.postData(stragety_url,{slbid,tgid,name,desc,cities,servers,serverskey,urls,uids,type}, function(err, result){
                         //         if(err || result.status === 'failure')  return dispatch(saveStragetyResult(false))
@@ -499,8 +499,8 @@ export function editStragety(stragety) {
 export function generateTags(slbid, tgid) {
     return (dispatch, getState) => {
         return dispatch(fetch.getData(tag_url + '?slbid='+slbid + '&tgid='+tgid,function(err, result){
-            if(err)  (freshStragetylist([]))
-            dispatch(freshStragetylist(result.data))
+            if(err)  dispatch(getStragetyListSuccess([], tgid, slbid))
+            dispatch(getStragetyListSuccess(result.data, tgid, slbid))
         }))
     }
 }
@@ -594,7 +594,7 @@ export function updateStragety(stra_id, tgid , slbid,  data) {
             //更新机器信息 - 添加策略名到新机器上
             return dispatch(fetch.updateData(server_url, {other:{opt: 'in', key: 'key', data:data.stra_serverskey}, type:'add'},{'stragetiesinfo':stra_id},function(err, result){
                 if(err)  dispatch(getTestGroupListSuccess([]))
-                return dispatch(fetch.getData(stragety_url + '?tgid='+tgid,function(err, result){
+                return dispatch(fetch.getData(stragety_url + '?slbid='+ slbid +'&tgid='+tgid,function(err, result){
                     if(err)  dispatch(getStragetyListSuccess([], tgid, slbid))
                     dispatch(getStragetyListSuccess(result.data, tgid, slbid))
                 }))
@@ -626,9 +626,12 @@ export function getVersionListSuccess(list, tgid,slbid) {
  */
 export function publishback(nowSnapcode, snapcode, domain, port, domainId, slbid, tgid, versionkey, versiondesc) {
     return (dispatch, getState) => {
+        console.log('ddd')
         return dispatch(fetch.getData(slb_publish_url + '/back?nowsnapcode='+nowSnapcode+'&snapcode='+snapcode+'&domain='+domain+'&port='+port+'&domainId='+domainId+ '&slbid='+slbid + '&tgid='+ tgid +'&versionkey='+versionkey  + '&versiondesc='+versiondesc,function(err, result){
+            console.log(result)
             if(err || result.status === 'failure')  return dispatch(publishSuccess(false, result.data))
             dispatch(publishSuccess(true, result.data));
+            // utilscomps.showNotification('success', '回滚成功', '回滚成功！' );
             return dispatch(versionlog_list(tgid, slbid))
         }))
     }

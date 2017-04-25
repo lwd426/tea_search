@@ -26,14 +26,14 @@ export default class EChart extends React.Component {
         }
     }
     rangeOnChange(dates, dateStrings) {
-        this.props.contentActions.mainpageActions.changeDatePicker(dateStrings);
+        this.props.contentActions.mainpageActions.changeConversionDatePicker(dateStrings);
     }
     onChange(arr){
         console.log(arr)
         this.props.contentActions.mainpageActions.changeCascader(arr);
     }
     disabledDate(current) {
-        return current && current.valueOf() > Date.now();
+        return current && current.valueOf() > (Date.now() - 24*3600*1000);
     }
     randerChart = async (date_picker, stragety_str) => {
         let startTime = moment(new Date(date_picker[0])).format('YYYY-MM-DD');
@@ -76,33 +76,40 @@ export default class EChart extends React.Component {
         }(date_picker);
 
         //循环赋值
-        // for(let link in responseData[stragetyVal]){
-        //     percentObj[link] = [];
-        //     uvObj[link] = [];
-        //     pvObj[link] = [];
-        //     showObj[link] = [];
-        //     clickObj[link] = [];
-        //     dateObj[link] = [];
 
-            tableData = [];
-            responseData[stragetyVal][linkVal].map((val,index) => {
-                //echart
-                percentObj.push((val.click_count*100/val.show_count).toFixed(2));
-                uvObj.push(val.uv);
-                pvObj.push(val.pv);
-                showObj.push(val.show_count);
-                clickObj.push(val.click_count);
-                dateObj.push(val.date)
-                //table
-                tableData.push({
-                    key: index,
-                    date: val.date,
-                    appear: val.show_count,
-                    click: val.click_count,
-                    persent: (val.click_count*100/val.show_count).toFixed(2) + '%',
-                })
+        //循环赋值echart
+        xData.forEach(function(xdate, index){
+            percentObj[index] = 0;
+            uvObj[index] = 0;
+            pvObj[index] = 0;
+            showObj[index] = 0;
+            clickObj[index] = 0;
+            dateObj[index] = 0;
+
+            responseData[stragetyVal][linkVal].map((val) => {
+                //3-4 between 2017-3-4
+                let valDateStr = (new Date(val.date).getMonth() + 1) + '-' + new Date(val.date).getDate();
+                if(xdate == valDateStr){
+                   percentObj[index] = (val.click_count*100/val.show_count).toFixed(2);
+                   uvObj[index] = val.uv;
+                   pvObj[index] = val.pv;
+                   showObj[index] = val.show_count;
+                   clickObj[index] = val.click_count;
+                   dateObj[index] = val.date;
+                }
             })
-        //}
+        })
+        //循环赋值 tableData
+        tableData = [];
+        responseData[stragetyVal][linkVal].map((val,index) => {
+            tableData.push({
+                key: index,
+                date: val.date,
+                appear: val.show_count,
+                click: val.click_count,
+                persent: (val.click_count*100/val.show_count).toFixed(2) + '%',
+            })
+        })
 
         this.setState({
             tableData: tableData
@@ -205,7 +212,7 @@ export default class EChart extends React.Component {
     }
     componentWillReceiveProps(nextProps) {
         console.log('duiji componentWillReceiveProps');
-        let date_picker = nextProps.content.mainpage.date_picker;
+        let date_picker = nextProps.content.mainpage.conversion_date_picker;
         let stragety_str = nextProps.content.mainpage.content_two_key;
         let tabsKey = nextProps.content.mainpage.main_card_key;
 
@@ -216,6 +223,8 @@ export default class EChart extends React.Component {
         return true;
     }
     render() {
+        let conversion_date_picker = this.props.content.mainpage.conversion_date_picker;
+        let conver_date_moment_val = [moment(new Date(conversion_date_picker[0])), moment(new Date(conversion_date_picker[1]))];
         const columns = [{
             title: '日期',
             dataIndex: 'date',
@@ -239,7 +248,8 @@ export default class EChart extends React.Component {
             <div>
                 <div className="rangepickerBox">
                     <RangePicker
-                        defaultValue={[moment().subtract(5, 'days'), moment().subtract(1, 'days')]}
+                        defaultValue={this.props.content.mainpage.rangeDefaultVal}
+                        value={conver_date_moment_val}
                         format={'YYYY/MM/DD'}
                         onChange={this.rangeOnChange.bind(this)}
                         disabledDate={this.disabledDate.bind(this)}

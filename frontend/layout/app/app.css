@@ -21,6 +21,7 @@
 .ant-layout-footer{
     width: 100%;
     padding: 8px 50px !important;
+    border-top: 1px solid #d9d9d9;
     color: rgba(0, 0, 0, 0.65);
     font-size: 12px;
     position: fixed;
@@ -31,7 +32,9 @@
 .ant-breadcrumb{
     margin: 12px !important;
 }
-
+#components-layout-demo-side {
+    display: block;
+}
 #components-layout-demo-side .logo {
     height: 32px;
     background: #333;
@@ -39,6 +42,9 @@
     margin: 16px;
 }
 
+#components-layout-demo-side .ant-layout-sider-collapsed{
+    display: none;
+}
 #components-layout-demo-side .ant-layout-sider-collapsed .anticon {
     font-size: 16px;
     margin-left: 8px;
@@ -64,18 +70,21 @@
 
 
 .ant-layout-sider-trigger{
-    width: 50% !important;
-    margin-left: 50%;
-    border-top: 1px solid #949090 !important;
-    border-left: 1px solid #949090 !important;
+    display: none !important;
+    /*width: 50% !important;*/
+    /*margin-left: 50%;*/
+    /*border-top: 1px solid #949090 !important;*/
+    /*border-left: 1px solid #949090 !important;*/
 }
 .ant-layout-sider{
-    width: 16% !important;
+    /*width: 16% !important;*/
     float: left;
+    height: 100%;
+    display: block;
 }
 
 .ant-layout-sider-trigger{
-    bottom: 34px !important;
+    bottom: 0px !important;
 }
 .gl-right-layout{
     width: 84% !important;
@@ -89,14 +98,19 @@
 .gl-content{
     display: block;
 }
+.ant-menu-root{
+    height: 93%;
+    overflow-y: auto;
+}
 .ant-layout-content{
     display: -webkit-box;
     width: 100%;
-    height: 94%;
+    height: 91%;
     margin-top: 3% !important;
     min-height: 604px;
     z-index: 0;
     background: #ffffff;
+    overflow: hidden;
 }
 .ant-layout-header{
     width: 100%;
@@ -122,8 +136,8 @@
     margin-left: 0%;
     position: absolute !important;
     text-align: center;
-    width: 50%;
-    bottom: 34px;
+    width: 100%;
+    bottom: 0px;
     cursor: pointer;
     height: 48px;
     border: 0px !important;
@@ -132,4 +146,10 @@
     line-height: 48px;
     background: rgba(64, 64, 64, 0.88) !important;
     color: #fff !important;
+}
+
+
+
+.ant-layout-sider.ant-layout-sider-collapsed{
+    width: 0px !important;
 }

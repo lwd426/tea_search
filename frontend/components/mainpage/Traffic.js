@@ -28,7 +28,25 @@ function inintdata(){
     }];
 };
 inintdata();
-
+//判断浏览器类型
+function myBrowser(){
+    var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+    var isOpera = userAgent.indexOf("Opera") > -1;
+    if (isOpera) { return "Opera" }; //判断是否Opera浏览器
+    if (userAgent.indexOf("Firefox") > -1) { return "FF"; } //判断是否Firefox浏览器
+    if (userAgent.indexOf("Chrome") > -1){ return "Chrome"; }
+    if (userAgent.indexOf("Safari") > -1) { return "Safari"; } //判断是否Safari浏览器
+    if (userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera) { return "IE"; }; //判断是否IE浏览器
+    if (userAgent.indexOf("Trident") > -1) { return "Edge"; } //判断是否Edge浏览器
+}
+function SaveAs5(imgURL) {
+    var oPop = window.open(imgURL,"","width=1, height=1, top=5000, left=5000");
+    for(; oPop.document.readyState != "complete"; ) {
+        if (oPop.document.readyState == "complete")break;
+    }
+    oPop.document.execCommand("SaveAs");
+    oPop.close();
+}
 
 
 
@@ -46,7 +64,12 @@ export default class EChart extends React.Component {
         let startTime = moment(new Date(date_picker[0])).format('YYYY-MM-DD');
         let endTime = moment(new Date(date_picker[1])).format('YYYY-MM-DD');
         let res = await request.getTrafficDataByStragety(stragety_arr, startTime, endTime);
-        let responseData = res.result.data.reverse();
+
+        if(res.result.status == 'error'){
+            alert('数据返回 ' + res.result.status)
+            return
+        }
+        let responseData = res.result.data;
 
         let uvArr = [];
         let pvArr = [];
@@ -79,8 +102,30 @@ export default class EChart extends React.Component {
                 });
             });
 
-            //循环赋值
+            let xData = function() {
+                var start = new Date(date_picker[0]).getTime();
+                var end = new Date(date_picker[1]).getTime();
+                var length = (end - start)/(24*60*60*1000) + 1;
+
+                var data_arr = [];
+                var date = moment(new Date(date_picker[0]));
+                for (var i = 0; i < length; i++) {
+                    var month = date.month() + 1;
+                    var day = date.date();
+                    data_arr.push(month + "-" + day);
+
+                    date = date.add(1, 'days');
+                }
+                //表格数据
+                // tableData.forEach(function(v, index, arr_self){
+                //     v.date = data_arr[index]
+                // })
+                return data_arr;
+            }(date_picker);
+
+            //循环赋值tableData
             tableData = [];
+            console.log(responseData)
             responseData.map((val,index) => {
                 tableData.push({
                     key: index + 1,
@@ -93,13 +138,30 @@ export default class EChart extends React.Component {
                 })
                 let arr_uv = Object.entries(val.uv);
                 arr_uv.map((v,i) => {
-                    uvArr[i].push(v[1].pvuv)
-                    pvArr[i].push(v[1].pv);
-
+                    // uvArr[i].push(v[1].pvuv)
+                    // pvArr[i].push(v[1].pv);
                     tableData[index]['visitor' + (i+1)] = v[1].pvuv;
                     tableData[index]['pv' + (i+1)] = v[1].pv;
                 })
             });
+            //循环赋值echart
+            xData.forEach(function(xdate, index){
+                strageties.map((v,i) => {
+                    uvArr[i][index] = 0;
+                    pvArr[i][index] = 0;
+                });
+                responseData.forEach(function(val){
+                    //3-4 between 2017-3-4
+                    let valDateStr = (new Date(val.date).getMonth() + 1) + '-' + new Date(val.date).getDate();
+                    if(xdate == valDateStr){
+                        let arr_uv = Object.entries(val.uv);
+                        arr_uv.forEach(function(v,i){
+                            uvArr[i][index] = v[1].pvuv;
+                            pvArr[i][index] = v[1].pv;
+                        })
+                    }
+                })
+            })
 
             //遍历生成 echart 配置
             strageties.map((v,i) => {
@@ -135,33 +197,10 @@ export default class EChart extends React.Component {
             // 基于准备好的dom，初始化echarts实例
             var myChart = echarts.init(document.getElementById('line'));
             // 绘制图表
-            let xData = function() {
-                var start = new Date(date_picker[0]).getTime();
-                var end = new Date(date_picker[1]).getTime();
-                var length = (end - start)/(24*60*60*1000) + 1;
-
-                var data_arr = [];
-                var date = moment(new Date(date_picker[0]));
-                for (var i = 0; i < length; i++) {
-                    var month = date.month() + 1;
-                    var day = date.date();
-                    data_arr.push(month + "-" + day);
-
-                    date = date.add(1, 'days');
-                }
-
-                //表格数据
-                // tableData.forEach(function(v, index, arr_self){
-                //     v.date = data_arr[index]
-                // })
-                console.log(tableData)
-                _this.setState({
-                    tableData: tableData,
-                    tableColumns: tableColumns
-                })
-
-                return data_arr;
-            }(date_picker);
+            _this.setState({
+                tableData: tableData,
+                tableColumns: tableColumns
+            })
 
             myChart.setOption({
                 title: { text: '' },
@@ -224,7 +263,29 @@ export default class EChart extends React.Component {
             });
 
         }else{
-            alert('所选日期无数据！')
+            alert('所选日期无数据！');
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('line'));
+            myChart.setOption({
+
+                title: { 
+                    text: '无数据',
+                    left: 'center',
+                },
+                yAxis: [
+                    {
+                        type: 'value',
+                        name: '访问用户',
+                        min: 0,
+                        max: 2000,
+                        interval: 200,
+                        axisLabel: {
+                            formatter: '{value}'
+                        },
+                    }
+                ],
+
+            });
         }
     }
     async exportTable(){
@@ -233,14 +294,34 @@ export default class EChart extends React.Component {
         let startTime = moment(new Date(date_picker[0])).format('YYYY-MM-DD');
         let endTime = moment(new Date(date_picker[1])).format('YYYY-MM-DD');
         console.log(stragety_arr + startTime + endTime)
-        //let res = await request.getTrafficDataByStragety(stragety_arr, startTime, endTime);
+        // let res = await request.getTrafficDataByStragety(stragety_arr, startTime, endTime);
 
         let data = {};
         data.stragety_arr = stragety_arr;
         data.startTime = startTime;
         data.endTime = endTime;
-        // let res = await lib.postTableData(data);
-        // console.log(res);
+
+
+        let res = await lib.postTableData(data);
+        console.log(res);
+        myBrowser();
+        if (myBrowser()==="IE"||myBrowser()==="Edge"){ //IE
+            odownLoad.href="#";
+            var oImg=document.createElement("img");
+            oImg.src=res;
+            oImg.id="downImg";
+            var odown=document.getElementById("down");
+            odown.appendChild(oImg);
+            SaveAs5(document.getElementById('downImg').src)
+        }else{ //!IE
+            var elemIF = document.createElement("iframe");
+            elemIF.src = res;
+            elemIF.style.display = "none";
+            elemIF.href=res;
+            elemIF.download="";
+            document.body.appendChild(elemIF);
+
+        }
     }
     componentDidMount() {
         // let date_picker = this.props.content.mainpage.date_picker
@@ -278,7 +359,7 @@ export default class EChart extends React.Component {
             <div>
                 <div id="line" style={{width:'100%',height:400}} className="chart-box"></div>
                 <div className="tableBox">
-                    {/*<Button className="export" onClick={this.exportTable.bind(this)}><Icon type="download" />导出表格</Button>*/}
+                    <Button className="export" onClick={this.exportTable.bind(this)}><Icon type="download" />导出表格</Button>
                     <Table bordered={true} columns={this.state.tableColumns} dataSource={this.state.tableData} /> 
                 </div>
             </div>          
