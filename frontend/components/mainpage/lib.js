@@ -93,7 +93,7 @@ export function setMainPageOptions(testGroups, arr, type) {
                     inObj = {}
                 }
                 inObj['value'] = project.objectId;
-                inObj['label'] = project.name + '（new）';
+                inObj['label'] = project.name;
                 inObj['disabled'] = true;
                 arr.push(inObj)
             }
@@ -109,11 +109,9 @@ export function setMainPageOptions(testGroups, arr, type) {
                     inObj = {}
                 }
                 inObj['value'] = project.objectId;
-                inObj['label'] = project.name + '(stopped)' + index;
+                inObj['label'] = project.name;
                 inObj['strageties'] = strageties;
                 arr.push(inObj)
-                console.log(project.name);
-                console.log(project.objectId)
             }
         }
     })

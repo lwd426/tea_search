@@ -57,7 +57,7 @@ class GLMainpage extends React.Component {
 
     }
     disabledDate(current) {
-        return current && current.valueOf() > Date.now();
+        return current && current.valueOf() > (Date.now() - 24*3600*1000);
     }
     collapseCallback(key) {
         console.log(key);
@@ -252,18 +252,9 @@ class GLMainpage extends React.Component {
                             
                         </div>
 
-                        {/*<div className="dropdownBox">
-                            <span>策略名称 ：</span>
-                            <Dropdown overlay={menu}>
-                              <Button>
-                                切换版本 <Icon type="down" />
-                              </Button>
-                            </Dropdown>
-                        </div>*/}
-
                         <div className="rangepickerBox">
                             <RangePicker
-                              defaultValue={[moment().subtract(5, 'days'), moment().subtract(1, 'days')]}
+                              defaultValue={this.props.content.mainpage.rangeDefaultVal}
                               format={dateFormat}
                               onChange={this.rangeOnChange.bind(this)}
                               disabledDate={this.disabledDate.bind(this)}
@@ -273,21 +264,6 @@ class GLMainpage extends React.Component {
                     </TabPane>
 
                     <TabPane tab="转化率" key="2">
-
-                        {/*<div className="rangepickerBox">
-                            <RangePicker
-                                defaultValue={[moment().subtract(7, 'days'), moment()]}
-                                format={dateFormat}
-                                onChange={this.rangeOnChange.bind(this)}
-                                disabledDate={this.disabledDate.bind(this)}
-                            />
-                        </div>
-                        <div className="CascaderBox">
-                            <span>优化指标 ：</span>
-                            <Cascader options={options_two} defaultValue={['BtnClick']} onChange={this.onChange} />
-                        </div>
-                        <div className="clear"></div>*/}
-
                         <div id = "content_one" style={{display:this.props.content.mainpage.content_one_display}}>
                             <Conversion {...this.props}/>
                         </div>
@@ -298,7 +274,6 @@ class GLMainpage extends React.Component {
                             }}><Icon type="left" />返回</Button>
                             <Duiji {...this.props}/>
                         </div>
-
                     </TabPane>
 
                   </Tabs>

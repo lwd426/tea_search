@@ -10,13 +10,15 @@ let initState = {
     content_two_key: 1,
     stragety: [],
     date_picker:[moment().subtract(5, 'days').format('YYYY/MM/DD'),moment().subtract(1, 'days').format('YYYY/MM/DD')],
+    conversion_date_picker:[moment().subtract(5, 'days').format('YYYY/MM/DD'),moment().subtract(1, 'days').format('YYYY/MM/DD')],
+    rangeDefaultVal: [moment().subtract(5, 'days'), moment().subtract(1, 'days')],
     menulist: [],
     testgrouplist: [],
     main_card_key: "1",
     options_two: [{
-                    value: '',
-                    label: ''
-                }],
+        value: '',
+        label: ''
+    }],
 }
 
 let reducer = (state = initState,action)=>{
@@ -37,6 +39,11 @@ let reducer = (state = initState,action)=>{
         case TYPES.DATE_PICKER:{
             return Object.assign({}, state, {
                 date_picker: action.date_picker
+            })
+        }
+        case 'CONVERSIONDATEPICKER':{
+            return Object.assign({},state, {
+                conversion_date_picker: action.conversion_date_picker
             })
         }
         case TYPES.MAIN_CONTAINER_DISPLAY:{

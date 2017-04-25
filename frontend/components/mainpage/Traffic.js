@@ -69,7 +69,7 @@ export default class EChart extends React.Component {
             alert('数据返回 ' + res.result.status)
             return
         }
-        let responseData = res.result.data.reverse();
+        let responseData = res.result.data;
 
         let uvArr = [];
         let pvArr = [];
@@ -125,6 +125,7 @@ export default class EChart extends React.Component {
 
             //循环赋值tableData
             tableData = [];
+            console.log(responseData)
             responseData.map((val,index) => {
                 tableData.push({
                     key: index + 1,
