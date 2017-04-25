@@ -36,6 +36,24 @@ router.post('/conversionData/', function *(next) {
     this.body = result;
 });
 
+router.post('/duijiData/', function *(next) {
+
+    console.log(this.request.body)
+    var stragety_arr = this.request.body.stragety_arr || '';
+    var startTime = this.request.body.startTime || '';
+    var endTime = this.request.body.endTime || '';
+    var data = {};
+    
+    data['start'] = startTime;
+    data['end'] = endTime;
+    data['gls'] = stragety_arr;
+    console.log(data)
+
+    //调用大数据接口
+    var result = yield lib.getDuijiDataByStragety(data);
+    this.body = result;
+});
+
 
 //test
 router.get('/trafficData/:name', function *(next) {

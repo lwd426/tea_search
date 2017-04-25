@@ -8,6 +8,9 @@ import moment from 'moment';
 import request from '../../request';
 import * as lib from './lib';
 
+const HOST = require('../../../config').HOST;
+const chart_url = HOST + '/charts/trafficData';
+
 
 let tableColumns = [], tableData = [];
 
@@ -302,7 +305,7 @@ export default class EChart extends React.Component {
         data.endTime = endTime;
 
 
-        let res = await lib.postTableData(data);
+        let res = await lib.postTableData(chart_url, data);
         console.log(res);
         myBrowser();
         if (myBrowser()==="IE"||myBrowser()==="Edge"){ //IE

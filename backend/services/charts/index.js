@@ -40,6 +40,8 @@ module.exports = {
             })
         })
 
+
+
         // var csv = json2csv({ data: tableData, fields: fields, fieldNames: fieldNames });
         // var newCsv = iconv.encode(csv, 'GBK'); // 转编码
         // fs.writeFileSync('file.csv', newCsv, function(err) {
@@ -57,8 +59,67 @@ module.exports = {
     },
     getConversionDataByStragety: function *(data){
         console.log(data)
-        var result = yield db.post('get_statistic_action/', data);
-        return result
+        var res = yield db.post('get_statistic_action/', data);
+        var responseData = res.result.data.reverse();
+        console.log(responseData)
+
+        var tableData = [];
+        var fields = ['date','useramount'];
+        var fieldNames = ['日期', '访客总数'];
+        responseData.map((val,index) => {
+            tableData.push({
+                date: val.date,
+                useramount: val.uv_all,
+                visit: {},
+                percent: {}
+            })
+            var arr_uv = Object.entries(val.uv);
+            arr_uv.map((v,i) => {
+                tableData[index]['visit'][v[0]] = v[1].count;
+                tableData[index]['percent'][v[0]] = (v[1].count*100/val.uv_all).toFixed(2);
+
+                fields.push('visit.' + v[0]);
+                fields.push('percent.' + v[0]);
+
+                fieldNames.push('版本' + v[1].name + '访客数');
+                fieldNames.push('版本' + v[1].name + '访问用户比例');
+            })
+        })
+
+        var filepath = yield utils.save_csv(result);
+        return filepath;
+    },
+    getDuijiDataByStragety: function *(data){
+        console.log(data)
+        var res = yield db.post('get_statistic_action/', data);
+        var responseData = res.result.data.reverse();
+        console.log(responseData)
+
+        var tableData = [];
+        var fields = ['date','useramount'];
+        var fieldNames = ['日期', '访客总数'];
+        responseData.map((val,index) => {
+            tableData.push({
+                date: val.date,
+                useramount: val.uv_all,
+                visit: {},
+                percent: {}
+            })
+            var arr_uv = Object.entries(val.uv);
+            arr_uv.map((v,i) => {
+                tableData[index]['visit'][v[0]] = v[1].count;
+                tableData[index]['percent'][v[0]] = (v[1].count*100/val.uv_all).toFixed(2);
+
+                fields.push('visit.' + v[0]);
+                fields.push('percent.' + v[0]);
+
+                fieldNames.push('版本' + v[1].name + '访客数');
+                fieldNames.push('版本' + v[1].name + '访问用户比例');
+            })
+        })
+
+        var filepath = yield utils.save_csv(columns, result);
+        return filepath;
     }
 }
 
