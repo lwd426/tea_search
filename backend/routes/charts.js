@@ -24,15 +24,34 @@ router.post('/conversionData/', function *(next) {
     var stragety_arr = this.request.body.stragety_arr || '';
     var startTime = this.request.body.startTime || '';
     var endTime = this.request.body.endTime || '';
+    var linkVal = this.request.body.linkVal;
     var data = {};
     
     data['start'] = startTime;
     data['end'] = endTime;
     data['gls'] = stragety_arr;
-    console.log(data)
 
     //调用大数据接口
-    var result = yield lib.getConversionDataByStragety(data);
+    var result = yield lib.getConversionDataByStragety(data, linkVal);
+    this.body = result;
+});
+
+router.post('/duijiData/', function *(next) {
+
+    console.log(this.request.body)
+    var stragety_arr = this.request.body.stragety_arr || '';
+    var startTime = this.request.body.startTime || '';
+    var endTime = this.request.body.endTime || '';
+    var linkVal = this.request.body.linkVal;
+    var stragetyVal = this.request.body.stragety_str
+    var data = {};
+    
+    data['start'] = startTime;
+    data['end'] = endTime;
+    data['gls'] = stragety_arr;
+
+    //调用大数据接口
+    var result = yield lib.getDuijiDataByStragety(data, stragetyVal, linkVal);
     this.body = result;
 });
 

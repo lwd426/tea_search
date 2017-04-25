@@ -1,7 +1,7 @@
 import { CONTENT, Meta, geo1p2DB } from './if';
 import { Verify } from './check';
 
-import { four } from './four';
+import { ARROW } from './arrow';
 const defaultUpstream = "defaultUpstream";
 let allServers = [];
 
@@ -95,10 +95,9 @@ function array2one(arr) {
 }
 
 function nginx(arr: any[], domain = 'test.m.le.com', port = '80') {
-    console.log("nginx:来的");
+    console.log("nginx传过来的参数：");
     console.log(arr);
     needDefault = true;
-    //let domain = 'test.m.le.com';//todo
     //先加上开始
     arr.forEach(item => {
         for (let i = 0; i < item.serverArray.length; i++) {
@@ -129,7 +128,7 @@ function nginx(arr: any[], domain = 'test.m.le.com', port = '80') {
     let geo = geoIp(arr);
     let wjgz = wanjianguizong(arr);
     const res = wjgz.map(item => {
-        return item.servers ? new four(item, allServers).doit() : new Upstream(item).doit();
+        return item.servers ? new ARROW(item, allServers).doit() : new Upstream(item).doit();
     });
 
     let content = `${geo}`;
@@ -153,7 +152,7 @@ function nginx(arr: any[], domain = 'test.m.le.com', port = '80') {
     // content += location;
 
     console.log(content);
-    re.content = content.replace(/\n/g, ' ').replace(/\s+/g, ' ');
+    re.content = content.replace(/\n/g, ' ').replace(/\s+/g, ' ');//去掉换行和多余的空格
     return re;
 }
 function geoIp(arr) {

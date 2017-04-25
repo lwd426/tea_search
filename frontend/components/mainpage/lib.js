@@ -1,9 +1,7 @@
 import 'whatwg-fetch';
-const HOST = require('../../../config').HOST;
-const chart_url = HOST + '/charts/trafficData';
 
 
-async function postData (url, data) {
+async function postData (chart_url, data) {
     try{
         let response = await fetch(chart_url,{
             method: 'POST',
@@ -19,7 +17,7 @@ async function postData (url, data) {
     }
 }
 
-export async function postTableData (data){
+export async function postTableData (chart_url, data){
     return await postData(chart_url, data)
 }
 

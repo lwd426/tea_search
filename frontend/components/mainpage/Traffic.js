@@ -8,6 +8,9 @@ import moment from 'moment';
 import request from '../../request';
 import * as lib from './lib';
 
+const HOST = require('../../../config').HOST;
+const chart_url = HOST + '/charts/trafficData';
+
 
 let tableColumns = [], tableData = [];
 
@@ -301,26 +304,26 @@ export default class EChart extends React.Component {
         data.endTime = endTime;
 
 
-        let res = await lib.postTableData(data);
+        let res = await lib.postTableData(chart_url, data);
         console.log(res);
-        myBrowser();
-        if (myBrowser()==="IE"||myBrowser()==="Edge"){ //IE
-            odownLoad.href="#";
-            var oImg=document.createElement("img");
-            oImg.src=res;
-            oImg.id="downImg";
-            var odown=document.getElementById("down");
-            odown.appendChild(oImg);
-            SaveAs5(document.getElementById('downImg').src)
-        }else{ //!IE
-            var elemIF = document.createElement("iframe");
-            elemIF.src = res;
-            elemIF.style.display = "none";
-            elemIF.href=res;
-            elemIF.download="";
-            document.body.appendChild(elemIF);
+        // myBrowser();
+        // if (myBrowser()==="IE"||myBrowser()==="Edge"){ //IE
+        //     odownLoad.href="#";
+        //     var oImg=document.createElement("img");
+        //     oImg.src=res;
+        //     oImg.id="downImg";
+        //     var odown=document.getElementById("down");
+        //     odown.appendChild(oImg);
+        //     SaveAs5(document.getElementById('downImg').src)
+        // }else{ //!IE
+        //     var elemIF = document.createElement("iframe");
+        //     elemIF.src = res;
+        //     elemIF.style.display = "none";
+        //     elemIF.href=res;
+        //     elemIF.download="";
+        //     document.body.appendChild(elemIF);
 
-        }
+        // }
     }
     componentDidMount() {
         // let date_picker = this.props.content.mainpage.date_picker
