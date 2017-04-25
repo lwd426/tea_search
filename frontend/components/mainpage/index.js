@@ -129,7 +129,7 @@ class GLMainpage extends React.Component {
                     if(arr.length > 0){
                         obj['children'] = arr;
                         options.push(obj);
-                    } 
+                    }
                 }
             })
         }
@@ -150,8 +150,6 @@ class GLMainpage extends React.Component {
         return (
             <div className="mainpage">
                 <div className="quickBox">
-                    {/*<span className="gl-quick"></span>*/}
-                    {/*<Icon className="gl-setting-btn" type="setting" >*/}
                     <div className="center">
                     <Button icon="setting" className={this.props.app.collapsed ? "gl-main-l-btn" : "gl-main-l-btn close"} onClick={this.props.appActions.changeSettingBtn}>{this.props.app.collapsed ? '打开配置面板' : '关闭配置面板'}</Button>
                     <Popover content={<Cascader placeholder="请选择" options={options} onChange={this.onChange.bind(this)} value={currentCasVal} expandTrigger='hover' />
@@ -253,7 +251,7 @@ class GLMainpage extends React.Component {
                   <Tabs type="card" onChange={this.tabChange.bind(this)}>
                     <TabPane tab="流量" key="1">
                         <div className="spanBox">
-                            
+
                         </div>
 
                         <div className="rangepickerBox">

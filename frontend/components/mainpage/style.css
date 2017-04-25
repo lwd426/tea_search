@@ -130,7 +130,7 @@
 }
 .gl-main-l-btn.close{
     background: rgba(22, 20, 20, 0.96);
-    color: #ffffff;
+    color: #b9b6b6;
     -webkit-box-shadow:  0px 2px 5px #888888;
     -moz-box-shadow:  0px 2px 5px #888888;
     box-shadow: 0px 2px 5px #888888;
@@ -153,8 +153,8 @@
     position: relative;
     overflow: hidden;
     transition: all .3s;
-    width: 32%;
-    margin: 5px 0.4%;
+    width: 48%;
+    margin: 5px 1%;
 }
 .ant-collapse{
     float: left;
