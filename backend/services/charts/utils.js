@@ -5,12 +5,9 @@
  * Created by lwd426 on 17/3/30.
  */
 
-var utils = require('../utils');
 var moment = require('moment')
 var fse = require('fs-extra')
 var json2csv = require('json2csv');
-var cache = require('../utils/cache');
-var chart = require('./chart')
 
 function columns_gen(sitetype) {
     var i = 1;
@@ -48,7 +45,7 @@ function columns_gen(sitetype) {
     }
     return result;
 }
-function deepCopy(p, c)=> {
+function deepCopy(p, c) {
     var c = c || {};
     for (var i in p) {
         if (typeof p[i] === 'object') {
@@ -61,12 +58,19 @@ function deepCopy(p, c)=> {
     return c;
 }
 module.exports = {
-    save_csv: function *(data) {
+    /**
+     * 根据表头和数据生成csv到本地并返回路路径
+     * @param columns 数据结构：{
+     *       fields: ['srctype', 'bname','sname','date','uid','phone','desc','bac','url','ip'],
+     *       fieldNames: ['反馈来源', '错误大类','错误类型','时间','用户UID','联系方式','描述','备注','页面地址','ip']
+     * }
+     * @param data
+     */
+    save_csv: function *(columns, data) {
         var fs = require('fs');
-        var columnsinfo = columns_gen();
-        var fields = columnsinfo.columns;
-        var fieldNames = columnsinfo.fieldNames;
-        var construct = columnsinfo.cell;
+        var fields = columns.fields;
+        var fieldNames = columns.fieldNames;
+        var construct = fields;
         var infos = []
         data.map((obj) => {
             var cell = deepCopy(construct);

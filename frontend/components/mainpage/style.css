@@ -89,6 +89,9 @@
     background: #756f6f;
     color: #ffffff;
 }
+.ant-card-body{
+    padding: 0px;
+}
 .ant-card{
     float: left;
     background: #fff;
@@ -147,7 +150,6 @@
 .gl-m-lefttitle{
     color: rgb(85, 85, 85);
     margin: 0 auto;
-    margin-top: 40px;
     height: 27px;
     width: 94%;
     border-bottom: 1px dashed #d9d9d9;
