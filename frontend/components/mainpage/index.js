@@ -152,11 +152,13 @@ class GLMainpage extends React.Component {
                 <div className="quickBox">
                     {/*<span className="gl-quick"></span>*/}
                     {/*<Icon className="gl-setting-btn" type="setting" >*/}
-                    <Button icon="setting" className={this.props.app.collapsed ? "gl-main-btn" : "gl-main-btn close"} onClick={this.props.appActions.changeSettingBtn}>{this.props.app.collapsed ? '打开配置面板' : '关闭配置面板'}</Button>
+                    <div className="center">
+                    <Button icon="setting" className={this.props.app.collapsed ? "gl-main-l-btn" : "gl-main-l-btn close"} onClick={this.props.appActions.changeSettingBtn}>{this.props.app.collapsed ? '打开配置面板' : '关闭配置面板'}</Button>
                     <Popover content={<Cascader placeholder="请选择" options={options} onChange={this.onChange.bind(this)} value={currentCasVal} expandTrigger='hover' />
                     } title="请选择测试组" trigger="click">
-                        <Button icon="scan">测试组快捷入口</Button>
+                        <Button icon="scan" className="gl-main-r-btn">测试组快捷入口</Button>
                     </Popover>
+                    </div>
                 </div>
 
                 <div className="main-container" style={{display: this.props.content.mainpage.main_container_display}}>
