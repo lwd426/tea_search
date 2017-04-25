@@ -6,6 +6,7 @@
  */
 var json2csv = require('json2csv');
 var iconv = require('iconv-lite');
+var utils = require('./utils')
 var fs = require('fs');
 
 var db = require('../../datasource/charts');
@@ -39,14 +40,20 @@ module.exports = {
             })
         })
 
-        var csv = json2csv({ data: tableData, fields: fields, fieldNames: fieldNames });
-        var newCsv = iconv.encode(csv, 'GBK'); // 转编码
-        fs.writeFileSync('file.csv', newCsv, function(err) {
-          if (err) throw err;
-          console.log('file saved');
-        });
-
-        return tableData
+        // var csv = json2csv({ data: tableData, fields: fields, fieldNames: fieldNames });
+        // var newCsv = iconv.encode(csv, 'GBK'); // 转编码
+        // fs.writeFileSync('file.csv', newCsv, function(err) {
+        //   if (err) throw err;
+        //   console.log('file saved');
+        // });
+        //
+        // var filepath = 'usercallbacks'+ moment().valueOf() +'.csv';
+        // fse.mkdirsSync('public/csv/')
+        // var dataBuffer = Buffer.concat([new Buffer('\xEF\xBB\xBF', 'binary'), new Buffer(csv)]);
+        // var result = fse.outputFileSync('public/csv/'+filepath, dataBuffer);
+        // resolve('csv/' + filepath)
+        var filepath = yield utils.save_csv(result);
+        return filepath;
     },
     getConversionDataByStragety: function *(data){
         console.log(data)

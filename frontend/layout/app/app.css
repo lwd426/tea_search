@@ -32,7 +32,9 @@
 .ant-breadcrumb{
     margin: 12px !important;
 }
-
+#components-layout-demo-side {
+    display: block;
+}
 #components-layout-demo-side .logo {
     height: 32px;
     background: #333;
@@ -40,6 +42,9 @@
     margin: 16px;
 }
 
+#components-layout-demo-side .ant-layout-sider-collapsed{
+    display: none;
+}
 #components-layout-demo-side .ant-layout-sider-collapsed .anticon {
     font-size: 16px;
     margin-left: 8px;
@@ -65,15 +70,17 @@
 
 
 .ant-layout-sider-trigger{
-    width: 50% !important;
-    margin-left: 50%;
-    border-top: 1px solid #949090 !important;
-    border-left: 1px solid #949090 !important;
+    display: none !important;
+    /*width: 50% !important;*/
+    /*margin-left: 50%;*/
+    /*border-top: 1px solid #949090 !important;*/
+    /*border-left: 1px solid #949090 !important;*/
 }
 .ant-layout-sider{
     /*width: 16% !important;*/
     float: left;
     height: 100%;
+    display: block;
 }
 
 .ant-layout-sider-trigger{
@@ -129,7 +136,7 @@
     margin-left: 0%;
     position: absolute !important;
     text-align: center;
-    width: 50%;
+    width: 100%;
     bottom: 0px;
     cursor: pointer;
     height: 48px;
@@ -139,4 +146,10 @@
     line-height: 48px;
     background: rgba(64, 64, 64, 0.88) !important;
     color: #fff !important;
+}
+
+
+
+.ant-layout-sider.ant-layout-sider-collapsed{
+    width: 0px !important;
 }

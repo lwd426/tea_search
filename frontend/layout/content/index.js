@@ -3,7 +3,7 @@ import GLDeviceInfo from '../../components/deviceinfo';
 import GLDataChart from '../../components/datachart';
 import GLTestInfo from '../../components/testgroup';
 import GLMainPage from '../../components/mainpage';
-import { Button, Modal ,Layout, Breadcrumb} from 'antd';
+import { Button, Modal ,Layout,Icon, Breadcrumb} from 'antd';
 
 import '../app/app.css';
 import './style.css';
@@ -66,9 +66,6 @@ class GLContent extends React.Component {
                 >
                     <GLAddServer {...this.props} />
                 </Modal>
-                {/*<Button className="gl-addslb-btn" icon="add" onClick={()=>{*/}
-                    {/*this.props.contActions.setAddSLBModalStatus(true)*/}
-                {/*}}>新增测试项</Button>*/}
             </div>
         );
     }

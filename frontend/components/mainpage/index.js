@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './style.css';
 import 'antd.min.css';
-import { Table, Input, Icon, Button,Cascader, Card,Tabs , Menu, Dropdown, message,Popconfirm, Collapse } from 'antd';
+import { Table, Input, Icon, Button,Popover,Cascader, Card,Tabs , Menu, Dropdown, message,Popconfirm, Collapse } from 'antd';
 import Traffic from './Traffic.js';
 import Conversion from './Conversion.js';
 import Duiji from './duiji.js';
@@ -58,9 +58,6 @@ class GLMainpage extends React.Component {
     }
     disabledDate(current) {
         return current && current.valueOf() > Date.now();
-    }
-    collapseCallback(key) {
-        console.log(key);
     }
     switchContentShow(none, block, arr, currentCasVal){
         let strageties = [];
@@ -150,14 +147,20 @@ class GLMainpage extends React.Component {
         const currentCasVal = this.props.content.mainpage.currentCasVal;
         return (
             <div className="mainpage">
-                <div className="quickBox"><span className="gl-quick">快捷入口</span><Cascader placeholder="请选择" options={options} onChange={this.onChange.bind(this)} value={currentCasVal} expandTrigger='hover' /></div>
+                <div className="quickBox">
+                    {/*<span className="gl-quick"></span>*/}
+                    {/*<Icon className="gl-setting-btn" type="setting" >*/}
+                    <Button icon="setting" className={this.props.app.collapsed ? "gl-main-btn" : "gl-main-btn close"} onClick={this.props.appActions.changeSettingBtn}>{this.props.app.collapsed ? '打开配置面板' : '关闭配置面板'}</Button>
+                    <Popover content={<Cascader placeholder="请选择" options={options} onChange={this.onChange.bind(this)} value={currentCasVal} expandTrigger='hover' />
+                    } title="请选择测试组" trigger="click">
+                        <Button icon="scan">测试组快捷入口</Button>
+                    </Popover>
+                </div>
 
                 <div className="main-container" style={{display: this.props.content.mainpage.main_container_display}}>
 
-                    <Collapse defaultActiveKey={['1','2','3']} onChange={this.collapseCallback}>
-
                         {this.state.testGroupsArr.map((q, index) =>
-                        <Card title={q.slb_name + '/' + q.name} extra={<a href="#" onClick={(e) =>{
+                        <Card title={q.slb_name + '/' + q.name} key={index+1} extra={<a href="#" onClick={(e) =>{
                             e.stopPropagation();
                             let currentCasVal = [q.slb_objectId, q.objectId];
                             this.props.menu.slbid = currentCasVal[0] || '';
@@ -228,7 +231,6 @@ class GLMainpage extends React.Component {
                         </Card>
                         )}
 
-                    </Collapse>
                 </div>
 
                 <div className="card-container" style={{display: this.props.content.mainpage.card_container_display}}>
