@@ -5,12 +5,9 @@
  * Created by lwd426 on 17/3/30.
  */
 
-var utils = require('../utils');
 var moment = require('moment')
 var fse = require('fs-extra')
 var json2csv = require('json2csv');
-var cache = require('../utils/cache');
-var chart = require('./chart')
 
 function columns_gen(sitetype) {
     var i = 1;
