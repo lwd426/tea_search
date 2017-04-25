@@ -65,7 +65,6 @@ export default class EChart extends React.Component {
         let str_arr = '["' + stragety_str + '"]'
         let res = await request.getConversionDataByStragety(str_arr, startTime, endTime);
         let responseData = res.result.data;
-        console.log(responseData);
         //策略
         let stragetyVal = stragety_str;
         //link
@@ -251,14 +250,15 @@ export default class EChart extends React.Component {
         let stragety_arr = this.props.content.mainpage.strageties;
         let startTime = moment(new Date(date_picker[0])).format('YYYY-MM-DD');
         let endTime = moment(new Date(date_picker[1])).format('YYYY-MM-DD');
-        console.log(stragety_arr + startTime + endTime)
-        // let res = await request.getTrafficDataByStragety(stragety_arr, startTime, endTime);
+        let casVal = this.props.content.mainpage.casVal || this.props.content.mainpage.options_two[0].value;
+        let stragety_str = this.props.content.mainpage.content_two_key;
 
         let data = {};
         data.stragety_arr = stragety_arr;
         data.startTime = startTime;
         data.endTime = endTime;
-
+        data.linkVal = casVal;
+        data.stragety_str = stragety_str;
 
         let res = await lib.postTableData(chart_url, data);
         console.log(res);

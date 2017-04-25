@@ -1,7 +1,7 @@
 import 'whatwg-fetch';
 
 
-async function postData (url, data) {
+async function postData (chart_url, data) {
     try{
         let response = await fetch(chart_url,{
             method: 'POST',
