@@ -194,8 +194,8 @@ export default class EChart extends React.Component {
 
             myChart.setOption({
                 title: {
-                    "text": "流量统计表",
-                    "subtext": "反馈总量趋势图和各类型反馈堆叠图",
+                    "text": "流量日统计表",
+                    "subtext": "各版本单日页面访问量PV、UV趋势图",
                     "x": "center",
                     "y": "top",
                     "textStyle": {
@@ -217,14 +217,7 @@ export default class EChart extends React.Component {
                 legend: {
                     data: legendDate,
                     bottom: 0,
-                    right: 50,
-                    formatter: function (name) {
-                        return echarts.format.truncateText(name, 150, '14px Microsoft Yahei', '…');
-                    },
-                    tooltip: {
-                        show: true
-                    },
-                    height: 50
+                    right: 50
                 },
                 xAxis: [
                     {

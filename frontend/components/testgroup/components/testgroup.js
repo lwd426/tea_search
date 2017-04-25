@@ -43,7 +43,13 @@ class GLTestgroup extends React.Component {
             render: (text, test) => {
                 return (
                 <span>
-                  <a href="#" onClick={()=>{
+                  <Button disabled={test.status !== 'new' ? false : true} className="gl-btn-without-border" href="#" onClick={()=>{
+                      let currentCasVal = [that.props.menu.slbid,test.code];
+                      that.props.menu.wintype = 'mainpage';
+                      this.props.app.collapsed = true;
+                      that.props.contentActions.mainpageActions.switchContentShow('none','block','["'+test.tags.join('","')+'"]',currentCasVal)
+                  }}>指标分析</Button>
+                  <span className="ant-divider" /><a href="#" onClick={()=>{
                       that.props.contentActions.testgroupActions.versionlog_list(test.code, that.props.menu.slbid)
                   }}>版本日志</a>
                   <span className="ant-divider" />
@@ -106,6 +112,7 @@ class GLTestgroup extends React.Component {
                             status: cell.status,
                             flowaccounting: cell.flowaccounting,
                             time: cell.time,
+                            tags: cell.tags,
                             version: cell.version || ''
                         }
                     })}

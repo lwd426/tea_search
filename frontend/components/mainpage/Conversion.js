@@ -135,8 +135,8 @@ export default class Chart extends React.Component {
         var myChart = echarts.init(document.getElementById('container'));
         // 绘制图表
         myChart.setOption({
-            title: {"text": "流量统计表",
-                "subtext": "反馈总量趋势图和各类型反馈堆叠图",
+            title: {"text": "点击率日均统计表",
+                "subtext": "各版本日均点击率趋势图",
                 "x": "center",
                 "y": "top",
                 "textStyle": {
@@ -155,7 +155,9 @@ export default class Chart extends React.Component {
                 }
             },
             legend: {
-                data: legendDate//['版本一','版本二','原始版本']
+                data: legendDate,//['版本一','版本二','原始版本']
+                bottom: 0,
+                right: 50
             },
             xAxis: [
                 {
@@ -291,7 +293,7 @@ export default class Chart extends React.Component {
                     />
                 </div>
                 <div className="CascaderBox">
-                    <span>优化指标 ：</span>
+                    <span>优化指标</span>
                     <Cascader options={this.props.content.mainpage.options_two} defaultValue={[this.props.content.mainpage.options_two[0].value]} onChange={this.onChange.bind(this)} />
                 </div>
                 <div className="clear"></div>

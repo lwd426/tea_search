@@ -153,12 +153,11 @@ class GLMainpage extends React.Component {
                 <div className="quickBox">
                 {
                     (()=>{
-                        var type = 'detailsPage';
                         if(wintype === 'mainpage' && card_container_display === 'none' && main_container_display === 'block') {
-                            return (<div className="center">
+                            return (<div className={this.props.app.collapsed ? "center" : "center close"}>
                                 <Button icon="setting" className={this.props.app.collapsed ? "gl-main-l-btn" : "gl-main-l-btn close"} onClick={this.props.appActions.changeSettingBtn}>{this.props.app.collapsed ? '打开配置面板' : '关闭配置面板'}</Button>
-                                <Popover content={<Cascader placeholder="请选择" options={options} onChange={this.onChange.bind(this)} value={currentCasVal} expandTrigger='hover' />
-                                } title="请选择测试组" trigger="click">
+                                <Popover   content={<Cascader placeholder="请选择" options={options} onChange={this.onChange.bind(this)} value={currentCasVal} expandTrigger='hover' />
+                                } title={null} trigger="click">
                                     <Button icon="scan" className="gl-main-r-btn">测试组快捷入口</Button>
                                 </Popover>
                             </div>)
@@ -173,19 +172,19 @@ class GLMainpage extends React.Component {
                                     this.props.content.mainpage.currentCasVal = undefined;
                                     this.props.app.collapsed = true;
                                 }}> 返回 </Button>
-                                <Button icon="setting" className="gl-main-mm-btn"  onClick={()=>{
+                                <Button icon="bar-chart" className="gl-main-mm-btn"  onClick={()=>{
                                     {/*this.props.content.mainpage.main_card_key = '1';*/}
                                     this.props.contentActions.mainpageActions.switchTable('1')
                                 }}>流量</Button>
-                                <Button icon="setting" className="gl-main-mm-btn"   onClick={()=>{
+                                <Button icon="bar-chart" className="gl-main-mm-btn"   onClick={()=>{
                                     {/*this.props.content.mainpage.main_card_key = '2';*/}
                                     this.props.contentActions.mainpageActions.switchTable('2')
                                 }}>转化率</Button>
-                                <Button icon="setting" className="gl-main-mm-btn"  onClick={()=>{
+                                <Button icon="database" className="gl-main-mm-btn"  onClick={()=>{
                                     this.props.menuActions.changeShowWinType(this.props.menu.slbid, 'deviceinfo');
                                 }}>设备信息</Button>
-                                <Button icon="setting" className="gl-main-rr-btn" onClick={()=>{
-                                    this.props.menuActions.changeShowWinType(this.props.menu.slbid, 'testinfo');
+                                <Button icon="right" className="gl-main-rr-btn" onClick={()=>{
+                                    this.props.contentActions.testgroupActions.edit_stragetylist(currentCasVal[1],currentCasVal[0]);
                                 }} >策略维护</Button>
                             </div>)
 
@@ -231,9 +230,9 @@ class GLMainpage extends React.Component {
                                         q.strageties.map((s, i) => {
                                                 let icontype = 'loading',text = '运行中';
                                                 switch(s.stra_status){
-                                                    case 'running': icontype = 'loading'; text = '运行中'; break;
+                                                    case 'running': icontype = 'check'; text = '运行'; break;
                                                     case 'new': icontype = 'bulb'; text = '新建'; break;
-                                                    case 'stopped':  icontype = 'hourglass'; text = '停止';break;
+                                                    case 'stopped':  icontype = 'coffee'; text = '停止';break;
                                                 }
                                                 return (<div key={index + '-' + i} style={{padding:3}}>
                                                     <div className="left" style={{float:'left',width:'33%'}}>

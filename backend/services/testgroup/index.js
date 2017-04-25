@@ -55,7 +55,7 @@ module.exports = {
         //遍历每个测试项目下的所有策略，累加流量配置
         for(;i<len;i++){
             var tg = list[i];
-            var flowaccount = 0.0;
+            var flowaccount = 0.0, tags=[];
             var straList = yield libStra.getStragetyInfos({tgid: tg.id, stra_status: 'running'},[{opt: 'equal', key: 'is_abolished', data: false}])
             var serverNum = straList.length || 0;
             if(serverNum !== 0){
@@ -67,8 +67,9 @@ module.exports = {
                 tg.set('status', 'new')
             }else{
                 var strageties = yield libStra.getStragetyInfos({tgid: tg.id},[{opt: 'equal', key: 'is_abolished', data: false}])
-                var status = 'stopped'
+                var status = 'stopped';
                 strageties.map((stra)=>{
+                    stra.get('tag') ? tags.push(stra.get('tag')) : '';
                     if(stra.get('stra_status') === 'running'){
                         status = 'running'
                     }
@@ -76,6 +77,7 @@ module.exports = {
                 tg.set('status', status)
             }
             tg.set('flowaccounting', flowaccount)
+            tg.set('tags', tags)
         }
 
 

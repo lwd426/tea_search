@@ -101,11 +101,18 @@
     float: left;
 }
 .quickBox .center{
-    width: 300px;
-    margin: 0 auto;
+    width: 28%;
+    margin: 0px 36%;
     border-top: 1px solid #bfb5b5;
     background: #3b3b3b;
     border-radius: 0px 0px 10px 10px;
+}
+
+.gl-pop-quick{
+    width: 100px;
+}
+.quickBox .center.close{
+    margin: 0px 26%;
 }
 .gl-main-l-btn{
     width: 50%;
@@ -213,10 +220,10 @@
     font-weight: bold;
     margin: 0px 8px;
 }
-.gl-icon-main-loading{
+.gl-icon-main-check{
     color: green
 }
-.gl-icon-main-hourglass{
+.gl-icon-main-coffee{
     color: #f04134;
 }
 .gl-icon-main-bulb{
@@ -231,12 +238,20 @@
     float: left !important;
     margin: 38px 20px 10px 80px !important;
 }
+
+.rangepickerBox>span{
+    margin: 0 3px;
+}
+.CascaderBox>span{
+    margin: 0 3px;
+}
+
 .rangepickerBox .ant-calendar-picker{
     width: 200px!important;
 }
 .dropdownBox,.spanBox,.rangepickerBox{
     font-size: 15px;
-    margin: 38px 20px 10px 20px;
+    margin: 40px 20px 10px 20px;
 }
 .tableBox{
     margin-top: 30px;
@@ -248,9 +263,10 @@
 }
 .CascaderBox{
     display: inline-block;
-    float: right;
-    margin-right: 20px;
-    font-size: 14px;
+    float: left;
+    font-size: 12px !important;
+    font-weight: bold !important;
+    margin-top: 40px;
 }
 .CascaderBox .ant-cascader-picker{
     width:100px;
