@@ -103,7 +103,6 @@ class GLMainpage extends React.Component {
         //this.props.contentActions.mainpageActions.getTestGroupList();
     }
     componentWillReceiveProps(nextProps) {
-        console.log('mainpage componentWillReceiveProps');
         //console.log(nextProps.content.mainpage.stragety);
         return true;
     }
@@ -162,16 +161,16 @@ class GLMainpage extends React.Component {
                         </Popover>
                     </div>
                     <div className={toolbarType === 'mainpage_details' ? "center-details" : "center-details hidden"}>
-                        <Button icon="home" className="gl-main-ll-btn" onClick={()=>{
-                            this.props.menuActions.changeShowWinType(0, 'mainpage');
-                            this.props.content.mainpage.card_container_display = 'none';
-                            this.props.content.mainpage.content_one_display = 'block'
-                            this.props.content.mainpage.main_container_display = 'block'
-                            this.props.content.mainpage.content_two_display = 'none';
-                            this.props.content.mainpage.currentCasVal = undefined;
-                            this.props.app.collapsed = true;
-                        }}> 返回home </Button>
-                        <Button icon="bar-chart" className="gl-main-mm-btn"  onClick={()=>{
+                        {/*<Button icon="home" className="gl-main-ll-btn" onClick={()=>{*/}
+                            {/*this.props.menuActions.changeShowWinType(0, 'mainpage');*/}
+                            {/*this.props.content.mainpage.card_container_display = 'none';*/}
+                            {/*this.props.content.mainpage.content_one_display = 'block'*/}
+                            {/*this.props.content.mainpage.main_container_display = 'block'*/}
+                            {/*this.props.content.mainpage.content_two_display = 'none';*/}
+                            {/*this.props.content.mainpage.currentCasVal = undefined;*/}
+                            {/*this.props.app.collapsed = true;*/}
+                        {/*}}> 返回home </Button>*/}
+                        <Button icon="bar-chart" className="gl-main-ll-btn"  onClick={()=>{
                             this.props.contentActions.mainpageActions.switchTable('1')
                         }}>流量</Button>
                         <Button icon="bar-chart" className="gl-main-mm-btn"   onClick={()=>{

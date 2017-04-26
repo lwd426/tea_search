@@ -27,27 +27,26 @@ module.exports = {
             console.log("error", e);
         }
     },
-    getTrafficDataByStragety : async (stragetys, start, end) => {
-        try{
-            let response = await fetch(data_traffic_url,{
-                method: 'POST',
-                headers: {
-                    "X-Parse-Application-Id": "gatedLaunch",
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify({
-                    "start": start,
-                    "end": end,
-                    "gls": stragetys
-                })
-            });
-            let data = await response.json();
-            return data;
-        }catch(e){
-            console.log('error', e);
-            return ("error")
-        }
+    getTrafficDataByStragety :  (stragetys, start, end, callback) => {
+        fetch(data_traffic_url,{
+            method: 'POST',
+            headers: {
+                "X-Parse-Application-Id": "gatedLaunch",
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                "start": start,
+                "end": end,
+                "gls": stragetys
+            })
+        }).then((res) => {
+            return res.json()
+        }).then((json) => {
+            if (callback) callback(json);
+        }).catch((e) => {
+            if (callback) callback(e.message);
+        })
     },
     getConversionDataByStragety : async (stragetys, start, end) => {
         try {

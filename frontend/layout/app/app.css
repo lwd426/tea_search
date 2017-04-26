@@ -119,6 +119,10 @@
     border-radius: 0px 0px 10px 10px;
 }
 
+.gl-gohome {
+    float: right;
+}
+
 .backcenter.hidden{
     display: none;
 }
@@ -147,7 +151,7 @@
 
 
 .gl-half-r-btn{
-    width: 50%;
+    width: 100%;
     border-radius: 0px 0px 10px 0px;
     background: #3b3b3b;
     border: none;
@@ -157,7 +161,7 @@
 }
 
 .gl-half-l-btn{
-    width: 50%;
+    width: 100%;
     border-radius: 0px 0px 0px 10px;
     background: #3b3b3b;
     border: none;
