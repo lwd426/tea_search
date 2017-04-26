@@ -25,3 +25,11 @@ export function changeSettingBtn() {
         type: TYPES.CHANGE_SETTING_BTN
     }
 }
+
+// export function toolbar(type, data) {
+//     return {
+//         type: TYPES.TOOLBAR,
+//         data,
+//         type
+//     }
+// }

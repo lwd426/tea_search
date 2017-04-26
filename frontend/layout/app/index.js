@@ -42,8 +42,6 @@ class App extends React.Component {
         }else if(this.props.menu.wintype !== 'mainpage'){
             toolbarType = 'mainpage'
         }
-        console.log(this.props.menu.wintype)
-        console.log(toolbarType)
         return (
             <Layout>
                 <div className="app-container" >
