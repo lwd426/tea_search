@@ -239,7 +239,8 @@ export default class EChart extends React.Component {
             });
 
         }else{
-            alert('所选日期无数据！');
+            //alert('所选日期无数据！');
+            console.log('所选日期无数据！');
             // 基于准备好的dom，初始化echarts实例
             var myChart = echarts.init(document.getElementById('line'));
             myChart.setOption({
@@ -268,8 +269,11 @@ export default class EChart extends React.Component {
                         },
                     }
                 ],
-
             });
+
+            this.setState({
+                tableData: [],
+            })
         }
     }
     exportTable(){

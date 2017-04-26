@@ -287,8 +287,10 @@ export default class EChart extends React.Component {
                 </div>
                 <div className="clear"></div>
                 <div id="duiji" style={{width:'100%',height:400}} ></div>
-                <Button className="export" onClick={this.exportTable.bind(this)}><Icon type="download" />导出表格</Button>
-                <Table bordered={true} size="middle" columns={columns} dataSource={this.state.tableData} title={() => '按日期'}/>
+                <div className="tableBox">
+                    <Button className="export" onClick={this.exportTable.bind(this)}><Icon type="download" />导出表格</Button>
+                    <Table bordered={true} size="middle" columns={columns} dataSource={this.state.tableData}/>
+                </div>
             </div>      
         )
     }

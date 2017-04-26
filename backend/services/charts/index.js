@@ -27,6 +27,7 @@ module.exports = {
     getTrafficDataByStragety: function *(data){
         var res = yield db.post('get_statistic_uv/', data);
         var responseData = res.result.data;
+        console.log(responseData)
 
         if(responseData.length == 0){
             return '无数据'
@@ -36,12 +37,12 @@ module.exports = {
         }
 
         var tableData = [];
-        var fields = ['date','useramount'];
-        var fieldNames = ['日期', '访客总数'];
+        var fields = ['date'];
+        var fieldNames = ['日期'];
         responseData.map((val,index) => {
             tableData.push({
                 date: val.date,
-                useramount: val.uv_all,
+                //useramount: val.uv_all,
                 uv: {},
                 pv: {}
             })
