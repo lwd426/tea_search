@@ -306,22 +306,23 @@ export default class Chart extends React.Component {
         }];
         return (
             <div>
-
-                <div className="rangepickerBox">
-                    <span>请选择时间区间</span>
-                    <RangePicker
-                        defaultValue={this.props.content.mainpage.rangeDefaultVal}
-                        value={conver_date_moment_val}
-                        format={'YYYY/MM/DD'}
-                        onChange={this.rangeOnChange.bind(this)}
-                        disabledDate={this.disabledDate.bind(this)}
-                    />
+                <div className="topBox">
+                    <div className="rangepickerBox">
+                        <span>请选择时间区间</span>
+                        <RangePicker
+                            defaultValue={this.props.content.mainpage.rangeDefaultVal}
+                            value={conver_date_moment_val}
+                            format={'YYYY/MM/DD'}
+                            onChange={this.rangeOnChange.bind(this)}
+                            disabledDate={this.disabledDate.bind(this)}
+                        />
+                    </div>
+                    <div className="CascaderBox">
+                        <span className="castitle">优化指标</span>
+                        <Cascader options={this.props.content.mainpage.options_two} defaultValue={[this.props.content.mainpage.options_two[0].value]} onChange={this.onChange.bind(this)} />
+                    </div>
+                    <div className="clear"></div>
                 </div>
-                <div className="CascaderBox">
-                    <span>优化指标</span>
-                    <Cascader options={this.props.content.mainpage.options_two} defaultValue={[this.props.content.mainpage.options_two[0].value]} onChange={this.onChange.bind(this)} />
-                </div>
-                <div className="clear"></div>
 
                 <div id="container" style={{width:'100%',height:400}} className="chart-box"></div>
                 <div className="tableBox">

@@ -237,8 +237,9 @@
 .rangepickerBox{
     font-size: 12px !important;
     font-weight: bold !important;
-    float: left !important;
-    margin:0px 20px 10px 120px !important;
+    display: inline-block;
+    //margin:0px 20px 10px 120px !important;
+    float: right;
 }
 
 .card-container{
@@ -257,21 +258,17 @@
 }
 .dropdownBox,.spanBox,.rangepickerBox{
     font-size: 15px;
-    margin: 40px 20px 10px 20px;
+    //margin: 40px 20px 10px 20px;
 }
 .tableBox{
     margin-top: 30px;
     padding: 20px 50px;
 }
-.dropdownBox{
-    text-align: left;
-    font-size: 14px;
-}
 .CascaderBox{
     display: inline-block;
-    float: left;
     font-size: 12px !important;
-    font-weight: bold !important;
+    float: right;
+    margin-right:20px;
 }
 
 .ant-tabs-tabpane{
@@ -280,6 +277,9 @@
 }
 .CascaderBox .ant-cascader-picker{
     width:100px;
+}
+.CascaderBox .castitle{
+    font-weight: bold;
 }
 .clear{clear: both;}
 #content_two{position: relative;}
@@ -381,3 +381,4 @@
 .center-details.hidden {
     display: none;
 }
+.topBox{margin: 5px 25px 15px 50px;}

@@ -268,24 +268,26 @@ export default class EChart extends React.Component {
 
         return (
             <div>
-                <div className="rangepickerBox">
+                <div className="topBox">
                     <Button  className="gl-left-btn" icon="double-left" onClick={() => {
-                        this.props.contentActions.mainpageActions.changeContentDisplay('block','none');
+                            this.props.contentActions.mainpageActions.changeContentDisplay('block','none');
                     }}>返回</Button>
-                    <span>请选择时间区间</span>
-                    <RangePicker
-                        defaultValue={this.props.content.mainpage.rangeDefaultVal}
-                        value={conver_date_moment_val}
-                        format={'YYYY/MM/DD'}
-                        onChange={this.rangeOnChange.bind(this)}
-                        disabledDate={this.disabledDate.bind(this)}
-                    />
+                    <div className="rangepickerBox">
+                        <span>请选择时间区间</span>
+                        <RangePicker
+                            defaultValue={this.props.content.mainpage.rangeDefaultVal}
+                            value={conver_date_moment_val}
+                            format={'YYYY/MM/DD'}
+                            onChange={this.rangeOnChange.bind(this)}
+                            disabledDate={this.disabledDate.bind(this)}
+                        />
+                    </div>
+                    <div className="CascaderBox">
+                        <span className="castitle">优化指标 ：</span>
+                        <Cascader options={this.props.content.mainpage.options_two} defaultValue={[this.props.content.mainpage.options_two[0].value]} onChange={this.onChange.bind(this)} />
+                    </div>
+                    <div className="clear"></div>
                 </div>
-                <div className="CascaderBox">
-                    <span>优化指标 ：</span>
-                    <Cascader options={this.props.content.mainpage.options_two} defaultValue={[this.props.content.mainpage.options_two[0].value]} onChange={this.onChange.bind(this)} />
-                </div>
-                <div className="clear"></div>
                 <div id="duiji" style={{width:'100%',height:400}} ></div>
                 <div className="tableBox">
                     <Button className="export" onClick={this.exportTable.bind(this)}><Icon type="download" />导出表格</Button>
