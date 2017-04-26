@@ -268,16 +268,18 @@ class GLMainpage extends React.Component {
 
                   <Tabs type="card" onChange={this.tabChange.bind(this)} activeKey={ this.props.content.mainpage.main_card_key}>
                     <TabPane tab="流量" key="1">
-                        <div className="rangepickerBox">
-                            <span>选择时间区间</span>
-                            <RangePicker
-                              defaultValue={this.props.content.mainpage.rangeDefaultVal}
-                              format={dateFormat}
-                              onChange={this.rangeOnChange.bind(this)}
-                              disabledDate={this.disabledDate.bind(this)}
-                            />
+                        <div className="topBox">
+                            <div className="rangepickerBox">
+                                <span>选择时间区间</span>
+                                <RangePicker
+                                  defaultValue={this.props.content.mainpage.rangeDefaultVal}
+                                  format={dateFormat}
+                                  onChange={this.rangeOnChange.bind(this)}
+                                  disabledDate={this.disabledDate.bind(this)}
+                                />
+                            </div>
+                            <div className="clear"></div>
                         </div>
-                        <div className="clear"></div>
                         <Traffic {...this.props}/>
                     </TabPane>
 
