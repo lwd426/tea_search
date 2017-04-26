@@ -48,6 +48,7 @@ module.exports = {
             // var arr_uv = Object.entries(val.uv);
             for(var key in val.uv){
                 tableData[index]['uv'][key] = val.uv[key].pvuv;
+                tableData[index]['pv'][key] = val.uv[key].pv;
             }
 
             // arr_uv.map((v,i) => {
