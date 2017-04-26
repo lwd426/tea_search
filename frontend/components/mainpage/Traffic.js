@@ -297,7 +297,6 @@ export default class EChart extends React.Component {
             let stragety_arr = nextProps.content.mainpage.strageties;
 
             let tabsKey = nextProps.content.mainpage.main_card_key
-            console.log('dddd')
             //组件展示出来后在请求数据
             if(nextProps.content.mainpage.card_container_display == 'block' && tabsKey == "1"){
                 this.randerChart(date_picker, stragety_arr);
