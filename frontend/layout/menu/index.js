@@ -56,7 +56,7 @@ class GLMenu extends React.Component {
     changeMenu =(item)=>{
         if(!item.key) return false;
         if(item.key.indexOf(',') === -1) return false;
-        var code = item.key.split(',')
+        var code = item.key.split(',');
         this.props.menuActions.changeShowWinType(code[0], code[1]);
     }
     render() {

@@ -63,6 +63,7 @@ class GLStragety extends React.Component {
                           utilscomps.showNotification('warning', '不能修改','此策略正在运行中，请先停止此策略');
                           return false;
                       }
+                      this.props.menu.wintype =  'testinfo';
                       this.props.contentActions.testgroupActions.editStragety(record)
                   }}>修改</a>
                   <span className="ant-divider" />
@@ -93,6 +94,7 @@ class GLStragety extends React.Component {
     }
     handleAdd = () => {
         // const {slbid, tgid} = this.props.content.testgroup;
+        this.props.menu.wintype =  'testinfo';
         this.props.contentActions.testgroupActions.add_stragety()
     }
     generateTags =()=>{
@@ -133,6 +135,7 @@ class GLStragety extends React.Component {
 
     }
     goBack = () => {
+        this.props.menu.wintype =  'testinfo';
         this.props.contentActions.testgroupActions.goback()
     }
     render() {

@@ -145,8 +145,8 @@ class GLMainpage extends React.Component {
         let colkey = 0;
         const wintype = this.props.menu.wintype;
         const {currentCasVal, card_container_display, main_container_display, main_card_key} = this.props.content.mainpage;
-
-        var toolbarType = 'mainpage_main'
+        let toolbarType = 'mainpage_main';
+        // const {toolbarType, toolbarData} = this.props.app;
         if(wintype === 'mainpage' && card_container_display === 'none' && main_container_display === 'block'){
             toolbarType = 'mainpage_main'
         }else if(wintype === 'mainpage' && card_container_display === 'block' && main_container_display === 'none'){
@@ -173,11 +173,9 @@ class GLMainpage extends React.Component {
                             this.props.app.collapsed = true;
                         }}> 返回 </Button>
                         <Button icon="bar-chart" className="gl-main-mm-btn"  onClick={()=>{
-                            {/*this.props.content.mainpage.main_card_key = '1';*/}
                             this.props.contentActions.mainpageActions.switchTable('1')
                         }}>流量</Button>
                         <Button icon="bar-chart" className="gl-main-mm-btn"   onClick={()=>{
-                            {/*this.props.content.mainpage.main_card_key = '2';*/}
                             this.props.contentActions.mainpageActions.switchTable('2')
                         }}>转化率</Button>
                         <Button icon="database" className="gl-main-mm-btn"  onClick={()=>{

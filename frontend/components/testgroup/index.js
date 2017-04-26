@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react'
 import './style.css';
 import 'antd.min.css';
 import GLTestgroup from './components/testgroup';
-// import * as actions from './actions'
 import GLStragety from './components/stragety';
 import GLAddStragety from './components/stragety_cell';
 import GLVersionLog from './components/versionlog';
@@ -14,12 +13,11 @@ class GLTestinfo extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        // if(nextProps.menu.slbid !== this.props.menu.slbid ||  (nextProps.menu.slbid === this.props.menu.slbid && this.props.menu.wintype === 'deviceinfo')) {
-        //     this.props.content.testgroup.showtype = 'testgroup';
-        // }
+        console.log(nextProps.content.testgroup.showtype)
         return true;
     }
     render() {
+        console.log(this.props.content.testgroup.showtype)
         return (
                 <div className="content-panel">
                     {(()=> {
@@ -35,23 +33,4 @@ class GLTestinfo extends React.Component {
         );
     }
 }
-
-
-
-//将state.counter绑定到props的counter
-// function mapStateToProps(state) {
-//     return{
-//         content: state.content
-//     }
-// }
-// 将action的所有方法绑定到props上
-// function mapDispatchToProps(dispatch) {
-//     return  {
-//         actions: bindActionCreators(actions,dispatch)
-//     }
-//
-// }
-
-//通过react-redux提供的connect方法将我们需要的state中的数据和actions中的方法绑定到props上
-// export default connect(mapStateToProps, mapDispatchToProps)(GLTestinfo)
 export default GLTestinfo;

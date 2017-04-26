@@ -142,8 +142,8 @@ export default class Chart extends React.Component {
         var myChart = echarts.init(document.getElementById('container'));
         // 绘制图表
         myChart.setOption({
-            title: {"text": "点击率日均统计表",
-                "subtext": "各版本日均点击率趋势图",
+            title: {"text": "点击率日统计表 ",
+                "subtext": "各版本单日点击率趋势图",
                 "x": "center",
                 "y": "top",
                 "textStyle": {
