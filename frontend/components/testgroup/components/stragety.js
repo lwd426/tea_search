@@ -178,6 +178,18 @@ class GLStragety extends React.Component {
                     >
                         <GLVersionForm {..._this.props} />
                     </Modal>
+                    <Button className="gl-right-btn" onClick={()=>{
+                        let {slbid, tgid, stragetylist} = this.props.content.testgroup;
+                        let tags = [];
+                        stragetylist.map((stra)=>{
+                            if(stra.tag) tags.push(stra.tag);
+                        })
+                        let currentCasVal = [slbid, tgid];
+                        this.props.menu.wintype = 'mainpage';
+                        this.props.app.collapsed = true;
+                        this.props.contentActions.mainpageActions.switchContentShow('none','block','["'+tags.join('","')+'"]',currentCasVal)
+
+                    }}>指标分析<Icon type="bar-chart" /></Button>
                     <Button className="gl-right-btn" icon="compass" onClick={this.generateReferVersion}>生成基准版本</Button>
                     <Button className="gl-right-btn" icon="tag" onClick={this.generateTags}>生成数据标签</Button>
                     <Button className="gl-right-btn" icon="plus" onClick={this.handleAdd}>新增策略</Button>

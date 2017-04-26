@@ -20,9 +20,9 @@ class GLAddStragety extends React.Component {
 
         return (
             <div className="add-stragety">
-                <div className="gl-testinfo-btndiv">
-                    <Button className="gl-left-btn" icon="double-left" onClick={this.goBack}>返回</Button>
-                </div>
+                {/*<div className="gl-testinfo-btndiv">*/}
+                    {/*<Button className="gl-left-btn" icon="double-left" onClick={this.goBack}>返回</Button>*/}
+                {/*</div>*/}
                 <div>
                     <div className="title">{this.props.content.testgroup.editting_status ? "修改分流策略" : "新增分流策略"}</div>
                 </div>

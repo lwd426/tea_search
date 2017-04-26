@@ -265,8 +265,8 @@ class RegistrationForm extends React.Component {
                 </FormItem>
 
                 <FormItem {...tailFormItemLayout}>
-                    <Button type="primary" htmlType="submit" size="large">{this.props.content.testgroup.editting_status ? '修改' : '保存' }</Button>
-                    <Button type="primary" size="large" onClick={this.props.contentActions.testgroupActions.goback2stragelist}>返回</Button>
+                    <Button  htmlType="submit" size="large">{this.props.content.testgroup.editting_status ? '修改' : '保存' }</Button>
+                    <Button  size="large" onClick={this.props.contentActions.testgroupActions.goback2stragelist}>返回</Button>
                 </FormItem>
             </Form>
         );
