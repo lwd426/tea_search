@@ -116,8 +116,10 @@
     margin: 6px 2px 0px 2px;
 }
 .gl-right-btn {
+    width: 112px;
     margin: 0px 4px 4px 4px;
     float: right;
+    padding: 5px 0px;
 }
 
 .gl-btn-without-border{
