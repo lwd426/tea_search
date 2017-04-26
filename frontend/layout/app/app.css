@@ -75,7 +75,7 @@
     /*border-left: 1px solid #949090 !important;*/
 }
 .ant-layout-sider{
-    /*width: 16% !important;*/
+    width: 16% !important;
     float: left;
     height: 100%;
     display: block;
@@ -112,15 +112,21 @@
 }
 .backcenter{
     width: 24%;
-    margin: 0px 38% auto;
+    display: block;
+    margin: 0px 30%;
     border-top: 1px solid #bfb5b5;
     background: #3b3b3b;
     border-radius: 0px 0px 10px 10px;
 }
 
+.backcenter.hidden{
+    display: none;
+}
+
 .backcenter.close{
     width: 24%;
-    margin: 0px 58% auto;
+    margin: 0px 48% auto;
+    display: block;
     border-top: 1px solid #bfb5b5;
     background: #3b3b3b;
     border-radius: 0px 0px 10px 10px;

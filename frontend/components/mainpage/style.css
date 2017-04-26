@@ -103,6 +103,7 @@
 .quickBox .center{
     width: 28%;
     margin: 0px 36%;
+    display: block;
     border-top: 1px solid #bfb5b5;
     background: #3b3b3b;
     border-radius: 0px 0px 10px 10px;
@@ -113,6 +114,7 @@
 }
 .quickBox .center.close{
     margin: 0px 26%;
+    display: block;
 }
 .gl-main-l-btn{
     width: 50%;
@@ -355,11 +357,19 @@
     background-color: rgba(22, 20, 20, 0.96) !important;
 }
 
+.center.hidden{
+    display: none;
+}
+
 .center-details{
     width: 550px;
     margin: 0 auto;
+    display: block;
     border-top: 1px solid #bfb5b5;
     background: #3b3b3b;
     border-radius: 0px 0px 10px 10px;
 }
 
+.center-details.hidden {
+    display: none;
+}

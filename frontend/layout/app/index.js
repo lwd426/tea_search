@@ -36,6 +36,14 @@ class App extends React.Component {
         this.props.menuActions.addTestGroup();
     }
     render() {
+        var toolbarType = 'stragetyinfo hidden'
+        if(this.props.menu.wintype === 'stragetyinfo' ){
+            toolbarType = 'stragetyinfo'
+        }else if(this.props.menu.wintype !== 'mainpage'){
+            toolbarType = 'mainpage'
+        }
+        console.log(this.props.menu.wintype)
+        console.log(toolbarType)
         return (
             <Layout>
                 <div className="app-container" >
@@ -43,50 +51,42 @@ class App extends React.Component {
                         乐视视频灰度发布系统
                     </Header>
                     <Content>
-                        {(()=> {
-                            if(this.props.menu.wintype === 'stragetyinfo' ){
-                                 return (<div className="quickBox">
-                                    <div className={this.props.app.collapsed ? "backcenter" : "backcenter close"}>
-                                        <Button icon="home" className="gl-half-l-btn" onClick={()=>{
-                                            this.props.menuActions.changeShowWinType(0, 'mainpage');
-                                            this.props.content.mainpage.card_container_display = 'none';
-                                            this.props.content.mainpage.content_one_display = 'block'
-                                            this.props.content.mainpage.main_container_display = 'block'
-                                            this.props.content.mainpage.content_two_display = 'none';
-                                            this.props.content.mainpage.currentCasVal = undefined;
-                                            this.props.app.collapsed = true;
-                                        }}>返回首页</Button>
-                                        <Button className="gl-half-r-btn" onClick={()=>{
-                                            let {slbid, tgid, stragetylist} = this.props.content.testgroup;
-                                            let tags = [];
-                                            stragetylist.map((stra)=>{
-                                                if(stra.tag) tags.push(stra.tag);
-                                            })
-                                            let currentCasVal = [slbid, tgid];
-                                            this.props.menu.wintype = 'mainpage';
-                                            this.props.app.collapsed = true;
-                                            this.props.contentActions.mainpageActions.switchContentShow('none','block','["'+tags.join('","')+'"]',currentCasVal)
+                        <div className="quickBox">
+                            <div className={toolbarType === 'stragetyinfo' ? (this.props.app.collapsed ? "backcenter" : "backcenter close" ) : "backcenter hidden"}>
+                                <Button icon="home" className="gl-half-l-btn" onClick={()=>{
+                                    this.props.menuActions.changeShowWinType(0, 'mainpage');
+                                    this.props.content.mainpage.card_container_display = 'none';
+                                    this.props.content.mainpage.content_one_display = 'block'
+                                    this.props.content.mainpage.main_container_display = 'block'
+                                    this.props.content.mainpage.content_two_display = 'none';
+                                    this.props.content.mainpage.currentCasVal = undefined;
+                                    this.props.app.collapsed = true;
+                                }}>返回首页</Button>
+                                <Button className="gl-half-r-btn" onClick={()=>{
+                                    let {slbid, tgid, stragetylist} = this.props.content.testgroup;
+                                    let tags = [];
+                                    stragetylist.map((stra)=>{
+                                        if(stra.tag) tags.push(stra.tag);
+                                    })
+                                    let currentCasVal = [slbid, tgid];
+                                    this.props.menu.wintype = 'mainpage';
+                                    this.props.app.collapsed = true;
+                                    this.props.contentActions.mainpageActions.switchContentShow('none','block','["'+tags.join('","')+'"]',currentCasVal)
 
-                                        }}>指标分析<Icon type="bar-chart" /></Button>
-                                    </div>
-                                </div>)
-                            }else if(this.props.menu.wintype !== 'mainpage'){
-                                return (<div className="quickBox">
-                                    <div className={this.props.app.collapsed ? "backcenter" : "backcenter close"}>
-                                        <Button icon="home" className="gl-main-back-btn" onClick={()=>{
-                                            this.props.menuActions.changeShowWinType(0, 'mainpage');
-                                            this.props.content.mainpage.card_container_display = 'none';
-                                            this.props.content.mainpage.content_one_display = 'block'
-                                            this.props.content.mainpage.main_container_display = 'block'
-                                            this.props.content.mainpage.content_two_display = 'none';
-                                            this.props.content.mainpage.currentCasVal = undefined;
-                                            this.props.app.collapsed = true;
-                                        }}>返回首页<Icon type="home" /></Button>
-                                    </div>
-                                </div>)
-                            }
-                        })()
-                        }
+                                }}>指标分析<Icon type="bar-chart" /></Button>
+                            </div>
+                            <div className={toolbarType === 'mainpage' ? (this.props.app.collapsed ? "backcenter" : "backcenter close" ) : "backcenter hidden"}>
+                                <Button icon="home" className="gl-main-back-btn" onClick={()=>{
+                                    this.props.menuActions.changeShowWinType(0, 'mainpage');
+                                    this.props.content.mainpage.card_container_display = 'none';
+                                    this.props.content.mainpage.content_one_display = 'block'
+                                    this.props.content.mainpage.main_container_display = 'block'
+                                    this.props.content.mainpage.content_two_display = 'none';
+                                    this.props.content.mainpage.currentCasVal = undefined;
+                                    this.props.app.collapsed = true;
+                                }}>返回首页<Icon type="home" /></Button>
+                            </div>
+                        </div>
                         <Sider
                                 collapsible
                                 collapsed={this.props.app.collapsed}
