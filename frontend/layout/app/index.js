@@ -54,8 +54,8 @@ class App extends React.Component {
                             this.props.content.mainpage.main_container_display = 'block'
                             this.props.content.mainpage.content_two_display = 'none';
                             this.props.content.mainpage.currentCasVal = undefined;
-                            this.props.app.collapsed = true;
-                        }}>返回home</Button>
+                            {/*this.props.app.collapsed = true;*/}
+                        }}>返回首页</Button>
                     </Header>
                     <Content>
                         {/*<div className="quickBox">*/}
@@ -94,12 +94,13 @@ class App extends React.Component {
                                 {/*}}>返回home</Button>*/}
                             {/*</div>*/}
                         {/*</div>*/}
+
                         <Sider
                                 collapsible
                                 collapsed={this.props.app.collapsed}
                                 onCollapse={this.onCollapse}
                             >
-                            <div className="logo" ></div>
+                            <div className="logo" >测试项列表</div>
                             <GLMenu mode={this.props.app.mode}/>
                             <Button icon="plus" className="add-test-group-btn" onClick={()=>{
                                 console.log(this.props)

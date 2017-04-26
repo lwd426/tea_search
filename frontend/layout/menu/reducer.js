@@ -5,12 +5,14 @@ import utilscomps from '../../components/utilscomps'
 let reducer = (state={wintype: 'mainpage',slbid: '', editting_slb:undefined, add: false, domain: '', port: '80',domainId: '', menulist: []},action)=>{
     switch(action.type){
         case TYPES.CHANGE_SLB_SUCCESS:
+            var showtype = action.wintype;
+            if(action.wintype  === 'stragetyinfo') showtype = 'testinfo'
             if(!action.slbid){
-                return Object.assign({}, state, { wintype: action.wintype})
+                return Object.assign({}, state, { wintype: action.wintype, selectedSubMenu: state.slbid + ',' + showtype})
             }else if(!action.wintype) {
-                return Object.assign({}, state, {slbid: action.slbid, domain: action.domain, domainId: action.domainId})
+                return Object.assign({}, state, {slbid: action.slbid,openSlb: action.slbid, domain: action.domain, domainId: action.domainId})
             }else{
-                return Object.assign({}, state, { wintype: action.wintype, slbid: action.slbid, domain: action.domain, domainId: action.domainId})
+                return Object.assign({}, state, { wintype: action.wintype, slbid: action.slbid, selectedSubMenu: action.slbid + ',' + showtype, openSlb: action.slbid, domain: action.domain, domainId: action.domainId})
             }
             break
         case TYPES.ADD_TEST_GROUP:

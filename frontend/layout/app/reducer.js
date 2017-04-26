@@ -3,7 +3,7 @@ import * as TYPES from './constants'
 const initialState = {
     mode:'inline'
     , showSlbModal:false
-    ,collapsed: true
+    ,collapsed: false
     // ,toolbarType: 'mainpage_main'
     // ,toolbarData: {
     //     wintype : 'mainpage',

@@ -28,6 +28,14 @@ class GLTestgroup extends React.Component {
         }, {
             title: '运行状态',
             dataIndex: 'status',
+            render: (text, record) =>{
+                switch(record.status){
+                    case 'running': return '运行'; break;
+                    case 'stopped': return  '停止';  break;
+                    case 'new': return '新建';break;
+                }
+            }
+
         },{
             title: '流量占比',
             dataIndex: 'flowaccounting',
@@ -46,7 +54,7 @@ class GLTestgroup extends React.Component {
                   <Button disabled={test.status !== 'new' ? false : true} className="gl-btn-without-border" href="#" onClick={()=>{
                       let currentCasVal = [that.props.menu.slbid,test.code];
                       that.props.menu.wintype = 'mainpage';
-                      this.props.app.collapsed = true;
+                      {/*this.props.app.collapsed = true;*/}
                       that.props.contentActions.mainpageActions.switchContentShow('none','block','["'+test.tags.join('","')+'"]',currentCasVal)
                   }}>指标分析</Button>
                   <span className="ant-divider" /><a href="#" onClick={()=>{

@@ -16,6 +16,7 @@ class GLMenu extends React.Component {
         super(props);
     }
     componentWillReceiveProps(nextProps) {
+        console.log(nextProps.menu)
         return true;
     }
     componentDidMount(){
@@ -59,9 +60,13 @@ class GLMenu extends React.Component {
         var code = item.key.split(',');
         this.props.menuActions.changeShowWinType(code[0], code[1]);
     }
+    openChange = (keys)=>{
+        this.props.menuActions.changeShowWinType(keys[0], '');
+    }
     render() {
+        const {selectedSubMenu, openSlb} = this.props.menu;
         return (
-            <Menu theme="dark" mode={this.props.app.mode} onClick={this.changeMenu}  >
+            <Menu theme="dark"  defaultSelectedKeys={[]} defaultOpenKeys={[]}  selectedKeys={selectedSubMenu ? [selectedSubMenu] : []} openKeys={openSlb ? [openSlb] : []} mode={this.props.app.mode} onClick={this.changeMenu} onOpenChange={this.openChange}>
                 {this.props.menu.menulist.map((e, index) =>
                     <SubMenu
                     key={e.objectId}

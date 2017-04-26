@@ -22,6 +22,14 @@ class GLStragety extends React.Component {
         }, {
             title: '状态',
             dataIndex: 'status',
+            render: (text, record) =>{
+                switch(record.status){
+                    case 'running': return '运行'; break;
+                    case 'stopped': return  '停止';  break;
+                    case 'ready': return '准备';break;
+                    case 'new': return '新建';break;
+                }
+            }
         }, {
             title: 'web服务器',
             dataIndex: 'server',
@@ -151,7 +159,7 @@ class GLStragety extends React.Component {
                 code: cell.objectId,
                 name: cell.stra_name,
                 desc: cell.stra_desc,
-                status: cell.stra_status,
+                status: cell.stra_status ,
                 server: '...',
                 serverskey: cell.stra_serverskey,
                 urls: '...',
@@ -186,7 +194,7 @@ class GLStragety extends React.Component {
                         })
                         let currentCasVal = [slbid, tgid];
                         this.props.menu.wintype = 'mainpage';
-                        this.props.app.collapsed = true;
+                        {/*this.props.app.collapsed = true;*/}
                         this.props.contentActions.mainpageActions.switchContentShow('none','block','["'+tags.join('","')+'"]',currentCasVal)
 
                     }}>指标分析</Button>
