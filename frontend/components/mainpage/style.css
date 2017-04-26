@@ -276,7 +276,7 @@
     border-top: 1px solid #d9d9d9;
 }
 .CascaderBox .ant-cascader-picker{
-    width:100px;
+    //width:100px;
 }
 .CascaderBox .castitle{
     font-weight: bold;
@@ -381,4 +381,5 @@
 .center-details.hidden {
     display: none;
 }
-.topBox{margin: 5px 25px 15px 50px;}
+.topBox{margin: 5px 50px 15px 50px;}
+#container{margin-top:40px}

@@ -191,7 +191,8 @@ export default class Chart extends React.Component {
                 show: true, //是否显示工具箱
                 feature: {
                     saveAsImage: { show: true }
-                }
+                },
+                right: 50
             },
             series: seriesArr,
         });
