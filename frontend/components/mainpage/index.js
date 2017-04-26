@@ -278,6 +278,7 @@ class GLMainpage extends React.Component {
                               disabledDate={this.disabledDate.bind(this)}
                             />
                         </div>
+                        <div className="clear"></div>
                         <Traffic {...this.props}/>
                     </TabPane>
 

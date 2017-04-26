@@ -132,7 +132,6 @@ export function setCascaderOptionstwo(strageties_arr){
                     value: key,
                     label: key
                 })
-                console.log(key)
             }
             return dispatch({
                 type:TYPES.OPTIONS,
