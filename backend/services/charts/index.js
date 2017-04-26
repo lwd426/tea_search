@@ -7,23 +7,24 @@
 var json2csv = require('json2csv');
 var iconv = require('iconv-lite');
 var utils = require('./utils')
+var moment  = require('moment')
 var fs = require('fs');
+var fse = require('fs-extra')
 
 var db = require('../../datasource/charts');
 
 function getAverageNumArr(arr){
-    let sum = 0;
-    let length = arr.length
+    var sum = 0;
+    var length = arr.length
     arr.map((v,i) => {
         sum += v;
     })
-    let average = sum/length;
+    var average = sum/length;
     return average
 }
 
 module.exports = {
     getTrafficDataByStragety: function *(data){
-        console.log(data)
         var res = yield db.post('get_statistic_uv/', data);
         var responseData = res.result.data;
 
@@ -44,57 +45,55 @@ module.exports = {
                 uv: {},
                 pv: {}
             })
-            var arr_uv = Object.entries(val.uv);
-            arr_uv.map((v,i) => {
-                tableData[index]['uv'][v[0]] = v[1].pvuv;
-                tableData[index]['pv'][v[0]] = v[1].pv;
-            })
+            // var arr_uv = Object.entries(val.uv);
+            for(var key in val.uv){
+                tableData[index]['uv'][key] = val.uv[key].pvuv;
+            }
+
+            // arr_uv.map((v,i) => {
+            //     tableData[index]['uv'][v[0]] = v[1].pvuv;
+            //     tableData[index]['pv'][v[0]] = v[1].pv;
+            // })
         });
 
-        var stra_arr = Object.entries(responseData[0].uv);
-        stra_arr.map((v,i) => {
-            fields.push('uv.' + v[0]);
-            fields.push('pv.' + v[0]);
-            fieldNames.push('版本' + v[1].name + 'UV');
-            fieldNames.push('版本' + v[1].name + 'PV');
-        })
+        // var stra_arr = Object.entries(responseData[0].uv);
+        // stra_arr.map((v,i) => {
+        //     fields.push('uv.' + v[0]);
+        //     fields.push('pv.' + v[0]);
+        //     fieldNames.push('版本' + v[1].name + 'UV');
+        //     fieldNames.push('版本' + v[1].name + 'PV');
+        // })
 
-        var csv = json2csv({ data: tableData, fields: fields, fieldNames: fieldNames });
-        var newCsv = iconv.encode(csv, 'GBK'); // 转编码
-        fs.writeFileSync('file-traffic.csv', newCsv, function(err) {
-          if (err) throw err;
-          console.log('file-traffic saved');
-        });
-        
-        // var filepath = 'usercallbacks'+ moment().valueOf() +'.csv';
-        // fse.mkdirsSync('public/csv/')
-        // var dataBuffer = Buffer.concat([new Buffer('\xEF\xBB\xBF', 'binary'), new Buffer(csv)]);
-        // var result = fse.outputFileSync('public/csv/'+filepath, dataBuffer);
-        // resolve('csv/' + filepath)
+        for(var key in responseData[0].uv){
+            fields.push('uv.' + key);
+            fields.push('pv.' + key);
+            fieldNames.push('版本' + responseData[0].uv[key].name + 'UV');
+            fieldNames.push('版本' + responseData[0].uv[key].name + 'PV');
+        }
 
-        // var filepath = yield utils.save_csv(result);
-        // return filepath;
-        return tableData;
+
+        var filepath = yield utils.save_csv({fields: fields, fieldNames: fieldNames}, tableData)
+        return {status: 'success', data: filepath};
     },
     getConversionDataByStragety: function *(data, linkVal){
         var res = yield db.post('get_statistic_action/', data);
         var responseData = res.result.data;
-        let strageties = Object.entries(responseData);
+        // var strageties = Object.entries(responseData);
 
         var tableData = [];
         var fields = ['strtagetyName','uv', 'pv', 'show', 'click', 'percent'];
         var fieldNames = ['版本', 'UV 访客数', 'PV 浏览数', '曝光', '点击', '转化率 / %'];
 
-        let percentObj = {};
-        let percentNumObj = {}
-        let uvObj = {};
-        let pvObj = {};
-        let showObj = {};
-        let clickObj = {};
-        let strtagetyNameObj = {};
+        var percentObj = {};
+        var percentNumObj = {}
+        var uvObj = {};
+        var pvObj = {};
+        var showObj = {};
+        var clickObj = {};
+        var strtagetyNameObj = {};
 
         //循环赋值
-        for(let key in responseData){
+        for(var key in responseData){
             percentObj[key] = [];
             percentNumObj[key] = [];
             uvObj[key] = [];
@@ -103,7 +102,7 @@ module.exports = {
             clickObj[key] = [];
             strtagetyNameObj[key] = []
 
-            for(let k in responseData[key]){
+            for(var k in responseData[key]){
                 percentObj[key][k] = [];
                 percentNumObj[key][k] = [];
                 uvObj[key][k] = [];
@@ -123,25 +122,30 @@ module.exports = {
             }
         }
 
-        strageties.map((v,i) => {
+        // strageties.map((v,i) => {
+        //     tableData.push({
+        //         strtagetyName: strtagetyNameObj[v[0]],
+        //         uv: Math.round(getAverageNumArr(uvObj[v[0]][linkVal])),
+        //         pv: Math.round(getAverageNumArr(pvObj[v[0]][linkVal])),
+        //         show: Math.round(getAverageNumArr(showObj[v[0]][linkVal])),
+        //         click: Math.round(getAverageNumArr(clickObj[v[0]][linkVal])),
+        //         percent: (getAverageNumArr(percentNumObj[v[0]][linkVal])).toFixed(2) + '%',
+        //     })
+        // });
+
+        for(var key in responseData){
             tableData.push({
-                strtagetyName: strtagetyNameObj[v[0]],
-                uv: Math.round(getAverageNumArr(uvObj[v[0]][linkVal])),
-                pv: Math.round(getAverageNumArr(pvObj[v[0]][linkVal])),
-                show: Math.round(getAverageNumArr(showObj[v[0]][linkVal])),
-                click: Math.round(getAverageNumArr(clickObj[v[0]][linkVal])),
-                percent: (getAverageNumArr(percentNumObj[v[0]][linkVal])).toFixed(2) + '%',
+                strtagetyName: strtagetyNameObj[key],
+                uv: Math.round(getAverageNumArr(uvObj[key][linkVal])),
+                pv: Math.round(getAverageNumArr(pvObj[key][linkVal])),
+                show: Math.round(getAverageNumArr(showObj[key][linkVal])),
+                click: Math.round(getAverageNumArr(clickObj[key][linkVal])),
+                percent: (getAverageNumArr(percentNumObj[key][linkVal])).toFixed(2) + '%',
             })
-        });
+        }
 
-        var csv = json2csv({ data: tableData, fields: fields, fieldNames: fieldNames });
-        var newCsv = iconv.encode(csv, 'GBK'); // 转编码
-        fs.writeFileSync('file-conversion.csv', newCsv, function(err) {
-          if (err) throw err;
-          console.log('file saved');
-        });
-
-        return tableData;
+        var filepath = yield utils.save_csv({fields: fields, fieldNames: fieldNames}, tableData)
+        return {status: 'success', data: filepath};
     },
     getDuijiDataByStragety: function *(data, stragetyVal, linkVal){
         var res = yield db.post('get_statistic_action/', data);
@@ -160,14 +164,8 @@ module.exports = {
                 click_rate: (val.click_count*100/val.show_count).toFixed(2) + '%',
             })
         })
-
-        var csv = json2csv({ data: tableData, fields: fields, fieldNames: fieldNames });
-        var newCsv = iconv.encode(csv, 'GBK'); // 转编码
-        fs.writeFileSync('file-duiji.csv', newCsv, function(err) {
-          if (err) throw err;
-          console.log('file saved');
-        });
-        return tableData;
+        var filepath = yield utils.save_csv({fields: fields, fieldNames: fieldNames}, tableData)
+        return {status: 'success', data: filepath};
     }
 }
 

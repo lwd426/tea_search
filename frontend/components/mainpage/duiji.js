@@ -6,7 +6,8 @@ import request from '../../request';
 
 const HOST = require('../../../config').HOST;
 const chart_url = HOST + '/charts/duijiData';
-
+const postTableData  = require('./lib').postTableData;
+const generateExcel  = require('./lib').generateExcel;
 //DatePicker
 import { DatePicker } from 'antd';
 const { MonthPicker, RangePicker } = DatePicker;
@@ -22,25 +23,6 @@ let tableData = [{
   persent: '20%',
 }];
 
-//判断浏览器类型
-function myBrowser(){
-    var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
-    var isOpera = userAgent.indexOf("Opera") > -1;
-    if (isOpera) { return "Opera" }; //判断是否Opera浏览器
-    if (userAgent.indexOf("Firefox") > -1) { return "FF"; } //判断是否Firefox浏览器
-    if (userAgent.indexOf("Chrome") > -1){ return "Chrome"; }
-    if (userAgent.indexOf("Safari") > -1) { return "Safari"; } //判断是否Safari浏览器
-    if (userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera) { return "IE"; }; //判断是否IE浏览器
-    if (userAgent.indexOf("Trident") > -1) { return "Edge"; } //判断是否Edge浏览器
-}
-function SaveAs5(imgURL) {
-    var oPop = window.open(imgURL,"","width=1, height=1, top=5000, left=5000");
-    for(; oPop.document.readyState != "complete"; ) {
-        if (oPop.document.readyState == "complete")break;
-    }
-    oPop.document.execCommand("SaveAs");
-    oPop.close();
-}
 
 export default class EChart extends React.Component {
     constructor(props) {
@@ -244,7 +226,7 @@ export default class EChart extends React.Component {
         //this.randerChart(date_picker, stragety_str);
         return true;
     }
-    async exportTable(){
+    exportTable(){
         let date_picker = this.props.content.mainpage.conversion_date_picker;
         let stragety_arr = this.props.content.mainpage.strageties;
         let startTime = moment(new Date(date_picker[0])).format('YYYY-MM-DD');
@@ -259,26 +241,8 @@ export default class EChart extends React.Component {
         data.linkVal = casVal;
         data.stragety_str = stragety_str;
 
-        let res = await lib.postTableData(chart_url, data);
-        console.log(res);
-        myBrowser();
-        if (myBrowser()==="IE"||myBrowser()==="Edge"){ //IE
-            odownLoad.href="#";
-            var oImg=document.createElement("img");
-            oImg.src=res;
-            oImg.id="downImg";
-            var odown=document.getElementById("down");
-            odown.appendChild(oImg);
-            SaveAs5(document.getElementById('downImg').src)
-        }else{ //!IE
-            var elemIF = document.createElement("iframe");
-            elemIF.src = res;
-            elemIF.style.display = "none";
-            elemIF.href=res;
-            elemIF.download="";
-            document.body.appendChild(elemIF);
+        postTableData(chart_url, data,generateExcel);
 
-        }
     }
     render() {
         let conversion_date_picker = this.props.content.mainpage.conversion_date_picker;
