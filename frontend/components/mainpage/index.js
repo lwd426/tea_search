@@ -5,6 +5,8 @@ import { Table, Input, Icon, Button,Popover,Cascader, Card,Tabs , Menu, Dropdown
 import Traffic from './Traffic.js';
 import Conversion from './Conversion.js';
 import Duiji from './duiji.js';
+import utilscomps from '../utilscomps'
+
 import request from '../../request';
 import { setMainPageOptions, setMainPageData } from './lib';
 
@@ -30,13 +32,9 @@ class GLMainpage extends React.Component {
         }
     }
     rangeOnChange(dates, dateStrings) {
-        //console.log('From: ', dates[0], ', to: ', dates[1]);
-        //console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
         this.props.contentActions.mainpageActions.changeDatePicker(dateStrings);
     }
     onChange(value_arr, selectedOptions) {
-        //this.props.contentActions.mainpageActions.changeProjectValue(value_arr);
-        //console.log(selectedOptions)
         let stragety_arr = selectedOptions[1].strageties;
         let length = stragety_arr.length;
         if(length > 0){
@@ -52,7 +50,8 @@ class GLMainpage extends React.Component {
             str += ']';
             this.props.contentActions.mainpageActions.switchContentShow('none','block',str,value_arr)
         }else{
-            alert('此项目无数据！')
+            utilscomps.showNotification('warning', '提示', '此项目无数据，请进行策略维护后重试！' );
+
         }
 
     }
@@ -81,23 +80,23 @@ class GLMainpage extends React.Component {
             str += ']';
             this.props.contentActions.mainpageActions.switchContentShow(none,block,str,currentCasVal)
         }else{
-            alert('此项目无数据！')
+            utilscomps.showNotification('warning', '提示', '此项目无数据，请进行策略维护后重试！' );
         }
     }
     tabChange(key){
         this.props.contentActions.mainpageActions.switchTable(key);
     }
-    async componentWillMount(){
-        let res = await request.getAllStrategies();
-        //console.log(res.result.data);
+    componentWillMount(){
+        var  _this = this;
+        let res = request.getAllStrategies((res)=>{
+            let testGroupsArr = setMainPageData(res.result.data);
+            _this.setState({
+                mainpage_data: res.result.data,
+                testGroupsArr: testGroupsArr
+            })
+        });
 
-        let testGroupsArr = setMainPageData(res.result.data);
-        //console.log(testGroupsArr);
 
-        this.setState({
-            mainpage_data: res.result.data,
-            testGroupsArr: testGroupsArr
-        })
     }
     componentDidMount(){
         //this.props.contentActions.mainpageActions.getMenulist();

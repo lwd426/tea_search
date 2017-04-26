@@ -71,24 +71,21 @@ module.exports = {
             return ("error")
         }
     },
-    getAllStrategies : async (slbid) => {
-        try {
-            let response = await fetch(mainpage_all_strategies_url,{
-                method: 'POST',
-                headers: {
-                    "X-Parse-Application-Id": "gatedLaunch",
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                // body: JSON.stringify({
-                //     "slbids": ["iUnU5Tij8P"]
-                // })
-            });
-            let data = await response.json();
-            return data;
-        } catch(e) {
-            console.log("error", e);
-        }
+    getAllStrategies : (callback) => {
+        let response = fetch(mainpage_all_strategies_url,{
+            method: 'POST',
+            headers: {
+                "X-Parse-Application-Id": "gatedLaunch",
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        }).then((res) => {
+            return res.json()
+        }).then((json) => {
+            if (callback) callback(json);
+        }).catch((e) => {
+            if (callback) callback(e.message);
+        })
     }
 }
 

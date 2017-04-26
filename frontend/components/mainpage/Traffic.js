@@ -239,7 +239,6 @@ export default class EChart extends React.Component {
             });
 
         }else{
-            //alert('所选日期无数据！');
             console.log('所选日期无数据！');
             // 基于准备好的dom，初始化echarts实例
             var myChart = echarts.init(document.getElementById('line'));
@@ -288,9 +287,6 @@ export default class EChart extends React.Component {
         postTableData(chart_url, data,generateExcel);
     }
     componentDidMount() {
-        // let date_picker = this.props.content.mainpage.date_picker
-        // console.log(date_picker);
-        // this.randerChart(date_picker);
     }
     componentWillReceiveProps(nextProps) {
         let date_picker = nextProps.content.mainpage.date_picker;
@@ -302,12 +298,6 @@ export default class EChart extends React.Component {
         if(nextProps.content.mainpage.card_container_display == 'block' && tabsKey == "1"){
             this.randerChart(date_picker, stragety_arr);
         }
-        //
-        // if(stragety_arr){
-        //     let stragety_arr = this.props.content.mainpage.strageties
-        //     debugger
-        //     this.props.contentActions.mainpageActions.setCascaderOptionstwo(stragety_arr);
-        // }
         return true;
     }
     componentDidUpdate(prevProps, prevState){
@@ -319,7 +309,7 @@ export default class EChart extends React.Component {
 
     render() {
         return (
-            <div>
+            <div style={{marginTop: 40}}>
                 <div id="line" style={{width:'100%',height:400}} className="chart-box"></div>
                 <div className="tableBox">
                     <Button className="export" onClick={this.exportTable.bind(this)}><Icon type="download" />导出表格</Button>
