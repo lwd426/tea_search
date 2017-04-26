@@ -71,16 +71,16 @@ module.exports = {
         var fields = columns.fields;
         var fieldNames = columns.fieldNames;
         var construct = fields;
-        var infos = []
-        data.map((obj) => {
-            var cell = deepCopy(construct);
-            fields.map((key)=>{
-                cell[key] = obj[key]
-
-            })
-            infos.push(cell);
-        })
-        var csv = json2csv({ data: infos, fields: fields,fieldNames: fieldNames, unwindPath: 'colors' });
+        // var infos = []
+        // data.map((obj) => {
+        //     var cell = deepCopy(construct);
+        //     fields.map((key)=>{
+        //         cell[key] = obj[key]
+        //
+        //     })
+        //     infos.push(cell);
+        // })
+        var csv = json2csv({ data: data, fields: fields,fieldNames: fieldNames, unwindPath: 'colors' });
         return new Promise((resolve,reject)=>{
             var filepath = 'data'+ moment().valueOf() +'.csv';
             fse.mkdirsSync('public/csv/')
