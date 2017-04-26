@@ -59,7 +59,7 @@ class App extends React.Component {
                                     this.props.content.mainpage.content_two_display = 'none';
                                     this.props.content.mainpage.currentCasVal = undefined;
                                     this.props.app.collapsed = true;
-                                }}>返回首页</Button>
+                                }}>返回home</Button>
                                 <Button className="gl-half-r-btn" onClick={()=>{
                                     let {slbid, tgid, stragetylist} = this.props.content.testgroup;
                                     let tags = [];
@@ -82,7 +82,7 @@ class App extends React.Component {
                                     this.props.content.mainpage.content_two_display = 'none';
                                     this.props.content.mainpage.currentCasVal = undefined;
                                     this.props.app.collapsed = true;
-                                }}>返回首页<Icon type="home" /></Button>
+                                }}>返回home</Button>
                             </div>
                         </div>
                         <Sider

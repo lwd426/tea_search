@@ -238,7 +238,11 @@
     font-size: 12px !important;
     font-weight: bold !important;
     float: left !important;
-    margin: 38px 20px 10px 80px !important;
+    margin:0px 20px 10px 120px !important;
+}
+
+.card-container{
+    margin-top: 40px;
 }
 
 .rangepickerBox>span{
@@ -268,7 +272,11 @@
     float: left;
     font-size: 12px !important;
     font-weight: bold !important;
-    margin-top: 40px;
+}
+
+.ant-tabs-tabpane{
+    padding: 10px 0px;
+    border-top: 1px solid #d9d9d9;
 }
 .CascaderBox .ant-cascader-picker{
     width:100px;

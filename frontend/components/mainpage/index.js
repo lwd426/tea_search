@@ -171,7 +171,7 @@ class GLMainpage extends React.Component {
                             this.props.content.mainpage.content_two_display = 'none';
                             this.props.content.mainpage.currentCasVal = undefined;
                             this.props.app.collapsed = true;
-                        }}> 返回 </Button>
+                        }}> 返回home </Button>
                         <Button icon="bar-chart" className="gl-main-mm-btn"  onClick={()=>{
                             this.props.contentActions.mainpageActions.switchTable('1')
                         }}>流量</Button>
@@ -267,16 +267,6 @@ class GLMainpage extends React.Component {
 
                 <div className="card-container" style={{display: this.props.content.mainpage.card_container_display}}>
 
-                {/*<Button className="device_button" onClick={()=>{*/}
-                    {/*this.props.menuActions.changeShowWinType(this.props.menu.slbid, 'deviceinfo');*/}
-                {/*}}>*/}
-                    {/*设备信息*/}
-                {/*</Button>*/}
-                {/*<Button className="stragety_button"  onClick={()=>{*/}
-                    {/*this.props.menuActions.changeShowWinType(this.props.menu.slbid, 'testinfo');*/}
-                {/*}}>*/}
-                    {/*策略维护*/}
-                {/*</Button>*/}
 
                   <Tabs type="card" onChange={this.tabChange.bind(this)} activeKey={ this.props.content.mainpage.main_card_key}>
                     <TabPane tab="流量" key="1">
@@ -297,10 +287,7 @@ class GLMainpage extends React.Component {
                             <Conversion {...this.props}/>
                         </div>
 
-                        <div id = "content_two" style={{display: this.props.content.mainpage.content_two_display}}>
-                            <Button type="primary" className="back" onClick={() => {
-                                this.props.contentActions.mainpageActions.changeContentDisplay('block','none');
-                            }}><Icon type="left" />返回</Button>
+                        <div id="content_two" className="back" style={{display: this.props.content.mainpage.content_two_display}}>
                             <Duiji {...this.props}/>
                         </div>
                     </TabPane>

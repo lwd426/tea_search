@@ -269,6 +269,9 @@ export default class EChart extends React.Component {
         return (
             <div>
                 <div className="rangepickerBox">
+                    <Button  className="gl-left-btn" icon="double-left" onClick={() => {
+                        this.props.contentActions.mainpageActions.changeContentDisplay('block','none');
+                    }}>返回</Button>
                     <span>请选择时间区间</span>
                     <RangePicker
                         defaultValue={this.props.content.mainpage.rangeDefaultVal}
