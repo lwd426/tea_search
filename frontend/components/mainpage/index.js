@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import './style.css';
 import 'antd.min.css';
 import { Table, Input, Icon, Button,Popover,Cascader, Card,Tabs , Menu, Dropdown, message,Popconfirm, Collapse } from 'antd';
-import Traffic from './Traffic.js';
-import Conversion from './Conversion.js';
+import Traffic from './traffic.js';
+import Conversion from './conversion.js';
 import Duiji from './duiji.js';
 import utilscomps from '../utilscomps'
 
