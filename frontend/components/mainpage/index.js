@@ -180,6 +180,7 @@ class GLMainpage extends React.Component {
                             this.props.menuActions.changeShowWinType(this.props.menu.slbid, 'deviceinfo');
                         }}>设备信息</Button>
                         <Button icon="right" className="gl-main-rr-btn" onClick={()=>{
+                            this.props.menuActions.changeShowWinType(this.props.menu.slbid, 'testinfo');
                             this.props.contentActions.testgroupActions.edit_stragetylist(currentCasVal[1],currentCasVal[0]);
                         }} >策略维护</Button>
                     </div>
@@ -195,6 +196,8 @@ class GLMainpage extends React.Component {
                             let currentCasVal = [q.slb_objectId, q.objectId];
                             this.props.menu.slbid = currentCasVal[0] || '';
                             _this.switchContentShow('none','block', q.strageties, currentCasVal)
+                            this.props.menu.openSlb = q.slb_objectId;
+                            this.props.menu.selectedSubMenu = '';
                         }}>详情</a>} >
                             <div style={{padding:10}}>
                                 <div className="gl-m-lefttitle">
