@@ -268,8 +268,11 @@ export default class EChart extends React.Component {
                         },
                     }
                 ],
-
             });
+
+            this.setState({
+                tableData: [],
+            })
         }
     }
     exportTable(){
