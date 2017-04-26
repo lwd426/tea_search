@@ -246,8 +246,8 @@ export default class EChart extends React.Component {
             myChart.setOption({
 
                 title: {
-                    "text": "流量统计表",
-                    "subtext": "反馈总量趋势图和各类型反馈堆叠图",
+                    "text": "无数据",
+                    "subtext": "",
                     "x": "center",
                     "y": "top",
                     "textStyle": {
