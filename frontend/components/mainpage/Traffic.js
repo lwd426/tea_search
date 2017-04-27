@@ -6,6 +6,7 @@ import { Table, Icon, Button,} from 'antd';
 //var echarts = require('echarts');
 import moment from 'moment';
 import request from '../../request';
+import utilscomps from '../utilscomps';
 const postTableData  = require('./lib').postTableData;
 const generateExcel  = require('./lib').generateExcel;
 
@@ -239,6 +240,7 @@ export default class EChart extends React.Component {
 
             }else{
                 console.log('所选日期无数据！');
+                utilscomps.showNotification('warning', '提示', '所选日期无数据！' );
                 // 基于准备好的dom，初始化echarts实例
                 var myChart = echarts.init(document.getElementById('line'));
                 myChart.setOption({
@@ -307,8 +309,11 @@ export default class EChart extends React.Component {
     }
     componentDidUpdate(prevProps, prevState){
         let stragety_arr = this.props.content.mainpage.strageties;
+        let date_picker = this.props.content.mainpage.conversion_date_picker;
+        let startTime = moment(new Date(date_picker[0])).format('YYYY-MM-DD');
+        let endTime = moment(new Date(date_picker[1])).format('YYYY-MM-DD');
         if(prevProps.content.mainpage.strageties != stragety_arr && stragety_arr){
-            this.props.contentActions.mainpageActions.setCascaderOptionstwo(stragety_arr);
+            this.props.contentActions.mainpageActions.setCascaderOptionstwo(stragety_arr, startTime, endTime);
         }
     }
 
