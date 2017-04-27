@@ -289,7 +289,9 @@ export default class EChart extends React.Component {
         postTableData(chart_url, data,generateExcel);
     }
     componentDidMount() {
-
+        if(this.props.content.mainpage.card_container_display == 'block'){
+            this.randerChart(this.props.content.mainpage.date_picker, this.props.content.mainpage.strageties);
+        }
     }
     componentWillReceiveProps(nextProps) {
         let props = nextProps.content.mainpage,
@@ -315,7 +317,6 @@ export default class EChart extends React.Component {
         }
     }
     componentWillUnmount(){
-        console.log('unmount')
         this.props.content.mainpage.card_container_display = 'none';
     }
 
