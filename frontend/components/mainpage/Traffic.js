@@ -49,7 +49,7 @@ export default class EChart extends React.Component {
         let startTime = moment(new Date(date_picker[0])).format('YYYY-MM-DD');
         let endTime = moment(new Date(date_picker[1])).format('YYYY-MM-DD');
         let res = request.getTrafficDataByStragety(stragety_arr, startTime, endTime, (res)=>{
-            if(res.result.status == 'error'){
+            if(!res || !res.result || res.result.status == 'error'){
                 return
             }
             let responseData = res.result.data;

@@ -100,7 +100,7 @@ class App extends React.Component {
                                 collapsed={this.props.app.collapsed}
                                 onCollapse={this.onCollapse}
                             >
-                            <div className="logo" >测试项列表</div>
+                            <div className="logo" >测试组列表</div>
                             <GLMenu mode={this.props.app.mode}/>
                             <Button icon="plus" className="add-test-group-btn" onClick={()=>{
                                 console.log(this.props)
