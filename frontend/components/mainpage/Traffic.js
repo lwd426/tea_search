@@ -34,8 +34,6 @@ function inintdata(){
 };
 inintdata();
 
-
-
 export default class EChart extends React.Component {
     constructor(props) {
         super(props);
@@ -315,6 +313,10 @@ export default class EChart extends React.Component {
         if(prevProps.content.mainpage.strageties != stragety_arr && stragety_arr){
             this.props.contentActions.mainpageActions.setCascaderOptionstwo(stragety_arr, startTime, endTime);
         }
+    }
+    componentWillUnmount(){
+        console.log('unmount')
+        this.props.content.mainpage.card_container_display = 'none';
     }
 
     render() {

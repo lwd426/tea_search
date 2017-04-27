@@ -21,8 +21,8 @@ async function postData (chart_url, data) {
 
 //首页 testgroupt 重新按照最近修改时间排序，slb信息加入到 testgroupt 里
 function sortTime (a,b){
-    let a_since = a.time == '-' ? 0 : new Date(a.time).getTime();
-    let b_since = b.time == '-' ? 0 : new Date(b.time).getTime();
+    let a_since = a.time == '-' ? 0 : new Date(a.time.replace(/-/g, "/")).getTime();
+    let b_since = b.time == '-' ? 0 : new Date(b.time.replace(/-/g, "/")).getTime();
     return (b_since - a_since)
 }
 export function setMainPageData(res){
@@ -30,11 +30,13 @@ export function setMainPageData(res){
     res.map((lib,index) => {
         if(lib.testGroups.length > 0){
             lib.testGroups.map((project,idx,) => {
-                project['slb_name'] = lib.name;
-                project['slb_objectId'] = lib.objectId;
-                project['slb_servers'] = lib.servers;
-
-                testGroupsArr.push(project);
+                if(project['first_publish_time'] && project['strageties'].length > 0){ //过滤掉没发布的项目、策略为0的项目
+                    project['slb_name'] = lib.name;
+                    project['slb_objectId'] = lib.objectId;
+                    project['slb_servers'] = lib.servers;
+                    testGroupsArr.push(project);
+                }
+                
             })
         }
     })
