@@ -49,7 +49,7 @@ export function saveMenu(name) {
         return dispatch(fetch.postData(slb_list_url,{name}, function(err, result){
             if(!err)  postData([])
             dispatch(fetch.getData(slb_list_url,function(err, result){
-                if(!err)  getMenuListSuccess([])
+                if(err)  dispatch(getMenuListSuccess([]))
                 dispatch(getMenuListSuccess(result.data))
             }))
         }))
@@ -59,9 +59,9 @@ export function saveMenu(name) {
 export function editSlb(slbid, slbname) {
     return (dispatch, getState) => {
         return dispatch(fetch.updateData(slb_list_url,{objectId: slbid}, {name: slbname}, function(err, result){
-            if(!err)  editMenuListSuccess([])
+            if(err)  dispatch(editMenuListSuccess([]))
             dispatch(fetch.getData(slb_list_url,function(err, result){
-                if(!err)  editMenuListSuccess([])
+                if(err)  dispatch(editMenuListSuccess([]))
                 dispatch(editMenuListSuccess(result.data))
             }))
         }))

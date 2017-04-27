@@ -292,19 +292,14 @@ export default class EChart extends React.Component {
 
     }
     componentWillReceiveProps(nextProps) {
-        if(nextProps !== this.props){
-            let date_picker = nextProps.content.mainpage.date_picker;
-            let stragety_arr = nextProps.content.mainpage.strageties;
-
+        let props = nextProps.content.mainpage,
+            preProps = this.props.content.mainpage;
+        if(props.date_picker !== preProps.date_picker || props.strageties !== preProps.strageties){
             let tabsKey = nextProps.content.mainpage.main_card_key;
             let display = nextProps.content.mainpage.card_container_display;
-            let pre_date_picker = this.props.content.mainpage.date_picker;
-            let pre_stragety_arr = this.props.content.mainpage.strageties;
             //组件为展示状态时才请求数据
             if(display == 'block' && tabsKey == "1"){
-                if(date_picker != pre_date_picker || stragety_arr != pre_stragety_arr){
-                    this.randerChart(date_picker, stragety_arr);
-                }
+                    this.randerChart(props.date_picker, props.strageties);
             }
             return true;
         }
