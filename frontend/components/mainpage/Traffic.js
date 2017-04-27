@@ -318,7 +318,8 @@ export default class EChart extends React.Component {
         }
     }
     componentWillUnmount(){
-        this.props.content.mainpage.card_container_display = 'none';
+        //this.props.content.mainpage.card_container_display = 'none';
+        this.props.content.mainpage.strageties = '';
     }
 
     render() {
