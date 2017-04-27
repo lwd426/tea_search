@@ -149,7 +149,10 @@ class GLStragety extends React.Component {
     render() {
         const columns = this.columns;
         const {stragetylist, versionModalShow} = this.props.content.testgroup;
+        let tags = [], type = 'refer';
         const  dataSource = stragetylist.map((cell, index)=>{
+            if(cell.tag) tags.push(cell.tag);
+            if(cell.type === 'normal') type = cell.type;
             return {
                 key: cell.objectId,
                 slbid:cell.slbid,
@@ -173,13 +176,14 @@ class GLStragety extends React.Component {
                 description: <GLInfo urls={cell.stra_urls} cities={cell.stra_cities} servers={cell.stra_servers} uids={cell.stra_uids}/>
             }
         });
+
         var _this = this;
         return (
 
             <div>
                 <div className="gl-testinfo-btndiv">
                     <Button className="gl-left-btn" icon="double-left" onClick={this.goBack}>返回</Button>
-                    <Button className="gl-left-btn" icon="upload" onClick={()=>{
+                    <Button className="gl-left-btn" icon="upload" disabled={type === "refer" ? true: false} onClick={()=>{
                         this.props.contentActions.testgroupActions.publishModal(true);
                     }}>发布到服务器</Button>
                     <Modal title="请输入发布版本的必要信息" closable={false} visible={versionModalShow} footer={null}
@@ -188,10 +192,7 @@ class GLStragety extends React.Component {
                     </Modal>
                     <Button className="gl-right-btn" icon="bar-chart"onClick={()=>{
                         let {slbid, tgid, stragetylist} = this.props.content.testgroup;
-                        let tags = [];
-                        stragetylist.map((stra)=>{
-                            if(stra.tag) tags.push(stra.tag);
-                        })
+
                         let currentCasVal = [slbid, tgid];
                         this.props.menu.wintype = 'mainpage';
                         {/*this.props.app.collapsed = true;*/}

@@ -222,7 +222,7 @@ class GLMainpage extends React.Component {
                                 <div className="gl-m-leftcontent">
                                     {
                                         q.strageties.map((s, i) => {
-                                                let icontype = 'loading',text = '运行中';
+                                                let icontype = 'check',text = '运行中';
                                                 switch(s.stra_status){
                                                     case 'running': icontype = 'check'; text = '运行'; break;
                                                     case 'new': icontype = 'bulb'; text = '新建'; break;
