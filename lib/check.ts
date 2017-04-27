@@ -166,7 +166,7 @@ class Verify {
                             if (ccc) {
                                 throw {
                                     code: CODE.URL_UID,
-                                    data: `${this.arr[i].url}相同但是uid:${ccc}多次`
+                                    data: `相同链接(${this.arr[i].url})下uid:${ccc}配置了多次`
                                 }
                             }
                         }
@@ -175,7 +175,7 @@ class Verify {
                             if (ccc) {
                                 throw {
                                     code: CODE.URL_UID,
-                                    data: `${this.arr[i].url}相同但是region:${ccc}多次`
+                                    data: `相同链接(${this.arr[i].url})下region:${ccc}配置了多次`
                                 }
                             }
                         }
@@ -242,7 +242,7 @@ class Verify {
                     if (v) {
                         throw {
                             code: CODE.JIAOJI,
-                            data: `${this.arr[i].url}下${v}用了多次了吧`
+                            data: `相同链接${this.arr[i].url}下一台服务器不允许配多次${v}`
                         }
                     }
                 }
