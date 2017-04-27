@@ -11,22 +11,22 @@ nginx([
         },*/
         {
             urlArray: ['/yyyy/uid'],
-            serverArray: ["1"],
+            serverArray: ["1.1.1.1"],
            uidArray: ['123'],
            regionArray: ['beijing'],
             default: false
         },
 
         {
-            urlArray: ["/"],
-            serverArray: ['2'],//传给我所有的没使用灰度服务器
+            urlArray: ["/yyyy/uid"],
+            serverArray: ['1.1.1.21'],//传给我所有的没使用灰度服务器
             uidArray:["zhuoyongran",'zyr'],
             // uidArray:['3456875456'],
             // serverArray: [],//传给我所有的没使用灰度服务器
             default: false
         },{
             urlArray: ["/"],
-            serverArray: ['2.8'],//传给我所有的没使用灰度服务器
+            serverArray: ['2.8','2.8'],//传给我所有的没使用灰度服务器
             uidArray:["fdf"],
             // uidArray:['3456875456'],
             // serverArray: [],//传给我所有的没使用灰度服务器
@@ -34,9 +34,9 @@ nginx([
         },
         {
             urlArray: ["/"],
-            serverArray: ['3','4'],//传给我所有的没使用灰度服务器
+            serverArray: ['1.1.1.1'],//传给我所有的没使用灰度服务器
             // serverArray: [],//传给我所有的没使用灰度服务器
             default: true
         }
-    ]
+    ],'m.le.com'
 );
