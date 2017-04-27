@@ -15,6 +15,7 @@ let initState = {
     menulist: [],
     testgrouplist: [],
     main_card_key: "1",
+    strageties: '',
     options_two: [{
         value: '',
         label: ''

@@ -35,7 +35,6 @@ export default class EChart extends React.Component {
         this.props.contentActions.mainpageActions.changeConversionDatePicker(dateStrings);
     }
     onChange(arr){
-        console.log(arr)
         this.props.contentActions.mainpageActions.changeCascader(arr);
     }
     disabledDate(current) {
@@ -134,6 +133,7 @@ export default class EChart extends React.Component {
                     "fontSize": 14
                 }
             },
+            animation: false,
             tooltip: {
                 trigger: 'axis',
                 axisPointer: {
@@ -216,15 +216,15 @@ export default class EChart extends React.Component {
         this.randerChart(date_picker);*/
     }
     componentWillReceiveProps(nextProps) {
-        console.log('duiji componentWillReceiveProps');
-        let date_picker = nextProps.content.mainpage.conversion_date_picker;
-        let stragety_str = nextProps.content.mainpage.content_two_key;
+        let props = nextProps.content.mainpage,
+            preProps = this.props.content.mainpage;
+        // if(props.conversion_date_picker === preProps.conversion_date_picker && props.content_two_key === preProps.content_two_key) return false;
         let tabsKey = nextProps.content.mainpage.main_card_key;
-
+        let display = nextProps.content.mainpage.card_container_display;
+        //组件为展示状态时才请求数据
         if(nextProps.content.mainpage.content_two_display == 'block' && tabsKey == "2"){
-            this.randerChart(date_picker, stragety_str);
+            this.randerChart(props.conversion_date_picker, props.content_two_key);
         }
-        //this.randerChart(date_picker, stragety_str);
         return true;
     }
     exportTable(){
