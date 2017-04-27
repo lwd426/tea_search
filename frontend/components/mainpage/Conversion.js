@@ -117,7 +117,7 @@ export default class Chart extends React.Component {
                         //3-4 between 2017-3-4
                         let valDateStr = (new Date(val.date).getMonth() + 1) + '-' + new Date(val.date).getDate();
                         if(xdate == valDateStr){
-                           percentObj[key][k][index] = (val.click_count*100/val.show_count).toFixed(2);
+                           percentObj[key][k][index] = val.show_count!==0 ? (val.click_count*100/val.show_count).toFixed(2) : 0;//字母为0时 取0
 
                         }
                     })
