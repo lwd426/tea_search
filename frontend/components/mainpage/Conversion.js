@@ -161,6 +161,7 @@ export default class Chart extends React.Component {
                     }
                 }
             },
+            animation: false,
             legend: {
                 data: legendDate,//['版本一','版本二','原始版本']
                 bottom: 0,
@@ -230,25 +231,16 @@ export default class Chart extends React.Component {
         this.randerChart(date_picker, stragety_arr);
     }
     componentWillReceiveProps(nextProps) {
-        console.log('chart componentWillReceiveProps');
-        // let date_picker = nextProps.content.mainpage.conversion_date_picker;
-        // let stragety_arr = nextProps.content.mainpage.strageties;
-        // let tabsKey = nextProps.content.mainpage.main_card_key
-        // if(nextProps.content.mainpage.content_one_display == 'block' && tabsKey == "2"){
-        //     this.randerChart(date_picker, stragety_arr);
-        // }
-        // return true;
         let props = nextProps.content.mainpage,
             preProps = this.props.content.mainpage;
-        if(props.conversion_date_picker !== preProps.conversion_date_picker || props.strageties !== preProps.strageties || props.casVal !== preProps.casVal){
-            let tabsKey = nextProps.content.mainpage.main_card_key;
-            let display = nextProps.content.mainpage.card_container_display;
-            //组件为展示状态时才请求数据
-            if(display == 'block' && tabsKey == "2"){
-                this.randerChart(props.conversion_date_picker, props.strageties);
-            }
-            return true;
+        // if(props.conversion_date_picker === preProps.conversion_date_picker && props.strageties === preProps.strageties) return false;
+        let tabsKey = nextProps.content.mainpage.main_card_key;
+        let display = nextProps.content.mainpage.card_container_display;
+        //组件为展示状态时才请求数据
+        if(nextProps.content.mainpage.content_one_display == 'block' && tabsKey == "2"){
+            this.randerChart(props.conversion_date_picker, props.strageties);
         }
+        return true;
     }
      exportTable(){
         let date_picker = this.props.content.mainpage.conversion_date_picker;

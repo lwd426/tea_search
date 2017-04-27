@@ -166,7 +166,7 @@ class Verify {
                             if (ccc) {
                                 throw {
                                     code: CODE.URL_UID,
-                                    data: `${this.arr[i].url}相同但是uid:${ccc}多次`
+                                    data: `相同链接(${this.arr[i].url})下uid:${ccc}配置了多次`
                                 }
                             }
                         }
@@ -175,7 +175,7 @@ class Verify {
                             if (ccc) {
                                 throw {
                                     code: CODE.URL_UID,
-                                    data: `${this.arr[i].url}相同但是region:${ccc}多次`
+                                    data: `相同链接(${this.arr[i].url})下region:${ccc}配置了多次`
                                 }
                             }
                         }
@@ -235,11 +235,14 @@ class Verify {
         for (let i = 0; i < this.arr.length; i++) {
             for (let j = i + 1; j < this.arr.length; j++) {
                 if (this.arr[i].url == this.arr[j].url) {
+                    if(this.arr[i].default||this.arr[j].default){
+                        continue;
+                    }
                     let v = Methods.intersection(this.arr[i].serverArray, this.arr[j].serverArray);
                     if (v) {
                         throw {
                             code: CODE.JIAOJI,
-                            data: `${this.arr[i].url}下${v}用了多次了吧`
+                            data: `相同链接${this.arr[i].url}下一台服务器不允许配多次${v}`
                         }
                     }
                 }

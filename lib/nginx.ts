@@ -94,19 +94,21 @@ function array2one(arr) {
     return arr2;
 }
 
-function nginx(arr: any[], domain = 'test.m.le.com', port = '80') {
+function nginx(arr: any[], domain = 't.m.le.com', port = '80') {
     console.log("nginx传过来的参数：");
     console.log(arr);
     needDefault = true;
     //先加上开始
-    arr.forEach(item => {
-        for (let i = 0; i < item.serverArray.length; i++) {
-            let vs = item.serverArray[i].split('.');
-            let v3 = vs[3];
-            vs[3] = '188';
-            item.serverArray[i] = vs.join(".") + ":9" + v3;
-        }
-    });
+    if(domain=='t.m.le.com'){
+        arr.forEach(item => {
+            for (let i = 0; i < item.serverArray.length; i++) {
+                let vs = item.serverArray[i].split('.');
+                let v3 = vs[3];
+                vs[3] = '188';
+                item.serverArray[i] = vs.join(".") + ":9" + v3;
+            }
+        });
+    }
     //先加上结束
 
 

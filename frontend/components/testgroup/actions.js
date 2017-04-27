@@ -319,7 +319,6 @@ function dataHandler(dispatch, ha,stra_id, slbid,tgid,name,desc,cities,servers,s
  */
 export function validate(editting_status, slbid,tgid,name,desc,cities,servers,serverskey,urls,uids) {
     return (dispatch, getState) => {
-        console.log('dd')
         var optType = 'save', stra_id = '';
         if(editting_status) {
             optType = 'update';

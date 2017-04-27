@@ -12,8 +12,11 @@ let reducer = (state={wintype: 'mainpage',slbid: '', editting_slb:undefined, add
             }else if(!action.wintype) {
                 return Object.assign({}, state, {slbid: action.slbid,openSlb: action.slbid, domain: action.domain, domainId: action.domainId})
             }else{
-                return Object.assign({}, state, { wintype: action.wintype, slbid: action.slbid, selectedSubMenu: action.slbid + ',' + showtype, openSlb: action.slbid, domain: action.domain, domainId: action.domainId})
+                return Object.assign({}, state, { wintype: action.wintype, slbid: action.slbid, selectedSubMenu: action.slbid + ',' + showtype, openSlb: [action.slbid], domain: action.domain, domainId: action.domainId})
             }
+            break
+        case TYPES.CHANGE_OPEN_SLBS:
+            return Object.assign({}, state, { openSlb: action.slbs})
             break
         case TYPES.ADD_TEST_GROUP:
             return Object.assign({}, state, { add: true})

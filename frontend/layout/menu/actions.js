@@ -90,6 +90,13 @@ export function editSlbClick(slbid, slbname) {
 //     }
 // }
 
+export function changeOpenSlbs(slbs) {
+    return {
+        type: TYPES.CHANGE_OPEN_SLBS,
+        slbs
+    }
+}
+
 export function changeShowWinType(slbid, wintype, noDirect) {
     //读取slb信息
     return (dispatch, getState) => {
