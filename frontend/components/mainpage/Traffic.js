@@ -269,9 +269,9 @@ export default class EChart extends React.Component {
                     ],
                 });
 
-                _this.setState({
-                    tableData: [],
-                })
+                // _this.setState({
+                //     tableData: [],
+                // })
             }
         });
 
@@ -296,10 +296,15 @@ export default class EChart extends React.Component {
             let date_picker = nextProps.content.mainpage.date_picker;
             let stragety_arr = nextProps.content.mainpage.strageties;
 
-            let tabsKey = nextProps.content.mainpage.main_card_key
-            //组件展示出来后在请求数据
-            if(nextProps.content.mainpage.card_container_display == 'block' && tabsKey == "1"){
-                this.randerChart(date_picker, stragety_arr);
+            let tabsKey = nextProps.content.mainpage.main_card_key;
+            let display = nextProps.content.mainpage.card_container_display;
+            let pre_date_picker = this.props.content.mainpage.date_picker;
+            let pre_stragety_arr = this.props.content.mainpage.strageties;
+            //组件为展示状态时才请求数据
+            if(display == 'block' && tabsKey == "1"){
+                if(date_picker != pre_date_picker || stragety_arr != pre_stragety_arr){
+                    this.randerChart(date_picker, stragety_arr);
+                }
             }
             return true;
         }
