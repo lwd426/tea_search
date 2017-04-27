@@ -235,6 +235,9 @@ class Verify {
         for (let i = 0; i < this.arr.length; i++) {
             for (let j = i + 1; j < this.arr.length; j++) {
                 if (this.arr[i].url == this.arr[j].url) {
+                    if(this.arr[i].default||this.arr[j].default){
+                        continue;
+                    }
                     let v = Methods.intersection(this.arr[i].serverArray, this.arr[j].serverArray);
                     if (v) {
                         throw {
