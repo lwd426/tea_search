@@ -269,9 +269,9 @@ export default class EChart extends React.Component {
                     ],
                 });
 
-                // _this.setState({
-                //     tableData: [],
-                // })
+                _this.setState({
+                    tableData: [],
+                })
             }
         });
 
