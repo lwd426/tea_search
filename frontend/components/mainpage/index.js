@@ -5,6 +5,8 @@ import { Table, Input, Icon, Button,Popover,Cascader, Card,Tabs , Menu, Dropdown
 import Traffic from './Traffic.js';
 import Conversion from './Conversion.js';
 import Duiji from './duiji.js';
+import utilscomps from '../utilscomps'
+
 import request from '../../request';
 import { setMainPageOptions, setMainPageData } from './lib';
 
@@ -30,13 +32,9 @@ class GLMainpage extends React.Component {
         }
     }
     rangeOnChange(dates, dateStrings) {
-        //console.log('From: ', dates[0], ', to: ', dates[1]);
-        //console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
         this.props.contentActions.mainpageActions.changeDatePicker(dateStrings);
     }
     onChange(value_arr, selectedOptions) {
-        //this.props.contentActions.mainpageActions.changeProjectValue(value_arr);
-        //console.log(selectedOptions)
         let stragety_arr = selectedOptions[1].strageties;
         let length = stragety_arr.length;
         if(length > 0){
@@ -52,7 +50,8 @@ class GLMainpage extends React.Component {
             str += ']';
             this.props.contentActions.mainpageActions.switchContentShow('none','block',str,value_arr)
         }else{
-            alert('此项目无数据！')
+            utilscomps.showNotification('warning', '提示', '此项目无数据，请进行策略维护后重试！' );
+
         }
 
     }
@@ -81,30 +80,29 @@ class GLMainpage extends React.Component {
             str += ']';
             this.props.contentActions.mainpageActions.switchContentShow(none,block,str,currentCasVal)
         }else{
-            alert('此项目无数据！')
+            utilscomps.showNotification('warning', '提示', '此项目无数据，请进行策略维护后重试！' );
         }
     }
     tabChange(key){
         this.props.contentActions.mainpageActions.switchTable(key);
     }
-    async componentWillMount(){
-        let res = await request.getAllStrategies();
-        //console.log(res.result.data);
+    componentWillMount(){
+        var  _this = this;
+        let res = request.getAllStrategies((res)=>{
+            let testGroupsArr = setMainPageData(res.result.data);
+            _this.setState({
+                mainpage_data: res.result.data,
+                testGroupsArr: testGroupsArr
+            })
+        });
 
-        let testGroupsArr = setMainPageData(res.result.data);
-        //console.log(testGroupsArr);
 
-        this.setState({
-            mainpage_data: res.result.data,
-            testGroupsArr: testGroupsArr
-        })
     }
     componentDidMount(){
         //this.props.contentActions.mainpageActions.getMenulist();
         //this.props.contentActions.mainpageActions.getTestGroupList();
     }
     componentWillReceiveProps(nextProps) {
-        console.log('mainpage componentWillReceiveProps');
         //console.log(nextProps.content.mainpage.stragety);
         return true;
     }
@@ -133,9 +131,6 @@ class GLMainpage extends React.Component {
                 }
             })
         }
-        //let defaultValue = (options.length > 0) ? [ options[0]['value'],options[0]['children'][0]['value'] ] : [];
-
-
         const options_two = [{
             value: 'BtnClick',
             label: 'BtnClick',
@@ -148,51 +143,47 @@ class GLMainpage extends React.Component {
         let colkey = 0;
         const wintype = this.props.menu.wintype;
         const {currentCasVal, card_container_display, main_container_display, main_card_key} = this.props.content.mainpage;
+        let toolbarType = 'mainpage_main';
+        // const {toolbarType, toolbarData} = this.props.app;
+        if(wintype === 'mainpage' && card_container_display === 'none' && main_container_display === 'block'){
+            toolbarType = 'mainpage_main'
+        }else if(wintype === 'mainpage' && card_container_display === 'block' && main_container_display === 'none'){
+            toolbarType = 'mainpage_details'
+        }
         return (
             <div className="mainpage">
                 <div className="quickBox">
-                {
-                    (()=>{
-                        var type = 'detailsPage';
-                        if(wintype === 'mainpage' && card_container_display === 'none' && main_container_display === 'block') {
-                            return (<div className="center">
-                                <Button icon="setting" className={this.props.app.collapsed ? "gl-main-l-btn" : "gl-main-l-btn close"} onClick={this.props.appActions.changeSettingBtn}>{this.props.app.collapsed ? '打开配置面板' : '关闭配置面板'}</Button>
-                                <Popover content={<Cascader placeholder="请选择" options={options} onChange={this.onChange.bind(this)} value={currentCasVal} expandTrigger='hover' />
-                                } title="请选择测试组" trigger="click">
-                                    <Button icon="scan" className="gl-main-r-btn">测试组快捷入口</Button>
-                                </Popover>
-                            </div>)
-                        }else if(wintype === 'mainpage' && card_container_display === 'block' && main_container_display === 'none') {
-                            return (<div className="center-details">
-                                <Button icon="home" className="gl-main-ll-btn" onClick={()=>{
-                                    this.props.menuActions.changeShowWinType(0, 'mainpage');
-                                    this.props.content.mainpage.card_container_display = 'none';
-                                    this.props.content.mainpage.content_one_display = 'block'
-                                    this.props.content.mainpage.main_container_display = 'block'
-                                    this.props.content.mainpage.content_two_display = 'none';
-                                    this.props.content.mainpage.currentCasVal = undefined;
-                                    this.props.app.collapsed = true;
-                                }}> 返回 </Button>
-                                <Button icon="setting" className="gl-main-mm-btn"  onClick={()=>{
-                                    {/*this.props.content.mainpage.main_card_key = '1';*/}
-                                    this.props.contentActions.mainpageActions.switchTable('1')
-                                }}>流量</Button>
-                                <Button icon="setting" className="gl-main-mm-btn"   onClick={()=>{
-                                    {/*this.props.content.mainpage.main_card_key = '2';*/}
-                                    this.props.contentActions.mainpageActions.switchTable('2')
-                                }}>转化率</Button>
-                                <Button icon="setting" className="gl-main-mm-btn"  onClick={()=>{
-                                    this.props.menuActions.changeShowWinType(this.props.menu.slbid, 'deviceinfo');
-                                }}>设备信息</Button>
-                                <Button icon="setting" className="gl-main-rr-btn" onClick={()=>{
-                                    this.props.menuActions.changeShowWinType(this.props.menu.slbid, 'testinfo');
-                                }} >策略维护</Button>
-                            </div>)
-
-                        }
-
-                    })()
-                }
+                    <div className={toolbarType === 'mainpage_main' ? (this.props.app.collapsed ? "center" : "center close" ) : "center hidden"}>
+                        <Button icon="setting" className={this.props.app.collapsed ? "gl-main-l-btn" : "gl-main-l-btn close"} onClick={this.props.appActions.changeSettingBtn}>{this.props.app.collapsed ? '打开配置面板' : '关闭配置面板'}</Button>
+                        <Popover   content={<Cascader placeholder="请选择" options={options} onChange={this.onChange.bind(this)} value={currentCasVal} expandTrigger='hover' />
+                        } title={null} trigger="click">
+                            <Button icon="scan" className="gl-main-r-btn">测试组快捷入口</Button>
+                        </Popover>
+                    </div>
+                    <div className={toolbarType === 'mainpage_details' ? "center-details" : "center-details hidden"}>
+                        {/*<Button icon="home" className="gl-main-ll-btn" onClick={()=>{*/}
+                            {/*this.props.menuActions.changeShowWinType(0, 'mainpage');*/}
+                            {/*this.props.content.mainpage.card_container_display = 'none';*/}
+                            {/*this.props.content.mainpage.content_one_display = 'block'*/}
+                            {/*this.props.content.mainpage.main_container_display = 'block'*/}
+                            {/*this.props.content.mainpage.content_two_display = 'none';*/}
+                            {/*this.props.content.mainpage.currentCasVal = undefined;*/}
+                            {/*this.props.app.collapsed = true;*/}
+                        {/*}}> 返回home </Button>*/}
+                        <Button icon="bar-chart" className="gl-main-ll-btn"  onClick={()=>{
+                            this.props.contentActions.mainpageActions.switchTable('1')
+                        }}>流量</Button>
+                        <Button icon="bar-chart" className="gl-main-mm-btn"   onClick={()=>{
+                            this.props.contentActions.mainpageActions.switchTable('2')
+                        }}>转化率</Button>
+                        <Button icon="database" className="gl-main-mm-btn"  onClick={()=>{
+                            this.props.menuActions.changeShowWinType(this.props.menu.slbid, 'deviceinfo');
+                        }}>设备信息</Button>
+                        <Button icon="right" className="gl-main-rr-btn" onClick={()=>{
+                            this.props.menuActions.changeShowWinType(this.props.menu.slbid, 'testinfo');
+                            this.props.contentActions.testgroupActions.edit_stragetylist(currentCasVal[1],currentCasVal[0]);
+                        }} >策略维护</Button>
+                    </div>
                 </div>
 
 
@@ -205,12 +196,14 @@ class GLMainpage extends React.Component {
                             let currentCasVal = [q.slb_objectId, q.objectId];
                             this.props.menu.slbid = currentCasVal[0] || '';
                             _this.switchContentShow('none','block', q.strageties, currentCasVal)
+                            this.props.menu.openSlb = q.slb_objectId;
+                            this.props.menu.selectedSubMenu = '';
                         }}>详情</a>} >
                             <div style={{padding:10}}>
                                 <div className="gl-m-lefttitle">
                                     <span>创建于：{ moment(new Date(q.createdAt)).format('YYYY-MM-DD') }  </span>
                                     <span style={{marginLeft:'20px'}}>
-                                            已运行：{q.first_publish_time? Math.ceil((new Date().getTime() - new Date(q.first_publish_time).getTime())/(24*60*60*1000)) : 0} 天
+                                            已运行：{q.first_publish_time? Math.ceil((new Date().getTime() - new Date(q.first_publish_time.replace(/-/g, "/")).getTime())/(24*60*60*1000)) : 0} 天
                                         </span>
 
                                     <span style={{marginLeft:'20px'}}>
@@ -231,9 +224,9 @@ class GLMainpage extends React.Component {
                                         q.strageties.map((s, i) => {
                                                 let icontype = 'loading',text = '运行中';
                                                 switch(s.stra_status){
-                                                    case 'running': icontype = 'loading'; text = '运行中'; break;
+                                                    case 'running': icontype = 'check'; text = '运行'; break;
                                                     case 'new': icontype = 'bulb'; text = '新建'; break;
-                                                    case 'stopped':  icontype = 'hourglass'; text = '停止';break;
+                                                    case 'stopped':  icontype = 'coffee'; text = '停止';break;
                                                 }
                                                 return (<div key={index + '-' + i} style={{padding:3}}>
                                                     <div className="left" style={{float:'left',width:'33%'}}>
@@ -275,27 +268,20 @@ class GLMainpage extends React.Component {
 
                 <div className="card-container" style={{display: this.props.content.mainpage.card_container_display}}>
 
-                {/*<Button className="device_button" onClick={()=>{*/}
-                    {/*this.props.menuActions.changeShowWinType(this.props.menu.slbid, 'deviceinfo');*/}
-                {/*}}>*/}
-                    {/*设备信息*/}
-                {/*</Button>*/}
-                {/*<Button className="stragety_button"  onClick={()=>{*/}
-                    {/*this.props.menuActions.changeShowWinType(this.props.menu.slbid, 'testinfo');*/}
-                {/*}}>*/}
-                    {/*策略维护*/}
-                {/*</Button>*/}
 
                   <Tabs type="card" onChange={this.tabChange.bind(this)} activeKey={ this.props.content.mainpage.main_card_key}>
                     <TabPane tab="流量" key="1">
-                        <div className="rangepickerBox">
-                            <span>选择时间区间</span>
-                            <RangePicker
-                              defaultValue={this.props.content.mainpage.rangeDefaultVal}
-                              format={dateFormat}
-                              onChange={this.rangeOnChange.bind(this)}
-                              disabledDate={this.disabledDate.bind(this)}
-                            />
+                        <div className="topBox">
+                            <div className="rangepickerBox">
+                                <span>选择时间区间</span>
+                                <RangePicker
+                                  defaultValue={this.props.content.mainpage.rangeDefaultVal}
+                                  format={dateFormat}
+                                  onChange={this.rangeOnChange.bind(this)}
+                                  disabledDate={this.disabledDate.bind(this)}
+                                />
+                            </div>
+                            <div className="clear"></div>
                         </div>
                         <Traffic {...this.props}/>
                     </TabPane>
@@ -305,10 +291,7 @@ class GLMainpage extends React.Component {
                             <Conversion {...this.props}/>
                         </div>
 
-                        <div id = "content_two" style={{display: this.props.content.mainpage.content_two_display}}>
-                            <Button type="primary" className="back" onClick={() => {
-                                this.props.contentActions.mainpageActions.changeContentDisplay('block','none');
-                            }}><Icon type="left" />返回</Button>
+                        <div id="content_two" className="back" style={{display: this.props.content.mainpage.content_two_display}}>
                             <Duiji {...this.props}/>
                         </div>
                     </TabPane>

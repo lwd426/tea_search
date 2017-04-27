@@ -6,7 +6,8 @@ import request from '../../request';
 
 const HOST = require('../../../config').HOST;
 const chart_url = HOST + '/charts/conversionData';
-
+const postTableData  = require('./lib').postTableData;
+const generateExcel  = require('./lib').generateExcel;
 //DatePicker
 import { DatePicker } from 'antd';
 const { MonthPicker, RangePicker } = DatePicker;
@@ -23,25 +24,6 @@ let tableData = [{
   persent: '20%',
 }];
 
-//判断浏览器类型
-function myBrowser(){
-    var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
-    var isOpera = userAgent.indexOf("Opera") > -1;
-    if (isOpera) { return "Opera" }; //判断是否Opera浏览器
-    if (userAgent.indexOf("Firefox") > -1) { return "FF"; } //判断是否Firefox浏览器
-    if (userAgent.indexOf("Chrome") > -1){ return "Chrome"; }
-    if (userAgent.indexOf("Safari") > -1) { return "Safari"; } //判断是否Safari浏览器
-    if (userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera) { return "IE"; }; //判断是否IE浏览器
-    if (userAgent.indexOf("Trident") > -1) { return "Edge"; } //判断是否Edge浏览器
-}
-function SaveAs5(imgURL) {
-    var oPop = window.open(imgURL,"","width=1, height=1, top=5000, left=5000");
-    for(; oPop.document.readyState != "complete"; ) {
-        if (oPop.document.readyState == "complete")break;
-    }
-    oPop.document.execCommand("SaveAs");
-    oPop.close();
-}
 
 
 export default class Chart extends React.Component {
@@ -135,7 +117,7 @@ export default class Chart extends React.Component {
                         //3-4 between 2017-3-4
                         let valDateStr = (new Date(val.date).getMonth() + 1) + '-' + new Date(val.date).getDate();
                         if(xdate == valDateStr){
-                           percentObj[key][k][index] = (val.click_count*100/val.show_count).toFixed(2);
+                           percentObj[key][k][index] = val.show_count!==0 ? (val.click_count*100/val.show_count).toFixed(2) : 0;//字母为0时 取0
 
                         }
                     })
@@ -160,8 +142,8 @@ export default class Chart extends React.Component {
         var myChart = echarts.init(document.getElementById('container'));
         // 绘制图表
         myChart.setOption({
-            title: {"text": "流量统计表",
-                "subtext": "反馈总量趋势图和各类型反馈堆叠图",
+            title: {"text": "点击率日统计表 ",
+                "subtext": "各版本单日点击率趋势图",
                 "x": "center",
                 "y": "top",
                 "textStyle": {
@@ -179,8 +161,11 @@ export default class Chart extends React.Component {
                     }
                 }
             },
+            animation: false,
             legend: {
-                data: legendDate//['版本一','版本二','原始版本']
+                data: legendDate,//['版本一','版本二','原始版本']
+                bottom: 0,
+                right: 50
             },
             xAxis: [
                 {
@@ -207,7 +192,8 @@ export default class Chart extends React.Component {
                 show: true, //是否显示工具箱
                 feature: {
                     saveAsImage: { show: true }
-                }
+                },
+                right: 50
             },
             series: seriesArr,
         });
@@ -234,7 +220,6 @@ export default class Chart extends React.Component {
                 persent: (getAverageNumArr(percentNumObj[v[0]][casVal])).toFixed(2) + '%',
             })
         })
-        console.log(tableData)
         this.setState({
             tableData: tableData
         })
@@ -246,20 +231,18 @@ export default class Chart extends React.Component {
         this.randerChart(date_picker, stragety_arr);
     }
     componentWillReceiveProps(nextProps) {
-        console.log('chart componentWillReceiveProps');
-        let date_picker = nextProps.content.mainpage.conversion_date_picker;
-        let stragety_arr = nextProps.content.mainpage.strageties;
-
-        let tabsKey = nextProps.content.mainpage.main_card_key
-
-
+        let props = nextProps.content.mainpage,
+            preProps = this.props.content.mainpage;
+        // if(props.conversion_date_picker === preProps.conversion_date_picker && props.strageties === preProps.strageties) return false;
+        let tabsKey = nextProps.content.mainpage.main_card_key;
+        let display = nextProps.content.mainpage.card_container_display;
+        //组件为展示状态时才请求数据
         if(nextProps.content.mainpage.content_one_display == 'block' && tabsKey == "2"){
-            this.randerChart(date_picker, stragety_arr);
+            this.randerChart(props.conversion_date_picker, props.strageties);
         }
-
         return true;
     }
-    async exportTable(){
+     exportTable(){
         let date_picker = this.props.content.mainpage.conversion_date_picker;
         let stragety_arr = this.props.content.mainpage.strageties;
         let startTime = moment(new Date(date_picker[0])).format('YYYY-MM-DD');
@@ -275,27 +258,9 @@ export default class Chart extends React.Component {
         data.linkVal = casVal;
 
 
-        let res = await lib.postTableData(chart_url, data);
-        console.log(res);
-        myBrowser();
-        if (myBrowser()==="IE"||myBrowser()==="Edge"){ //IE
-            odownLoad.href="#";
-            var oImg=document.createElement("img");
-            oImg.src=res;
-            oImg.id="downImg";
-            var odown=document.getElementById("down");
-            odown.appendChild(oImg);
-            SaveAs5(document.getElementById('downImg').src)
-        }else{ //!IE
-            var elemIF = document.createElement("iframe");
-            elemIF.src = res;
-            elemIF.style.display = "none";
-            elemIF.href=res;
-            elemIF.download="";
-            document.body.appendChild(elemIF);
+        postTableData(chart_url, data,generateExcel);
 
-        }
-    }
+     }
     render() {
         // (async() => {
         //     res = await request.getConversionDataByStragety("['100001', '100002']",'2017-03-05','2017-03-08');
@@ -341,22 +306,23 @@ export default class Chart extends React.Component {
         }];
         return (
             <div>
-
-                <div className="rangepickerBox">
-                    <span>请选择时间区间</span>
-                    <RangePicker
-                        defaultValue={this.props.content.mainpage.rangeDefaultVal}
-                        value={conver_date_moment_val}
-                        format={'YYYY/MM/DD'}
-                        onChange={this.rangeOnChange.bind(this)}
-                        disabledDate={this.disabledDate.bind(this)}
-                    />
+                <div className="topBox">
+                    <div className="rangepickerBox">
+                        <span>请选择时间区间</span>
+                        <RangePicker
+                            defaultValue={this.props.content.mainpage.rangeDefaultVal}
+                            value={conver_date_moment_val}
+                            format={'YYYY/MM/DD'}
+                            onChange={this.rangeOnChange.bind(this)}
+                            disabledDate={this.disabledDate.bind(this)}
+                        />
+                    </div>
+                    <div className="CascaderBox">
+                        <span className="castitle">优化指标</span>
+                        <Cascader options={this.props.content.mainpage.options_two} defaultValue={[this.props.content.mainpage.options_two[0].value]} onChange={this.onChange.bind(this)} />
+                    </div>
+                    <div className="clear"></div>
                 </div>
-                <div className="CascaderBox">
-                    <span>优化指标 ：</span>
-                    <Cascader options={this.props.content.mainpage.options_two} defaultValue={[this.props.content.mainpage.options_two[0].value]} onChange={this.onChange.bind(this)} />
-                </div>
-                <div className="clear"></div>
 
                 <div id="container" style={{width:'100%',height:400}} className="chart-box"></div>
                 <div className="tableBox">

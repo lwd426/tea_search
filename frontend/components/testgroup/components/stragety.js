@@ -22,6 +22,14 @@ class GLStragety extends React.Component {
         }, {
             title: '状态',
             dataIndex: 'status',
+            render: (text, record) =>{
+                switch(record.status){
+                    case 'running': return '运行'; break;
+                    case 'stopped': return  '停止';  break;
+                    case 'ready': return '准备';break;
+                    case 'new': return '新建';break;
+                }
+            }
         }, {
             title: 'web服务器',
             dataIndex: 'server',
@@ -63,6 +71,7 @@ class GLStragety extends React.Component {
                           utilscomps.showNotification('warning', '不能修改','此策略正在运行中，请先停止此策略');
                           return false;
                       }
+                      this.props.menu.wintype =  'testinfo';
                       this.props.contentActions.testgroupActions.editStragety(record)
                   }}>修改</a>
                   <span className="ant-divider" />
@@ -93,6 +102,7 @@ class GLStragety extends React.Component {
     }
     handleAdd = () => {
         // const {slbid, tgid} = this.props.content.testgroup;
+        this.props.menu.wintype =  'testinfo';
         this.props.contentActions.testgroupActions.add_stragety()
     }
     generateTags =()=>{
@@ -133,6 +143,7 @@ class GLStragety extends React.Component {
 
     }
     goBack = () => {
+        this.props.menu.wintype =  'testinfo';
         this.props.contentActions.testgroupActions.goback()
     }
     render() {
@@ -148,7 +159,7 @@ class GLStragety extends React.Component {
                 code: cell.objectId,
                 name: cell.stra_name,
                 desc: cell.stra_desc,
-                status: cell.stra_status,
+                status: cell.stra_status ,
                 server: '...',
                 serverskey: cell.stra_serverskey,
                 urls: '...',
@@ -175,6 +186,18 @@ class GLStragety extends React.Component {
                     >
                         <GLVersionForm {..._this.props} />
                     </Modal>
+                    <Button className="gl-right-btn" icon="bar-chart"onClick={()=>{
+                        let {slbid, tgid, stragetylist} = this.props.content.testgroup;
+                        let tags = [];
+                        stragetylist.map((stra)=>{
+                            if(stra.tag) tags.push(stra.tag);
+                        })
+                        let currentCasVal = [slbid, tgid];
+                        this.props.menu.wintype = 'mainpage';
+                        {/*this.props.app.collapsed = true;*/}
+                        this.props.contentActions.mainpageActions.switchContentShow('none','block','["'+tags.join('","')+'"]',currentCasVal)
+
+                    }}>指标分析</Button>
                     <Button className="gl-right-btn" icon="compass" onClick={this.generateReferVersion}>生成基准版本</Button>
                     <Button className="gl-right-btn" icon="tag" onClick={this.generateTags}>生成数据标签</Button>
                     <Button className="gl-right-btn" icon="plus" onClick={this.handleAdd}>新增策略</Button>

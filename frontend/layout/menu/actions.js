@@ -49,7 +49,7 @@ export function saveMenu(name) {
         return dispatch(fetch.postData(slb_list_url,{name}, function(err, result){
             if(!err)  postData([])
             dispatch(fetch.getData(slb_list_url,function(err, result){
-                if(!err)  getMenuListSuccess([])
+                if(err)  dispatch(getMenuListSuccess([]))
                 dispatch(getMenuListSuccess(result.data))
             }))
         }))
@@ -59,9 +59,9 @@ export function saveMenu(name) {
 export function editSlb(slbid, slbname) {
     return (dispatch, getState) => {
         return dispatch(fetch.updateData(slb_list_url,{objectId: slbid}, {name: slbname}, function(err, result){
-            if(!err)  editMenuListSuccess([])
+            if(err)  dispatch(editMenuListSuccess([]))
             dispatch(fetch.getData(slb_list_url,function(err, result){
-                if(!err)  editMenuListSuccess([])
+                if(err)  dispatch(editMenuListSuccess([]))
                 dispatch(editMenuListSuccess(result.data))
             }))
         }))
@@ -90,7 +90,14 @@ export function editSlbClick(slbid, slbname) {
 //     }
 // }
 
-export function changeShowWinType(slbid, wintype) {
+export function changeOpenSlbs(slbs) {
+    return {
+        type: TYPES.CHANGE_OPEN_SLBS,
+        slbs
+    }
+}
+
+export function changeShowWinType(slbid, wintype, noDirect) {
     //读取slb信息
     return (dispatch, getState) => {
         if(!slbid) return dispatch(changeSlbSuccess(wintype, undefined, undefined, undefined));
@@ -99,8 +106,8 @@ export function changeShowWinType(slbid, wintype) {
             var arr = result.data;
             var domain = arr[0].slbDomain;
             var domainId = arr[0].domainId;
-            dispatch(tgActions.goback())
-            dispatch(appActions.max_menu())
+            if(!noDirect) dispatch(tgActions.goback())
+            // dispatch(appActions.max_menu())
             return dispatch(changeSlbSuccess(wintype, slbid, domain, domainId));
         }))
     }

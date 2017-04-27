@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import GLDeviceInfo from '../../components/deviceinfo';
 import GLDataChart from '../../components/datachart';
 import GLTestInfo from '../../components/testgroup';
+import GLStragetyInfo from '../../components/testgroup/components/stragety';
 import GLMainPage from '../../components/mainpage';
 import { Button, Modal ,Layout,Icon, Breadcrumb} from 'antd';
 
@@ -30,14 +31,10 @@ class GLContent extends React.Component {
     }
     render() {
         let {domain,domainId, wintype } = this.props.menu;
-        // let
-        // switch(wintype){
-        //     case 'deviceinfo':
-        // }
         return (
             <div className="gl-content">
                 { wintype !== 'mainpage' ? (
-                    <Breadcrumb style={{ margin: '12px 0' }} separator=">">
+                    <Breadcrumb  separator=">">
                     <Breadcrumb.Item>{domain + (domainId ? '('+domainId + ')' : '')}</Breadcrumb.Item>
                     <Breadcrumb.Item>{wintype === 'deviceinfo' ? '设备管理' : '测试项目'}</Breadcrumb.Item>
                     </Breadcrumb>)

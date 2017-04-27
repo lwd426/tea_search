@@ -4,6 +4,7 @@ import checkUrl from '../../utils/checkUrl'
 const HOST = require('../../../config').HOST;
 import utilscomps from '../utilscomps'
 import * as contActions from '../../layout/content/actions'
+import * as menuActions from '../../layout/menu/actions'
 const testgroup_url = HOST + '/testgroup'
 const versionlog_url = HOST + '/versionlog'
 const stragety_url = HOST + '/stragety'
@@ -21,6 +22,7 @@ export function edit_stragetylist(tgid, slbid) {
     return (dispatch, getState) => {
         return dispatch(fetch.getData(stragety_url + '?slbid='+slbid+'&tgid='+tgid,function(err, result){
             if(err)  return dispatch(getStragetyListSuccess([], tgid, slbid))
+            dispatch(menuActions.changeShowWinType(slbid,'stragetyinfo', true))
             return dispatch(getStragetyListSuccess(result.data, tgid, slbid))
         }))
     }

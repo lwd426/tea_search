@@ -116,8 +116,23 @@
     margin: 6px 2px 0px 2px;
 }
 .gl-right-btn {
+    width: 112px;
     margin: 0px 4px 4px 4px;
     float: right;
+    padding: 5px 0px;
+}
+
+.gl-btn-without-border{
+    border: none;
+    color: #108ee9;
+    cursor: pointer;
+    font-weight: initial;
+    padding: 0px !important;
+    background: rgba(255, 255, 255, 0.00) !important;
+}
+
+.gl-btn-without-border:focus, .gl-btn-without-border:hover{
+    background: rgba(255, 255, 255, 0.00);
 }
 
 .ant-calendar-picker{

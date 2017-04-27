@@ -113,27 +113,33 @@ export function changeCascader(arr){
     }
 }
 
-export function setCascaderOptionstwo(strageties_arr){
-    let aaa = strageties_arr;
+export function setCascaderOptionstwo(strageties_arr, startTime, endTime){
     return async (dispatch,getstate) => {
         //debugger
-        let res = await request.getConversionDataByStragety(aaa,'2017-04-15','2017-04-18');
+        let res = await request.getConversionDataByStragety(strageties_arr, startTime, endTime);
         let responseData = res.result.data;
         console.log(responseData);
         if(responseData == {}){
             return
         }
         let strageties = Object.entries(responseData);
+        let options_two = [];
         if(strageties.length > 0){
-            //设置 option_two
-            let options_two = [];
             for(let key in strageties[0][1]){
                 options_two.push({
                     value: key,
                     label: key
                 })
-                console.log(key)
             }
+            return dispatch({
+                type:TYPES.OPTIONS,
+                options_two: options_two
+            })
+        }else{
+            options_two.push({
+                value: '',
+                label: ''
+            })
             return dispatch({
                 type:TYPES.OPTIONS,
                 options_two: options_two

@@ -16,6 +16,7 @@ class GLMenu extends React.Component {
         super(props);
     }
     componentWillReceiveProps(nextProps) {
+        console.log(nextProps.menu)
         return true;
     }
     componentDidMount(){
@@ -53,15 +54,19 @@ class GLMenu extends React.Component {
         var slbname = this.refs.edit.refs.input.value;
         this.props.menuActions.editSlb(slbid, slbname);
     }
-    changeMenu =(item)=>{
+    changeSubMenu =(item)=>{
         if(!item.key) return false;
         if(item.key.indexOf(',') === -1) return false;
-        var code = item.key.split(',')
+        var code = item.key.split(',');
         this.props.menuActions.changeShowWinType(code[0], code[1]);
     }
+    openChange = (keys)=>{
+        this.props.menuActions.changeOpenSlbs(keys);
+    }
     render() {
+        const {selectedSubMenu, openSlb} = this.props.menu;
         return (
-            <Menu theme="dark" mode={this.props.app.mode} onClick={this.changeMenu}  >
+            <Menu theme="dark"  defaultSelectedKeys={[]} defaultOpenKeys={[]}  selectedKeys={selectedSubMenu ? [selectedSubMenu] : []} openKeys={openSlb ? openSlb : []} mode={this.props.app.mode} onClick={this.changeSubMenu} onSelect={this.changeMenu} onOpenChange={this.openChange} >
                 {this.props.menu.menulist.map((e, index) =>
                     <SubMenu
                     key={e.objectId}
