@@ -118,7 +118,6 @@ export function setCascaderOptionstwo(strageties_arr, startTime, endTime){
         //debugger
         let res = await request.getConversionDataByStragety(strageties_arr, startTime, endTime);
         let responseData = res.result.data;
-        console.log(responseData);
         if(responseData == {}){
             return
         }

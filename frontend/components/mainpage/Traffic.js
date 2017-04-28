@@ -34,8 +34,6 @@ function inintdata(){
 };
 inintdata();
 
-
-
 export default class EChart extends React.Component {
     constructor(props) {
         super(props);
@@ -240,6 +238,10 @@ export default class EChart extends React.Component {
                 });
 
             }else{
+                this.setState({
+                    tableData: [],
+                    tableColumns: tableColumns
+                })
                 console.log('所选日期无数据！');
                 utilscomps.showNotification('warning', '提示', '所选日期无数据！' );
                 // 基于准备好的dom，初始化echarts实例
@@ -271,10 +273,6 @@ export default class EChart extends React.Component {
                         }
                     ],
                 });
-
-                _this.setState({
-                    tableData: [],
-                })
             }
         });
 
@@ -292,20 +290,22 @@ export default class EChart extends React.Component {
         postTableData(chart_url, data,generateExcel);
     }
     componentDidMount() {
-
+        if(this.props.content.mainpage.card_container_display == 'block'){
+            this.randerChart(this.props.content.mainpage.date_picker, this.props.content.mainpage.strageties);
+        }
     }
     componentWillReceiveProps(nextProps) {
         let props = nextProps.content.mainpage,
             preProps = this.props.content.mainpage;
-        // if(props.date_picker === preProps.date_picker && props.strageties === preProps.strageties) return false;
-        let tabsKey = nextProps.content.mainpage.main_card_key;
-        let display = nextProps.content.mainpage.card_container_display;
-        //组件为展示状态时才请求数据
-        if(display == 'block' && tabsKey == "1"){
-            this.randerChart(props.date_picker, props.strageties);
+        if(props.date_picker !== preProps.date_picker || props.strageties !== preProps.strageties){
+            let tabsKey = nextProps.content.mainpage.main_card_key;
+            let display = nextProps.content.mainpage.card_container_display;
+            //组件为展示状态时才请求数据
+            if(display == 'block' && tabsKey == "1"){
+                    this.randerChart(props.date_picker, props.strageties);
+            }
+            return true;
         }
-        return true;
-
 
     }
     componentDidUpdate(prevProps, prevState){
@@ -317,9 +317,12 @@ export default class EChart extends React.Component {
             this.props.contentActions.mainpageActions.setCascaderOptionstwo(stragety_arr, startTime, endTime);
         }
     }
+    componentWillUnmount(){
+        //this.props.content.mainpage.card_container_display = 'none';
+        this.props.content.mainpage.strageties = '';
+    }
 
     render() {
-        console.log('props: ' + this.props.content.mainpage.strageties )
         return (
             <div style={{marginTop: 40}}>
                 <div id="line" style={{width:'100%',height:400}} className="chart-box"></div>
