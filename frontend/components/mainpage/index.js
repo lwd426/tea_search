@@ -191,7 +191,7 @@ class GLMainpage extends React.Component {
                 <div className="main-container" style={{display: this.props.content.mainpage.main_container_display}}>
 
                         {this.state.testGroupsArr.map((q, index) =>
-                        <Card title={q.slb_name + '/' + q.name} key={index+1} extra={<a href="#" onClick={(e) =>{
+                        <Card title={'测试组/项目名：'+q.slb_name + '/' + q.name} key={index+1} extra={<a href="#" onClick={(e) =>{
                             e.stopPropagation();
                             let currentCasVal = [q.slb_objectId, q.objectId];
                             this.props.menu.slbid = currentCasVal[0] || '';
