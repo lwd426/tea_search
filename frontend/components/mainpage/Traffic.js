@@ -238,6 +238,10 @@ export default class EChart extends React.Component {
                 });
 
             }else{
+                this.setState({
+                    tableData: [],
+                    tableColumns: tableColumns
+                })
                 console.log('所选日期无数据！');
                 utilscomps.showNotification('warning', '提示', '所选日期无数据！' );
                 // 基于准备好的dom，初始化echarts实例
@@ -269,10 +273,6 @@ export default class EChart extends React.Component {
                         }
                     ],
                 });
-
-                _this.setState({
-                    tableData: [],
-                })
             }
         });
 
@@ -323,7 +323,6 @@ export default class EChart extends React.Component {
     }
 
     render() {
-        console.log('props: ' + this.props.content.mainpage.strageties )
         return (
             <div style={{marginTop: 40}}>
                 <div id="line" style={{width:'100%',height:400}} className="chart-box"></div>
