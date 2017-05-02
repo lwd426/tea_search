@@ -189,13 +189,12 @@ class GLMainpage extends React.Component {
 
 
                 <div className="main-container" style={{display: this.props.content.mainpage.main_container_display}}>
-
                         {this.state.testGroupsArr.map((q, index) =>
                         <Card title={'测试组/项目名：'+q.slb_name + '/' + q.name} key={index+1} extra={<a href="#" onClick={(e) =>{
                             e.stopPropagation();
                             let currentCasVal = [q.slb_objectId, q.objectId];
                             this.props.menu.slbid = currentCasVal[0] || '';
-                            _this.switchContentShow('none','block', q.strageties, currentCasVal)
+                            _this.switchContentShow('none','block', q.strageties, currentCasVal, '1')
                             this.props.menu.openSlb = q.slb_objectId;
                             this.props.menu.selectedSubMenu = '';
                         }}>详情</a>} >
@@ -269,7 +268,7 @@ class GLMainpage extends React.Component {
                 <div className="card-container" style={{display: this.props.content.mainpage.card_container_display}}>
 
 
-                  <Tabs type="card" onChange={this.tabChange.bind(this)} activeKey={ this.props.content.mainpage.main_card_key}>
+                  <Tabs type="card" onChange={this.tabChange.bind(this)} activeKey={ this.props.content.mainpage.main_card_key || '1'}>
                     <TabPane tab="流量" key="1">
                         <div className="topBox">
                             <div className="rangepickerBox">

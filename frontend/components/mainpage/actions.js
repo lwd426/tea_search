@@ -82,20 +82,21 @@ export function changeConversionDatePicker(dateStrings){
     }
 }
 
-export function switchContentShow(main_display, card_display, strageties, currentCasVal) {
+export function switchContentShow(main_display, card_display, strageties, currentCasVal, main_display_key) {
     return (dispatch, getState) => {
         if(!currentCasVal || currentCasVal.length ===0) dispatch(menuActions.changeShowWinType( currentCasVal[0] || 0, ''))
-        return dispatch(switchContentShowSuccess(main_display, card_display, strageties,currentCasVal))
+        return dispatch(switchContentShowSuccess(main_display, card_display, strageties,currentCasVal, main_display_key))
     }
 }
 
-export function switchContentShowSuccess(main_display, card_display, strageties, currentCasVal){
+export function switchContentShowSuccess(main_display, card_display, strageties, currentCasVal,main_display_key){
     return{
         type:TYPES.MAIN_CONTAINER_DISPLAY,
         main_container_display: main_display,
         card_container_display: card_display,
         strageties: strageties,
-        currentCasVal: currentCasVal
+        currentCasVal: currentCasVal,
+        main_display_key: main_display_key
     }
 }
 

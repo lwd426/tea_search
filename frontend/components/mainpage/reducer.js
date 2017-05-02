@@ -53,7 +53,8 @@ let reducer = (state = initState,action)=>{
                 card_container_display: action.card_container_display,
                 strageties: action.strageties,
                 currentCasVal: action.currentCasVal,
-                main_card_key: "1",//写死，每次切换都回到流量tab
+                // main_card_key: "1",//写死，每次切换都回到流量tab
+                main_card_key: action.main_display_key || state.main_card_key
             })
         }
         case TYPES.GET_MENUDATA_SUCCESS:{

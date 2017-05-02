@@ -68,7 +68,7 @@ module.exports = {
      */
     getStragetyList: function*(opts) {
         var allservers = yield libServer.getServersInfo({slbid: opts.slbid})
-        var stragetylist =  yield db.get('stragety',opts,  [{opt: 'equal', key: 'is_abolished', data: false}]);
+        var stragetylist =  yield db.get('stragety',opts,  [{opt: 'equal', key: 'is_abolished', data: false},{opt: 'equal', key: 'is_active', data: true}]);
         //为了与web服务器的增删改查一致，所以策略的基准以服务器的key为准
         var i=0; len=stragetylist.length;
         for(;i<len;i++){
@@ -180,10 +180,13 @@ module.exports = {
                 is_abolished: false,
                 flowaccounting: stragegty.get('flowaccounting'),
                 time: stragegty.get('time'),
-                snapcode : snapcode
+                snapcode : snapcode,
+                is_active: true
             }
             //把之前的is_abolished字段设置为true
             result = yield db.update('stragety', {objectId:stragegty.id }, {is_abolished: true});
+            result = yield db.save('stragety', data);
+            data.is_active = false;
             result = yield db.save('stragety', data);
 
         }
